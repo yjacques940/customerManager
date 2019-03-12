@@ -11,7 +11,7 @@ namespace CustomerManagerWebApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new[] { "value1", "value2" };
+            return new[] { "JEssy", "Yannick", "Nicolas" };
         }
 
         // GET api/values/5
