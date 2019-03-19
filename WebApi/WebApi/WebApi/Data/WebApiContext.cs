@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cause.Core.DataLayerExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Models
@@ -14,5 +15,14 @@ namespace WebApi.Models
         }
 
         public DbSet<Customer> Customer { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.AddTableNameToPrimaryKey();
+            modelBuilder.UseAutoSnakeCaseMapping();
+            modelBuilder.UseTablePrefix("tbl_");
+            this.UseAutoDetectedMappings(modelBuilder);
+        }
     }
 }

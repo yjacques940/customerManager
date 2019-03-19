@@ -7,11 +7,11 @@ namespace WebApi.Models
 {
     public class Customer
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Sex { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Occupation { get; set; }
     }
 }

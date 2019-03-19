@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cause.Core.DataLayerExtensions" Version="1.0.0" />
     <PackageReference Include="LeXun.Pomelo.EntityFrameworkCore.MySql" Version="4.1.32" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />

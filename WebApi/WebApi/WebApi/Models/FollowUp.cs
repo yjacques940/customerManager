@@ -7,7 +7,7 @@ namespace WebApi.Models
 {
     public class FollowUp
     { 
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Treatment { get; set; }
         public string Summary { get; set; }
         public DateTime CreatedOn { get; set; }
