@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
-
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace WebApi
 {
@@ -32,22 +32,32 @@ namespace WebApi
 
             services.AddDbContext<WebApiContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("WebApiContext")));
-
-            }
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "API Massothérapie Carl et Mélanie", Version = "v1" });
+            });
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"API Massothérapie Carl et Mélanie v1");
+                    c.RoutePrefix = string.Empty;
+                });
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseMvc();
         }
