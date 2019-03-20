@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace WebApi.Models
 {
-    public class FollowUp
+    public class FollowUp : BaseModel
     { 
-        public int Id { get; set; }
         public string Treatment { get; set; }
         public string Summary { get; set; }
         public DateTime CreatedOn { get; set; }

@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using WebApi.Data;
+using WebApi.Services;
 
 namespace WebApi
 {
@@ -29,13 +31,20 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddDbContext<WebApiContext>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("WebApiContext")));
+            RegisterServicesAndContext(services);
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "API Massothérapie Carl et Mélanie", Version = "v1" });
             });
+        }
+
+        private void RegisterServicesAndContext(IServiceCollection services)
+        {
+            services.AddDbContext<WebApiContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("WebApiContext")));
+            services.AddScoped<IWebApiContext,WebApiContext>();
+             services.InjectDataServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
