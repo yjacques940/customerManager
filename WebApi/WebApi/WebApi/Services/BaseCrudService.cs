@@ -36,7 +36,7 @@ namespace WebApi.Services
             if (entity == null)
                 return false;
 
-           // entity.IsActive = false;
+            entity.IsActive = false;
             Context.SaveChanges();
 
             return true;
@@ -48,7 +48,7 @@ namespace WebApi.Services
             {
                 var entity = new T { Id = id };
                 Context.Set<T>().Attach(entity);
-             //   entity.IsActive = false;
+                entity.IsActive = false;
             });
             Context.SaveChanges();
             return true;
