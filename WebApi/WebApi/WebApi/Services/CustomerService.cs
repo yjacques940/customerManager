@@ -35,13 +35,16 @@ namespace WebApi.Services
         public int AddNewCustomer(Customer customer)
         {
             //ajouter validation si le user existe déjà
+            //devra créer le dernier id automatiquement,
+            //aller chercher le dernier +1
             if (customer != null)
             {
                 Context.Add(customer);
             }
 
             Context.SaveChanges();
-            return 1;
+            //Renvoyer le id du customer qui a été assigné : customer.Id
+            return customer.IdAddress;
         }
     }
 }

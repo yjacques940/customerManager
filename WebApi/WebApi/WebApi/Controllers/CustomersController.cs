@@ -18,7 +18,7 @@ namespace WebApi.Controllers
         {
         }
 
-        [HttpGet("getAll")]
+        [HttpGet("GetAll")]
         public ActionResult<IEnumerable<Customer>> GetCustomer()
         {
             return Service.GetList();
@@ -30,13 +30,13 @@ namespace WebApi.Controllers
             return Service.GetCustomerFullName(id);
         }
 
-        [HttpPut("{customer}")]
+        [HttpPut("AddNew/{customer}")]
         public ActionResult AddNewCustomerObject(Customer customer)
         {
             return Ok(Service.AddNewCustomer(customer));
         }
 
-        [HttpPut("changeCustomerLastName/{id}/{lastName}")]
+        [HttpPut("UpdateCustomerLastName/{id}/{lastName}")]
         public ActionResult UpdateCustomerLastName(int id, string lastName)
         {
             return Ok(Service.ChangeCustomerLastName(id,lastName));
