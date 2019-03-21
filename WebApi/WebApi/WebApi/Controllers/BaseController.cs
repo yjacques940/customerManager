@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using WebApi.Services;
 
 namespace WebApi.Controllers
 {
     [Produces("application/json")]
-    public abstract class BaseController<TService,TModel> : Controller
+    public abstract class BaseController<TService, TModel> : Controller
         where TModel : BaseModel, new()
         where TService : BaseCrudService<TModel>
     {
@@ -36,7 +32,6 @@ namespace WebApi.Controllers
         public virtual ActionResult Get()
         {
             var result = Service.GetList();
-
             return Ok(result);
         }
 

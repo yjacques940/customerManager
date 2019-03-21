@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using WebApi.Data;
 using WebApi.Models;
 
@@ -38,7 +35,6 @@ namespace WebApi.Services
 
             entity.IsActive = false;
             Context.SaveChanges();
-
             return true;
         }
 

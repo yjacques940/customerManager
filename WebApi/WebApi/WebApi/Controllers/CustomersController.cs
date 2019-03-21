@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using WebApi.Data;
 using WebApi.Models;
 using WebApi.Services;
 
@@ -12,7 +8,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : BaseController<CustomerService,Customer>
+    public class CustomersController : BaseController<CustomerService, Customer>
     {
         public CustomersController(WebApiContext context, CustomerService service) : base(service)
         {
@@ -39,7 +35,7 @@ namespace WebApi.Controllers
         [HttpPut("UpdateCustomerLastName/{id}/{lastName}")]
         public ActionResult UpdateCustomerLastName(int id, string lastName)
         {
-            return Ok(Service.ChangeCustomerLastName(id,lastName));
+            return Ok(Service.ChangeCustomerLastName(id, lastName));
         }
 
         [HttpDelete("Delete/{id}")]
@@ -47,8 +43,8 @@ namespace WebApi.Controllers
         [ProducesResponseType(200)]
         public ActionResult DeleteCustomer(int id)
         {
-            if(Service.Remove(id))
-                 return NoContent();
+            if (Service.Remove(id))
+                return NoContent();
 
             return BadRequest();
         }
