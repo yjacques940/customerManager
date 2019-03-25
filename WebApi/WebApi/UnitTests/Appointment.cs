@@ -12,15 +12,17 @@ namespace Tests
         [TestCase()]
         public bool IsOverlapping(Appointment newAppointment)
         {
-            var test = new List<Appointment>();
-            test.Add(new Appointment()
+            var test = new List<Appointment>
             {
-                Id = 35136515,
-                IsActive = true,
-                Date = DateTime.Now.Date,
-                Time= Convert.ToDateTime("12:00"),
-                DurationTime = new TimeSpan(0,1,0,0)
-            });
+                new Appointment()
+                {
+                    Id = 35136515,
+                    IsActive = true,
+                    Date = DateTime.Now.Date,
+                    Time = Convert.ToDateTime("12:00"),
+                    DurationTime = new TimeSpan(0, 1, 0, 0)
+                }
+            };
 
             var app = new Appointment()
             {
