@@ -14,31 +14,31 @@ namespace WebApi.Controllers
         {
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet,Route("GetAll")]
         public ActionResult<IEnumerable<Customer>> GetCustomer()
         {
             return Service.GetList();
         }
 
-        [HttpGet("FullName/{id}")]
-        public string GetCustomerFullName(int id)
+        [HttpGet, Route("FullName/{id}")]
+        public ActionResult GetCustomerFullName(int id)
         {
-            return Service.GetCustomerFullName(id);
+            return Ok(Service.GetCustomerFullName(id));
         }
 
-        [HttpPut("AddNew/{customer}")]
+        [HttpPut, Route("AddNew/{customer}")]
         public ActionResult AddNewCustomerObject(Customer customer)
         {
             return Ok(Service.AddNewCustomer(customer));
         }
 
-        [HttpPut("UpdateCustomerLastName/{id}/{lastName}")]
+        [HttpPut, Route("UpdateCustomerLastName/{id}/{lastName}")]
         public ActionResult UpdateCustomerLastName(int id, string lastName)
         {
             return Ok(Service.ChangeCustomerLastName(id, lastName));
         }
 
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete,Route("Delete/{id}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
         public ActionResult DeleteCustomer(int id)
