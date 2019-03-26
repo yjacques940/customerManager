@@ -7,11 +7,11 @@ using WebApi.Models;
 
 namespace WebApi.Validators
 {
-    public class AppointmentValidator
+    public static class AppointmentValidator
     {
         public const int MaximumAppointmentsCount = 8;
 
-        public bool IsAvailable(Appointment newAppointment,List<Appointment> appointments)
+        public static bool IsAvailable(Appointment newAppointment,List<Appointment> appointments)
         {
             if (HasReachedMaximumAppointmentsForADay(appointments))
                 return false;
@@ -29,29 +29,27 @@ namespace WebApi.Validators
             return true;
         }
 
-        private bool IsOverlapping(Appointment newAppointment, Appointment appointment)
+        private static bool IsOverlapping(Appointment newAppointment, Appointment appointment)
         {
             TimeRange newOne = new TimeRange(newAppointment.AppointmentDateTime, GetEndHour(newAppointment));
             TimeRange existingAppointment = new TimeRange(appointment.AppointmentDateTime, GetEndHour(newAppointment));
             return newOne.OverlapsWith(existingAppointment);
         }
 
-        private DateTime GetEndHour(Appointment appointment)
+        private static DateTime GetEndHour(Appointment appointment)
         {
             return appointment.AppointmentDateTime.AddHours(appointment.DurationTime.Hour)
                 .AddMinutes(appointment.DurationTime.Minute);
         }
 
-        public bool HasAnAppointmentForTheDay(List<Appointment> appointments)
+        public static bool HasAnAppointmentForTheDay(List<Appointment> appointments)
         {
             return appointments.Count > 0 && appointments != null;
         }
 
-        public bool HasReachedMaximumAppointmentsForADay(List<Appointment> appointments)
+        public static bool HasReachedMaximumAppointmentsForADay(List<Appointment> appointments)
         {
             return appointments.Count >= MaximumAppointmentsCount;
         }
-
-
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
+using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Services;
 
@@ -13,16 +14,34 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentsController : BaseController<AppointmentService, Appointment>
+    public class AppointmentsController : BaseReaderController<AppointmentService, Appointment>
     {
         public AppointmentsController(WebApiContext context, AppointmentService service) : base(service)
         {
         }
 
         [HttpGet, Route("GetByDate/{date}")]
-        public ActionResult<IEnumerable<Appointment>> GetCustomer(string date)
+        public ActionResult<IEnumerable<Appointment>> GetAppointmentsByDate(string date)
         {
             return Service.GetAppointmentsByDate(date);
+        }
+
+        [HttpGet, Route("AppointmentsAndCustomers")]
+        public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers()
+        {
+            return Service.GetAppointmentAndCustomers();
+        }
+
+        [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(200)]
+        public ActionResult AddAppointment(Appointment appointment)
+        {
+            if (appointment == null)
+                return BadRequest();
+            if (Service.CheckAppointmentIsAvailable(appointment) == null)
+                return Conflict();
+            return Ok(Service.AddOrUpdate(appointment));
         }
     }
 }
