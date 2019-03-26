@@ -13,10 +13,9 @@ namespace UnitTests.Mocks
             {
                 Id = 351658156,
                 IsActive = true,
-                Date = DateTime.Now.Date,
-                Time = Convert.ToDateTime("12:30"),
-                DurationTime = new TimeSpan(0, 1, 0, 0)
-            };
+                AppointmentDateTime = Convert.ToDateTime("12:30"),
+                DurationTime = new DateTime().AddHours(1)
+        };
         }
 
         public List<Appointment> GetAppointmentList(int numberOfAppointments,List<string> hours = null)
@@ -32,10 +31,9 @@ namespace UnitTests.Mocks
                     {
                         Id = i,
                         IsActive = true,
-                        Date = DateTime.Now.Date,
-                        Time = Convert.ToDateTime(hours != null ? hours[i] : $"{8 + i}:00"),
-                        DurationTime = new TimeSpan(0, 1, 0, 0)
-                    });
+                        AppointmentDateTime = Convert.ToDateTime(hours != null ? hours[i] : $"{8 + i}:00"),
+                        DurationTime = new DateTime().AddHours(1)
+        });
             }
             return appointments;
         }

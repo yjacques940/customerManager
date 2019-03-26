@@ -12,6 +12,7 @@ namespace WebApi.Data
         }
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

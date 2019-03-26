@@ -7,6 +7,7 @@ namespace WebApi.Data
     public interface IWebApiContext
     {
         DbSet<Customer> Customers { get; set; }
+        DbSet<Appointment> Appointments { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;

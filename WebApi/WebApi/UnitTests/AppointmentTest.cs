@@ -28,7 +28,7 @@ namespace Tests
         [Test]
         public void IsNotOverlapping()
         {
-            newAppointment.Time = Convert.ToDateTime("11:00");
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("11:00");
             Assert.AreEqual(true, validator.IsAvailable(newAppointment,Appointments));
         }
 
@@ -41,7 +41,7 @@ namespace Tests
         [Test] //#2
         public void IsOverlapping()
         {
-            newAppointment.Time = Convert.ToDateTime("12:00");
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("12:00");
             var appointments = new AppointmentMock().GetAppointmentList(1, new List<string> { "12:00" });
             Assert.AreEqual(false, validator.IsAvailable(newAppointment, appointments));
         }
@@ -49,7 +49,7 @@ namespace Tests
         [Test] //#4
         public void CreateAnAppointmentBetweenTwoAppointments()
         {
-            newAppointment.Time = Convert.ToDateTime("9:00");
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("9:00");
             var appointments = new AppointmentMock().GetAppointmentList(2, new List<string> { "8:00","11:00" });
             Assert.AreEqual(true, validator.IsAvailable(newAppointment, appointments));
         }
@@ -57,8 +57,8 @@ namespace Tests
         [Test] //#5
         public void CreateAnAppointmentBetweenTwoAppointmentsThatFinishInNextAppointment()
         {
-            newAppointment.Time = Convert.ToDateTime("10:00");
-            newAppointment.DurationTime = new TimeSpan(0, 1, 30, 0);
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("10:00");
+            newAppointment.DurationTime = new DateTime().AddHours(1).AddMinutes(30);
             var appointments = new AppointmentMock().GetAppointmentList(2, new List<string> { "9:00", "11:00" });
             Assert.AreEqual(false, validator.IsAvailable(newAppointment, appointments));
         }
@@ -66,7 +66,7 @@ namespace Tests
         [Test] //#6
         public void CreateAnAppointmentThatStartInAnotherOneAndFinishBeforeNextAppointment()
         {
-            newAppointment.Time = Convert.ToDateTime("9:30");
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("9:30");
             var appointments = new AppointmentMock().GetAppointmentList(2, new List<string> { "9:00", "11:00" });
             Assert.AreEqual(false, validator.IsAvailable(newAppointment, appointments));
         }
@@ -74,8 +74,8 @@ namespace Tests
         [Test] //#7
         public void CreateAnAppointment()
         {
-            newAppointment.Time = Convert.ToDateTime("9:30");
-            newAppointment.DurationTime = new TimeSpan(0, 1, 30, 0);
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("9:30");
+            newAppointment.DurationTime = new DateTime().AddHours(1).AddMinutes(30);
             var appointments = new AppointmentMock().GetAppointmentList(2, new List<string> { "9:00", "10:30" });
             Assert.AreEqual(false, validator.IsAvailable(newAppointment, appointments));
         }
@@ -89,7 +89,7 @@ namespace Tests
         [Test] //#9
         public void CanCreateMaximumAppointmentForTheDay()
         {
-            newAppointment.Time = Convert.ToDateTime("17:00");
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("17:00");
             Assert.AreEqual(true,validator.IsAvailable(newAppointment,new AppointmentMock().GetAppointmentList(7)));
         }
 
@@ -102,37 +102,37 @@ namespace Tests
         [Test] //#11
         public void CanCreateAppointmentThatStartAndFinishBeforeAnotherOne()
         {
-            newAppointment.Time = Convert.ToDateTime("8:00");
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("8:00");
             Assert.AreEqual(true, validator.IsAvailable(newAppointment, new AppointmentMock().GetAppointmentList(1,new List<string> {"9:15"})));
         }
 
         [Test] //#12
         public void CreateAnAppointmentThatFinishInAnotherOne()
         {
-            newAppointment.Time = Convert.ToDateTime("8:00");
-            newAppointment.DurationTime = new TimeSpan(0, 1, 30, 0);
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("8:00");
+            newAppointment.DurationTime = new DateTime().AddHours(1).AddMinutes(30);
             Assert.AreEqual(false, validator.IsAvailable(newAppointment, new AppointmentMock().GetAppointmentList(1, new List<string> { "9:15" })));
         }
 
         [Test] //#13
         public void CreateAnAppointmentThatStartInAnotherOne()
         {
-            newAppointment.Time = Convert.ToDateTime("9:45");
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("9:45");
             Assert.AreEqual(false, validator.IsAvailable(newAppointment, new AppointmentMock().GetAppointmentList(1, new List<string> { "9:15" })));
         }
 
         [Test] //#14
         public void CreateAnAppointmentThatStartAfterAnotherOne()
         {
-            newAppointment.Time = Convert.ToDateTime("14:45");
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("14:45");
             Assert.AreEqual(true, validator.IsAvailable(newAppointment, new AppointmentMock().GetAppointmentList(1, new List<string> { "13:00" })));
         }
 
         [Test] //#15
         public void CreateAnAppointmentThatStartBeforeAndFinishAfterAnotherOne()
         {
-            newAppointment.Time = Convert.ToDateTime("12:45");
-            newAppointment.DurationTime = new TimeSpan(0,1,30,0);
+            newAppointment.AppointmentDateTime = Convert.ToDateTime("12:45");
+            newAppointment.DurationTime = new DateTime().AddHours(1).AddMinutes(30);
             Assert.AreEqual(false, validator.IsAvailable(newAppointment, new AppointmentMock().GetAppointmentList(1, new List<string> { "13:00" })));
         }
 
