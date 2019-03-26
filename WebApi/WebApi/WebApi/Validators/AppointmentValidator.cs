@@ -10,9 +10,6 @@ namespace WebApi.Validators
     public class AppointmentValidator
     {
         public const int MaximumAppointmentsCount = 8;
-        public AppointmentValidator()
-        {
-        }
 
         public bool IsAvailable(Appointment newAppointment,List<Appointment> appointments)
         {
