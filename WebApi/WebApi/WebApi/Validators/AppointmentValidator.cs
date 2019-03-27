@@ -31,7 +31,7 @@ namespace WebApi.Validators
 
         private static bool IsOverlapping(Appointment newAppointment, Appointment appointment)
         {
-            TimeRange newOnewAppointmentTime = new TimeRange(newAppointment.AppointmentDateTime, GetEndHour(newAppointment));
+            TimeRange newAppointmentTime = new TimeRange(newAppointment.AppointmentDateTime, GetEndHour(newAppointment));
             TimeRange existingAppointmentTime = new TimeRange(appointment.AppointmentDateTime, GetEndHour(appointment));
             return newOnewAppointmentTime.OverlapsWith(existingAppointmentTime);
         }
