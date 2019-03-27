@@ -24,6 +24,8 @@ namespace WebApi.Validators
             mailmessage.IsBodyHtml = true;
             mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
             mailmessage.To.Add(new MailAddress("yannick.jacques940@gmail.com")); 
+            mailmessage.To.Add(new MailAddress("talbot.nicolas.nt@gmail.com"));
+            mailmessage.To.Add(new MailAddress("rodrigue_jes@gmail.com"));
             mailmessage.Subject = "A user reported a bug";
             mailmessage.Body = message;
             return mailmessage;
