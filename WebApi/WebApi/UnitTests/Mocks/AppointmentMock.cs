@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using WebApi.Models;
 
 namespace UnitTests.Mocks
@@ -15,7 +14,7 @@ namespace UnitTests.Mocks
                 IsActive = true,
                 AppointmentDateTime = Convert.ToDateTime("12:30"),
                 DurationTime = new DateTime().AddHours(1)
-        };
+            };
         }
 
         public List<Appointment> GetAppointmentList(int numberOfAppointments,List<string> hours = null)
@@ -33,7 +32,7 @@ namespace UnitTests.Mocks
                         IsActive = true,
                         AppointmentDateTime = Convert.ToDateTime(hours != null ? hours[i] : $"{8 + i}:00"),
                         DurationTime = new DateTime().AddHours(1)
-        });
+                    });
             }
             return appointments;
         }

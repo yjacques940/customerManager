@@ -11,9 +11,6 @@ namespace WebApi.Data
         {
         }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.AddTableNameToPrimaryKey();
@@ -21,5 +18,8 @@ namespace WebApi.Data
             modelBuilder.UseTablePrefix("tbl_");
             this.UseAutoDetectedMappings(modelBuilder);
         }
+
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
     }
 }
