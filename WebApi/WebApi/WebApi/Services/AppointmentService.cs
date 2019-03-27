@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -22,9 +21,11 @@ namespace WebApi.Services
             return Context.Appointments.Where(c => c.AppointmentDateTime.Date == Convert.ToDateTime(date).Date && c.IsActive).ToList();
         }
 
-        public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers()
+        public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers
+            (CustomerPhoneNumberService customerPhoneNumberService)
         {
-            return (from appointment in Context.Appointments
+            var appointments = (
+                from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
                 where customer.IsActive && appointment.IsActive
                 select new CustomerAppointmentInformation()
@@ -32,6 +33,13 @@ namespace WebApi.Services
                     Customer = customer,
                     Appointment = appointment
                 }).AsNoTracking().ToList();
+
+            foreach (var appointment in appointments)
+            {
+                appointment.PhoneNumbers = customerPhoneNumberService
+                    .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
+            }
+            return appointments;
         }
 
         public Appointment CheckAppointmentIsAvailable(Appointment appointment)

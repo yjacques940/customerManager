@@ -1,10 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -16,8 +11,12 @@ namespace WebApi.Controllers
     [ApiController]
     public class AppointmentsController : BaseReaderController<AppointmentService, Appointment>
     {
-        public AppointmentsController(WebApiContext context, AppointmentService service) : base(service)
+        private readonly CustomerPhoneNumberService customerPhoneNumberService;
+
+        public AppointmentsController(WebApiContext context, AppointmentService service,
+            CustomerPhoneNumberService customerPhoneNumberService) : base(service)
         {
+            this.customerPhoneNumberService = customerPhoneNumberService;
         }
 
         [HttpGet, Route("GetByDate/{date}")]
@@ -29,7 +28,7 @@ namespace WebApi.Controllers
         [HttpGet, Route("AppointmentsAndCustomers")]
         public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers()
         {
-            return Service.GetAppointmentAndCustomers();
+            return Service.GetAppointmentAndCustomers(customerPhoneNumberService);
         }
 
         [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
