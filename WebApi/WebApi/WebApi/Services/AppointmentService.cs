@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -27,22 +27,19 @@ namespace WebApi.Services
             return (from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
                 where customer.IsActive && appointment.IsActive
-                    select new CustomerAppointmentInformation()
-                    {
-                        Customer = customer,
-                        Appointment = appointment
-                    }).AsNoTracking().ToList();
+                select new CustomerAppointmentInformation()
+                {
+                    Customer = customer,
+                    Appointment = appointment
+                }).AsNoTracking().ToList();
         }
 
         public Appointment CheckAppointmentIsAvailable(Appointment appointment)
         {
             var appointmentsForTheDay = Context.Appointments.Where(c =>
                 c.IsActive && appointment.AppointmentDateTime.Date == c.AppointmentDateTime.Date).ToList();
-            if (!AppointmentValidator.IsAvailable(appointment, appointmentsForTheDay))
-            {
-                appointment = null;
-            }
-            return appointment;
+
+            return AppointmentValidator.IsAvailable(appointment, appointmentsForTheDay) == false ? null : appointment;
         }
     }
 }

@@ -43,5 +43,17 @@ namespace WebApi.Controllers
                 return Conflict();
             return Ok(Service.AddOrUpdate(appointment));
         }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(200)]
+        public virtual ActionResult Delete(int id)
+        {
+            if (Service.Remove(id))
+                return NoContent();
+
+            return BadRequest();
+        }
     }
 }
