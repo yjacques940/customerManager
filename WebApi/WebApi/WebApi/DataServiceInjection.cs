@@ -12,6 +12,7 @@ namespace WebApi
         public static IServiceCollection InjectDataServices(this IServiceCollection services)
         {
             services.AddTransient<CustomerService>();
+            services.AddTransient<AppointmentService>();
             return services;
         }
     }
