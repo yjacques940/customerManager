@@ -31,9 +31,9 @@ namespace WebApi.Validators
 
         private static bool IsOverlapping(Appointment newAppointment, Appointment appointment)
         {
-            TimeRange newOne = new TimeRange(newAppointment.AppointmentDateTime, GetEndHour(newAppointment));
-            TimeRange existingAppointment = new TimeRange(appointment.AppointmentDateTime, GetEndHour(appointment));
-            return newOne.OverlapsWith(existingAppointment);
+            TimeRange newOnewAppointmentTime = new TimeRange(newAppointment.AppointmentDateTime, GetEndHour(newAppointment));
+            TimeRange existingAppointmentTime = new TimeRange(appointment.AppointmentDateTime, GetEndHour(appointment));
+            return newOnewAppointmentTime.OverlapsWith(existingAppointmentTime);
         }
 
         private static DateTime GetEndHour(Appointment appointment)
@@ -44,7 +44,7 @@ namespace WebApi.Validators
 
         public static bool HasAnAppointmentForTheDay(List<Appointment> appointments)
         {
-            return appointments.Count > 0 && appointments != null;
+            return appointments != null ? appointments.Count > 0 : false;
         }
 
         public static bool HasReachedMaximumAppointmentsForADay(List<Appointment> appointments)
