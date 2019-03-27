@@ -127,7 +127,7 @@ namespace Tests
         }
 
         [Test] //#15
-        public void CreateAnAppointmentThatStartsBeforeAndFinishAfterAnotherOne()
+        public void CreateAnAppointmentThatStartsBeforeAndEndsAfterAnotherOne()
         {
             newAppointment.AppointmentDateTime = Convert.ToDateTime("12:45");
             newAppointment.DurationTime = new DateTime().AddHours(1).AddMinutes(30);
