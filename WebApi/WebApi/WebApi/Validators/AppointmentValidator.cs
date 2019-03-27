@@ -33,7 +33,7 @@ namespace WebApi.Validators
         {
             TimeRange newAppointmentTime = new TimeRange(newAppointment.AppointmentDateTime, GetEndHour(newAppointment));
             TimeRange existingAppointmentTime = new TimeRange(appointment.AppointmentDateTime, GetEndHour(appointment));
-            return newOnewAppointmentTime.OverlapsWith(existingAppointmentTime);
+            return newAppointmentTime.OverlapsWith(existingAppointmentTime);
         }
 
         private static DateTime GetEndHour(Appointment appointment)
