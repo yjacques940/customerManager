@@ -34,7 +34,7 @@ namespace WebApi.Controllers
         [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
-        public ActionResult AddAppointment(Appointment appointment)
+        public ActionResult AddAppointment([FromBody]Appointment appointment)
         {
             if (appointment == null)
                 return BadRequest();
