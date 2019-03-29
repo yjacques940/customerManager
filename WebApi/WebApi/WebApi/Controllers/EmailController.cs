@@ -5,9 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using WebApi.Validators;
+using WebApi.DTO;
 
 namespace WebApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class EmailController : Controller
     {
         private readonly IConfiguration configuration;
@@ -17,10 +20,14 @@ namespace WebApi.Controllers
             this.configuration = configuration;
         }
 
-        [HttpPost, Route("{message}")]
-        public void SendEmailToAdmins(string message)
+        [HttpPost]
+        public ActionResult SendEmailToAdmins([FromBody]Message message)
         {
-             EmailSender.SendEmail(message,configuration);
+            if (EmailSender.SendEmail(message.MessageContent, configuration))
+                return Ok();
+
+            return BadRequest();
+
         }
     }
 }

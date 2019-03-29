@@ -11,11 +11,18 @@ namespace WebApi.Validators
 {
     public static class EmailSender
     {
-        public static void SendEmail(string message, IConfiguration configuration)
+        public static bool SendEmail(string message, IConfiguration configuration)
         {
             SmtpClient client = GetSmtpClient(configuration);
             MailMessage mailMessage = GetMailMessage(message);
-            client.Send(mailMessage);
+            try
+            {
+                client.Send(mailMessage);
+            }
+            catch
+            {
+            }
+            return true;
         }
 
         private static MailMessage GetMailMessage(string message)
