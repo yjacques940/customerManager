@@ -18,11 +18,12 @@ namespace WebApi.Validators
             try
             {
                 client.Send(mailMessage);
+                return true;
             }
             catch
             {
+                return false;
             }
-            return true;
         }
 
         private static MailMessage GetMailMessage(string message)
