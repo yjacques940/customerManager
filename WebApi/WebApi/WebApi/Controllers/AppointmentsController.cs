@@ -9,7 +9,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentsController : BaseReaderController<AppointmentService, Appointment>
+    public class AppointmentsController : BaseController<AppointmentService, Appointment>
     {
         private readonly CustomerPhoneNumberService customerPhoneNumberService;
 
