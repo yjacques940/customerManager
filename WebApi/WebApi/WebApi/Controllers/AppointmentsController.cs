@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         {
             return Service.GetAppointmentAndCustomers(customerPhoneNumberService);
         }
-
+        /*
         [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
@@ -42,17 +42,19 @@ namespace WebApi.Controllers
                 return Conflict();
             return Ok(Service.AddOrUpdate(appointment));
         }
-
-        [HttpDelete]
-        [Route("{id:int}")]
+        */
+        [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
-        public virtual ActionResult Delete(int id)
+        public ActionResult AddAppointment([FromBody]AppointmentInformation appointment)
         {
-            if (Service.Remove(id))
-                return NoContent();
+            if (appointment == null)
+                return BadRequest();
+            var newAppointment = Service.CheckAppointmentIsAvailable(appointment);
+            if(newAppointment  == null)
+                return Conflict();
 
-            return BadRequest();
+            return Ok(Service.AddOrUpdate(newAppointment));
         }
     }
 }
