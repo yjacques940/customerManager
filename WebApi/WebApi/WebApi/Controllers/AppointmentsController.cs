@@ -30,19 +30,7 @@ namespace WebApi.Controllers
         {
             return Service.GetAppointmentAndCustomers(customerPhoneNumberService);
         }
-        /*
-        [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(200)]
-        public ActionResult AddAppointment([FromBody]Appointment appointment)
-        {
-            if (appointment == null)
-                return BadRequest();
-            if (Service.CheckAppointmentIsAvailable(appointment) == null)
-                return Conflict();
-            return Ok(Service.AddOrUpdate(appointment));
-        }
-        */
+
         [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
@@ -54,6 +42,7 @@ namespace WebApi.Controllers
             if(newAppointment  == null)
                 return Conflict();
 
+            newAppointment.IsActive = true;
             return Ok(Service.AddOrUpdate(newAppointment));
         }
     }

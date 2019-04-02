@@ -27,7 +27,7 @@ namespace WebApi.Services
             var appointments = (
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
-                //where customer.IsActive && appointment.IsActive
+                where customer.IsActive && appointment.IsActive
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
@@ -39,17 +39,8 @@ namespace WebApi.Services
                 appointment.PhoneNumbers = customerPhoneNumberService
                     .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
             }
-            return appointments;
+            return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
         }
-        /*
-        public Appointment CheckAppointmentIsAvailable(Appointment appointment)
-        {
-            var appointmentsForTheDay = Context.Appointments.Where(c =>
-                c.IsActive && appointment.AppointmentDateTime.Date == c.AppointmentDateTime.Date).ToList();
-
-            return AppointmentValidator.IsAvailable(appointment, appointmentsForTheDay) == false ? null : appointment;
-        }
-        */
         public Appointment CheckAppointmentIsAvailable(AppointmentInformation appointment)
         {
             var appointmentConverted = ConvertDtoToModel(appointment);
