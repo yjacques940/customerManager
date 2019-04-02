@@ -13,14 +13,14 @@ namespace WebApi.Controllers
         {
         }
 
-        [HttpGet, Route("Login")]
+        [HttpGet, Route("Login/{email}/{password}")]
         public ActionResult<UserInformation> GetUserInformation(string email, string password)
         {
             var user = Service.GetUserInformation(email, password);
             if (user == null)
-                return Unauthorized();
+                return BadRequest();
 
-            return user;
+            return Ok(user);
         }
 
         [HttpGet, Route("HasPermission")]
