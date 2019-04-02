@@ -28,7 +28,7 @@ namespace WebApi.Services
             UserInformation userInfo = new UserInformation();
             userInfo.Id = user.Id;
             var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
-            userInfo.FullName = $"{customer.FirstName}  {customer.LastName}";
+            userInfo.FullName = $"{customer.FirstName} {customer.LastName}";
             return userInfo;
         }
     }

@@ -24,7 +24,7 @@ namespace WebApi.Controllers
             if (user == null)
                 return BadRequest();
 
-            return Ok(user);
+            return user;
         }
     }
 }

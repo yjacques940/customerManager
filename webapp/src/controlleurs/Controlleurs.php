@@ -56,18 +56,19 @@ function Login(){
         $userRegistered = new ManagerUsers;
         $email = htmlentities($_POST['email']);
         $password = htmlentities($_POST['password']);
-        $user = $userRegistered->VerifierLogin($email, $password);
-        if($donnees = $user->fetch())
+        $userAPI = CallAPI('GET', 'Users/Login/'.$email.'/'.$password);
+        if($userAPI)
         {
-            $_SESSION['username'] = $donnees['first_name'] . ' ' . $donnees['last_name'];
-            $_SESSION['userid'] = $donnees['id_user'];
+            $_SESSION['username'] = $userAPI->fullName;
+            $_SESSION['userid'] = $userAPI->id;
             About();
         }
         else
         {
+            
             require('views/login.php');
         }
-        $user->closeCursor();
+       // $user->closeCursor();
     }
     else
     {
