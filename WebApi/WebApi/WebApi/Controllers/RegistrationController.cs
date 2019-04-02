@@ -1,0 +1,32 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebApi.DTO;
+using WebApi.Models;
+using WebApi.Services;
+
+namespace WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RegistrationController : BaseController<RegistrationService, Customer>
+    {
+        public RegistrationController(RegistrationService service) : base(service)
+        {
+        }
+
+        [HttpPost, Route("Register/{registrationInformation}")]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(200)]
+        public ActionResult AddAppointment(RegistrationInformation registrationInformation)
+        {
+            if (registrationInformation == null)
+                return BadRequest();
+            if (Service.RegisterNewUser(registrationInformation) == null)
+                return Conflict();
+            return Ok();
+        }
+    }
+}

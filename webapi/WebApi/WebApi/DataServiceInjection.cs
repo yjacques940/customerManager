@@ -13,6 +13,7 @@ namespace WebApi
             services.AddTransient<UserService>();
             services.AddTransient<PhoneTypeService>();
             services.AddTransient<PermissionService>();
+            services.AddTransient<RegistrationService>();
             return services;
         }
     }
