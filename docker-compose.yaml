@@ -1,11 +1,11 @@
-# Placer ce fichier dans un contexte plus haut, donc à côté du dossier customerManager et du site web.
+﻿# Placer ce fichier dans un contexte plus haut, donc à côté du dossier customerManager et du site web.
 
 version: '2.4'
 services:
     webapp:
         image: httpd:2.4-apache
         build:
-            context: carlmelanie-masso-webApp/webapp/
+            context: ./webapp/
             dockerfile: Dockerfile
         environment:
           - API_URL=test #'http://localhost:63212/api/'
@@ -16,13 +16,13 @@ services:
         - '443:443'
         volumes:
         - type: bind
-          source: ./carlmelanie-masso-webApp/webapp/src
+          source: ./webapp/src
           target: /var/www/html
     webapi:
         image: alpine:3.9
         build:
-            context: customerManager/WebApi/WebApi/
-            dockerfile: WebApi/Dockerfile
+            context: ./webapi/WebApi/
+            dockerfile: ./WebApi/Dockerfile
         networks:
         - local
         ports:
@@ -31,7 +31,7 @@ services:
         container_name: database
         image: mysql:8
         build:
-            context: customerManager/database/
+            context: ./database/
             dockerfile: Dockerfile
         environment:
         - MYSQL_ROOT_PASSWORD=admin
