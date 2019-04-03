@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -17,9 +18,10 @@ namespace WebApi.Validators
         {
             SmtpClient client = GetSmtpClient(configuration);
             MailMessage mailMessage = GetMailMessage(message);
+            MailMessage MailMessageForConfirmAppointment = GetMailMessageToConfirmAppointment("exeinformatiquedev@gmail.com", Convert.ToDateTime("2019-01-31 16:14:23"));
             try
             {
-                client.Send(mailMessage);
+                client.Send(MailMessageForConfirmAppointment);
                 return true;
             }
             catch
@@ -28,19 +30,36 @@ namespace WebApi.Validators
             }
         }
 
+        private static MailMessage GetMailMessageToConfirmAppointment(string emailTo, DateTime AppointmentDateTime)
+        {
+            using (StreamReader reader = File.OpenText("EmailTemplate/index.html"))
+            {
+                string newHtml = "";
+                MailMessage mailmessage = new MailMessage();
+                mailmessage.IsBodyHtml = true;
+                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                mailmessage.To.Add(new MailAddress(emailTo));
+                mailmessage.Subject = "Confirmation de rendez-vous";
+
+                var htmlFile = reader.ReadToEnd();
+                newHtml = htmlFile.Replace("[DateOfTheDayx]", DateTime.Now.Date.ToString("yyyy/MM/dd"));
+                newHtml = newHtml.Replace("[TimeOfTheDayx]", DateTime.Now.ToShortTimeString().ToString());
+                newHtml = newHtml.Replace("[AppointmentHourx]", AppointmentDateTime.ToShortTimeString());
+                newHtml = newHtml.Replace("[AppointmentDatex]", AppointmentDateTime.Date.ToString("yyyy/MM/dd"));
+                mailmessage.Body = newHtml;
+                return mailmessage;
+            }
+        }
+
         private static MailMessage GetMailMessage(string message)
         {
-            using (StreamReader reader = File.OpenText("../WebApi/markup/index.html"))
-            {
                 MailMessage mailmessage = new MailMessage();
                 mailmessage.IsBodyHtml = true;
                 mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
                 mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
                 mailmessage.Subject = "A user reported a bug";
-                // mailmessage.Body = message;
-                mailmessage.Body = reader.ReadToEnd();
+                mailmessage.Body = message;
                 return mailmessage;
-            }
         }
 
         private static SmtpClient GetSmtpClient(IConfiguration configuration)
