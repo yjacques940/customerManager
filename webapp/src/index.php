@@ -4,13 +4,13 @@ try
 {
     if (isset($_GET['action'])) {
     switch ($_GET['action']){
-        case 'inscription': 
+        case 'inscription':
             Inscription();
-            break;  
-        case 'home': 
+            break;
+        case 'home':
             Home();
             break;
-        case 'login': 
+        case 'login':
             Login();
             break;
         case 'about':
@@ -26,13 +26,23 @@ try
             unset($_SESSION['userid']);
             Home();
             break;
-        case 'api' :
-            Api();
         case 'report-bug' :
             ReportBug();
             break;
         case 'send_bug' :
             SendBug();
+            break;
+        case 'appointmentCreator' :
+            AppointmentCreator();
+            break;
+        case 'appointments':
+            Appointments();
+            break;
+        case 'customers' :
+            Customers();
+            break;
+        case 'makeAppointment':
+            MakeAppointment();
             break;
         default :
             Home();

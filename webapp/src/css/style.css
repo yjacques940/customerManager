@@ -240,13 +240,13 @@ nav ul li {
 
 nav ul li a {
   color: #fff;
-  text-shadow: -2px 0 #444, 0 2px #444, 2px 0 #444, 0 -2px #444;
+  text-shadow: -1px 0 #444, 0 1px #444, 1px 0 #444, 0 -1px #444;
   text-transform: capitalize;
   font-weight: bold;
   font-size: 18px;
   letter-spacing: 1px;
   background: transparent;
-  padding: 7px 20px;
+  padding: 2px 8px;
   display: inline-block;
   transition: 0.5s all;
   -webkit-transition: 0.5s all;

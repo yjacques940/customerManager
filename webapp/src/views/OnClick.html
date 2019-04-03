@@ -1,0 +1,66 @@
+<style>
+  .search-header {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search-bar {
+    min-width: 200px;
+    margin-right: 10%;
+  }
+  table .activeRow {
+    background-color: #9c9 !important;
+  }
+  .col-sm {
+    border: .3px solid;
+  }
+</style>
+<script type="text/javascript">
+    $('#tbl_customers').on('click', '.clickable-row', function(event) {
+        $(this).addClass('activeRow').siblings().removeClass('activeRow');
+    });
+    $(document).ready(function(){
+        $('#frm_newAppointment').submit(function(e){
+            e.preventDefault();
+            $('#btn_makeAppointment').prop("disabled", true);
+            $('#btn_makeAppointment').append('  <span class="fa fa-cog fa-spin"></span>');
+            var client = document.getElementsByClassName('activeRow')[0];
+            if (!client){
+                alert('Veuillez sélectionner un client');
+                $('#btn_makeAppointment').prop("disabled", false);
+                $('#btn_makeAppointment').html($('#btn_makeAppointment').val());
+            } else {
+                var appointmentDate = document.getElementById('appointmentDate').value;
+                var appointmentTime = document.getElementById('appointmentTime').value;
+                var appointmentDuration = document.getElementById('appointmentDuration').value;
+                if (!appointmentLength){
+                    alert('Veuillez sélectionner la durée du rendez-vous');
+                    $('#btn_makeAppointment').prop("disabled", false);
+                    $('#btn_makeAppointment').html($('#btn_makeAppointment').val());
+                } else {
+                    $.ajax({
+                        url: '?action=makeAppointment',
+                        type: "post",
+                        data:{
+                            appointmentDate: appointmentDate,
+                            appointmentTime: appointmentTime,
+                            appointmentDuration: appointmentDuration,
+                            idCustomer: client.id
+                        },
+                        success:function(output) {
+                            if (output != 'success'){
+                                $('#btn_makeAppointment').prop("disabled", false);
+                                $('#submitResult').html(output);
+                                $('#btn_makeAppointment').html('Prendre un rendez-vous');
+                            } else {
+                                $('#submitResult').html('');
+                                $('#btn_makeAppointment').html('Réservé avec succès!');
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>

@@ -21,6 +21,7 @@
   "Company-Name": "Carl et Mélanie Orthothérapie",
   "Company-Phone": "(418) 774-0246",
   "Company-Rights": "Tous droits réservés",
+  "CustomersList": "Liste des clients",
   "Footer-Text-Address": "Adresse",
   "Footer-Text-Email": "Courriel",
   "Footer-Text-Phone": "Téléphone",
@@ -54,8 +55,11 @@
   "Login-Title": "Connexion",
   "Report-Bug-Instructions" : "Si vous avez rencontré des bogues sur le site web, veuillez nous expliquer clairement les étapes que vous avez effectuées pour déclencher celui-ci et le résultat que vous souhaitiez obtenir.",
   "PageTitle-About": "À propos",
+  "PageTitle-Appointments": "Rendez-vous",
   "PageTitle-Home": "Accueil",
   "PageTitle-Login": "Espace Client",
+  "PageTitle-AppointmentCreator" : "Création de rendez-vous",
+  "searchClient" : "Rechercher un client",
   "PageTitle-Inscription": "S'inscrire",
   "PasswordUpdate-ConfirmPassword": "Confirmation du nouveau mot de passe",
   "PasswordUpdate-Fail": "Les informations entrées sont invalides",
@@ -84,5 +88,16 @@
   "Send" : "Envoyer",
   "Email-Send-Admins": "Le courriel a été envoyé aux administrateurs",
   "Validate-Error-ValidPhone": "Veuillez entrer un numéro valide",
-  "Website-Credits": "Gracieuseté de Yannick Jacques, Jessy Rodrigue et Nicolas Talbot"
+  "Website-Credits": "Gracieuseté de Yannick Jacques, Jessy Rodrigue et Nicolas Talbot",
+  "PageTitle-NewAppointment":"Nouveau rendez-vous",
+  "CreateAppointment-DetailsAppointment-Text":"Détais du rendez-vous",
+  "CreateAppointment-DetailsCustomer-Text":"Sélectionnez un client",
+  "CreateAppointment-MakeAppointment":"Prendre un rendez-vous",
+  "Appointment-Date":"Date",
+  "Appointment-Time":"Heure",
+  "Appointment-Duration":"Durée",
+  "Appointment-Customer":"Client",
+  "CreateAppointment-OneHour":"Une heure",
+  "CreateAppointment-OneHourAndHalf":"Une heure trente minutes"
+
 }
