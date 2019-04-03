@@ -27,7 +27,6 @@ namespace WebApi.Controllers
                 return Ok();
 
             return BadRequest();
-
         }
     }
 }

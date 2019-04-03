@@ -18,7 +18,23 @@ namespace WebApi.Validators
         {
             SmtpClient client = GetSmtpClient(configuration);
             MailMessage mailMessage = GetMailMessage(message);
-            MailMessage MailMessageForConfirmAppointment = GetMailMessageToConfirmAppointment("exeinformatiquedev@gmail.com", Convert.ToDateTime("2019-01-31 16:14:23"));
+            
+            try
+            {
+                client.Send(mailMessage);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool SendConfirmationEmail(string userEmail,DateTime appointment, IConfiguration configuration)
+        {
+            SmtpClient client = GetSmtpClient(configuration);
+            MailMessage MailMessageForConfirmAppointment = GetMailMessageToConfirmAppointment(userEmail, appointment);
+
             try
             {
                 client.Send(MailMessageForConfirmAppointment);

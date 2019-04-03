@@ -1,9 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Services;
+using WebApi.Validators;
 
 namespace WebApi.Controllers
 {
@@ -11,12 +18,14 @@ namespace WebApi.Controllers
     [ApiController]
     public class AppointmentsController : BaseReaderController<AppointmentService, Appointment>
     {
-        private readonly CustomerPhoneNumberService customerPhoneNumberService;
+ 	    private readonly CustomerPhoneNumberService customerPhoneNumberService;
+		private readonly IConfiguration configuration;
 
-        public AppointmentsController(WebApiContext context, AppointmentService service,
-            CustomerPhoneNumberService customerPhoneNumberService) : base(service)
+        public AppointmentsController(WebApiContext context, AppointmentService service) : base(service)
+            CustomerPhoneNumberService customerPhoneNumberService, IConfiguration configuration) : base(service)
         {
-            this.customerPhoneNumberService = customerPhoneNumberService;
+			this.customerPhoneNumberService = customerPhoneNumberService;
+			this.configuration = configuration;
         }
 
         [HttpGet, Route("GetByDate/{date}")]
@@ -38,12 +47,26 @@ namespace WebApi.Controllers
         {
             if (appointment == null)
                 return BadRequest();
-            var newAppointment = Service.CheckAppointmentIsAvailable(appointment);
-            if(newAppointment  == null)
-                return Conflict();
+			var newAppointment = Service.CheckAppointmentIsAvailable(appointment);
+            if (newAppointment == null)
+			    return Conflict();
+			newAppointment.IsActive = true;
+            var appointmentAdded = Service.AddOrUpdate(newAppointment);
+            var user = Service.GetUser(appointmentAdded);
+            EmailSender.SendConfirmationEmail(user.Email, appointment.AppointmentDateTime, configuration);
+            return Ok(appointmentAdded);
+        }
 
-            newAppointment.IsActive = true;
-            return Ok(Service.AddOrUpdate(newAppointment));
+        [HttpDelete]
+        [Route("{id:int}")]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(200)]
+        public virtual ActionResult Delete(int id)
+        {
+            if (Service.Remove(id))
+                return NoContent();
+
+            return BadRequest();
         }
     }
 }
