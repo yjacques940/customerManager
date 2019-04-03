@@ -87,7 +87,7 @@ CREATE TABLE tbl_phone_type(
 
 CREATE TABLE tbl_phone_number(
         id_phone_number Int  Auto_increment  NOT NULL ,
-        phonenumber    Varchar (15) NOT NULL ,
+        phone		    Varchar (15) NOT NULL ,
         extension       Varchar (10) ,
         is_active       Bool NOT NULL DEFAULT 1 ,
         id_phone_type   Int NOT NULL
@@ -266,7 +266,7 @@ INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id
 ('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),
 ('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2');
 
-INSERT INTO tbl_phone_number (phonenumber, id_phone_type) VALUES
+INSERT INTO tbl_phone_number (phone, id_phone_type) VALUES
 ('(418) 774-3835', 1),
 ('(418) 588-6211', 1),
 ('(418) 230-5469', 3),
@@ -276,23 +276,23 @@ INSERT INTO tbl_phone_number (phonenumber, id_phone_type) VALUES
 INSERT INTO tbl_customer_phone_number (id_customer, id_phone_number) VALUES
 (
 	(select id_customer from tbl_customer where first_name = 'Jessy'),
-    (select id_phone_number from tbl_phone_number where phonenumber = '(418) 774-3835')
+    (select id_phone_number from tbl_phone_number where phone = '(418) 774-3835')
 ),
 (
 	(select id_customer from tbl_customer where first_name = 'Jessy'),
-    (select id_phone_number from tbl_phone_number where phonenumber = '(418) 313-8034')
+    (select id_phone_number from tbl_phone_number where phone = '(418) 313-8034')
 ),
 (
 	(select id_customer from tbl_customer where first_name = 'Yannick'),
-    (select id_phone_number from tbl_phone_number where phonenumber = '(418) 588-6211')
+    (select id_phone_number from tbl_phone_number where phone = '(418) 588-6211')
 ),
 (
 	(select id_customer from tbl_customer where first_name = 'Yannick'),
-    (select id_phone_number from tbl_phone_number where phonenumber = '(418) 230-5469')
+    (select id_phone_number from tbl_phone_number where phone = '(418) 230-5469')
 ),
 (
 	(select id_customer from tbl_customer where first_name = 'Yannick'),
-    (select id_phone_number from tbl_phone_number where phonenumber = '(418) 420-6969')
+    (select id_phone_number from tbl_phone_number where phone = '(418) 420-6969')
 );
 
 INSERT INTO tbl_appointment (appointment_date_time, duration_time, id_customer) VALUES
