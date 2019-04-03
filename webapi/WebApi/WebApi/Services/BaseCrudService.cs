@@ -20,7 +20,10 @@ namespace WebApi.Services
             if (isExistRecord)
                 Context.Set<T>().Update(entity);
             else
+            {
+                entity.IsActive = true;
                 Context.Set<T>().Add(entity);
+            }
 
             Context.SaveChanges();
             return entity.Id;

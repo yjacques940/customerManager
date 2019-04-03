@@ -31,6 +31,7 @@ namespace WebApi.Services
                 Context.SaveChanges();
                 user.IdCustomer = customer.Id;
                 Context.Add(user);
+                Context.SaveChanges();
                 foreach (var phone in phoneNumbers)
                 {
                     Context.Add(phone);

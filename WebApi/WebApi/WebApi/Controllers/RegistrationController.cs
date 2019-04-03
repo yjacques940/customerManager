@@ -20,13 +20,11 @@ namespace WebApi.Controllers
         [HttpPost, Route("Register/{registrationInformation}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
-        public ActionResult AddAppointment(RegistrationInformation registrationInformation)
+        public ActionResult RegisterNewUser([FromBody]RegistrationInformation registrationInformation)
         {
             if (registrationInformation == null)
                 return BadRequest();
-            if (Service.RegisterNewUser(registrationInformation) == null)
-                return Conflict();
-            return Ok();
+            return Ok(Service.RegisterNewUser(registrationInformation) == null);
         }
     }
 }
