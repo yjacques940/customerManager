@@ -14,6 +14,7 @@ namespace WebApi
             services.AddTransient<PhoneTypeService>();
             services.AddTransient<PermissionService>();
             services.AddTransient<RegistrationService>();
+            services.AddTransient<PersonalInformationService>();
             return services;
         }
     }
