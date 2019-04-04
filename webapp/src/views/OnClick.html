@@ -34,7 +34,7 @@
                 var appointmentDate = document.getElementById('appointmentDate').value;
                 var appointmentTime = document.getElementById('appointmentTime').value;
                 var appointmentDuration = document.getElementById('appointmentDuration').value;
-                if (!appointmentLength){
+                if (!appointmentDuration){
                     alert('Veuillez sélectionner la durée du rendez-vous');
                     $('#btn_makeAppointment').prop("disabled", false);
                     $('#btn_makeAppointment').html($('#btn_makeAppointment').val());
