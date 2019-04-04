@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>
-      <?php echo localize('Company-Name') . " - " . $titre; ?>
+      <?php echo localize('Company-Name') . " - " . $title; ?>
     </title>
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
       <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -32,12 +32,16 @@
             <li class="mx-lg-3 mx-md-2 my-md-0 my-1">
               <a href="index.php?action=about"><?php echo localize('PageTitle-About'); ?></a>
             </li>
+              <li>
+                  <a href="?action=appointments"><?php echo localize('PageTitle-Appointments'); ?></a>
+              </li>
             <?php
               if (!isset($_SESSION['username'])) {
             ?>
             <li>
               <a href="index.php?action=login"><?php echo localize('PageTitle-Login'); ?></a>
             </li>
+
             <?php
               } else {
             ?>

@@ -87,7 +87,7 @@ CREATE TABLE tbl_phone_type(
 
 CREATE TABLE tbl_phone_number(
         id_phone_number Int  Auto_increment  NOT NULL ,
-        phone_number    Varchar (15) NOT NULL ,
+        phone		    Varchar (15) NOT NULL ,
         extension       Varchar (10) ,
         is_active       Bool NOT NULL DEFAULT 1 ,
         id_phone_type   Int NOT NULL
@@ -102,9 +102,11 @@ CREATE TABLE tbl_phone_number(
 #------------------------------------------------------------
 
 CREATE TABLE tbl_customer_phone_number(
+        id_customer_phone_number Int  Auto_increment  NOT NULL ,
+        is_active       Bool NOT NULL DEFAULT 1 ,
         id_phone_number Int NOT NULL ,
         id_customer     Int NOT NULL
-	,CONSTRAINT tbl_customer_phone_number_PK PRIMARY KEY (id_phone_number,id_customer)
+	,CONSTRAINT tbl_customer_phone_number_PK PRIMARY KEY (id_customer_phone_number, id_phone_number,id_customer)
 
 	,CONSTRAINT tbl_customer_phone_number_tbl_phone_number_FK FOREIGN KEY (id_phone_number) REFERENCES tbl_phone_number(id_phone_number)
 	,CONSTRAINT tbl_customer_phone_number_tbl_customer0_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
@@ -257,10 +259,41 @@ INSERT INTO tbl_state (code,name,id_country) VALUES
 #------------------------------------------------------------
 
 INSERT INTO tbl_address (address, city_name, zip_code, id_state) VALUES
-('123, rue fictive', 'Québec', 'H0H0H0', (select id_state from tbl_state where name = 'Québec'));
+('382, rang saint-joseph', 'Beauceville', 'G5X2C8', (select id_state from tbl_state where name = 'Québec')),
+('13140, Boul. Lacroix', 'Saint-Georges', 'G5Y6P8', (select id_state from tbl_state where name = 'Québec'));
 
 INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id_address) VALUES
-('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1');
+('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),
+('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2');
+
+INSERT INTO tbl_phone_number (phone, id_phone_type) VALUES
+('(418) 774-3835', 1),
+('(418) 588-6211', 1),
+('(418) 230-5469', 3),
+('(418) 420-6969', 2),
+('(418) 313-8034', 3);
+
+INSERT INTO tbl_customer_phone_number (id_customer, id_phone_number) VALUES
+(
+	(select id_customer from tbl_customer where first_name = 'Jessy'),
+    (select id_phone_number from tbl_phone_number where phone = '(418) 774-3835')
+),
+(
+	(select id_customer from tbl_customer where first_name = 'Jessy'),
+    (select id_phone_number from tbl_phone_number where phone = '(418) 313-8034')
+),
+(
+	(select id_customer from tbl_customer where first_name = 'Yannick'),
+    (select id_phone_number from tbl_phone_number where phone = '(418) 588-6211')
+),
+(
+	(select id_customer from tbl_customer where first_name = 'Yannick'),
+    (select id_phone_number from tbl_phone_number where phone = '(418) 230-5469')
+),
+(
+	(select id_customer from tbl_customer where first_name = 'Yannick'),
+    (select id_phone_number from tbl_phone_number where phone = '(418) 420-6969')
+);
 
 INSERT INTO tbl_appointment (appointment_date_time, duration_time, id_customer) VALUES
 ( '1000-01-01 09:00:00', '1000-01-01 01:00:00', 1),

@@ -33,5 +33,5 @@ function CallAPI($method, $url, $data = false)
     if(!$result){die("Connection Failure");}
     curl_close($curl);
 
-    return $result;
+    return json_decode($result);
 }
