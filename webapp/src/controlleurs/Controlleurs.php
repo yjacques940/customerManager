@@ -254,6 +254,18 @@ function SendBug()
     }
 }
 
+function NewAppointments(){
+    $newAppointments = CallAPI('GET','Appointments/NewAppointments');
+    if($newAppointments)
+    {
+        require('views/new_appointments.php');
+    }
+    else
+    {
+        require('views/appointments.php');
+    }
+}
+
 function Appointments(){
   require('views/appointments.php');
 }

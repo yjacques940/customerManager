@@ -41,6 +41,27 @@ namespace WebApi.Services
             }
             return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
         }
+
+        internal ActionResult<IEnumerable<CustomerAppointmentInformation>> GetNewAppointments(CustomerPhoneNumberService customerPhoneNumberService)
+        {
+            var appointments = (
+                from appointment in Context.Appointments
+                join customer in Context.Customers on appointment.IdCustomer equals customer.Id
+                where customer.IsActive && appointment.IsActive && appointment.IsNew
+                select new CustomerAppointmentInformation()
+                {
+                    Customer = customer,
+                    Appointment = appointment
+                }).AsNoTracking().ToList();
+
+            foreach (var appointment in appointments)
+            {
+                appointment.PhoneNumbers = customerPhoneNumberService
+                    .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
+            }
+            return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
+        }
+
         public Appointment CheckAppointmentIsAvailable(AppointmentInformation appointment)
         {
             var appointmentConverted = ConvertDtoToModel(appointment);

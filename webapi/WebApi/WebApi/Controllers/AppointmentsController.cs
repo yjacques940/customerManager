@@ -36,6 +36,12 @@ namespace WebApi.Controllers
             return Service.GetAppointmentAndCustomers(customerPhoneNumberService);
         }
 
+        [HttpGet, Route("NewAppointments")]
+        public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetNewAppointments()
+        {
+            return Service.GetNewAppointments(customerPhoneNumberService);
+        }
+
         [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
@@ -46,8 +52,9 @@ namespace WebApi.Controllers
                 var newAppointment = Service.CheckAppointmentIsAvailable(appointment);
             if (newAppointment == null)
                 return Conflict();
+			newAppointment.IsNew = true;
             newAppointment.IsActive = true;
-            var appointmentAdded = Service.AddOrUpdate(newAppointment);
+ 			var appointmentAdded = Service.AddOrUpdate(newAppointment);
             var user = Service.GetUser(appointmentAdded);
             if(user != null)
                 EmailSender.SendConfirmationEmail(user.Email,

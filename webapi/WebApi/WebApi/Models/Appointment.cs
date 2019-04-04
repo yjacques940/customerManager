@@ -10,5 +10,6 @@ namespace WebApi.Models
         public DateTime AppointmentDateTime { get; set; }
         public DateTime DurationTime { get; set; }
         public int IdCustomer { get; set; }
+        public bool IsNew { get; set; }
     }
 }
