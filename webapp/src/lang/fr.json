@@ -100,5 +100,6 @@
   "CreateAppointment-OneHour":"Une heure",
   "CreateAppointment-OneHourAndHalf":"Une heure trente minutes",
   "PageTitle-NewAppointments" :"Nouveaux rendez-vous",
-  "Button-ShowAppointments" : "Afficher tous les rendez-vous"
+  "Button-ShowAppointments" : "Afficher tous les rendez-vous",
+  "Appointment-ChangeNewStatus" : "A été vu"
 }

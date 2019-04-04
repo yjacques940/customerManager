@@ -2,19 +2,29 @@
 $title = localize('PageTitle-NewAppointments');
 ob_start();
 ?>
-
+<script language="JavaScript">
+    function checkAll(source) {
+            checkboxes = document.getElementsByName('checkbox_new');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+            }
+    }
+</script>
 <div class=" mx-auto" style="margin-top: 30px; width: 90%">
+    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('PageTitle-NewAppointments') ?></h3>
         <a href="?action=appointments" class="btn btn-success" style="float:right; margin-bottom: 10px;">
             <i class="fa fa-lg" ></i> <?php echo localize('Button-ShowAppointments'); ?>
         </a>
 
-    <table class="table table-sm table-striped table-hover" id="tbl_appointments">
+    <table class="table table-sm table-striped table-hover table-bordered" id="tbl_appointments">
         <thead class="thead-dark">
-        <tr>
+        <tr class="text-center">
             <th scope="col"><?php echo localize('Appointment-Date'); ?></th>
             <th scope="col"><?php echo localize('Appointment-Time'); ?></th>
             <th scope="col"><?php echo localize('Appointment-Duration'); ?></th>
             <th scope="col"><?php echo localize('Appointment-Customer'); ?></th>
+            <th scope="col"><?php echo localize('Appointment-ChangeNewStatus'); ?>
+                <input onClick="checkAll(this)" type="checkbox" ></th>
         </tr>
         </thead>
         <tbody>
@@ -55,6 +65,9 @@ ob_start();
                     }
                     ?>
                 </td>
+                <td class="align-middle text-center">
+                   <input id="<?php echo $appointment->appointment->id ?>" name="checkbox_new" type="checkbox" style="width:32px;height: 32px;">
+                </td>
             </tr>
             <?php
             $count++;
@@ -67,5 +80,5 @@ ob_start();
 $contenu = ob_get_clean();
 $onHomePage = false;
 require 'gabarit.php';
-require 'OnClick.html'
+require 'OnClick.html';
 ?>

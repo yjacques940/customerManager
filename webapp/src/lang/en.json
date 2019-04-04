@@ -99,5 +99,6 @@
   "CreateAppointment-OneHour":"One hour",
   "CreateAppointment-OneHourAndHalf":"One hour thirty minutes",
   "PageTitle-New-Appointments" :"New appointments",
-  "Button-ShowAppointments" : "Show all appointments"
+  "Button-ShowAppointments" : "Show all appointments",
+  "Appointment-ChangeNewStatus" : "seen"
 }
