@@ -41,6 +41,11 @@ namespace WebApi.Services
            return SaveCustomerPhoneNumbers(phoneNumbers,customer);
         }
 
+        internal object UpdateUser(RegistrationInformation registrationInformation)
+        {
+            throw new NotImplementedException();
+        }
+
         private int SaveCustomerPhoneNumbers(List<PhoneNumber> phoneNumbers, Customer customer)
         {
             foreach (var phone in phoneNumbers)

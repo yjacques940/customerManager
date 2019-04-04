@@ -12,21 +12,31 @@ $titre = localize('Personal-Title');
     $phone3 = array('','','0');
     
 if(isset($_SESSION['userid'])){
-    var_dump($personalInformation);
     $address = $personalInformation->physicalAddress->physicalAddress;
     $city = $personalInformation->physicalAddress->cityName;
     $zipcode = $personalInformation->physicalAddress->zipCode;
     $idProvince = $personalInformation->physicalAddress->idState;
     $occupation = $personalInformation->customer->occupation;
-    $phone1[0] = $personalInformation->phoneNumbers[0]->phone;
-    $phone1[1] = $personalInformation->phoneNumbers[0]->extension;
-    $phone1[2] = $personalInformation->phoneNumbers[0]->idPhoneType;
-    $phone2[0] = $personalInformation->phoneNumbers[1]->phone;
-    $phone2[1] = $personalInformation->phoneNumbers[1]->extension;
-    $phone2[2] = $personalInformation->phoneNumbers[1]->idPhoneType;
-    $phone3[0] = $personalInformation->phoneNumbers[2]->phone;
-    $phone3[1] = $personalInformation->phoneNumbers[2]->extension;
-    $phone3[2] = $personalInformation->phoneNumbers[2]->idPhoneType;
+    foreach($personalInformation->phoneNumbers as $phoneNumber){
+        switch($cpt){
+            case 0:
+                $phone1[0] = $personalInformation->phoneNumbers[0]->phone;
+                $phone1[1] = $personalInformation->phoneNumbers[0]->extension;
+                $phone1[2] = $personalInformation->phoneNumbers[0]->idPhoneType;
+            break;
+            case 1:
+                $phone2[0] = $personalInformation->phoneNumbers[1]->phone;
+                $phone2[1] = $personalInformation->phoneNumbers[1]->extension;
+                $phone2[2] = $personalInformation->phoneNumbers[1]->idPhoneType;
+            break;
+            case 2:
+                $phone3[0] = $personalInformation->phoneNumbers[2]->phone;
+                $phone3[1] = $personalInformation->phoneNumbers[2]->extension;
+                $phone3[2] = $personalInformation->phoneNumbers[2]->idPhoneType;
+            break;
+        }
+        $cpt++;
+    }
 }
  ?>
 
