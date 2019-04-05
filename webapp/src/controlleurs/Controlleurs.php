@@ -255,7 +255,8 @@ function SendBug()
 }
 
 function NewAppointments(){
-    $newAppointments = CallAPI('GET','Appointments/NewAppointments');
+    $result = CallAPI('GET','Appointments/NewAppointments');
+    $newAppointments = $result['response'];
     if($newAppointments)
     {
         require('views/new_appointments.php');
