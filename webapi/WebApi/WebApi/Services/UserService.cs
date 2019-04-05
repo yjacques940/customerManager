@@ -29,6 +29,12 @@ namespace WebApi.Services
             var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
             userInfo.FullName = $"{customer.FirstName} {customer.LastName}";
             return userInfo;
+		}
+		
+        public bool CheckIfUserHasPermission(int idUser, string permission)
+        {
+
+            return (Context.User.Where(c => c.Role & Context.Permission.First(x => x.Name == permission).Bit));
         }
 
         public object GetUserWithUserId(int userId, string password)

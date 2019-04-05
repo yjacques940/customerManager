@@ -25,6 +25,12 @@ namespace WebApi.Controllers
                 return Unauthorized();
 
             return user;
+		}
+		
+        [HttpGet, Route("HasPermission")]
+        public ActionResult UserHasPermission(int idUser, string permission)
+        {
+            return Ok(Service.CheckIfUserHasPermission(idUser, permission));
         }
 
         [HttpGet, Route("CheckPassword")]
