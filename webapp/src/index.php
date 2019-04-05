@@ -24,6 +24,7 @@ try
             break;
         case 'logout':
             unset($_SESSION['userid']);
+            unset($_SESSION['username']);
             Home();
             break;
         case 'report-bug' :

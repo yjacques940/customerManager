@@ -10,6 +10,7 @@ namespace WebApi.Data
         DbSet<Appointment> Appointments { get; set; }
         DbSet<PhoneNumber> PhoneNumbers { get; set; }
         DbSet<CustomerPhoneNumber> CustomerPhoneNumbers { get; set; }
+        DbSet<User> Users { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;

@@ -54,20 +54,21 @@ function Login(){
     if(isset($_POST['email'])){
         unset($_SESSION['email']);
         $userRegistered = new ManagerUsers;
-        $email = htmlentities($_POST['email']);
-        $password = htmlentities($_POST['password']);
-        $user = $userRegistered->VerifierLogin($email, $password);
-        if($donnees = $user->fetch())
+        $userIdentification = [
+            "email" => htmlentities($_POST['email']),
+            "password" => htmlentities($_POST['password'])
+        ];
+        $userAPI = CallAPI('GET', 'Users/Login', $userIdentification);
+        if($userAPI['statusCode'] == 200)
         {
-            $_SESSION['username'] = $donnees['first_name'] . ' ' . $donnees['last_name'];
-            $_SESSION['userid'] = $donnees['id_user'];
+            $_SESSION['username'] = $userAPI['response']->fullName;
+            $_SESSION['userid'] = $userAPI['response']->id;
             About();
         }
         else
         {
             require('views/login.php');
         }
-        $user->closeCursor();
     }
     else
     {
