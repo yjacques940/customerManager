@@ -10,7 +10,6 @@ using WebApi.Models;
 namespace WebApi.Services
 {
     public class UserService : BaseCrudService<User>
-
     {
         public UserService(IWebApiContext context) : base(context)
         {
