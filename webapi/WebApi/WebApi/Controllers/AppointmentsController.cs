@@ -49,6 +49,7 @@ namespace WebApi.Controllers
             newAppointment.IsActive = true;
             var appointmentAdded = Service.AddOrUpdate(newAppointment);
             var user = Service.GetUser(appointmentAdded);
+            if(user != null)
             EmailSender.SendConfirmationEmail(user.Email, Convert.ToDateTime(appointment.AppointmentDateTime), configuration);
             return Ok(appointmentAdded);
         }
