@@ -48,5 +48,11 @@ namespace WebApi.Controllers
 
             return BadRequest();
         }
+
+        [HttpPost, Route("UpdateCustomerEmail/{id}/{email}")]
+        public ActionResult UpdateCustomerEmail(int id, string email)
+        {
+            return Ok(Service.ChangeCustomerEmail(id, email));
+        }
     }
 }

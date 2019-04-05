@@ -46,5 +46,16 @@ namespace WebApi.Services
             //Renvoyer le id du customer qui a été assigné : customer.Id
             return customer.IdAddress;
         }
+
+        internal object ChangeCustomerEmail(int id, string email)
+        {
+            User user = (from c in Context.Users where c.Id == id select c).First();
+            if(user != null)
+            {
+                user.Email = email;
+                Context.SaveChanges();
+            }
+            return user;
+        }
     }
 }
