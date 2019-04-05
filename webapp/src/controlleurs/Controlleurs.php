@@ -54,13 +54,15 @@ function Login(){
     if(isset($_POST['email'])){
         unset($_SESSION['email']);
         $userRegistered = new ManagerUsers;
-        $email = htmlentities($_POST['email']);
-        $password = htmlentities($_POST['password']);
-        $userAPI = CallAPI('GET', 'Users/Login/'.$email.'/'.$password);
-        if($userAPI)
+        $userIdentification = [
+            "email" => htmlentities($_POST['email']),
+            "password" => htmlentities($_POST['password'])
+        ];
+        $userAPI = CallAPI('GET', 'Users/Login', $userIdentification);
+        if($userAPI['errorCode'] == 200)
         {
-            $_SESSION['username'] = $userAPI->fullName;
-            $_SESSION['userid'] = $userAPI->id;
+            $_SESSION['username'] = $userAPI['userAPI']->fullName;
+            $_SESSION['userid'] = $userAPI['userAPI']->id;
             About();
         }
         else

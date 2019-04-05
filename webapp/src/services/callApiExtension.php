@@ -30,8 +30,10 @@ function CallAPI($method, $url, $data = false)
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
     $result = curl_exec($curl);
-    if(!$result){die("Connection Failure");}
+    $errorCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close($curl);
-
-    return json_decode($result);
+    return [
+        'userAPI' => json_decode($result),
+        'errorCode' => $errorCode
+    ];
 }
