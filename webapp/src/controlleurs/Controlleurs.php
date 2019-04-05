@@ -199,7 +199,6 @@ function AddOrUpdateUser(){
                 'phoneNumbers'=>$phones
             ); var_dump($registeringInformation);
             $result = CallAPI('POST','Registration/Register/%23definition', json_encode($registeringInformation));
-            var_dump($result);
             if(!isset($_SESSION['userid'])){
                 $_SESSION['registered'] = 'success';
                 unset($_SESSION['email']);
