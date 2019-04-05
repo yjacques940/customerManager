@@ -181,8 +181,8 @@ function AddOrUpdateUser(){
             );
             $customer = array(
                 'sex'=>(isset($_SESSION['gender']))? $_SESSION['gender']:'',
-                'firstName'=>(isset($_SESSION['firstName']))? $_SESSION['firstName']:'',
-                'lastName'=>(isset($_SESSION['lastName']))? $_SESSION['lastName']:'',
+                'firstName'=>(isset($_SESSION['firstname']))? $_SESSION['firstname']:'',
+                'lastName'=>(isset($_SESSION['lastname']))? $_SESSION['lastname']:'',
                 'birthDate'=>(isset($_SESSION['dateofbirth']))? $_SESSION['dateofbirth']:'',
                 'occupation'=>htmlentities($_POST['occupation'])
             );
