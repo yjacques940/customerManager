@@ -59,5 +59,11 @@ namespace WebApi.Services
                 IdCustomer = int.Parse(appointment.IdCustomer)
             };
         }
+
+        public User GetUser(int appointmentId)
+        {
+            var customerId = Context.Appointments.First(c => c.Id == appointmentId).IdCustomer;
+            return Context.Users.FirstOrDefault(c => c.IdCustomer == customerId);
+        }
     }
 }

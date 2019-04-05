@@ -41,7 +41,8 @@ ob_start(); ?>
                             </thead>
                             <tbody>
                                 <?php
-                                $customers = CallAPI('GET', 'Customers');
+                                $result = CallAPI('GET', 'Customers');
+                                $customers = $result['response'];
                                 $count = 0;
                                 foreach ($customers as $customer) {
                                     ?>
@@ -56,7 +57,8 @@ ob_start(); ?>
                                     </td>
                                     <td>
                                     <?php
-                                    $phoneNumbers = CallAPI('GET', 'CustomerPhoneNumbers/ForCustomer/'.($customer->id));
+                                    $phoneResult = CallAPI('GET', 'CustomerPhoneNumbers/ForCustomer/'.($customer->id));
+                                    $phoneNumbers = $phoneResult['response'];
                                     foreach ($phoneNumbers as $phoneNumber) {
                                         ?>
                                         <table style="width:100%; background-color: rgba(255,255,255,0)">
