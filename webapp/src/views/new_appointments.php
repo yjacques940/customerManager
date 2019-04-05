@@ -48,10 +48,51 @@ ob_start();
             }
         }
     }
+
+    function getTheCheckedBoxesId()
+    {
+        ids = [];
+        checkboxes = document.getElementsByName('checkbox_new');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            if(checkboxes[i].checked)
+            {
+               ids.push(checkboxes[i].id);
+            }
+        }
+        return ids;
+    }
+
+    function saveIsNewStatusIfChecked()
+    {
+        let ids;
+        if (hasACheckboxChecked()) {
+            ids = getTheCheckedBoxesId();
+            $.ajax({
+                url: '?action=changeAppointmentIsNewStatus',
+                type: "post",
+                data: {ids},
+                success: function (output) {
+                    if (output === 'success') {
+                        alert('Enregistrement effectué avec succès.');
+                        window.location.href = '?action=appointments';
+                    } else {
+                        alert(output);
+                        alert('Une erreur est survenue lors de l\'enregistrement')
+                    }
+                }
+            });
+        }
+        else
+        {
+            window.location.href = '?action=appointments';
+        }
+    }
 </script>
 <div class=" mx-auto" style="margin-top: 30px; width: 90%">
-    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('PageTitle-NewAppointments') ?></h3>
-        <a href="?action=appointments" class="btn btn-success" style="float:right; margin-bottom: 10px;" id="button_save_and_show_appointments">
+    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2">
+        <?php echo localize('PageTitle-NewAppointments') ?></h3>
+        <a href="#" class="btn btn-success" style="float:right; margin-bottom: 10px;"
+           id="button_save_and_show_appointments" onClick="saveIsNewStatusIfChecked()">
             <?php echo localize('Button-ShowAppointments'); ?>
         </a>
 

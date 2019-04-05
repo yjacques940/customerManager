@@ -48,6 +48,9 @@ try
         case 'makeAppointment':
             MakeAppointment();
             break;
+        case 'changeAppointmentIsNewStatus':
+            ChangeAppointmentIsNewStatus();
+            break;
         default :
             Home();
             break;

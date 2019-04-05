@@ -42,6 +42,24 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
         }
 
+        public bool ChangeIsNewStatus(List<int> ids)
+        {
+            try
+            {
+                var appointmentsNotSeen = Context.Appointments.Where(c => c.IsNew && ids.Contains(c.Id)).ToList();
+                foreach (var appointment in appointmentsNotSeen)
+                {
+                    appointment.IsNew = false;
+                }
+                Context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         internal ActionResult<IEnumerable<CustomerAppointmentInformation>> GetNewAppointments(CustomerPhoneNumberService customerPhoneNumberService)
         {
             var appointments = (

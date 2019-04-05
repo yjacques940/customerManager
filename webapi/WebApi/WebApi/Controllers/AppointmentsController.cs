@@ -42,6 +42,14 @@ namespace WebApi.Controllers
             return Service.GetNewAppointments(customerPhoneNumberService);
         }
 
+        [HttpPost, Route("ChangeIsNewStatus")]
+        public ActionResult ChangeIsNewStatus([FromBody]List<int> ids)
+        {
+            if (Service.ChangeIsNewStatus(ids))
+                return Ok();
+            return Conflict();
+        }
+
         [HttpPost, Route("CheckAppointmentIsAvailable/{appointment}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]

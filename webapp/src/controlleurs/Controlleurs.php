@@ -270,6 +270,15 @@ function Appointments(){
   require('views/appointments.php');
 }
 
+function ChangeAppointmentIsNewStatus()
+{
+    if(isset($_POST['ids']))
+    {
+        CallAPI('POST', 'Appointments/ChangeIsNewStatus',json_encode($_POST['ids']));
+        echo 'success';
+    }
+}
+
 function MakeAppointment(){
     if (isset($_POST)){
         $appointment = array(
