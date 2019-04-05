@@ -33,7 +33,7 @@ function CallAPI($method, $url, $data = false)
     $errorCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close($curl);
     return [
-        'userAPI' => json_decode($result),
-        'errorCode' => $errorCode
+        'response' => json_decode($result),
+        'statusCode' => $errorCode
     ];
 }

@@ -59,10 +59,10 @@ function Login(){
             "password" => htmlentities($_POST['password'])
         ];
         $userAPI = CallAPI('GET', 'Users/Login', $userIdentification);
-        if($userAPI['errorCode'] == 200)
+        if($userAPI['statusCode'] == 200)
         {
-            $_SESSION['username'] = $userAPI['userAPI']->fullName;
-            $_SESSION['userid'] = $userAPI['userAPI']->id;
+            $_SESSION['username'] = $userAPI['response']->fullName;
+            $_SESSION['userid'] = $userAPI['response']->id;
             About();
         }
         else
