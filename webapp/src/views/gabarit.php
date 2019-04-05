@@ -20,7 +20,7 @@
     <header class="header-outs inner_page-banner" id="home">
       <div class="headder-top">
         <div style="display: inline" id="logo">
-          <img src="images/completeLogo.svg" alt="Carl et Mélanie Massothérapie" />
+          <a href="?action=home"><img class="img-fluid rounded float-left" style="width:100%;height: 100%;top:0;left:0;" src="images/completeLogo.svg" alt="Carl et Mélanie Massothérapie" /></a>
         </div>
         <nav style="display: inline">
           <label for="drop" class="toggle"><?php echo localize('Header-Menu'); ?></label>
