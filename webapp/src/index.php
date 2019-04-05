@@ -51,6 +51,9 @@ try
         case 'changeAppointmentIsNewStatus':
             ChangeAppointmentIsNewStatus();
             break;
+        case 'updateemail':
+            UpdateEmail();
+            break;
         default :
             Home();
             break;

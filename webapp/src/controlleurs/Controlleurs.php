@@ -115,7 +115,7 @@ function PersonalInformation(){
             $phoneType = $provinces->GetPhoneType();
             $phoneType2 = $provinces->GetPhoneType();
             $phoneType3 = $provinces->GetPhoneType();
-            $personalInformation = $provinces->GetPersonalInformation($_SESSION['userid']);
+            $personalInformation = CallAPI('GET','PersonalInformation/PersonalInformation/'.json_encode($_SESSION['userid']));
             require('views/personalinformation.php');
         }
     }
@@ -123,50 +123,91 @@ function PersonalInformation(){
 
 function AddOrUpdateUser(){
     if(isset($_POST)){
-        if($_POST['address'] != '' and $_POST['city'] != ''
+        if($_POST['address'] != '' and $_POST['city'] != '' 
         and $_POST['province'] != '' and $_POST['zipcode'] != '' and $_POST['occupation'] != ''
         and $_POST['phone1'] != '' and $_POST['type1'] != ''){
-            $phone1 = array(htmlentities($_POST['phone1']),'',htmlentities($_POST['type1']));
+            $phone1 = array(
+                'phone'=>htmlentities($_POST['phone1']),
+                'extension'=>'',
+                'idPhoneType'=>htmlentities($_POST['type1'])
+            );
             if(!empty($_POST['extension1'])){
-                $phone1[1] = htmlentities($_POST['extension1']);
+                $phone1['extension'] = htmlentities($_POST['extension1']);
             }
-            $phone2 = array('','','0');
-            $phone3 = array('','','0');
             if(!empty($_POST['phone2'])){
-                $phone2[0] = htmlentities($_POST['phone2']);
-                $phone2[2] = htmlentities($_POST['type2']);
+                $phone2 = array(
+                    'phone'=>htmlentities($_POST['phone2']),
+                    'extension'=>'',
+                    'idPhoneType'=>htmlentities($_POST['type2'])
+                );
                 if(!empty($_POST['extension2'])){
-                    $phone2[1] = htmlentities($_POST['extension2']);
+                    $phone2['extension'] = htmlentities($_POST['extension2']);
                 }
             }
             if(!empty($_POST['phone3'])){
-                $phone3[0] = htmlentities($_POST['phone3']);
-                $phone3[2] = htmlentities($_POST['type3']);
+                $phone3 = array(
+                    'phone'=>htmlentities($_POST['phone3']),
+                    'extension'=>'',
+                    'idPhoneType'=>htmlentities($_POST['type3'])
+                );
                 if(!empty($_POST['extension3'])){
-                    $phone2[1] = htmlentities($_POST['extension3']);
+                    $phone2['extension'] = htmlentities($_POST['extension3']);
                 }
             }
-            $newUser = new ManagerUsers;
+            $physicalAddress = array(
+                'physicalAddress'=>htmlentities($_POST['address']),
+                'cityName'=>htmlentities($_POST['city']),
+                'zipCode'=>htmlentities($_POST['zipcode']),
+                'idState'=>htmlentities($_POST['province'])
+            );
+            $user = array(
+                'email'=>(isset($_SESSION['email']))?$_SESSION['email']:'',
+                'password'=>(isset($_SESSION['password']))?$_SESSION['password']:''
+            );
+            $customer = array(
+                'sex'=>(isset($_SESSION['gender']))? $_SESSION['gender']:'',
+                'firstName'=>(isset($_SESSION['firstName']))? $_SESSION['firstName']:'',
+                'lastName'=>(isset($_SESSION['lastName']))? $_SESSION['lastName']:'',
+                'birthDate'=>(isset($_SESSION['dateofbirth']))? $_SESSION['dateofbirth']:'',
+                'occupation'=>htmlentities($_POST['occupation'])
+            );
+            $phones = array($phone1);
+            if (isset($phone2))
+                array_push($phones, $phone2);
+            if (isset($phone3))
+                array_push($phones, $phone3);
+
+            $registeringInformation = array(
+                'physicalAddress'=>$physicalAddress,
+                'customer'=>$customer,
+                'user'=>$user,
+                'phoneNumbers'=>$phones
+            ); 
             if(!isset($_SESSION['userid'])){
+                /*
                 $newUser->AddUser($_SESSION['email'],$_SESSION['password'],$_SESSION['firstname'],
-            $_SESSION['lastname'],$_SESSION['gender'],htmlentities($_POST['address']),
-            htmlentities($_POST['city']),htmlentities($_POST['province']),
-            htmlentities($_POST['zipcode']),$_SESSION['dateofbirth'],
-            htmlentities($_POST['occupation']),$phone1[0],$phone1[1],$phone1[2],
-            $phone2[0],$phone2[1],$phone2[2],$phone3[0],$phone3[1],$phone3[2]);
-            $_SESSION['registered'] = 'success';
-            unset($_SESSION['email']);
-            unset($_SESSION['password']);
-            unset($_SESSION['firstname']);
-            unset($_SESSION['lastname']);
-            unset($_SESSION['gender']);
-            unset($_SESSION['dateofbirth']);
-            }else{
+                $_SESSION['lastname'],$_SESSION['gender'],htmlentities($_POST['address']),
+                htmlentities($_POST['city']),htmlentities($_POST['province']),
+                htmlentities($_POST['zipcode']),$_SESSION['dateofbirth'],
+                htmlentities($_POST['occupation']),$phone1[0],$phone1[1],$phone1[2],
+                $phone2[0],$phone2[1],$phone2[2],$phone3[0],$phone3[1],$phone3[2]);
+                */
+                $result = CallAPI('POST','Registration/Register/%23definition', json_encode($registeringInformation));
+                var_dump($result);
+                $_SESSION['registered'] = 'success';
+                unset($_SESSION['email']);
+                unset($_SESSION['password']);
+                unset($_SESSION['firstname']);
+                unset($_SESSION['lastname']);
+                unset($_SESSION['gender']);
+                unset($_SESSION['dateofbirth']);
+            }else{/*
                 $newUser->UpdateUser($_SESSION['userid'],htmlentities($_POST['address']),
                 htmlentities($_POST['city']),htmlentities($_POST['province']),
                 htmlentities($_POST['zipcode']), htmlentities($_POST['occupation']),
                 $phone1[0],$phone1[1],$phone1[2], $phone2[0],$phone2[1],$phone2[2],
                 $phone3[0],$phone3[1],$phone3[2]);
+                */
             }
         }
     }
@@ -180,7 +221,7 @@ function CheckEmailInUse(){
         echo 'taken';
     }
     else
-    {
+    {   
         if($_POST['email'] != $_POST['email2']){
             echo 'emailerror';
         }else if($_POST['password'] != $_POST['password2']){
@@ -208,13 +249,35 @@ function UpdatePassword(){
             if(CheckPasswords()){
                 $updatePassword = new ManagerUsers;
                 $updatePassword->UpdatePassword(htmlentities($_POST['newpassword']),$_SESSION['userid']);
-                require('views/about.php');
+                About();
             }else{
                 require('views/UpdatePassword.php');
             }
         }
     }else{
         require('views/UpdatePassword.php');
+    }
+}
+
+function UpdateEmail(){
+    if(!empty($_POST)){
+        if(isset($_POST['oldemail']) and isset($_POST['newemail']) and isset($_POST['password'])){
+            if($_POST['newemail'] == $_POST['newemailconfirmed']){
+                $user = CallAPI('GET', 'Users/Login/'.$_POST['oldemail'].'/'.$_POST['password']);
+                if($user){
+                    $emailUpdate = CallAPI('POST', 'Customers/UpdateCustomerEmail/'.$_SESSION['userid'].'/'.$_POST['newemail']);
+                    About();
+                }else{
+                    $_SESSION['emailerror'] = 1;
+                    require('views/updateEmail.php');
+                }
+            }else{
+                $_SESSION['emaildontmatch'] = 1;
+                require('views/updateEmail.php');
+            }
+        }
+    }else{
+        require('views/updateEmail.php');
     }
 }
 
@@ -225,7 +288,7 @@ function CheckPasswords(){
         return false;
     }else if(htmlentities($_POST['confirmedpassword']) != htmlentities($_POST['newpassword'])){
         return false;
-    }else if(htmlentities($_POST['oldpassword']) == '' or htmlentities($_POST['confirmedpassword']) ==''
+    }else if(htmlentities($_POST['oldpassword']) == '' or htmlentities($_POST['confirmedpassword']) =='' 
             or htmlentities($_POST['newpassword']) == ''){
         return false;
     }else if(htmlentities($_POST['oldpassword']) == htmlentities($_POST['newpassword'])){
@@ -326,13 +389,4 @@ function Api()
 
   /* CallAPI("DELETE","Customers/4");
   echo  CallAPI("GET","Customers");*/
-}
-
-function AppointmentCreator()
-{
-    require('views/appointment_creator.php');
-}
-function Customers()
-{
-    require('views/customers.php');
 }
