@@ -21,7 +21,7 @@ namespace WebApi.Controllers
  	    private readonly CustomerPhoneNumberService customerPhoneNumberService;
 		private readonly IConfiguration configuration;
 
-        public AppointmentsController(WebApiContext context, AppointmentService service) : base(service)
+        public AppointmentsController(WebApiContext context, AppointmentService service,
             CustomerPhoneNumberService customerPhoneNumberService, IConfiguration configuration) : base(service)
         {
 			this.customerPhoneNumberService = customerPhoneNumberService;
@@ -53,7 +53,7 @@ namespace WebApi.Controllers
 			newAppointment.IsActive = true;
             var appointmentAdded = Service.AddOrUpdate(newAppointment);
             var user = Service.GetUser(appointmentAdded);
-            EmailSender.SendConfirmationEmail(user.Email, appointment.AppointmentDateTime, configuration);
+            EmailSender.SendConfirmationEmail(user.Email, Convert.ToDateTime(appointment.AppointmentDateTime), configuration);
             return Ok(appointmentAdded);
         }
 

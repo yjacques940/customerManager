@@ -3,7 +3,7 @@ $title = localize('PageTitle-Appointments');
 ob_start();
 ?>
 
-<div class="border mx-auto" style="margin-top: 30px; width: 90%">
+<div class="mx-auto" style="margin-top: 30px; width: 90%">
 <div class="search-header">
     <input id="search_customer" type="text" class="form-control search-bar" onkeyup="SearchCustomer()"
     name="search_customer" placeholder='<?php echo localize('searchClient'); ?>' />
@@ -12,7 +12,7 @@ ob_start();
     </a>
 </div>
 
-<table class="table table-sm table-striped table-hover" id="tbl_appointments">
+<table class="table table-sm table-striped table-hover border" id="tbl_appointments">
     <thead class="thead-dark">
         <tr>
             <th scope="col"><?php echo localize('Appointment-Date'); ?></th>
@@ -23,7 +23,8 @@ ob_start();
     </thead>
     <tbody>
         <?php
-        $appointments = CallAPI('GET', 'Appointments/AppointmentsAndCustomers');
+        $result = CallAPI('GET', 'Appointments/AppointmentsAndCustomers');
+        $appointments = $result['response'];
         $count =0;
         foreach ($appointments as $appointment) {
         ?>
