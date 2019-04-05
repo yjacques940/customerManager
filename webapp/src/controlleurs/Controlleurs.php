@@ -273,9 +273,9 @@ function Appointments(){
 
 function ChangeAppointmentIsNewStatus()
 {
-    if(isset($_POST['ids']))
+    if(isset($_POST['newAppointmentIds']))
     {
-        CallAPI('POST', 'Appointments/ChangeIsNewStatus',json_encode($_POST['ids']));
+        CallAPI('POST', 'Appointments/ChangeIsNewStatus',json_encode($_POST['newAppointmentIds']));
         echo 'success';
     }
 }
