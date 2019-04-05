@@ -261,7 +261,7 @@ function UpdatePassword(){
 
 function UpdateEmail(){
     if(!empty($_POST)){
-        if(isset($_POST['oldemail']) and isset($_POST['newemail']) and isset($_POST['password'])){
+        if(isset($_POST['newemail']) and isset($_POST['newemailconfirmed'])  and isset($_POST['password'])){
             if($_POST['newemail'] == $_POST['newemailconfirmed']){
                 $user = CallAPI('GET', 'Users/Login/'.$_POST['oldemail'].'/'.$_POST['password']);
                 if($user){

@@ -4,14 +4,16 @@ $titre = Localize('Header-Manage-Password');
  <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Header-Manage-Password');?></h3>
-    <?php
+    <?php 
         if (isset($_SESSION['emailerror'])){
           unset($_SESSION['emailerror']);
             ?>
             <p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('mailUpdate-Error-password');?>.</p>
             <?php
-        }else{
-          
+        }else if(isset($_SESSION['emaildontmatch'])){
+          ?>
+            <p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Validate-Error-EmailDontMatch');?>.</p>
+          <?php
         }
     ?>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
@@ -43,33 +45,43 @@ $titre = Localize('Header-Manage-Password');
 </section>
 <script>
 $(document).ready(function(){
-    $("#updatepassword").validate({
+    $("#updateemail").validate({
         errorClass : "error_class",
         errorelement : "em",
         rules:{
-          oldpassword: {
+          oldemail: {
+                email:true,
                 required:true
             },
-            newpassword:{
-                required:true,
-                minlength: 7
+            newemail:{
+                email:true,
+                required:true
             },
-            confirmedpassword:{
+            newemailconfirmed:{
+                email:true,
                 required:true,
-                equalTo:"#newpassword"
+                equalTo:"#newemail"
+            },
+            password:{
+              required:true
             }
         },
         messages:{
-          oldpassword:{
+          oldemail:{
                 required:'<?php echo localize('Validate-Error-RequiredField'); ?>.',
+                email: '<?php echo localize('Validate-Error-InvalidEmail'); ?>.'
             },
-            newpassword:{
+            newemail:{
                 required :'<?php echo localize('Validate-Error-RequiredField'); ?>.',
-                minlength: '<?php echo localize('Validate-Error-PasswordMinLength'); ?>.'
+                email: '<?php echo localize('Validate-Error-InvalidEmail'); ?>.'
             },
-            confirmedpassword:{
+            newemailconfirmed:{
                 required :'<?php echo localize('Validate-Error-RequiredField'); ?>.',
-                equalTo:'<?php echo localize('Validate-Error-PasswordDontMatch'); ?>.'
+                equalTo:'<?php echo localize('Validate-Error-EmailDontMatch'); ?>.',
+                email: '<?php echo localize('Validate-Error-InvalidEmail'); ?>.'
+            },
+            password:{
+              required :'<?php echo localize('Validate-Error-RequiredField'); ?>.'
             }
         },
         submitHandler:function(){
