@@ -82,7 +82,6 @@ function Login(){
         }
         else
         {
-            
             require('views/login.php');
         }
     }
@@ -202,8 +201,6 @@ function AddOrUpdateUser(){
             $result = CallAPI('POST','Registration/Register/%23definition', json_encode($registeringInformation));
             var_dump($result);
             if(!isset($_SESSION['userid'])){
-                $result = CallAPI('POST','Registration/Register/%23definition', json_encode($registeringInformation));
-                var_dump($result);
                 $_SESSION['registered'] = 'success';
                 unset($_SESSION['email']);
                 unset($_SESSION['password']);
@@ -211,12 +208,6 @@ function AddOrUpdateUser(){
                 unset($_SESSION['lastname']);
                 unset($_SESSION['gender']);
                 unset($_SESSION['dateofbirth']);
-            }else{
-                $newUser->UpdateUser($_SESSION['userid'],htmlentities($_POST['address']),
-                htmlentities($_POST['city']),htmlentities($_POST['province']),
-                htmlentities($_POST['zipcode']), htmlentities($_POST['occupation']),
-                $phone1[0],$phone1[1],$phone1[2], $phone2[0],$phone2[1],$phone2[2],
-                $phone3[0],$phone3[1],$phone3[2]);
             }
         }
     }
