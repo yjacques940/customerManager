@@ -14,14 +14,14 @@ namespace WebApi.Controllers
     [ApiController]
     public class AppointmentsController : BaseReaderController<AppointmentService, Appointment>
     {
- 	    private readonly CustomerPhoneNumberService customerPhoneNumberService;
-		private readonly IConfiguration configuration;
+        private readonly CustomerPhoneNumberService customerPhoneNumberService;
+        private readonly IConfiguration configuration;
 
         public AppointmentsController(WebApiContext context, AppointmentService service,
             CustomerPhoneNumberService customerPhoneNumberService, IConfiguration configuration) : base(service)
         {
-			this.customerPhoneNumberService = customerPhoneNumberService;
-			this.configuration = configuration;
+                this.customerPhoneNumberService = customerPhoneNumberService;
+                this.configuration = configuration;
         }
 
         [HttpGet, Route("GetByDate/{date}")]
@@ -43,10 +43,10 @@ namespace WebApi.Controllers
         {
             if (appointment == null)
                 return BadRequest();
-			var newAppointment = Service.CheckAppointmentIsAvailable(appointment);
+                var newAppointment = Service.CheckAppointmentIsAvailable(appointment);
             if (newAppointment == null)
-			    return Conflict();
-			newAppointment.IsActive = true;
+                return Conflict();
+            newAppointment.IsActive = true;
             var appointmentAdded = Service.AddOrUpdate(newAppointment);
             var user = Service.GetUser(appointmentAdded);
             EmailSender.SendConfirmationEmail(user.Email, Convert.ToDateTime(appointment.AppointmentDateTime), configuration);
