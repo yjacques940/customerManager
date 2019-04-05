@@ -263,9 +263,18 @@ function UpdateEmail(){
     if(!empty($_POST)){
         if(isset($_POST['newemail']) and isset($_POST['newemailconfirmed'])  and isset($_POST['password'])){
             if($_POST['newemail'] == $_POST['newemailconfirmed']){
-                $user = CallAPI('GET', 'Users/Login/'.$_POST['oldemail'].'/'.$_POST['password']);
-                if($user){
-                    $emailUpdate = CallAPI('POST', 'Customers/UpdateCustomerEmail/'.$_SESSION['userid'].'/'.$_POST['newemail']);
+                $userIdentification = [
+                    "userid" => htmlentities($_SESSION['userid']),
+                    "password" => htmlentities($_POST['password'])
+                ];
+                $user = CallAPI('GET', 'Users/CheckPassword',$userIdentification);
+                if($user['statusCode'] == 200){
+                    $newEmail = [
+                        "userid" => htmlentities($_SESSION['userid']),
+                        "email" => htmlentities($_POST['newemail'])
+                    ];
+                    $emailUpdate = CallAPI('POST', 'Users/UpdateUserEmail',json_encode($newEmail));
+                    var_dump($emailUpdate);
                     About();
                 }else{
                     $_SESSION['emailerror'] = 1;

@@ -8,9 +8,10 @@ $titre = Localize('Header-Manage-Password');
         if (isset($_SESSION['emailerror'])){
           unset($_SESSION['emailerror']);
             ?>
-            <p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('mailUpdate-Error-password');?>.</p>
+            <p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('EmailUpdate-Error-password');?>.</p>
             <?php
         }else if(isset($_SESSION['emaildontmatch'])){
+          unset($_SESSION['emaildontmatch']);
           ?>
             <p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Validate-Error-EmailDontMatch');?>.</p>
           <?php
@@ -20,10 +21,6 @@ $titre = Localize('Header-Manage-Password');
       <div class="col-lg-6 col-md-6">
         <form action="?action=updateemail" name="updateemail" id="updateemail" method="post">
           <div class="w3pvt-wls-contact-mid">
-            <div class="form-group contact-forms">
-                <label for="oldemail"><h4><?php echo Localize('EmailUpdate-OldEmail');?></h4></label>
-              <input type="email" id="oldemail" name="oldemail" class="form-control" placeholder="<?php echo Localize('EmailUpdate-OldEmail');?>">
-            </div>
             <div class="form-group contact-forms">
               <label for="newemail"><h4><?php echo Localize('EmailUpdate-NewEmail');?></h4></label>
               <input type="email" name="newemail" id="newemail" class="form-control" placeholder="<?php echo Localize('EmailUpdate-NewEmail');?>">
@@ -49,10 +46,6 @@ $(document).ready(function(){
         errorClass : "error_class",
         errorelement : "em",
         rules:{
-          oldemail: {
-                email:true,
-                required:true
-            },
             newemail:{
                 email:true,
                 required:true
@@ -67,10 +60,6 @@ $(document).ready(function(){
             }
         },
         messages:{
-          oldemail:{
-                required:'<?php echo localize('Validate-Error-RequiredField'); ?>.',
-                email: '<?php echo localize('Validate-Error-InvalidEmail'); ?>.'
-            },
             newemail:{
                 required :'<?php echo localize('Validate-Error-RequiredField'); ?>.',
                 email: '<?php echo localize('Validate-Error-InvalidEmail'); ?>.'

@@ -30,5 +30,26 @@ namespace WebApi.Services
             userInfo.FullName = $"{customer.FirstName} {customer.LastName}";
             return userInfo;
         }
+
+        public object GetUserWithUserId(int userid, string password)
+        {
+            var user = Context.Users.Where(c => c.Id == userid &&
+                        c.Password == password).First();
+            if (user == null)
+                return null;
+
+            return user;
+        }
+
+        public object ChangeUserEmail(int userid, string email)
+        {
+            User user = (from c in Context.Users where c.Id == userid select c).First();
+            if (user != null)
+            {
+                user.Email = email;
+                Context.SaveChanges();
+            }
+            return user;
+        }
     }
 }

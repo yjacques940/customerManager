@@ -3,7 +3,7 @@
 function CallAPI($method, $url, $data = false)
 {
     //$api_url = 'http://webapi/api/' . $url;
-    $api_url = 'localhost:59059/api/' . $url;
+    $api_url = 'http://localhost:59059/api/' . $url;
     $curl = curl_init();
     switch ($method)
     {

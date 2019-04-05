@@ -26,5 +26,21 @@ namespace WebApi.Controllers
 
             return user;
         }
+
+        [HttpGet, Route("CheckPassword")]
+        public ActionResult<object> GetUserWithUserId(int userid, string password)
+        {
+            var user = Service.GetUserWithUserId(userid, password);
+            if (user == null)
+                return Unauthorized();
+
+            return user;
+        }
+
+        [HttpPost, Route("UpdateUserEmail")]
+        public ActionResult<object> UpdateUserEmail(int userid, string email)
+        {
+            return Ok(Service.ChangeUserEmail(userid, email));
+        }
     }
 }
