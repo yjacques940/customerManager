@@ -98,6 +98,9 @@
   "Appointment-Duration":"Durée",
   "Appointment-Customer":"Client",
   "CreateAppointment-OneHour":"Une heure",
-  "CreateAppointment-OneHourAndHalf":"Une heure trente minutes"
-
+  "CreateAppointment-OneHourAndHalf":"Une heure trente minutes",
+  "PageTitle-NewAppointments" :"Nouveaux rendez-vous",
+  "NewAppointments-ShowAppointments" : "Afficher tous les rendez-vous",
+  "NewAppointments-ShowAppointmentsAndSave" : "Enregistrer et afficher tous les rendez-vous",
+  "Appointment-ChangeNewStatus" : "A été vu"
 }

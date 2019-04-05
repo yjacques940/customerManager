@@ -25,45 +25,46 @@ ob_start();
         <?php
         $result = CallAPI('GET', 'Appointments/AppointmentsAndCustomers');
         $appointments = $result['response'];
-        $count =0;
-        foreach ($appointments as $appointment) {
-        ?>
-        <tr id="<?php echo $appointment->appointment->idCustomer; ?>">
-            <td scope="row">
-            <?php
-                $appointmentDate = new DateTime($appointment->appointment->appointmentDateTime);
-                echo $appointmentDate->format('Y-m-d');
+        if($appointments)
+        {
+            foreach ($appointments as $appointment) {
             ?>
-            </td>
-            <td>
-            <?php
-                echo $appointmentDate->format('H:i');
-            ?>
-            </td>
-            <td>
-            <?php
-                echo $appointment->customer->firstName
-                    ." ".
-                    $appointment->customer->lastName;
-            ?>
-            </td>
-            <td>
-            <?php
-            foreach ($appointment->phoneNumbers as $phoneNumber) {
-            ?>
-                <table style="width:100%; background-color: rgba(255,255,255,0)">
-                    <tr>
-                        <th><?php echo $phoneNumber->idPhoneType; ?></th>
-                        <td><?php echo $phoneNumber->phone.$phoneNumber->extension; ?></td>
-                    </tr>
-                </table>
+            <tr id="<?php echo $appointment->appointment->idCustomer; ?>">
+                <td scope="row">
+                <?php
+                    $appointmentDate = new DateTime($appointment->appointment->appointmentDateTime);
+                    echo $appointmentDate->format('Y-m-d');
+                ?>
+                </td>
+                <td>
+                <?php
+                    echo $appointmentDate->format('H:i');
+                ?>
+                </td>
+                <td>
+                <?php
+                    echo $appointment->customer->firstName
+                        ." ".
+                        $appointment->customer->lastName;
+                ?>
+                </td>
+                <td>
+                <?php
+                foreach ($appointment->phoneNumbers as $phoneNumber) {
+                ?>
+                    <table style="width:100%; background-color: rgba(255,255,255,0)">
+                        <tr>
+                            <th><?php echo $phoneNumber->idPhoneType; ?></th>
+                            <td><?php echo $phoneNumber->phone.$phoneNumber->extension; ?></td>
+                        </tr>
+                    </table>
+                <?php
+                }
+                ?>
+                </td>
+            </tr>
             <?php
             }
-            ?>
-            </td>
-        </tr>
-        <?php
-            $count++;
         }
         ?>
     </tbody>

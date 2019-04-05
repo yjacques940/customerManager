@@ -254,8 +254,30 @@ function SendBug()
     }
 }
 
+function NewAppointments(){
+    $result = CallAPI('GET','Appointments/NewAppointments');
+    $newAppointments = $result['response'];
+    if($newAppointments)
+    {
+        require('views/new_appointments.php');
+    }
+    else
+    {
+        require('views/appointments.php');
+    }
+}
+
 function Appointments(){
   require('views/appointments.php');
+}
+
+function ChangeAppointmentIsNewStatus()
+{
+    if(isset($_POST['newAppointmentIds']))
+    {
+        CallAPI('POST', 'Appointments/ChangeIsNewStatus',json_encode($_POST['newAppointmentIds']));
+        echo 'success';
+    }
 }
 
 function MakeAppointment(){

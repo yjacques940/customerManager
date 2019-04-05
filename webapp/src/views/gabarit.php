@@ -33,7 +33,7 @@
               <a href="index.php?action=about"><?php echo localize('PageTitle-About'); ?></a>
             </li>
               <li>
-                  <a href="?action=appointments"><?php echo localize('PageTitle-Appointments'); ?></a>
+                  <a href="?action=newAppointments"><?php echo localize('PageTitle-Appointments'); ?></a>
               </li>
             <?php
               if (!isset($_SESSION['username'])) {

@@ -97,5 +97,9 @@
   "Appointment-Duration":"Duration",
   "Appointment-Customer":"Customer",
   "CreateAppointment-OneHour":"One hour",
-  "CreateAppointment-OneHourAndHalf":"One hour thirty minutes"
+  "CreateAppointment-OneHourAndHalf":"One hour thirty minutes",
+  "PageTitle-NewAppointments" :"New appointments",
+  "NewAppointments-ShowAppointments" : "Show all appointments",
+  "NewAppointments-ShowAppointmentsAndSave" : "Save and show all appointments",
+  "Appointment-ChangeNewStatus" : "Mark as seen"
 }

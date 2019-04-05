@@ -39,11 +39,17 @@ try
         case 'appointments':
             Appointments();
             break;
+        case 'newAppointments' :
+            NewAppointments();
+            break;
         case 'customers' :
             Customers();
             break;
         case 'makeAppointment':
             MakeAppointment();
+            break;
+        case 'changeAppointmentIsNewStatus':
+            ChangeAppointmentIsNewStatus();
             break;
         default :
             Home();

@@ -1,4 +1,4 @@
-#------------------------------------------------------------
+﻿#------------------------------------------------------------
 #        DB Generator for main_db
 #------------------------------------------------------------
 
@@ -158,6 +158,7 @@ CREATE TABLE tbl_appointment(
         appointment_date_time datetime NOT NULL ,
         duration_time    datetime NOT NULL ,
         is_active        Bool NOT NULL DEFAULT 1,
+        is_new        Bool NOT NULL DEFAULT 1,
         id_customer      Int NOT NULL
 	,CONSTRAINT tbl_appointment_PK PRIMARY KEY (id_appointment)
 )ENGINE=InnoDB;
