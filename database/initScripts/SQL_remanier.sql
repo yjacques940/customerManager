@@ -101,9 +101,9 @@ CREATE TABLE tbl_user(
         id_user     Int  Auto_increment  NOT NULL ,
         email       Varchar (256) NOT NULL UNIQUE,
         password    Varchar (256) NOT NULL ,
-        role        Int (8) ,
-        created_on  Datetime NOT NULL ,
-        last_login  Datetime NOT NULL ,
+        role        Int (8) NOT NULL DEFAULT 0,
+        created_on  Datetime NOT NULL DEFAULT current_timestamp ,
+        last_login  Datetime NOT NULL DEFAULT current_timestamp ,
         is_active   Bool NOT NULL DEFAULT 1 ,
         id_customer Int NOT NULL
 	,CONSTRAINT tbl_user_PK PRIMARY KEY (id_user)
@@ -270,6 +270,10 @@ INSERT INTO tbl_address (address, city_name, zip_code, id_state) VALUES
 INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id_address) VALUES
 ('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),
 ('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2');
+
+INSERT INTO tbl_user (id_customer, email, password, role) VALUES
+(1, "jessy@rodrigue.com", "ValidPassword", 1),
+(2, "yannick@jacques.com", "ValidPassword", DEFAULT);
 
 INSERT INTO tbl_phone_number (phone, id_phone_type,id_customer) VALUES
 ('(418) 774-3835', 1,1),

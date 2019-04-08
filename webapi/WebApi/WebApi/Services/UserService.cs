@@ -33,8 +33,7 @@ namespace WebApi.Services
 		
         public bool CheckIfUserHasPermission(int idUser, string permission)
         {
-
-            return (Context.User.Where(c => c.Role & Context.Permission.First(x => x.Name == permission).Bit));
+            return Context.User.Any(u => u.Id == idUser && (u.Role & (Context.Permission.FirstOrDefault(p => p.Name == permission).Bit)) == 1);
         }
 
         public object GetUserWithUserId(int userId, string password)
