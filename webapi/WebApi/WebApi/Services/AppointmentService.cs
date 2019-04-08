@@ -80,6 +80,20 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
         }
 
+        internal void SendAppointmentRequest(AskForAppointmentInformation requestInfo)
+        {
+            if (requestInfo.UserId != "")
+            {
+                var user = Context.Users.First(c => c.Id == Convert.ToInt32(requestInfo.UserId));
+                requestInfo.Email = user.Email;
+                var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
+                requestInfo.UserName = customer.FirstName + " " + customer.LastName;
+                
+            }
+                
+
+        }
+
         public Appointment CheckAppointmentIsAvailable(AppointmentInformation appointment)
         {
             var appointmentConverted = ConvertDtoToModel(appointment);

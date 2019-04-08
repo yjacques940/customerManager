@@ -84,9 +84,9 @@
   "Validate-Error-PasswordDontMatch": "Les mots de passe ne correspondent pas",
   "Validate-Error-PasswordMinLength": "Le mot de passe doit contenir au moins 7 caractères",
   "Validate-Error-RequiredField": "Ce champ est obligatoire",
-  "Report-Problem": "Signaler un bogue",
+  "Appointment-AskForAppointment": "Faire une demande de réservation",
   "Send" : "Envoyer",
-  "Email-Send-Admins": "Le courriel a été envoyé aux administrateurs",
+  "Email-Send-Admins": "Le courriel a été envoyé!",
   "Validate-Error-ValidPhone": "Veuillez entrer un numéro valide",
   "Website-Credits": "Gracieuseté de Yannick Jacques, Jessy Rodrigue et Nicolas Talbot",
   "PageTitle-NewAppointment":"Nouveau rendez-vous",
@@ -102,5 +102,13 @@
   "PageTitle-NewAppointments" :"Nouveaux rendez-vous",
   "NewAppointments-ShowAppointments" : "Afficher tous les rendez-vous",
   "NewAppointments-ShowAppointmentsAndSave" : "Enregistrer et afficher tous les rendez-vous",
-  "Appointment-ChangeNewStatus" : "A été vu"
+  "Appointment-ChangeNewStatus" : "A été vu",
+  "Appointment-AskForAppointmentDescription" : "Informations supplémentaires",
+  "AskForAppointment-Evening" : "Soir",
+  "AskForAppointment-TimeOfDay" : "Période de la journée",
+  "AskForAppointment-TypeOfTreatment" : "Type de traitement",
+  "AskForAppointment-Treatment-HotStones" : "Pierres chaudes",
+  "AskForAppointment-Treatment-Regular" : "Régulier",
+  "AskForAppointment-Treatment-1h30" : "Une heure trente",
+  "Appointment-DateRequested" : "Date désirée"
 }

@@ -235,18 +235,33 @@ function CheckPasswords(){
     }
 }
 
-function ReportBug()
+function AskForAppointment()
 {
-    require('views/report_bug.php');
+    require('views/ask_for_appointment.php');
 }
 
-function SendBug()
+function SendAskForAppointment()
 {
     require('views/confirmation_message.php');
-    if(isset($_POST['bug-description']))
+    if(isset($_POST['askForAppointmentDate']) && isset($_POST['appointmentTimeOfDay'])
+    && isset($_POST['TypeOfTreatment']))
     {
-        $data = array( 'MessageContent' => htmlentities($_POST['bug-description']));
-        CallAPI('POST','Email' , json_encode($data));
+        $data = array(
+            'date' => htmlentities($_POST['askForAppointmentDate']),
+            'timeOfDay' => htmlentities($_POST['appointmentTimeOfDay']),
+            'typeOfTreatment' => htmlentities($_POST['TypeOfTreatment']),
+            'moreInformation' => isset($_POST['moreInformation']) ?
+                htmlentities($_POST['TypeOfTreatment']) : "",
+            'email' => isset($_POST['askForAppointmentEmail']) ?
+                htmlentities($_POST['askForAppointmentEmail']) : "",
+            'userId' => isset($_SESSION['userid']) ? htmlentities($_SESSION['userid']) : "",
+            'phoneNumber' => isset($_POST['AskForAppointment-PhoneNumber']) ?
+                htmlentities($_POST['AskForAppointment-PhoneNumber']):"",
+            'userName' => isset($_POST['AskForAppointment-UserName']) ?
+                htmlentities($_SESSION['AskForAppointment-UserName']) : ""
+        );
+        $result = CallAPI('POST','Appointments/AskForAppointment',json_encode($data));
+        echo  $result['statusCode'];
     }
     else
     {

@@ -66,7 +66,7 @@
   "PasswordUpdate-NewPassword": "New password",
   "PasswordUpdate-OldPassword": "Current password",
   "PasswordUpdate-UpdateConfirmation": "Confirm changes",
-  "Report-Problem":"Report a bug",
+  "Appointment-AskForAppointment":"Ask for an appointment",
   "Personnal-Address": "Address",
   "Personnal-City": "City",
   "Personnal-DateOfBirth": "Date of birth",
@@ -87,7 +87,7 @@
   "Validate-Error-PasswordMinLength": "Password must contain at least 7 characters",
   "Validate-Error-RequiredField": "This field is required",
   "Website-Credits": "Courtesy of Yannick Jacques, Jessy Rodrigue and Nicolas Talbot",
-  "Email-Send-Admins" : "The email has been sent to administrators",
+  "Email-Send-Admins" : "The email has been sent!",
   "PageTitle-NewAppointment":"New appointment",
   "CreateAppointment-DetailsAppointment-Text":"Appointment details",
   "CreateAppointment-DetailsCustomer-Text":"Select a customer",
@@ -101,5 +101,14 @@
   "PageTitle-NewAppointments" :"New appointments",
   "NewAppointments-ShowAppointments" : "Show all appointments",
   "NewAppointments-ShowAppointmentsAndSave" : "Save and show all appointments",
-  "Appointment-ChangeNewStatus" : "Mark as seen"
+  "Appointment-ChangeNewStatus" : "Mark as seen",
+  "Appointment-AskForAppointmentDescription" : "More information",
+  "AskForAppointment-Evening" : "Evening",
+  "AskForAppointment-TimeOfDay" : "Time of day",
+  "AskForAppointment-TypeOfTreatment" :"Type of treatment",
+  "AskForAppointment-Treatment-HotStones" : "Hot stones",
+  "AskForAppointment-Treatment-Regular" : "Regular",
+  "AskForAppointment-Treatment-1h30" : "One hour and a half",
+  "Appointment-DateRequested" : "Desired date"
+
 }

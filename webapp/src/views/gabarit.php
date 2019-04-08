@@ -156,8 +156,8 @@
               </ul>
             </div>
               <div>
-                  <i><a href="?action=report-bug" style="color:white; font-style:normal;"><span class="fa  fa-bug" aria-hidden="true">
-                          </span> <?php echo localize('Report-Problem') ?></a></i>
+                  <i><a href="?action=ask_for_appointment" style="color:white; font-style:normal;"><span class="fa  fa-bug" aria-hidden="true">
+                          </span> <?php echo localize('Appointment-AskForAppointment') ?></a></i>
               </div>
           </div>
         </div>

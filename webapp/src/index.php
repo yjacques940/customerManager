@@ -27,11 +27,11 @@ try
             unset($_SESSION['username']);
             Home();
             break;
-        case 'report-bug' :
-            ReportBug();
+        case 'ask_for_appointment' :
+            AskForAppointment();
             break;
-        case 'send_bug' :
-            SendBug();
+        case 'send_ask_for_appointment' :
+            SendAskForAppointment();
             break;
         case 'appointmentCreator' :
             AppointmentCreator();
