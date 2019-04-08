@@ -116,5 +116,9 @@
   "AskForAppointment-Treatment-HotStones" : "Pierres chaudes",
   "AskForAppointment-Treatment-Regular" : "Régulier",
   "AskForAppointment-Treatment-1h30" : "Une heure trente",
-  "Appointment-DateRequested" : "Date désirée"
+  "Appointment-DateRequested" : "Date désirée",
+  "PageTitle-Error":"Erreur",
+  "Error-Title":"Erreur: ",
+  "Error-Reason-403":"Vous n'avez pas les permissions requises pour consulter cette page.",
+  "Error-Help":"Si vous croyez que ceci est une erreur et que vous avez droit à accéder cette page, veuillez <em>contacter l'administrateur.</em>"
 }
