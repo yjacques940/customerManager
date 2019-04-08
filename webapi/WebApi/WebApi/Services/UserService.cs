@@ -29,11 +29,12 @@ namespace WebApi.Services
             var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
             userInfo.FullName = $"{customer.FirstName} {customer.LastName}";
             return userInfo;
-		}
-		
+        }
+
         public bool CheckIfUserHasPermission(int idUser, string permission)
         {
-            return Context.User.Any(u => u.Id == idUser && (u.Role & (Context.Permission.FirstOrDefault(p => p.Name == permission).Bit)) == 1);
+            return Context.Users.Any(u => u.Id == idUser &&
+                (u.Role & (Context.Permission.FirstOrDefault(p => p.Name == permission).Bit)) == 1);
         }
 
         public object GetUserWithUserId(int userId, string password)
