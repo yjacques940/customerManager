@@ -18,11 +18,13 @@
   <body>
 
     <header class="header-outs inner_page-banner" id="home">
+
       <div class="headder-top">
-        <div style="display: inline" id="logo">
-          <img src="images/completeLogo.svg" alt="Carl et Mélanie Massothérapie" />
-        </div>
-        <nav style="display: inline">
+          <div style="display: inline; float:left;margin: 10px 10px 10px 10px;"  >
+              <a href="?action=home"><img
+                          style=" width:70%;" class="img-fluid" src="images/completeLogo.svg" alt="Carl et Mélanie Massothérapie" /></a>
+          </div>
+        <nav style="display: -moz-inline-block">
           <label for="drop" class="toggle"><?php echo localize('Header-Menu'); ?></label>
           <input type="checkbox" id="drop">
           <ul class="menu mt-2">

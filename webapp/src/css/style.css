@@ -353,7 +353,7 @@ a.reqe-button {
   }
 }
 
-@media all and (max-width: 767px) {
+@media all and (max-width: 1260px) {
   #logo {
     display: block;
     padding: 0;
