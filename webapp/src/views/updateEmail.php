@@ -1,9 +1,9 @@
 <?php
-$titre = Localize('Header-Manage-Password');
+$title = Localize('Header-Manage-Email');
  ob_start(); ?>
  <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Header-Manage-Password');?></h3>
+    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Header-Manage-Email');?></h3>
     <?php 
         if (isset($_SESSION['emailerror'])){
           unset($_SESSION['emailerror']);
@@ -33,7 +33,7 @@ $titre = Localize('Header-Manage-Password');
               <label for="password"><h4><?php echo Localize('EmailUpdate-PasswordConfirm');?></h4></label>
               <input type="password" name="password" id="password" class="form-control" placeholder="<?php echo Localize('Login-Password');?>">
             </div>
-            <button type="submit" class="btn sent-butnn"><?php echo Localize('Header-Manage-Password');?></button>
+            <button type="submit" class="btn sent-butnn"><?php echo Localize('Header-Manage-Email');?></button>
           </div>
         </form>
       </div>

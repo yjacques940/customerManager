@@ -270,9 +270,9 @@ function UpdateEmail(){
                 $user = CallAPI('GET', 'Users/CheckPassword',$userIdentification);
                 if($user['statusCode'] == 200){
                     $newEmail = [
-                        "userid" => htmlentities($_SESSION['userid']),
+                        "id" => htmlentities($_SESSION['userid']),
                         "email" => htmlentities($_POST['newemail'])
-                    ];
+                    ]; var_dump($newEmail);
                     $emailUpdate = CallAPI('POST', 'Users/UpdateUserEmail',json_encode($newEmail));
                     var_dump($emailUpdate);
                     About();

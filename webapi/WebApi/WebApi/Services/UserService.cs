@@ -31,9 +31,9 @@ namespace WebApi.Services
             return userInfo;
         }
 
-        public object GetUserWithUserId(int userid, string password)
+        public object GetUserWithUserId(int userId, string password)
         {
-            var user = Context.Users.Where(c => c.Id == userid &&
+            var user = Context.Users.Where(c => c.Id == userId &&
                         c.Password == password).First();
             if (user == null)
                 return null;
@@ -41,9 +41,9 @@ namespace WebApi.Services
             return user;
         }
 
-        public object ChangeUserEmail(int userid, string email)
+        public object ChangeUserEmail(int userId, string email)
         {
-            User user = (from c in Context.Users where c.Id == userid select c).First();
+            User user = (from c in Context.Users where c.Id == userId select c).First();
             if (user != null)
             {
                 user.Email = email;

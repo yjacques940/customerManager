@@ -28,19 +28,19 @@ namespace WebApi.Controllers
         }
 
         [HttpGet, Route("CheckPassword")]
-        public ActionResult<object> GetUserWithUserId(int userid, string password)
+        public ActionResult GetUserWithUserId(int userId, string password)
         {
-            var user = Service.GetUserWithUserId(userid, password);
+            var user = Service.GetUserWithUserId(userId, password);
             if (user == null)
                 return Unauthorized();
 
-            return user;
+            return Ok(user);
         }
 
         [HttpPost, Route("UpdateUserEmail")]
-        public ActionResult<object> UpdateUserEmail(int userid, string email)
+        public ActionResult UpdateUserEmail([FromBody]UserEmailInformation userEmailInformation)
         {
-            return Ok(Service.ChangeUserEmail(userid, email));
+            return Ok(Service.ChangeUserEmail(userEmailInformation.Id, userEmailInformation.Email));
         }
     }
 }
