@@ -51,6 +51,9 @@ try
         case 'changeAppointmentIsNewStatus':
             ChangeAppointmentIsNewStatus();
             break;
+        case 'timeslotManagement':
+            require('views/timeslotManagement.php');
+            break;
         case 'updateemail':
             UpdateEmail();
             break;
