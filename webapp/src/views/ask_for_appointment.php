@@ -5,7 +5,7 @@ ob_start(); ?>
     <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize($titre) ?></h3>
     <div class="container">
-        <p><?php echo localize('Report-Bug-Instructions')?></p></br>
+        <p><?php echo localize('AskForAppointment-Instructions')?></p></br>
             <form action="?action=send_ask_for_appointment" method="post" id="AskForAppointmentInformation">
                 <?php if(!isset($_SESSION['userid'])){ ?>
                     <div class="form-group">
