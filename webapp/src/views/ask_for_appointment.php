@@ -9,18 +9,23 @@ ob_start(); ?>
             <form action="?action=send_ask_for_appointment" method="post">
                 <?php if(!isset($_SESSION['userid'])){ ?>
                     <div class="form-group">
-                        <label for="AskForAppointment-UserName">*<?php echo localize('Inscription-Lastname')?>: </label>
-                        <input class="form-control" id="AskForAppointment-UserName" required>
+                        <label for="AskForAppointment-UserName">
+                            *<?php echo localize('Inscription-Lastname')?>: </label>
+                        <input class="form-control" id="AskForAppointment-UserName"
+                               name="AskForAppointment-UserName" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="AskForAppointment-PhoneNumber">*<?php echo localize('Personal-Phone')?>: </label>
-                        <input class="form-control" id="AskForAppointment-PhoneNumber" required>
+                        <label for="AskForAppointment-PhoneNumber">
+                            *<?php echo localize('Personal-Phone')?>: </label>
+                        <input class="form-control" id="AskForAppointment-PhoneNumber"
+                               name="AskForAppointment-PhoneNumber" placeholder="(555)555-5555" required>
                     </div>
 
                     <div class="form-group">
                         <label for="AskForAppointment-Email">*<?php echo localize('Login-Email')?>: </label>
                         <input type="email" class="form-control" id="AskForAppointment-Email"
+                               name="AskForAppointment-Email"
                                aria-describedby="emailHelp" placeholder="<?php echo localize('Login-Email') ?>" required>
                     </div>
                 <?php }?>
@@ -50,9 +55,9 @@ ob_start(); ?>
                     <div>
                         <select id="TypeOfTreatment" name="TypeOfTreatment">
                             <option disabled selected value></option>
-                            <option value=""><?php echo localize('AskForAppointment-Treatment-Regular'); ?></option>
-                            <option value="1h30"><?php echo localize('AskForAppointment-Treatment-1h30')?></option>
-                            <option value="PM"><?php echo localize('AskForAppointment-Treatment-HotStones')?></option>
+                            <option value="Régulier"><?php echo localize('AskForAppointment-Treatment-Regular'); ?></option>
+                            <option value="Rendez-vous d'1h30"><?php echo localize('AskForAppointment-Treatment-1h30')?></option>
+                            <option value="Pierres chaudes"><?php echo localize('AskForAppointment-Treatment-HotStones')?></option>
 
                         </select>
                     </div>
@@ -65,6 +70,11 @@ ob_start(); ?>
             </form>
     </div>
 </div></section>
+<script>
+    $(document).ready(function() {
+        $('#AskForAppointment-PhoneNumber').mask('(000)000-0000');
+    })
+</script>
 <?php $contenu = ob_get_clean();
 $onHomePage = false;
 require 'gabarit.php'; ?>

@@ -88,6 +88,11 @@
                 margin: 0 auto !important;
                 font: 16px/25px Arial, Helvetica, sans-serif;
             }
+            .moreInfoBorder {
+                border-style: solid;
+                border-width: 1px;
+                border-radius: 5px;
+            }
 		</style>
 	</head>
 	<body style="margin:0; padding:0;" bgcolor="#eaeced">
@@ -125,23 +130,22 @@
                                                 </tr>
                                                 <tr>
                                                     <td data-color="text" data-size="size text" data-min="10" data-max="26" data-link-color="link text color" data-link-style="font-weight:bold; text-decoration:underline; color:#40aceb;" align="center" style="font:bold 16px/25px Arial, Helvetica, sans-serif; color:  #1e1e2e; padding:0 0 23px;">
-                                                        Vous avez reçu une demande de rendez-vous
+                                                        [SenderNamex] vous a envoyé une demande de rendez-vous.
                                                     </td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td data-color="text" data-size="size text" data-min="10" data-max="26" data-link-color="link text color" data-link-style="font-weight:bold; text-decoration:underline; color:#40aceb;" align="center" style="font:bold 20px/29px Arial, Helvetica, sans-serif; color:  #1e1e2e; padding:0 0 23px;">
-                                                    <div>Période de la journée : [AppointmentTimeOfDayx]</div>
+                                                    <td data-color="text" data-size="size text" data-min="10" data-max="26" data-link-color="link text color" data-link-style=" text-decoration:underline; color:#40aceb;" align="center" style="font:bold 16px/26px Arial, Helvetica, sans-serif; color:  #1e1e2e; padding:0 0 23px;">
+                                                        
 
-                                                    <div>Date du rendez-vous : [AppointmentDatex]</div>
+                                                        <div>Date du rendez-vous : [AppointmentDatex],  [AppointmentTimeOfDayx]</div>
+                                                        
+                                                        <div>Téléphone du demandeur : [SenderPhoneNumberx]</div>
 
-                                                    <div>Nom du demandeur : [SenderEmailx]</div>
+                                                        <div>Courriel du demandeur : [SenderEmailx]</div>
+                                                        <div>Type de rendez-vous : [AppointmentTypex]</div>
 
-                                                    <div>Téléphone du demandeur : [SenderPhoneNumberx]</div>
-
-                                                    <div>Courriel du demandeur : [SenderEmailx]</div>
-
-                                                    <div>Autres informations : [OtherInformationx]</div>
+                                                        <div>[OtherInformationx]</div>
                                                     </td>
                                                 </tr>
                                                 <tr>

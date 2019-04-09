@@ -242,7 +242,8 @@ function AskForAppointment()
 
 function SendAskForAppointment()
 {
-    require('views/confirmation_message.php');
+
+echo isset($_POST['AskForAppointment-UserName']);
     if(isset($_POST['askForAppointmentDate']) && isset($_POST['appointmentTimeOfDay'])
     && isset($_POST['TypeOfTreatment']))
     {
@@ -251,17 +252,24 @@ function SendAskForAppointment()
             'timeOfDay' => htmlentities($_POST['appointmentTimeOfDay']),
             'typeOfTreatment' => htmlentities($_POST['TypeOfTreatment']),
             'moreInformation' => isset($_POST['moreInformation']) ?
-                htmlentities($_POST['TypeOfTreatment']) : "",
-            'email' => isset($_POST['askForAppointmentEmail']) ?
-                htmlentities($_POST['askForAppointmentEmail']) : "",
+                htmlentities($_POST['moreInformation']) : "",
+            'email' => isset($_POST['AskForAppointment-Email']) ?
+                htmlentities($_POST['AskForAppointment-Email']) : "",
             'userId' => isset($_SESSION['userid']) ? htmlentities($_SESSION['userid']) : "",
             'phoneNumber' => isset($_POST['AskForAppointment-PhoneNumber']) ?
                 htmlentities($_POST['AskForAppointment-PhoneNumber']):"",
             'userName' => isset($_POST['AskForAppointment-UserName']) ?
-                htmlentities($_SESSION['AskForAppointment-UserName']) : ""
+                htmlentities($_POST['AskForAppointment-UserName']) : ""
         );
         $result = CallAPI('POST','Appointments/AskForAppointment',json_encode($data));
         echo  $result['statusCode'];
+        if($result['statusCode'] == 200)
+        {
+            require('views/confirmation_message.php');
+        }
+        else{
+            echo $result['statusCode'];
+        }
     }
     else
     {

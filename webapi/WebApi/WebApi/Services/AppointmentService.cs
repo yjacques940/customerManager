@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Microsoft.AspNetCore.Mvc.Formatters.Internal;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Validators;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Services
 {
@@ -80,7 +83,7 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
         }
 
-        internal void SendAppointmentRequest(AskForAppointmentInformation requestInfo)
+        internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
         {
             if (requestInfo.UserId != "")
             {
@@ -88,9 +91,11 @@ namespace WebApi.Services
                 requestInfo.Email = user.Email;
                 var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
                 requestInfo.UserName = customer.FirstName + " " + customer.LastName;
-                
+                requestInfo.PhoneNumber = "4185555555";
             }
-                
+
+            EmailSender.SendAppointmentRequest(requestInfo,configuration);
+            return requestInfo.UserId;
 
         }
 

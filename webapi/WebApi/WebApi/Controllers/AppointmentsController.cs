@@ -75,8 +75,7 @@ namespace WebApi.Controllers
         [ProducesResponseType(200)]
         public ActionResult AskForAppointment([FromBody]AskForAppointmentInformation requestInfo)
         {
-            Service.SendAppointmentRequest(requestInfo)
-            return Ok(appointment);
+            return Ok(Service.SendAppointmentRequest(requestInfo,configuration));
         }
 
         [HttpDelete]
