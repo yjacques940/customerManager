@@ -365,36 +365,16 @@ function MakeAppointment(){
             echo $result->title;
         }
     } else {
-        //declareError
         echo 'No data received';
     }
 }
 
-function Api()
+function AppointmentCreator()
 {
-    //https://www.weichieprojects.com/blog/curl-api-calls-with-php/
-    //******* Prendre l'objet JSON dans SWAGGER, et ne pas oublier les foreign keys
-    //$customer = array('H','Yannick','Jacques','2019-08-31','developper','1');
+    require('views/appointment_creator.php');
+}
 
-    require('services/callApiExtension.php');
-    //$id = '1';
-    //$get_Data = CallAPI('GET','Customers/FullName/' . $id);
-    // $response = json_decode($get_Data,true);
-    //$errors = $response['response']['errors'];
-    //$data = $response['response']['data'][0];
-
-   /* $new_object = array(
-        "sex" => "H",
-  "firstName"=> "Yannick",
-  "lastName"=> "Jacques",
-  "birthDate"=> "2019-03-25T17:12:40.000Z",
-  "occupation"=> "Programmer",
-  "idAddress"=> 1,
-  "id"=> 0,
-  "isActive" => "true"
-    );*/
-   // echo CallAPI("POST","Customers", json_encode($new_object));
-
-  /* CallAPI("DELETE","Customers/4");
-  echo  CallAPI("GET","Customers");*/
+function Customers()
+{
+    require('views/customers.php');
 }
