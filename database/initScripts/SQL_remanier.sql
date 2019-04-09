@@ -118,7 +118,7 @@ CREATE TABLE tbl_user(
 #------------------------------------------------------------
 
 CREATE TABLE tbl_permission(
-		id_permissions Int  Auto_increment  NOT NULL ,
+        id_permissions Int  Auto_increment  NOT NULL ,
         is_active      Bool NOT NULL DEFAULT 1 ,
         bit            Int (8) NOT NULL UNIQUE ,
         name           Varchar (64) NOT NULL UNIQUE
