@@ -109,7 +109,7 @@ namespace WebApi.Validators
                 mailmessage.IsBodyHtml = true;
                 mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
                 mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
-                mailmessage.Subject = "Confirmation de rendez-vous";
+                mailmessage.Subject = "Un client vous a envoyé une demande de rendez-vous";
                 var htmlFile     = reader.ReadToEnd();
                 newHtml          = htmlFile.Replace("[AppointmentTimeOfDayx]", requestInfo.TimeOfDay);
                 newHtml          = newHtml.Replace("[AppointmentDatex]", requestInfo.Date);

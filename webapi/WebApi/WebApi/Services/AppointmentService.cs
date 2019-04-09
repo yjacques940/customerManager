@@ -91,7 +91,7 @@ namespace WebApi.Services
                 requestInfo.Email = user.Email;
                 var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
                 requestInfo.UserName = customer.FirstName + " " + customer.LastName;
-                requestInfo.PhoneNumber = "4185555555";
+                requestInfo.PhoneNumber = "4185555555";//À modifier lorsqu'on aura modifié la table des numéros de téléphon
             }
 
             EmailSender.SendAppointmentRequest(requestInfo,configuration);
