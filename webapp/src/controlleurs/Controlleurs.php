@@ -123,7 +123,7 @@ function PersonalInformation(){
 
 function AddOrUpdateUser(){
     if(isset($_POST)){
-        if($_POST['address'] != '' and $_POST['city'] != '' 
+        if($_POST['address'] != '' and $_POST['city'] != ''
         and $_POST['province'] != '' and $_POST['zipcode'] != '' and $_POST['occupation'] != ''
         and $_POST['phone1'] != '' and $_POST['type1'] != ''){
             $phone1 = array(
@@ -151,7 +151,7 @@ function AddOrUpdateUser(){
                     'idPhoneType'=>htmlentities($_POST['type3'])
                 );
                 if(!empty($_POST['extension3'])){
-                    $phone2['extension'] = htmlentities($_POST['extension3']);
+                    $phone3['extension'] = htmlentities($_POST['extension3']);
                 }
             }
             $physicalAddress = array(
@@ -184,14 +184,6 @@ function AddOrUpdateUser(){
                 'phoneNumbers'=>$phones
             ); 
             if(!isset($_SESSION['userid'])){
-                /*
-                $newUser->AddUser($_SESSION['email'],$_SESSION['password'],$_SESSION['firstname'],
-                $_SESSION['lastname'],$_SESSION['gender'],htmlentities($_POST['address']),
-                htmlentities($_POST['city']),htmlentities($_POST['province']),
-                htmlentities($_POST['zipcode']),$_SESSION['dateofbirth'],
-                htmlentities($_POST['occupation']),$phone1[0],$phone1[1],$phone1[2],
-                $phone2[0],$phone2[1],$phone2[2],$phone3[0],$phone3[1],$phone3[2]);
-                */
                 $result = CallAPI('POST','Registration/Register/%23definition', json_encode($registeringInformation));
                 var_dump($result);
                 $_SESSION['registered'] = 'success';
@@ -201,13 +193,6 @@ function AddOrUpdateUser(){
                 unset($_SESSION['lastname']);
                 unset($_SESSION['gender']);
                 unset($_SESSION['dateofbirth']);
-            }else{/*
-                $newUser->UpdateUser($_SESSION['userid'],htmlentities($_POST['address']),
-                htmlentities($_POST['city']),htmlentities($_POST['province']),
-                htmlentities($_POST['zipcode']), htmlentities($_POST['occupation']),
-                $phone1[0],$phone1[1],$phone1[2], $phone2[0],$phone2[1],$phone2[2],
-                $phone3[0],$phone3[1],$phone3[2]);
-                */
             }
         }
     }
@@ -221,7 +206,7 @@ function CheckEmailInUse(){
         echo 'taken';
     }
     else
-    {   
+    {
         if($_POST['email'] != $_POST['email2']){
             echo 'emailerror';
         }else if($_POST['password'] != $_POST['password2']){
@@ -261,7 +246,7 @@ function UpdatePassword(){
 
 function UpdateEmail(){
     if(!empty($_POST)){
-        if(isset($_POST['newemail']) and isset($_POST['newemailconfirmed'])  and isset($_POST['password'])){
+        if(isset($_POST['newemail']) and isset($_POST['newemailconfirmed']) and isset($_POST['password'])){
             if($_POST['newemail'] == $_POST['newemailconfirmed']){
                 $userIdentification = [
                     "userid" => htmlentities($_SESSION['userid']),
@@ -296,7 +281,7 @@ function CheckPasswords(){
         return false;
     }else if(htmlentities($_POST['confirmedpassword']) != htmlentities($_POST['newpassword'])){
         return false;
-    }else if(htmlentities($_POST['oldpassword']) == '' or htmlentities($_POST['confirmedpassword']) =='' 
+    }else if(htmlentities($_POST['oldpassword']) == '' or htmlentities($_POST['confirmedpassword']) ==''
             or htmlentities($_POST['newpassword']) == ''){
         return false;
     }else if(htmlentities($_POST['oldpassword']) == htmlentities($_POST['newpassword'])){
