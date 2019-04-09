@@ -68,7 +68,7 @@
                 </li>
                 <li>
                   <a href="index.php?action=searchCustomer" class="drop-down">
-                  CustomerSearch
+                  <?php echo localize('searchClient'); ?>
                   </a>
                 </li>
                 <li>

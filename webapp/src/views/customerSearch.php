@@ -1,28 +1,28 @@
 <?php
-$title = localize('PageTitle-Appointments');
+$title = localize('searchClient');
 ob_start();
 ?>
 
 <div class="mx-auto" style="margin-top: 30px; width: 90%">
+<h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('searchClient'); ?></h3>
     <div class="search-header">
         <div class="radio">
             <div class="form-check form-check-inline">
                 <label class="form-check-inline">
                 <input type="radio" class="form-check-input" checked name="searchType" value="1">
-                <h4>phone</h4></label>
+                <h4><?php echo localize('Personal-Phone');?></h4></label>
                 <input id="phoneNumber" type="text" class="form-control search-bar" 
                 name="phoneNumber" placeholder='phone' />
             </div>
             <div class="form-check form-check-inline">
                 <label class="form-check-inline">
                 <input type="radio" class="form-check-input" name="searchType" value="2">
-                <h4>nom</h4></label>
+                <h4><?php echo localize('Inscription-Lastname'); ?></h4></label>
                 <input id="customerName" type="text" class="form-control search-bar" 
                 name="customerName" placeholder='name' />
             </div>
-            <input type="button" value="hey" class="form-check-inline btn btn-success" onclick="SearchCustomer();">
+            <input type="button" value="<?php echo localize("searchClient"); ?>" class="form-check-inline btn btn-success" onclick="SearchCustomer();">
         </div>
-        
     </div>
     <div id="customers" class="form-group contact-forms col-md-4">
     </div>
