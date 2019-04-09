@@ -272,7 +272,7 @@ function UpdateEmail(){
                     $newEmail = [
                         "id" => htmlentities($_SESSION['userid']),
                         "email" => htmlentities($_POST['newemail'])
-                    ]; var_dump($newEmail);
+                    ];
                     $emailUpdate = CallAPI('POST', 'Users/UpdateUserEmail',json_encode($newEmail));
                     About();
                 }else{
