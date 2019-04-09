@@ -22,7 +22,6 @@ namespace WebApi.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<PhoneNumber> PhoneNumbers { get; set; }
-        public DbSet<CustomerPhoneNumber> CustomerPhoneNumbers { get; set; }
         public DbSet<User> Users { get; set; }
     }
 }
