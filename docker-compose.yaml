@@ -39,6 +39,12 @@ services:
         - local
         ports:
         - '3306:3306'
+    cronjobs:
+        build: 
+            context: ./cronjobs/
+            dockerfile: Dockerfile
+        networks:
+        - local
 networks:
     local:
         name: local_network
