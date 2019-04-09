@@ -5,6 +5,8 @@ using WebApi.Services;
 
 namespace WebApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class PhoneNumbersController : BaseController<PhoneNumberService, PhoneNumber>
     {
         public PhoneNumbersController(PhoneNumberService service) : base(service)
