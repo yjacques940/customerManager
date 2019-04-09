@@ -7,7 +7,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerPhoneNumbersController : BaseReaderController<CustomerPhoneNumberService, CustomerPhoneNumber>
+    public class CustomerPhoneNumbersController : BaseReaderController<CustomerPhoneNumberService, PhoneNumber>
     {
         public CustomerPhoneNumbersController(CustomerPhoneNumberService service) : base(service)
         {

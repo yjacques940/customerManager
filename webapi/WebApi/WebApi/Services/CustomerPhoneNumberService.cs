@@ -6,7 +6,7 @@ using WebApi.Models;
 
 namespace WebApi.Services
 {
-    public class CustomerPhoneNumberService : BaseCrudService<CustomerPhoneNumber>
+    public class CustomerPhoneNumberService : BaseCrudService<PhoneNumber>
     {
         public CustomerPhoneNumberService(IWebApiContext context) : base(context)
         {
@@ -19,9 +19,7 @@ namespace WebApi.Services
 
         public List<PhoneNumber> GetPhoneNumbersFromCustomerList(int customerId)
         {
-            List<int> phoneNumberIDs = Context.CustomerPhoneNumbers
-                .Where(c => c.IdCustomer == customerId).Select(c => c.IdPhoneNumber).ToList();
-            return Context.PhoneNumbers.Where(c => phoneNumberIDs.Contains(c.Id)).ToList();
+            return Context.PhoneNumbers.Where(c => c.IdCustomer == customerId).ToList();
         }
     }
 }

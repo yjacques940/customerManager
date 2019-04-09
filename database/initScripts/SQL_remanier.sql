@@ -49,26 +49,6 @@ CREATE TABLE tbl_address(
 	,CONSTRAINT tbl_address_tbl_state_FK FOREIGN KEY (id_state) REFERENCES tbl_state(id_state)
 )ENGINE=InnoDB;
 
-
-#------------------------------------------------------------
-# Table: tbl_customer
-#------------------------------------------------------------
-
-CREATE TABLE tbl_customer(
-        id_customer Int  Auto_increment  NOT NULL ,
-        sex         Char (1) NOT NULL ,
-        first_name  Varchar (50) NOT NULL ,
-        last_name   Varchar (50) NOT NULL ,
-        birth_date  Date NOT NULL ,
-        occupation  Varchar (100) NOT NULL ,
-        is_active   Bool NOT NULL DEFAULT 1 ,
-        id_address  Int NOT NULL
-	,CONSTRAINT tbl_customer_PK PRIMARY KEY (id_customer)
-
-	,CONSTRAINT tbl_customer_tbl_address_FK FOREIGN KEY (id_address) REFERENCES tbl_address(id_address)
-)ENGINE=InnoDB;
-
-
 #------------------------------------------------------------
 # Table: tbl_phone_type
 #------------------------------------------------------------
@@ -80,6 +60,22 @@ CREATE TABLE tbl_phone_type(
 	,CONSTRAINT tbl_phone_type_PK PRIMARY KEY (id_phone_type)
 )ENGINE=InnoDB;
 
+#------------------------------------------------------------
+# Table: tbl_customer
+#------------------------------------------------------------
+
+CREATE TABLE tbl_customer(
+        id_customer Int  Auto_increment  NOT NULL ,
+        sex         Char (1) NOT NULL ,
+        first_name  Varchar (50) NOT NULL ,
+        last_name   Varchar (50) NOT NULL ,
+        birth_date  DateTime NOT NULL ,
+        occupation  Varchar (100) NOT NULL ,
+        is_active   Bool NOT NULL DEFAULT 1 ,
+        id_address  Int NOT NULL
+	,CONSTRAINT tbl_customer_PK PRIMARY KEY (id_customer)
+	,CONSTRAINT tbl_customer_tbl_address_FK FOREIGN KEY (id_address) REFERENCES tbl_address(id_address)
+)ENGINE=InnoDB;
 
 #------------------------------------------------------------
 # Table: tbl_phone_number   --- VOIR À RENDRE UNIQUE LE NUMÉRO DE TÉLÉPHONE ET EXTENSION COMBINÉ ---
@@ -90,28 +86,12 @@ CREATE TABLE tbl_phone_number(
         phone		    Varchar (15) NOT NULL ,
         extension       Varchar (10) ,
         is_active       Bool NOT NULL DEFAULT 1 ,
-        id_phone_type   Int NOT NULL
+        id_phone_type   Int NOT NULL,
+        id_customer Int NOT NULL
 	,CONSTRAINT tbl_phone_number_PK PRIMARY KEY (id_phone_number)
-
+    ,CONSTRAINT tbl_customer_tbl_phone_number_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
 	,CONSTRAINT tbl_phone_number_tbl_phone_type_FK FOREIGN KEY (id_phone_type) REFERENCES tbl_phone_type(id_phone_type)
 )ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: tbl_customer_phone_number
-#------------------------------------------------------------
-
-CREATE TABLE tbl_customer_phone_number(
-        id_customer_phone_number Int  Auto_increment  NOT NULL ,
-        is_active       Bool NOT NULL DEFAULT 1 ,
-        id_phone_number Int NOT NULL ,
-        id_customer     Int NOT NULL
-	,CONSTRAINT tbl_customer_phone_number_PK PRIMARY KEY (id_customer_phone_number, id_phone_number,id_customer)
-
-	,CONSTRAINT tbl_customer_phone_number_tbl_phone_number_FK FOREIGN KEY (id_phone_number) REFERENCES tbl_phone_number(id_phone_number)
-	,CONSTRAINT tbl_customer_phone_number_tbl_customer0_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
-)ENGINE=InnoDB;
-
 
 #------------------------------------------------------------
 # Table: tbl_user
@@ -254,7 +234,6 @@ INSERT INTO tbl_state (code,name,id_country) VALUES
 	('WI','Wisconsin', @USA_CountryId),
 	('WY','Wyoming', @USA_CountryId);
 
-
 #------------------------------------------------------------
 # Creating data for tests
 #------------------------------------------------------------
@@ -267,34 +246,12 @@ INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id
 ('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),
 ('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2');
 
-INSERT INTO tbl_phone_number (phone, id_phone_type) VALUES
-('(418) 774-3835', 1),
-('(418) 588-6211', 1),
-('(418) 230-5469', 3),
-('(418) 420-6969', 2),
-('(418) 313-8034', 3);
-
-INSERT INTO tbl_customer_phone_number (id_customer, id_phone_number) VALUES
-(
-	(select id_customer from tbl_customer where first_name = 'Jessy'),
-    (select id_phone_number from tbl_phone_number where phone = '(418) 774-3835')
-),
-(
-	(select id_customer from tbl_customer where first_name = 'Jessy'),
-    (select id_phone_number from tbl_phone_number where phone = '(418) 313-8034')
-),
-(
-	(select id_customer from tbl_customer where first_name = 'Yannick'),
-    (select id_phone_number from tbl_phone_number where phone = '(418) 588-6211')
-),
-(
-	(select id_customer from tbl_customer where first_name = 'Yannick'),
-    (select id_phone_number from tbl_phone_number where phone = '(418) 230-5469')
-),
-(
-	(select id_customer from tbl_customer where first_name = 'Yannick'),
-    (select id_phone_number from tbl_phone_number where phone = '(418) 420-6969')
-);
+INSERT INTO tbl_phone_number (phone, id_phone_type,id_customer) VALUES
+('(418) 774-3835', 1,1),
+('(418) 588-6211', 1,2),
+('(418) 230-5469', 3,1),
+('(418) 420-6969', 2,2),
+('(418) 313-8034', 3,2);
 
 INSERT INTO tbl_appointment (appointment_date_time, duration_time, id_customer) VALUES
 ( '1000-01-01 09:00:00', '1000-01-01 01:00:00', 1),
