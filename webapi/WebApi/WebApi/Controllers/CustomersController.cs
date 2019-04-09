@@ -14,7 +14,7 @@ namespace WebApi.Controllers
         {
         }
 
-        [HttpGet,Route("GetAll")]
+        [HttpGet, Route("GetAll")]
         public ActionResult<IEnumerable<Customer>> GetCustomer()
         {
             return Service.GetList();
@@ -38,7 +38,7 @@ namespace WebApi.Controllers
             return Ok(Service.ChangeCustomerLastName(id, lastName));
         }
 
-        [HttpDelete,Route("Delete/{id}")]
+        [HttpDelete, Route("Delete/{id}")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
         public ActionResult DeleteCustomer(int id)
@@ -47,6 +47,18 @@ namespace WebApi.Controllers
                 return NoContent();
 
             return BadRequest();
+        }
+
+        [HttpGet, Route("GetCustomersWithPhone/{phone}")]
+        public ActionResult GetCustomersWithPhone(string phone)
+        {
+            return Ok(Service.GetCustomersWithPhone(phone));
+        }
+
+        [HttpGet, Route("GetCustomersWithName/{name}")]
+        public ActionResult GetCustomersWithName(string name)
+        {
+            return Ok(Service.GetCustomersWithName(name));
         }
     }
 }

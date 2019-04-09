@@ -32,6 +32,7 @@
   "Footer-Text-Phone": "Téléphone",
   "Header-Account": "Mon compte",
   "Header-Account-Manage": "Gérer mon compte",
+  "Header-Admin" : "Administration",
   "Header-Logout": "Se déconnecter",
   "Header-Manage-Email": "Modification de l'adresse courriel",
   "Header-Manage-Password": "Modification du mot de passe",

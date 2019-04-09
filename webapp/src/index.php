@@ -67,6 +67,9 @@ try
         case 'reserveappointment':
             ReserveAppointment();
             break;
+        case "searchCustomer":
+            SearchCustomer();
+            break;
         default :
             error(404);
             break;
@@ -83,6 +86,15 @@ try
     }
     else if(isset($_POST['timeslot'])){
         CheckTimeSlotAvailable();
+    }
+    else if(isset($_POST['customerPhone'])){
+        GetCustomersWithPhone();
+    }
+    else if(isset($_POST['customerName'])){
+        GetCustomersWithName();
+    }
+    else if(isset($_POST['customerId'])){
+        GetCustomerInformation();
     }
     else
     {
