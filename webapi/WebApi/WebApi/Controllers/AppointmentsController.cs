@@ -14,13 +14,13 @@ namespace WebApi.Controllers
     [ApiController]
     public class AppointmentsController : BaseReaderController<AppointmentService, Appointment>
     {
-        private readonly CustomerPhoneNumberService customerPhoneNumberService;
+        private readonly PhoneNumberService phoneNumberService;
         private readonly IConfiguration configuration;
 
         public AppointmentsController(WebApiContext context, AppointmentService service,
-            CustomerPhoneNumberService customerPhoneNumberService, IConfiguration configuration) : base(service)
+            PhoneNumberService phoneNumberService, IConfiguration configuration) : base(service)
         {
-                this.customerPhoneNumberService = customerPhoneNumberService;
+                this.phoneNumberService = phoneNumberService;
                 this.configuration = configuration;
         }
 
@@ -33,13 +33,13 @@ namespace WebApi.Controllers
         [HttpGet, Route("AppointmentsAndCustomers")]
         public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers()
         {
-            return Service.GetAppointmentAndCustomers(customerPhoneNumberService);
+            return Service.GetAppointmentAndCustomers(phoneNumberService);
         }
 
         [HttpGet, Route("NewAppointments")]
         public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetNewAppointments()
         {
-            return Service.GetNewAppointments(customerPhoneNumberService);
+            return Service.GetNewAppointments(phoneNumberService);
         }
 
         [HttpPost, Route("ChangeIsNewStatus")]

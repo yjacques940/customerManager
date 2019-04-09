@@ -22,7 +22,7 @@ namespace WebApi.Services
         }
 
         public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers
-            (CustomerPhoneNumberService customerPhoneNumberService)
+            (PhoneNumberService phoneNumberService)
         {
             var appointments = (
                 from appointment in Context.Appointments
@@ -36,7 +36,7 @@ namespace WebApi.Services
 
             foreach (var appointment in appointments)
             {
-                appointment.PhoneNumbers = customerPhoneNumberService
+                appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
             }
             return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
@@ -60,7 +60,7 @@ namespace WebApi.Services
             }
         }
 
-        internal ActionResult<IEnumerable<CustomerAppointmentInformation>> GetNewAppointments(CustomerPhoneNumberService customerPhoneNumberService)
+        internal ActionResult<IEnumerable<CustomerAppointmentInformation>> GetNewAppointments(PhoneNumberService phoneNumberService)
         {
             var appointments = (
                 from appointment in Context.Appointments
@@ -74,7 +74,7 @@ namespace WebApi.Services
 
             foreach (var appointment in appointments)
             {
-                appointment.PhoneNumbers = customerPhoneNumberService
+                appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
             }
             return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();

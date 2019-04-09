@@ -10,7 +10,6 @@ namespace WebApi
             services.AddTransient<CustomerService>();
             services.AddTransient<AppointmentService>();
             services.AddTransient<PhoneNumberService>();
-            services.AddTransient<CustomerPhoneNumberService>();
             services.AddTransient<UserService>();
             return services;
         }

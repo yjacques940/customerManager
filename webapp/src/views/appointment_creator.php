@@ -57,7 +57,7 @@ ob_start(); ?>
                                     </td>
                                     <td>
                                     <?php
-                                    $phoneResult = CallAPI('GET', 'CustomerPhoneNumbers/ForCustomer/'.($customer->id));
+                                    $phoneResult = CallAPI('GET', 'PhoneNumbers/ForCustomer/'.($customer->id));
                                     $phoneNumbers = $phoneResult['response'];
                                     foreach ($phoneNumbers as $phoneNumber) {
                                         ?>
