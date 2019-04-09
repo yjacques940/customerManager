@@ -110,6 +110,12 @@
   "AskForAppointment-Treatment-HotStones" : "Hot stones",
   "AskForAppointment-Treatment-Regular" : "Regular",
   "AskForAppointment-Treatment-1h30" : "One hour and a half",
-  "Appointment-DateRequested" : "Desired date"
-
+  "Appointment-DateRequested" : "Desired date",
+  "PageTitle-Error":"Error",
+  "Error-Title":"Error ",
+  "Error-Reason-403":"You don't have the credentials to access this content.",
+  "Error-Reason-404":"This page doesn't exist.",
+  "Error-Reason-500":"The server could not handle this request. Please retry later.",
+  "Error-Reason-Unknown":"Something unexpected happened. Please retry later..",
+  "Error-Help":"If this happens again or you are supposed to be able to access this content, please <em>contact the administrator.</em>"
 }

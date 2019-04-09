@@ -1,4 +1,5 @@
 <?php
+if (!userHasPermission('customers-read') && !userHasPermission('appointments-write')) error(403);
 $title = localize('PageTitle-Appointments');
 ob_start();
 ?>

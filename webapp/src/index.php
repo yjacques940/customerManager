@@ -55,7 +55,7 @@ try
             UpdateEmail();
             break;
         default :
-            Home();
+            error(404);
             break;
         }
     }

@@ -14,8 +14,9 @@ if (isset($_GET['setLocale'])) {
     $_SESSION['locale'] = $_GET['setLocale'];
 }
 
-function permissionDenied() {
+function error($errorCode) {
     require('views/error.php');
+    die();
 }
 
 function userHasPermission(String $permission): bool
@@ -347,7 +348,7 @@ function NewAppointments(){
         {
             require('views/appointments.php');
         }
-    } else permissionDenied();
+    } else error(403);
 }
 
 function Appointments(){
