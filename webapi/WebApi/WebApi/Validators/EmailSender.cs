@@ -96,8 +96,7 @@ namespace WebApi.Validators
         {
             SmtpClient client = GetSmtpClient(configuration);
             MailMessage mailMessage = GetMailMessageForAppointmentRequest(requestInfo);
-            
-                client.Send(mailMessage);
+            client.Send(mailMessage);
         }
 
         private static MailMessage GetMailMessageForAppointmentRequest(AskForAppointmentInformation requestInfo)

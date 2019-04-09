@@ -14,14 +14,12 @@ ob_start(); ?>
                         <input class="form-control" id="AskForAppointmentUserName"
                                name="AskForAppointmentUserName">
                     </div>
-
                     <div class="form-group">
                         <label for="AskForAppointmentPhoneNumber">
                             *<?php echo localize('Personal-Phone')?>: </label>
                         <input class="form-control" id="AskForAppointmentPhoneNumber"
                                name="AskForAppointmentPhoneNumber" ">
                     </div>
-
                     <div class="form-group">
                         <label for="AskForAppointmentEmail">*<?php echo localize('Login-Email')?>: </label>
                         <input type="email" class="form-control" id="AskForAppointmentEmail"
@@ -29,14 +27,12 @@ ob_start(); ?>
                                aria-describedby="emailHelp" placeholder="<?php echo localize('Login-Email') ?>">
                     </div>
                 <?php }?>
-
                     <div class="form-group">
                             <label for="askForAppointmentDate"><p>*<?php echo localize('Appointment-DateRequested'); ?></p></label>
                             <input type="date" min="<?php echo date('Y-m-d'); ?>" id="askForAppointmentDate"
                                    name="askForAppointmentDate" class="form-control"
                                    placeholder="Date du rendez-vous">
                     </div>
-
                 <div class="form-group">
                     <label for="appointmentTimeOfDay">*<?php echo localize('AskForAppointment-TimeOfDay'); ?></label>
                     <div>
@@ -49,7 +45,6 @@ ob_start(); ?>
                         </select>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="TypeOfTreatment">*<?php echo localize('AskForAppointment-TypeOfTreatment'); ?></label>
                     <div>
@@ -58,7 +53,6 @@ ob_start(); ?>
                             <option value="Régulier"><?php echo localize('AskForAppointment-Treatment-Regular'); ?></option>
                             <option value="Rendez-vous d'1h30"><?php echo localize('AskForAppointment-Treatment-1h30')?></option>
                             <option value="Pierres chaudes"><?php echo localize('AskForAppointment-Treatment-HotStones')?></option>
-
                         </select>
                     </div>
                 </div>
