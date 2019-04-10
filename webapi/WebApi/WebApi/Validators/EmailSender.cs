@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using WebApi.DTO;
 
 namespace WebApi.Validators
 {
@@ -89,6 +90,36 @@ namespace WebApi.Validators
             client.Credentials =
                 new NetworkCredential(configuration.GetSection("EmailAddress").Value,configuration.GetSection("EmailPassword").Value);
             return client;
+        }
+
+        internal static void SendAppointmentRequest(AskForAppointmentInformation requestInfo, IConfiguration configuration)
+        {
+            SmtpClient client = GetSmtpClient(configuration);
+            MailMessage mailMessage = GetMailMessageForAppointmentRequest(requestInfo);
+            client.Send(mailMessage);
+        }
+
+        private static MailMessage GetMailMessageForAppointmentRequest(AskForAppointmentInformation requestInfo)
+        {
+            using (StreamReader reader = File.OpenText("EmailTemplate/askForAppointment.html"))
+            {
+                string newHtml = "";
+                MailMessage mailmessage = new MailMessage();
+                mailmessage.IsBodyHtml = true;
+                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
+                mailmessage.Subject = "Un client vous a envoyé une demande de rendez-vous";
+                var htmlFile     = reader.ReadToEnd();
+                newHtml          = htmlFile.Replace("[AppointmentTimeOfDayx]", requestInfo.TimeOfDay);
+                newHtml          = newHtml.Replace("[AppointmentDatex]", requestInfo.Date);
+                newHtml          = newHtml.Replace("[SenderEmailx]", requestInfo.Email);
+                newHtml          = newHtml.Replace("[OtherInformationx]",  requestInfo.MoreInformation != "" ? "<div>Informations supplémentaires  :</div><div class=\"moreInfoBorder\">" + requestInfo.MoreInformation + "</div>": "");
+                newHtml          = newHtml.Replace("[SenderPhoneNumberx]", requestInfo.PhoneNumber);
+                newHtml          = newHtml.Replace("[SenderNamex]", requestInfo.UserName);
+                newHtml          = newHtml.Replace("[AppointmentTypex]", requestInfo.TypeOfTreatment);
+                mailmessage.Body = newHtml;
+                return mailmessage;
+            }
         }
     }
 }

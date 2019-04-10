@@ -70,6 +70,14 @@ namespace WebApi.Controllers
             return Ok(appointmentAdded);
         }
 
+        [HttpPost, Route("AskForAppointment")]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(200)]
+        public ActionResult AskForAppointment([FromBody]AskForAppointmentInformation requestInfo)
+        {
+            return Ok(Service.SendAppointmentRequest(requestInfo,configuration));
+        }
+
         [HttpDelete]
         [Route("{id:int}")]
         [ProducesResponseType(401)]

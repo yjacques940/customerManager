@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Microsoft.AspNetCore.Mvc.Formatters.Internal;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Validators;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Services
 {
@@ -78,6 +81,20 @@ namespace WebApi.Services
                     .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
             }
             return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
+        }
+
+        internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
+        {
+            if (requestInfo.UserId != "")
+            {
+                var user = Context.Users.First(c => c.Id == Convert.ToInt32(requestInfo.UserId));
+                requestInfo.Email = user.Email;
+                var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
+                requestInfo.UserName = customer.FirstName + " " + customer.LastName;
+                requestInfo.PhoneNumber = Context.PhoneNumbers.First(c => c.IdCustomer == customer.Id).Phone.ToString();
+            }
+            EmailSender.SendAppointmentRequest(requestInfo,configuration);
+            return requestInfo.UserId;
         }
 
         public Appointment CheckAppointmentIsAvailable(AppointmentInformation appointment)
