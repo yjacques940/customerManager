@@ -20,10 +20,11 @@ namespace WebApi.Services
             Customer customer = registerInformation.Customer;
             User user = registerInformation.User;
             List<PhoneNumber> phoneNumbers = registerInformation.PhoneNumbers;
-
-            
             if (address != null && customer != null && user != null && phoneNumbers.First() != null)
             {
+                address.IsActive = true;
+                customer.IsActive = true;
+                user.IsActive = true;
                 Context.Add(address);
                 Context.SaveChanges();
                 customer.IdAddress = address.Id;
@@ -36,6 +37,7 @@ namespace WebApi.Services
                 Context.SaveChanges();
                 foreach (var phone in phoneNumbers)
                 {
+                    phone.IsActive = true;
                     phone.IdCustomer = customer.Id;
                     Context.Add(phone);
                 }
