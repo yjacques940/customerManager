@@ -117,5 +117,5 @@
   "Error-Reason-404":"This page doesn't exist.",
   "Error-Reason-500":"The server could not handle this request. Please retry later.",
   "Error-Reason-Unknown":"Something unexpected happened. Please retry later..",
-  "Error-Help":"If this happens again or you are supposed to be able to access this content, please <em>contact the administrator.</em>"
+  "Error-Help":"You have attempted to access a page that you are not authorized to view. If you have any questions, please contact the site administrator."
 }
