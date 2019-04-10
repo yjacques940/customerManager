@@ -71,6 +71,11 @@
                   </a>
                 </li>
                 <li>
+                  <a href="index.php?action=updateemail" class="drop-text">
+                    <?php echo localize('Header-Manage-Email'); ?>
+                  </a>
+                </li>
+                <li>
                   <a href="index.php?action=logout" class="drop-text">
                     <?php echo localize('Header-Logout'); ?>
                   </a>
