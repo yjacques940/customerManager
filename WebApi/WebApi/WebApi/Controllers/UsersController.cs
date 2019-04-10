@@ -13,10 +13,10 @@ namespace WebApi.Controllers
         {
         }
 
-        [HttpGet, Route("Login/{email}/{password}")]
-        public ActionResult<UserInformation> GetUserInformation(string email, string password)
+        [HttpPost, Route("Login")]
+        public ActionResult<UserInformation> GetUserInformation([FromBody]LoginInformation loginInformation)
         {
-            var user = Service.GetUserInformation(email, password);
+            var user = Service.GetUserInformation(loginInformation.Email, loginInformation.Password);
             if (user == null)
                 return BadRequest();
 

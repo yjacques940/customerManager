@@ -1,5 +1,5 @@
 <?php
-$titre = localize('Personal-Title');
+$title = localize('Personal-Title');
  ob_start(); 
     $cpt=0;
     $address='';

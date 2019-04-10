@@ -1,5 +1,5 @@
 <?php
-$titre = Localize('Login-Title');
+$title = Localize('Login-Title');
  ob_start(); ?>
  <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">

@@ -68,12 +68,11 @@ function getLocaleFile($locale)
 function Login(){
     if(isset($_POST['email'])){
         unset($_SESSION['email']);
-        $userRegistered = new ManagerUsers;
         $userIdentification = [
             "email" => htmlentities($_POST['email']),
             "password" => htmlentities($_POST['password'])
         ];
-        $userAPI = CallAPI('GET', 'Users/Login', $userIdentification);
+        $userAPI = CallAPI('POST', 'Users/Login', json_encode($userIdentification));
         if($userAPI['statusCode'] == 200)
         {
             $_SESSION['username'] = $userAPI['response']->fullName;
@@ -197,8 +196,8 @@ function AddOrUpdateUser(){
                 'customer'=>$customer,
                 'user'=>$user,
                 'phoneNumbers'=>$phones
-            ); var_dump($registeringInformation);
-            $result = CallAPI('POST','Registration/Register/%23definition', json_encode($registeringInformation));
+            );
+            $result = CallAPI('POST','Registration/Register', json_encode($registeringInformation));
             if(!isset($_SESSION['userid'])){
                 $_SESSION['registered'] = 'success';
                 unset($_SESSION['email']);

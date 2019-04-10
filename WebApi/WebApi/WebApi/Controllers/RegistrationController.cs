@@ -17,7 +17,7 @@ namespace WebApi.Controllers
         {
         }
 
-        [HttpPost, Route("Register/{registrationInformation}")]
+        [HttpPost, Route("Register")]
         [ProducesResponseType(401)]
         [ProducesResponseType(200)]
         public ActionResult RegisterNewUser([FromBody]RegistrationInformation registrationInformation)

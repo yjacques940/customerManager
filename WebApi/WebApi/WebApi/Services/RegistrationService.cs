@@ -30,30 +30,23 @@ namespace WebApi.Services
                 Context.Add(customer);
                 Context.SaveChanges();
                 user.IdCustomer = customer.Id;
+                user.LastLogin = DateTime.Now;
+                user.CreatedOn = DateTime.Now;
                 Context.Add(user);
                 Context.SaveChanges();
                 foreach (var phone in phoneNumbers)
                 {
+                    phone.IdCustomer = customer.Id;
                     Context.Add(phone);
                 }
             }
             Context.SaveChanges();
-           return SaveCustomerPhoneNumbers(phoneNumbers,customer);
+           return user;
         }
 
         internal object UpdateUser(RegistrationInformation registrationInformation)
         {
             throw new NotImplementedException();
-        }
-
-        private int SaveCustomerPhoneNumbers(List<PhoneNumber> phoneNumbers, Customer customer)
-        {
-            foreach (var phone in phoneNumbers)
-            {
-                Context.Add(new CustomerPhoneNumber() { IdPhoneNumber = phone.Id, IdCustomer = customer.Id });
-            }
-            Context.SaveChanges();
-            return customer.Id;
         }
     }
 }

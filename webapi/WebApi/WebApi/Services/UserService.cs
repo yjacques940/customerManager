@@ -16,11 +16,12 @@ namespace WebApi.Services
         {
             var user = Context.Users.Where(c => c.Email == email &&
                     c.Password == password).First();
-
-            if (user == null)
+            if(user == null)
             {
                 return null;
             }
+            user.LastLogin = DateTime.Now;
+            Context.SaveChanges();
             UserInformation userInfo = new UserInformation();
             userInfo.Id = user.Id;
             var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
