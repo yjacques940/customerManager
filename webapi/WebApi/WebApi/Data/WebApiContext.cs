@@ -23,6 +23,7 @@ namespace WebApi.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<PhoneNumber> PhoneNumbers { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<PhoneType> PhoneTypes { get; set; }
         public DbSet<Permission> Permissions { get; set; }
     }
 }

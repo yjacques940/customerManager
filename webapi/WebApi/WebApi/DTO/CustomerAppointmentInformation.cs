@@ -7,6 +7,6 @@ namespace WebApi.DTO
     {
         public Appointment Appointment { get; set; }
         public Customer Customer { get; set; }
-        public List<PhoneNumber> PhoneNumbers { get; set; }
+        public List<PhoneNumberAndTypesInformation> PhoneNumbers { get; set; }
     }
 }

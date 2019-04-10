@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Services;
 
@@ -14,7 +15,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet, Route("ForCustomer/{id}")]
-        public List<PhoneNumber> GetPhoneNumberByCustomer(int id)
+        public List<PhoneNumberAndTypesInformation> GetPhoneNumberByCustomer(int id)
         {
             return Service.GetPhoneNumbersFromCustomerList(id);
         }

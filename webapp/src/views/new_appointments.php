@@ -135,10 +135,21 @@ ob_start();
                     <?php
                     foreach ($appointment->phoneNumbers as $phoneNumber) {
                         ?>
-                        <table style="width:100%; background-color: rgba(255,255,255,0)">
+                        <table style="width:100%;">
                             <tr>
-                                <th><?php echo $phoneNumber->idPhoneType; ?></th>
-                                <td><?php echo $phoneNumber->phone.$phoneNumber->extension; ?></td>
+                                <div>
+                                <td style="text-align: right; border: none; width: 45%;"><?php echo $phoneNumber->phoneType . " :"; ?></td>
+                                <td style="text-align: left; border: none; float:left;">
+                                    <?php echo $phoneNumber->phone; ?>
+                                <?php
+                                if($phoneNumber->extension)
+                                {
+                                    echo "&nbsp&nbsp Ext. " .$phoneNumber->extension ;
+                                }
+                                ?>
+                                </td>
+
+                                </div>
                             </tr>
                         </table>
                         <?php
