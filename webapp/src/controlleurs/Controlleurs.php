@@ -212,9 +212,11 @@ function AddOrUpdateUser(){
 }
 
 function CheckEmailInUse(){
-    $user = new ManagerUsers;
-    $emailinUse = $user->CheckEmailInUse(htmlentities($_POST['email']));
-    if($emailinUse->fetch())
+    $email = [
+        "email" => htmlentities($_POST['email'])
+    ];
+    $emailInUse = CallAPI('POST','Users/CheckEmailInUse',json_encode($email));
+    if($emailInUse['statusCode'] == 200)
     {
         echo 'taken';
     }

@@ -56,5 +56,14 @@ namespace WebApi.Services
             }
             return user;
         }
+
+        public string CheckEmailInUse(string email)
+        {
+            User user = (from c in Context.Users where c.Email == email select c).First();
+            if (user != null)
+                return user.Email;
+
+            return "availlable";
+        }
     }
 }

@@ -44,5 +44,11 @@ namespace WebApi.Controllers
         {
             return Ok(Service.UpdateUserEmail(userEmailInformation.Id, userEmailInformation.Email));
         }
+
+        [HttpPost, Route ("CheckEmailInUse")]
+        public ActionResult CheckEmailInUSe([FromBody] EmailAddress emailAddress)
+        {
+            return Ok(Service.CheckEmailInUse(emailAddress.Email));
+        }
     }
 }
