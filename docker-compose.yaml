@@ -3,7 +3,6 @@
 version: '2.4'
 services:
     webapp:
-        image: httpd:2.4-apache
         build:
             context: ./webapp/
             dockerfile: Dockerfile
@@ -19,7 +18,6 @@ services:
           source: ./webapp/src
           target: /var/www/html
     webapi:
-        image: alpine:3.9
         build:
             context: ./webapi/WebApi/
             dockerfile: ./WebApi/Dockerfile
