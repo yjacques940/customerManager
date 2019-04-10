@@ -264,9 +264,6 @@ function SendAskForAppointment()
         {
             require('views/confirmation_message.php');
         }
-        else{
-            echo $result['statusCode'];
-        }
     }
 }
 
