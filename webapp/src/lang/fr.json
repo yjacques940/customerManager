@@ -1,4 +1,5 @@
 {
+  "About-EmailChanged": "Adresse courriel modifié avec succès",
   "About-InformationChanged": "Informations personnelles mise à jour",
   "About-Introduction": "Introduction sur l'entreprise.",
   "About-OurGoals": "Notre but",
@@ -25,7 +26,6 @@
   "EmailUpdate-Error-password": "Mot de passe incorrect",
   "EmailUpdate-NewEmail": "Nouvelle adresse courriel",
   "EmailUpdate-NewEmailConfirmed": "Confirmation de l'adresse courriel",
-  "EmailUpdate-OldEmail": "Adresse courriel actuelle",
   "EmailUpdate-PasswordConfirm" : "Veuillez confirmer avec votre mot de passe",
   "Footer-Text-Address": "Adresse",
   "Footer-Text-Email": "Courriel",
