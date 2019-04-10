@@ -40,7 +40,7 @@ namespace WebApi.Controllers
         [HttpPost, Route("UpdateUserEmail")]
         public ActionResult UpdateUserEmail([FromBody]UserEmailInformation userEmailInformation)
         {
-            return Ok(Service.ChangeUserEmail(userEmailInformation.Id, userEmailInformation.Email));
+            return Ok(Service.UpdateUserEmail(userEmailInformation.Id, userEmailInformation.Email));
         }
     }
 }
