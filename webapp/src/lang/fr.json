@@ -125,4 +125,10 @@
   "Error-Reason-500":"Le serveur n'a pas pu répondre à votre requête. Veuillez réessayer plus tard.",
   "Error-Reason-Unknown":"Une erreur inattendue c'est produite. Veuillez réessayer plus tard.",
   "Error-Help":"Si vous avez des questions, veuillez contacter l'administrateur du site."
+  "Appointment-ChangeNewStatus" : "A été vu",
+  "Timeslot-Add" : "Ajouter",
+  "Timeslot-At" : "à",
+  "Timeslot-From" : "de",
+  "Timeslot-Le" : "le",
+  "Timeslot-To" : "jusqu'à"
 }
