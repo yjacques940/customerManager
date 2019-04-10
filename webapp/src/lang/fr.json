@@ -124,5 +124,5 @@
   "Error-Reason-404":"Cette page est inexistante.",
   "Error-Reason-500":"Le serveur n'a pas pu répondre à votre requête. Veuillez réessayer plus tard.",
   "Error-Reason-Unknown":"Une erreur inattendue c'est produite. Veuillez réessayer plus tard.",
-  "Error-Help":"Si cela se reproduit ou que vous devriez avoir droit à accéder cette page, veuillez <em>contacter l'administrateur.</em>"
+  "Error-Help":"Vous n'êtes pas autorisé à afficher cette page. Si vous avez des questions, veuillez contacter l'administrateur du site."
 }
