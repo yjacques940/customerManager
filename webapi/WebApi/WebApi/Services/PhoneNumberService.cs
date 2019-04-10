@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebApi.Data;
+using WebApi.DTO;
 using WebApi.Models;
 
 namespace WebApi.Services
@@ -17,9 +18,20 @@ namespace WebApi.Services
             return GetPhoneNumbersFromCustomer(customerId);
         }
 
-        public List<PhoneNumber> GetPhoneNumbersFromCustomerList(int customerId)
+        public List<PhoneNumberAndTypesInformation> GetPhoneNumbersFromCustomerList(int customerId)
         {
-            return Context.PhoneNumbers.Where(c => c.IdCustomer == customerId).ToList();
+            var query = (from phoneNumber in Context.PhoneNumbers
+                join phoneType in Context.PhoneTypes on phoneNumber.IdPhoneType equals phoneType.Id
+                where phoneNumber.IdCustomer == customerId && phoneNumber.IsActive && phoneType.IsActive
+                select new PhoneNumberAndTypesInformation()
+                {
+                    Phone = phoneNumber.Phone,
+                    PhoneType = phoneType.Name,
+                    IdPhoneType = phoneType.Id,
+                    Extension = phoneNumber.Extension,
+                    IdCustomer = customerId
+                }).ToList();
+            return query;
         }
     }
 }
