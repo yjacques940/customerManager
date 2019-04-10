@@ -41,7 +41,7 @@ namespace WebApi.Services
             return user;
         }
 
-        public object ChangeUserEmail(int userId, string email)
+        public object UpdateUserEmail(int userId, string email)
         {
             User user = (from c in Context.Users where c.Id == userId select c).First();
             if (user != null)
