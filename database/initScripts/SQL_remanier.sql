@@ -2,7 +2,9 @@
 #        DB Generator for main_db
 #------------------------------------------------------------
 
-create database if not exists main_db;
+create database if not exists main_db
+CHARACTER SET utf8
+COLLATE utf8_bin;
 use main_db;
 
 #------------------------------------------------------------
@@ -14,7 +16,7 @@ CREATE TABLE tbl_country(
         name       Varchar (25) NOT NULL UNIQUE ,
         is_active  Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_country_PK PRIMARY KEY (id_country)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 #------------------------------------------------------------
@@ -30,7 +32,7 @@ CREATE TABLE tbl_state(
 	,CONSTRAINT tbl_state_PK PRIMARY KEY (id_state)
 
 	,CONSTRAINT tbl_state_tbl_country_FK FOREIGN KEY (id_country) REFERENCES tbl_country(id_country)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 #------------------------------------------------------------
@@ -47,7 +49,7 @@ CREATE TABLE tbl_address(
 	,CONSTRAINT tbl_address_PK PRIMARY KEY (id_address)
 
 	,CONSTRAINT tbl_address_tbl_state_FK FOREIGN KEY (id_state) REFERENCES tbl_state(id_state)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 #------------------------------------------------------------
 # Table: tbl_phone_type
@@ -58,7 +60,7 @@ CREATE TABLE tbl_phone_type(
         name          Varchar (15) NOT NULL UNIQUE,
         is_active     Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_phone_type_PK PRIMARY KEY (id_phone_type)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 #------------------------------------------------------------
 # Table: tbl_customer
@@ -75,7 +77,7 @@ CREATE TABLE tbl_customer(
         id_address  Int NOT NULL
 	,CONSTRAINT tbl_customer_PK PRIMARY KEY (id_customer)
 	,CONSTRAINT tbl_customer_tbl_address_FK FOREIGN KEY (id_address) REFERENCES tbl_address(id_address)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 #------------------------------------------------------------
 # Table: tbl_phone_number   --- VOIR À RENDRE UNIQUE LE NUMÉRO DE TÉLÉPHONE ET EXTENSION COMBINÉ ---
@@ -91,7 +93,7 @@ CREATE TABLE tbl_phone_number(
 	,CONSTRAINT tbl_phone_number_PK PRIMARY KEY (id_phone_number)
     ,CONSTRAINT tbl_customer_tbl_phone_number_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
 	,CONSTRAINT tbl_phone_number_tbl_phone_type_FK FOREIGN KEY (id_phone_type) REFERENCES tbl_phone_type(id_phone_type)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 #------------------------------------------------------------
 # Table: tbl_user
@@ -110,7 +112,7 @@ CREATE TABLE tbl_user(
 
 	,CONSTRAINT tbl_user_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
 	,CONSTRAINT tbl_user_tbl_customer_AK UNIQUE (id_customer)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 #------------------------------------------------------------
@@ -124,7 +126,7 @@ CREATE TABLE tbl_permission(
         name           Varchar (64) NOT NULL UNIQUE
 	,CONSTRAINT tbl_permissions_PK PRIMARY KEY (id_permissions)
     ,CONSTRAINT tbl_permissions_CHK_bit CHECK (mod(bit, 2) = 0)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 #------------------------------------------------------------
@@ -141,7 +143,7 @@ CREATE TABLE tbl_follow_up(
 	,CONSTRAINT tbl_follow_up_PK PRIMARY KEY (id_follow_up)
 
 	,CONSTRAINT tbl_follow_up_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 #------------------------------------------------------------
@@ -156,7 +158,7 @@ CREATE TABLE tbl_appointment(
         is_new        Bool NOT NULL DEFAULT 1,
         id_customer      Int NOT NULL
 	,CONSTRAINT tbl_appointment_PK PRIMARY KEY (id_appointment)
-)ENGINE=InnoDB;
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 ALTER TABLE tbl_appointment
 	ADD CONSTRAINT tbl_appointment_tbl_customer0_FK
