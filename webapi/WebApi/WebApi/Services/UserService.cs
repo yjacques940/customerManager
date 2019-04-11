@@ -32,13 +32,6 @@ namespace WebApi.Services
         {
             return Context.Users.Any(u => u.Id == idUser
                 && ((u.Role % 2) == 1
-                || (u.Role & (Context.Permission.FirstOrDefault(p => p.Name == permission).Bit)) != 0));
-        }
-
-        public bool CheckIfUserHasPermission(int idUser, string permission)
-        {
-            return Context.Users.Any(u => u.Id == idUser
-                && ((u.Role % 2) == 1
                 || (u.Role & (Context.Permissions.FirstOrDefault(p => p.Name == permission).Bit)) != 0));
         }
 
