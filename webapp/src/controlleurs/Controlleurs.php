@@ -1,7 +1,6 @@
 <?php
 session_start();
 require('models/ManagerUsers.php');
-require('models/Customer.php');
 require('services/callApiExtension.php');
 
 $default_locale = 'fr';
@@ -98,7 +97,8 @@ function Home(){
 function Inscription(){
     if(isset($_SESSION['email'])){
         $provinces = new ManagerUsers;
-        $result = $provinces->GetProvinces();
+        $states = CallAPI('GET','State');
+        $phoneTypes = CallAPI('GET', 'PhoneType');
         $phoneType = $provinces->GetPhoneType();
         $phoneType2 = $provinces->GetPhoneType();
         $phoneType3 = $provinces->GetPhoneType();
@@ -125,7 +125,7 @@ function PersonalInformation(){
             About();
         }else{
             $provinces = new ManagerUsers;
-            $result = $provinces->GetProvinces();
+            $result = CallAPI('GET','State');
             $phoneType = $provinces->GetPhoneType();
             $phoneType2 = $provinces->GetPhoneType();
             $phoneType3 = $provinces->GetPhoneType();

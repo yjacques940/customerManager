@@ -85,22 +85,9 @@
              <h4 class="mb-lg-3 mb-2"><?php echo localize('Home-Text-Title'); ?></h4>
              <h5><?php echo localize('Home-Text-Bold'); ?></h5>
             </div>
-          <div class="two-demo-button mt-lg-5 mt-md-4 mt-3">
-             <p><?php echo localize('Home-Text-Details'); ?></p>
-          </div>
-          <div class="view-buttn mt-md-4 mt-sm-4 mt-3">
-             <a href="?action=inscription" class="btn"><?php echo localize('Home-Button'); ?></a>
-          </div>
          </div>
         </div>
       </div>
     </header>
-    <div id="modal01" class="modal" onclick="this.style.display='none'">
-      <span class="close">&times;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <div class="modal-content">
-        <img id="img02" style="max-width:100%">
-      </div>
-    </div>
-
   </body>
 </html>
