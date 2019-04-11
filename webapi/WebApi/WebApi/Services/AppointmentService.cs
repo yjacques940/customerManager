@@ -19,9 +19,17 @@ namespace WebApi.Services
         {
         }
 
-        public ActionResult<IEnumerable<Appointment>> GetAppointmentsByDate(string date)
+        public ActionResult<IEnumerable<AppointmentTimeSlotInformation>> GetAppointmentsByDate(string date)
         {
-            return Context.Appointments.Where(c => c.AppointmentDateTime.Date == Convert.ToDateTime(date).Date && c.IsActive).ToList();
+            return (
+                from appointment in Context.Appointments
+                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
+                where appointment.IsActive && timeslot.IsActive
+                select new AppointmentTimeSlotInformation()
+                {
+                    AppointmentInfo = appointment,
+                    TimeSlotInfo = timeslot
+                }).AsNoTracking().ToList();
         }
 
         public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers
@@ -30,10 +38,12 @@ namespace WebApi.Services
             var appointments = (
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
+                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
                 where customer.IsActive && appointment.IsActive
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
+                    Timeslot = timeslot,
                     Appointment = appointment
                 }).AsNoTracking().ToList();
 
@@ -42,7 +52,7 @@ namespace WebApi.Services
                 appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
             }
-            return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
+            return appointments.OrderBy(c => c.Timeslot.SlotDateTime).ToList();
         }
 
         public bool ChangeIsNewStatus(List<int> ids)
@@ -68,10 +78,12 @@ namespace WebApi.Services
             var appointments = (
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
+                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
                 where customer.IsActive && appointment.IsActive && appointment.IsNew
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
+                    Timeslot = timeslot,
                     Appointment = appointment
                 }).AsNoTracking().ToList();
 
@@ -80,7 +92,7 @@ namespace WebApi.Services
                 appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
             }
-            return appointments.OrderBy(c => c.Appointment.AppointmentDateTime).ToList();
+            return appointments.OrderBy(c => c.Timeslot.SlotDateTime).ToList();
         }
 
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
@@ -99,20 +111,17 @@ namespace WebApi.Services
 
         public Appointment CheckAppointmentIsAvailable(AppointmentInformation appointment)
         {
-            var appointmentConverted = ConvertDtoToModel(appointment);
-            var appointmentsForTheDay = Context.Appointments.Where(c =>
-                c.IsActive && appointmentConverted.AppointmentDateTime.Date == c.AppointmentDateTime.Date).ToList();
-
-            return AppointmentValidator.IsAvailable(appointmentConverted, appointmentsForTheDay) == false ? null : appointmentConverted;
+            return  Context.TimeSlots.Any(c => c.Id == appointment.IdTimeSlot) ?
+                    Context.Appointments.Any(c => c.IdTimeSlot == appointment.IdTimeSlot) ? null
+                    : ConvertDtoToModel(appointment) : null;
         }
 
         private Appointment ConvertDtoToModel(AppointmentInformation appointment)
         {
             return new Appointment()
             {
-                AppointmentDateTime = Convert.ToDateTime(appointment.AppointmentDateTime),
-                DurationTime = Convert.ToDateTime(appointment.DurationTime),
-                IdCustomer = int.Parse(appointment.IdCustomer)
+                IdTimeSlot = appointment.IdTimeSlot,
+                IdCustomer = appointment.IdCustomer
             };
         }
 

@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet, Route("GetByDate/{date}")]
-        public ActionResult<IEnumerable<Appointment>> GetAppointmentsByDate(string date)
+        public ActionResult<IEnumerable<AppointmentTimeSlotInformation>> GetAppointmentsByDate(string date)
         {
             return Service.GetAppointmentsByDate(date);
         }
