@@ -41,7 +41,7 @@ CREATE TABLE tbl_state(
 
 CREATE TABLE tbl_address(
         id_address Int  Auto_increment  NOT NULL ,
-        address    Varchar (150) NOT NULL ,
+        physical_address    Varchar (150) NOT NULL ,
         city_name  Varchar (75) NOT NULL ,
         zip_code   Varchar (10) NOT NULL ,
         is_active  Bool NOT NULL DEFAULT 1 ,
@@ -265,7 +265,7 @@ INSERT INTO tbl_state (code,name,id_country) VALUES
 # Creating data for tests
 #------------------------------------------------------------
 
-INSERT INTO tbl_address (address, city_name, zip_code, id_state) VALUES
+INSERT INTO tbl_address (physical_address, city_name, zip_code, id_state) VALUES
 ('382, rang saint-joseph', 'Beauceville', 'G5X2C8', (select id_state from tbl_state where name = 'Québec')),
 ('13140, Boul. Lacroix', 'Saint-Georges', 'G5Y6P8', (select id_state from tbl_state where name = 'Québec'));
 

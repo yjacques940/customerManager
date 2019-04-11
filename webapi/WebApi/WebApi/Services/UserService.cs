@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using WebApi.Data;
 using WebApi.DTO;
@@ -16,11 +17,12 @@ namespace WebApi.Services
         {
             var user = Context.Users.Where(c => c.Email == email &&
                     c.Password == password).First();
-
-            if (user == null)
+            if(user == null)
             {
                 return null;
             }
+            user.LastLogin = DateTime.Now;
+            Context.SaveChanges();
             UserInformation userInfo = new UserInformation();
             userInfo.Id = user.Id;
             var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
@@ -54,6 +56,15 @@ namespace WebApi.Services
                 Context.SaveChanges();
             }
             return user;
+        }
+
+        public string CheckEmailInUse(string email)
+        {
+            User user = (from c in Context.Users where c.Email == email select c).First();
+            if (user != null)
+                return user.Email;
+
+            return "available";
         }
     }
 }

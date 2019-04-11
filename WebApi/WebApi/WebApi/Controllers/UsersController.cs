@@ -13,12 +13,12 @@ namespace WebApi.Controllers
         {
         }
 
-        [HttpGet, Route("Login")]
-        public ActionResult<UserInformation> GetUserInformation(string email, string password)
+        [HttpPost, Route("Login")]
+        public ActionResult<UserInformation> GetUserInformation([FromBody]LoginInformation loginInformation)
         {
-            var user = Service.GetUserInformation(email, password);
+            var user = Service.GetUserInformation(loginInformation.Email, loginInformation.Password);
             if (user == null)
-                return Unauthorized();
+                return BadRequest();
 
             return user;
         }
@@ -43,6 +43,12 @@ namespace WebApi.Controllers
         public ActionResult UpdateUserEmail([FromBody]UserEmailInformation userEmailInformation)
         {
             return Ok(Service.UpdateUserEmail(userEmailInformation.Id, userEmailInformation.Email));
+        }
+
+        [HttpPost, Route ("CheckEmailInUse")]
+        public ActionResult CheckEmailInUSe([FromBody] EmailAddress emailAddress)
+        {
+            return Ok(Service.CheckEmailInUse(emailAddress.Email));
         }
     }
 }

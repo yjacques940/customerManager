@@ -1,7 +1,6 @@
 <?php
 session_start();
 require('models/ManagerUsers.php');
-require('models/Customer.php');
 require('services/callApiExtension.php');
 
 $default_locale = 'fr';
@@ -68,12 +67,11 @@ function getLocaleFile($locale)
 function Login(){
     if(isset($_POST['email'])){
         unset($_SESSION['email']);
-        $userRegistered = new ManagerUsers;
         $userIdentification = [
             "email" => htmlentities($_POST['email']),
             "password" => htmlentities($_POST['password'])
         ];
-        $userAPI = CallAPI('GET', 'Users/Login', $userIdentification);
+        $userAPI = CallAPI('POST', 'Users/Login', json_encode($userIdentification));
         if($userAPI['statusCode'] == 200)
         {
             $_SESSION['username'] = $userAPI['response']->fullName;
@@ -98,11 +96,11 @@ function Home(){
 
 function Inscription(){
     if(isset($_SESSION['email'])){
-        $provinces = new ManagerUsers;
-        $result = $provinces->GetProvinces();
-        $phoneType = $provinces->GetPhoneType();
-        $phoneType2 = $provinces->GetPhoneType();
-        $phoneType3 = $provinces->GetPhoneType();
+        $states = CallAPI('GET','States')['response'];
+        $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
+        $phoneType = $phoneTypes;
+        $phoneType2 = $phoneTypes;
+        $phoneType3 = $phoneTypes;
         require('views/personalinformation.php');
     }
     else{
@@ -125,11 +123,11 @@ function PersonalInformation(){
             AddOrUpdateUser();
             About();
         }else{
-            $provinces = new ManagerUsers;
-            $result = $provinces->GetProvinces();
-            $phoneType = $provinces->GetPhoneType();
-            $phoneType2 = $provinces->GetPhoneType();
-            $phoneType3 = $provinces->GetPhoneType();
+            $result = CallAPI('GET','States')['response'];
+            $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
+            $phoneType = $phoneTypes;
+            $phoneType2 = $phoneTypes;
+            $phoneType3 = $phoneTypes;
             $personalInformation = CallAPI('GET','PersonalInformation/PersonalInformation/'.json_encode($_SESSION['userid']));
             require('views/personalinformation.php');
         }
@@ -181,8 +179,8 @@ function AddOrUpdateUser(){
             );
             $customer = array(
                 'sex'=>(isset($_SESSION['gender']))? $_SESSION['gender']:'',
-                'firstName'=>(isset($_SESSION['firstName']))? $_SESSION['firstName']:'',
-                'lastName'=>(isset($_SESSION['lastName']))? $_SESSION['lastName']:'',
+                'firstName'=>(isset($_SESSION['firstname']))? $_SESSION['firstname']:'',
+                'lastName'=>(isset($_SESSION['lastname']))? $_SESSION['lastname']:'',
                 'birthDate'=>(isset($_SESSION['dateofbirth']))? $_SESSION['dateofbirth']:'',
                 'occupation'=>htmlentities($_POST['occupation'])
             );
@@ -197,10 +195,9 @@ function AddOrUpdateUser(){
                 'customer'=>$customer,
                 'user'=>$user,
                 'phoneNumbers'=>$phones
-            ); 
+            );
+            $result = CallAPI('POST','Registration/Register', json_encode($registeringInformation));
             if(!isset($_SESSION['userid'])){
-                $result = CallAPI('POST','Registration/Register/%23definition', json_encode($registeringInformation));
-                var_dump($result);
                 $_SESSION['registered'] = 'success';
                 unset($_SESSION['email']);
                 unset($_SESSION['password']);
@@ -214,9 +211,11 @@ function AddOrUpdateUser(){
 }
 
 function CheckEmailInUse(){
-    $user = new ManagerUsers;
-    $emailinUse = $user->CheckEmailInUse(htmlentities($_POST['email']));
-    if($emailinUse->fetch())
+    $email = [
+        "email" => htmlentities($_POST['email'])
+    ];
+    $emailInUse = CallAPI('POST','Users/CheckEmailInUse',json_encode($email));
+    if($emailInUse['statusCode'] == 200)
     {
         echo 'taken';
     }

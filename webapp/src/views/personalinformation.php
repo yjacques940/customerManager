@@ -1,5 +1,5 @@
 <?php
-$titre = localize('Personal-Title');
+$title = localize('Personal-Title');
  ob_start(); 
     $cpt=0;
     $address='';
@@ -12,30 +12,30 @@ $titre = localize('Personal-Title');
     $phone3 = array('','','0');
     
 if(isset($_SESSION['userid'])){
-    while($donnees = $personalInformation->fetch()){
-        switch ($cpt){
+    $address = $personalInformation->physicalAddress->physicalAddress;
+    $city = $personalInformation->physicalAddress->cityName;
+    $zipcode = $personalInformation->physicalAddress->zipCode;
+    $idProvince = $personalInformation->physicalAddress->idState;
+    $occupation = $personalInformation->customer->occupation;
+    foreach($personalInformation->phoneNumbers as $phoneNumber){
+        switch($cpt){
             case 0:
-                $address = $donnees['address'];
-                $city = $donnees['city_name'];
-                $zipcode = $donnees['zip_code'];
-                $idProvince = $donnees['id_state'];
-                $occupation = $donnees['occupation'];
-                $phone1[0] = $donnees['phone_number'];
-                $phone1[1] = $donnees['extension'];
-                $phone1[2] = $donnees['id_phone_type'];
-                break;
+                $phone1[0] = $personalInformation->phoneNumbers[0]->phone;
+                $phone1[1] = $personalInformation->phoneNumbers[0]->extension;
+                $phone1[2] = $personalInformation->phoneNumbers[0]->idPhoneType;
+            break;
             case 1:
-                $phone2[0] = $donnees['phone_number'];
-                $phone2[1] = $donnees['extension'];
-                $phone2[2] = $donnees['id_phone_type'];
-                break;
+                $phone2[0] = $personalInformation->phoneNumbers[1]->phone;
+                $phone2[1] = $personalInformation->phoneNumbers[1]->extension;
+                $phone2[2] = $personalInformation->phoneNumbers[1]->idPhoneType;
+            break;
             case 2:
-                $phone3[0] = $donnees['phone_number'];
-                $phone3[1] = $donnees['extension'];
-                $phone3[2] = $donnees['id_phone_type'];
-                break;
+                $phone3[0] = $personalInformation->phoneNumbers[2]->phone;
+                $phone3[1] = $personalInformation->phoneNumbers[2]->extension;
+                $phone3[2] = $personalInformation->phoneNumbers[2]->idPhoneType;
+            break;
         }
-        $cpt+=1;
+        $cpt++;
     }
 }
  ?>
@@ -60,15 +60,14 @@ if(isset($_SESSION['userid'])){
                     <label for="province"><h4><?php echo localize('Personal-Province');?></h4></label>
                     <select name="province" id="province">
                     <option value=""></option>
-                    <?php 
-                        while($donnees = $result->fetch()){
-                            if($donnees['id_state'] == $idProvince){
-                            echo '<option selected value="' . $donnees['id_state'].'">'.$donnees['Name'].'</option>';
-                            }else{
-                                echo '<option value="' . $donnees['id_state'].'">'.$donnees['Name'].'</option>';
-                            }
+                    <?php foreach($states as $state)
+                    {
+                        if($state->id == $idProvince){
+                            echo '<option selected value="' . $state->id.'">'.$state->name.'</option>';
+                        }else{
+                            echo '<option value="' . $state->id.'">'.$state->name.'</option>';
                         }
-                        $result->closeCursor();
+                    }
                     ?>
                     </select>
                 </div>
@@ -99,14 +98,13 @@ if(isset($_SESSION['userid'])){
                 <div class="form-group contact-forms col-md-4">
                     <select name="type1" id="type1">
                     <option value=""></option>
-                    <?php while($donnees = $phoneType->fetch()){
-                        if($donnees['id_phone_type'] == $phone1[2]){
-                            echo '<option selected value="'.$donnees['id_phone_type'].'">'.$donnees['name'].'</option>';
+                    <?php foreach($phoneTypes as $phoneType){
+                        if($phoneType->id == $phone1[2]){
+                            echo '<option selected value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
                         }else{
-                            echo '<option value="'.$donnees['id_phone_type'].'">'.$donnees['name'].'</option>';
+                            echo '<option value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
                         }
                     }
-                    $phoneType->closeCursor();
                     ?>
                     </select>
                 </div>
@@ -125,14 +123,14 @@ if(isset($_SESSION['userid'])){
                 <div class="form-group contact-forms col-md-4">
                     <select name="type2" id="type2">
                     <option value=""></option>
-                    <?php while($donnees = $phoneType2->fetch()){
-                        if($donnees['id_phone_type'] == $phone2[2]){
-                            echo '<option selected value="'.$donnees['id_phone_type'].'">'.$donnees['name'].'</option>';
+                    <?php
+                    foreach($phoneTypes as $phoneType){
+                        if($phoneType->id == $phone2[2]){
+                            echo '<option selected value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
                         }else{
-                            echo '<option value="'.$donnees['id_phone_type'].'">'.$donnees['name'].'</option>';
+                            echo '<option value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
                         }
                     }
-                    $phoneType2->closeCursor();
                     ?>
                     </select>
                 </div>
@@ -155,14 +153,14 @@ if(isset($_SESSION['userid'])){
                 <div class="form-group contact-forms col-md-4">
                     <select name="type3" id="type3">
                     <option value=""></option>
-                    <?php while($donnees = $phoneType3->fetch()){
-                        if($donnees['id_phone_type'] == $phone3[2]){
-                            echo '<option selected value="'.$donnees['id_phone_type'].'">'.$donnees['name'].'</option>';
+                    <?php
+                    foreach($phoneTypes as $phoneType){
+                        if($phoneType->id == $phone3[2]){
+                            echo '<option selected value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
                         }else{
-                            echo '<option value="'.$donnees['id_phone_type'].'">'.$donnees['name'].'</option>';
+                            echo '<option value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
                         }
                     }
-                    $phoneType3->closeCursor();
                     ?>
                     </select>
                 </div>
@@ -227,6 +225,9 @@ $(document).ready(function(){
             },
             extension3:{
                 number:true
+            },
+            province:{
+                required:true
             }
         },
         messages:{
@@ -263,6 +264,9 @@ $(document).ready(function(){
             },
             extension3:{
                 number:'<?php echo localize('Validate-Error-Number'); ?>.'
+            },
+            province:{
+                required:'<?php echo localize('Validate-Error-RequiredField'); ?>'
             }
         },
         submitHandler:function(){
