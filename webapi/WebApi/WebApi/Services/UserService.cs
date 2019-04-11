@@ -63,7 +63,7 @@ namespace WebApi.Services
             if (user != null)
                 return user.Email;
 
-            return "availlable";
+            return "available";
         }
     }
 }
