@@ -22,11 +22,6 @@ namespace WebApi.Validators
             return true;
         }
 
-        public static bool HasAnAppointment(TimeSlot timeSlot)
-        {
-
-        }
-
         private static bool IsOverlapping(TimeSlot newTimeSlot, TimeSlot timeSlots)
         {
             TimeRange newTimeSlotTime = new TimeRange(newTimeSlot.SlotDateTime, GetEndHour(newTimeSlot));

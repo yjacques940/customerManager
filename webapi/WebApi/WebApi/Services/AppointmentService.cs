@@ -116,6 +116,11 @@ namespace WebApi.Services
                     : ConvertDtoToModel(appointment) : null;
         }
 
+        public TimeSlot GetAppointmentTimeSlot(Appointment appointment)
+        {
+            return Context.TimeSlots.First(c => c.Id == appointment.IdTimeSlot);
+        }
+
         private Appointment ConvertDtoToModel(AppointmentInformation appointment)
         {
             return new Appointment()
