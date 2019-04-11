@@ -29,12 +29,6 @@ namespace WebApi.Controllers
             return Ok(Service.CheckIfUserHasPermission(idUser, permission));
         }
 
-        [HttpGet, Route("HasPermission")]
-        public ActionResult UserHasPermission(int idUser, string permission)
-        {
-            return Ok(Service.CheckIfUserHasPermission(idUser, permission));
-        }
-
         [HttpGet, Route("CheckPassword")]
         public ActionResult GetUserWithUserId(int userId, string password)
         {
