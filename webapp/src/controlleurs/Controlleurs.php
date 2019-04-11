@@ -96,12 +96,11 @@ function Home(){
 
 function Inscription(){
     if(isset($_SESSION['email'])){
-        $provinces = new ManagerUsers;
-        $states = CallAPI('GET','State');
-        $phoneTypes = CallAPI('GET', 'PhoneType');
-        $phoneType = $provinces->GetPhoneType();
-        $phoneType2 = $provinces->GetPhoneType();
-        $phoneType3 = $provinces->GetPhoneType();
+        $states = CallAPI('GET','States')['response'];
+        $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
+        $phoneType = $phoneTypes;
+        $phoneType2 = $phoneTypes;
+        $phoneType3 = $phoneTypes;
         require('views/personalinformation.php');
     }
     else{
@@ -124,11 +123,11 @@ function PersonalInformation(){
             AddOrUpdateUser();
             About();
         }else{
-            $provinces = new ManagerUsers;
-            $result = CallAPI('GET','State');
-            $phoneType = $provinces->GetPhoneType();
-            $phoneType2 = $provinces->GetPhoneType();
-            $phoneType3 = $provinces->GetPhoneType();
+            $result = CallAPI('GET','States')['response'];
+            $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
+            $phoneType = $phoneTypes;
+            $phoneType2 = $phoneTypes;
+            $phoneType3 = $phoneTypes;
             $personalInformation = CallAPI('GET','PersonalInformation/PersonalInformation/'.json_encode($_SESSION['userid']));
             require('views/personalinformation.php');
         }

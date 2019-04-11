@@ -26,7 +26,6 @@ namespace WebApi.Data
         public DbSet<PhoneType> PhoneTypes { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<PhoneType> PhoneTypes { get; set; }
         public DbSet<State> States { get; set; }
     }
 }
