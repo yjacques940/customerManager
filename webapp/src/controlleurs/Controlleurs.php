@@ -21,10 +21,12 @@ function error($errorCode) {
 
 function userHasPermission(String $permission): bool
 {
-    return CallAPI('GET', 'Users/HasPermission', array(
-        "idUser" => isset($_SESSION['userid']) ? $_SESSION['userid'] : "0",
-        "permission" => $permission
-        ))['response'];
+    return (isset($_SESSION['userid']))
+        ? CallAPI('GET', 'Users/HasPermission', array(
+                "idUser" =>  $_SESSION['userid'],
+                "permission" => $permission
+            ))['response']
+        : false;
 }
 
 function localize($phrase)
