@@ -47,10 +47,12 @@ ob_start(); ?>
             end.time = (info.allDay) ? null : ' ' + endDatetime.toLocaleTimeString('it-IT', timeOptions);
             timeslot = {
                 allDay: (info.allDay),
-                startDate: start.date,
-                startTime: start.time,
-                endDate: end.date,
-                endTime: end.time
+                startDatetime: startDatetime.toLocaleString('it-IT'),
+                startDateStr: start.date,
+                startTimeStr: start.time,
+                endDatetime: endDatetime.toLocaleString('it-IT'),
+                endDateStr: end.date,
+                endTimeStr: end.time
             };
         },
         unselect: function(info) {
@@ -63,28 +65,73 @@ ob_start(); ?>
                     var at = " <?php echo localize("Timeslot-At") ?> "
                     var from = "<?php echo localize("Timeslot-From") ?> ";
                     var le = "<?php echo localize("Timeslot-Le") ?> ";
-                    var to = "<?php echo localize("Timeslot-To") ?> ";
+                    var to = " <?php echo localize("Timeslot-To") ?> ";
                     if (timeslot !== null) {
-                        if (timeslot.startDate != timeslot.endDate)
-                            infoString = from + timeslot.startDate + at + timeslot.startTime
-                                + to + timeslot.endDate + at + timeslot.endTime;
-                        else
-                            if (timeslot.startTime === null)
-                                infoString = le + timeslot.startDate;
+                        if (timeslot.startDateStr != timeslot.endDateStr)
+                            if (timeslot.allDay)
+                                infoString = from + timeslot.startDateStr + to + timeslot.endDateStr;
                             else
-                                infoString = le + timeslot.startDate + ' '
-                                    + from + timeslot.startTime + at + timeslot.endTime;
+                                infoString = from + timeslot.startDateStr + at + timeslot.startTimeStr
+                                    + to + timeslot.endDateStr + at + timeslot.endTimeStr;
+                        else
+                            if (timeslot.allDay)
+                                infoString = le + timeslot.startDateStr;
+                            else
+                                infoString = le + timeslot.startDateStr + ' '
+                                    + from + timeslot.startTimeStr + at + timeslot.endTimeStr;
                         Swal.fire({
                             title: "<strong>Nouvelle plage horaire</strong>",
-                            html: infoString +
-                                  '<input type="datetime-local" min="<?php echo date('Y-m-d'); ?>" id="appointmentDate" class="form-control">',
-                            focusConfirm: false,
-                            preConfirm: () => {
-                                return [
-                                    alert(document.getElementById('appointmentDate').value)
-                                ]
-                            }
-                        })
+                            text: infoString,
+                            showCancelButton: true,
+                            confirmButtonText: 'Créer la plage horaire',
+                            onConfirm: () => {
+                                Swal.showLoading();
+                                var startDatetime = timeslot.startDatetime;
+                                var endDatetime = timeslot.endDatetime;
+                                $.ajax({
+                                    url: '?action=ajaxAddNewTimeslot',
+                                    type: 'POST',
+                                    data: {
+                                        startDatetime: startDatetime,
+                                        endDatetime: endDatetime,
+                                        isPublic: true
+                                    }
+                                }).done(function(response){
+                                    if (response == 'success')
+                                        Swal.fire({
+                                            text: 'Enregistrement effectué avec succès!',
+                                            type: 'success',
+                                            timer: 1750,
+                                            showConfirmButton: false
+                                        });
+                                    else {
+                                        Swal.fire('Erreur', 'Réponse: \n' + response, 'error');
+                                    }
+                                }).fail(function(){
+                                    Swal.fire(
+                                        'Erreur',
+                                        "Une erreur c'est produite lors de l'envoi de la requête",
+                                        'error'
+                                    );
+                                });
+                            },
+                            allowOutsideClick: () => !Swal.isLoading()
+                        }).then((result) => {
+                            Swal.fire({
+                                title: 'Enregistrement en cours...',
+                                timer: 7500,
+                                onBeforeOpen: () => {
+                                        Swal.showLoading()
+                                },
+                                onClose: () => {
+                                    Swal.fire(
+                                        'Error',
+                                        'Aucune réponse reçue. Veuillez réessayer plus tard...',
+                                        'warning'
+                                    )
+                                }
+                            })
+                        });
                     } else {
                         alert('No selection');
                     }

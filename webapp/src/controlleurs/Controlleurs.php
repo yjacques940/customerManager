@@ -392,6 +392,23 @@ function MakeAppointment(){
     }
 }
 
+function ajaxAddNewTimeslot() {
+    if (isset($_POST)) {
+        if (isset($_POST['startDatetime']) && isset($_POST['endDatetime']) && isset($_POST['isPublic'])) {
+            $startDatetime = DateTime::createFromFormat('d/m/Y, H:i:s', htmlentities($_POST['startDatetime']));
+            $endDatetime = DateTime::createFromFormat('d/m/Y, H:i:s', htmlentities($_POST['endDatetime']));
+            $durationTime = $startDatetime->diff($endDatetime)->format("%d/%m/%Y %H:%i:%s");
+
+            var_dump($durationTime);
+            $newTimeslot = array(
+                'SlotDateTime' => $startDatetime,
+                'DurationTime' => $durationTime,
+                'IsPublic' => $_POST['isPublic']
+            );
+        } else echo 'Incomplete or invalid data received';
+    } else echo 'No data received';
+}
+
 function AppointmentCreator()
 {
     require('views/appointment_creator.php');

@@ -1,5 +1,6 @@
 <?php
 require('controlleurs/Controlleurs.php');
+
 try
 {
     if (isset($_GET['action'])) {
@@ -56,6 +57,9 @@ try
             break;
         case 'updateemail':
             UpdateEmail();
+            break;
+        case 'ajaxAddNewTimeslot':
+            ajaxAddNewTimeslot();
             break;
         default :
             error(404);
