@@ -11,6 +11,7 @@ namespace WebApi
             services.AddTransient<AppointmentService>();
             services.AddTransient<PhoneNumberService>();
             services.AddTransient<UserService>();
+            services.AddTransient<PermissionService>();
             return services;
         }
     }

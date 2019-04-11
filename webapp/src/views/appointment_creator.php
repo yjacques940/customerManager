@@ -1,4 +1,5 @@
 <?php
+if (!userHasPermission('customers-read') && !userHasPermission('appointments-write')) error(403);
 $titre = 'AppointmentCreation';
 ob_start(); ?>
     <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">

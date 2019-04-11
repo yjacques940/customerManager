@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -17,10 +14,10 @@ namespace WebApi.Services
 
         public ActionResult<UserInformation> GetUserInformation(string email, string password)
         {
-            var user = Context.Users.Where(c => c.Email== email &&
+            var user = Context.Users.Where(c => c.Email == email &&
                     c.Password == password).First();
 
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -29,6 +26,13 @@ namespace WebApi.Services
             var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
             userInfo.FullName = $"{customer.FirstName} {customer.LastName}";
             return userInfo;
+        }
+
+        public bool CheckIfUserHasPermission(int idUser, string permission)
+        {
+            return Context.Users.Any(u => u.Id == idUser
+                && ((u.Role % 2) == 1
+                || (u.Role & (Context.Permissions.FirstOrDefault(p => p.Name == permission).Bit)) != 0));
         }
 
         public object GetUserWithUserId(int userId, string password)

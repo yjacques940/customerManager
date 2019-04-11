@@ -101,14 +101,29 @@ CREATE TABLE tbl_user(
         id_user     Int  Auto_increment  NOT NULL ,
         email       Varchar (256) NOT NULL UNIQUE,
         password    Varchar (256) NOT NULL ,
-        created_on  Datetime NOT NULL ,
-        last_login  Datetime NOT NULL ,
+        role        Int (8) NOT NULL DEFAULT 0,
+        created_on  Datetime NOT NULL DEFAULT current_timestamp ,
+        last_login  Datetime NOT NULL DEFAULT current_timestamp ,
         is_active   Bool NOT NULL DEFAULT 1 ,
         id_customer Int NOT NULL
 	,CONSTRAINT tbl_user_PK PRIMARY KEY (id_user)
 
 	,CONSTRAINT tbl_user_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
 	,CONSTRAINT tbl_user_tbl_customer_AK UNIQUE (id_customer)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: tbl_permissions
+#------------------------------------------------------------
+
+CREATE TABLE tbl_permission(
+        id_permissions Int  Auto_increment  NOT NULL ,
+        is_active      Bool NOT NULL DEFAULT 1 ,
+        bit            Int (8) NOT NULL UNIQUE ,
+        name           Varchar (64) NOT NULL UNIQUE
+	,CONSTRAINT tbl_permissions_PK PRIMARY KEY (id_permissions)
+    ,CONSTRAINT tbl_permissions_CHK_bit CHECK (mod(bit, 2) = 0)
 )ENGINE=InnoDB;
 
 
@@ -151,6 +166,16 @@ ALTER TABLE tbl_appointment
 #------------------------------------------------------------
 # Inserting basic data
 #------------------------------------------------------------
+
+# 'bit' must be a multiple of 2
+INSERT INTO tbl_permission (bit,name) VALUES
+(1,   'Root'),
+(2,   'Appointments-Read'),
+(4,   'Appointments-Write'),
+(8,   'Customers-Read'),
+(16,  'Customers-Write'),
+(32,  'Timeslots-Read'),
+(64,  'Timeslots-Write');
 
 INSERT INTO tbl_phone_type (name) VALUES
 ('Résidentiel'), ('Bureau'), ('Cellulaire');
@@ -245,6 +270,10 @@ INSERT INTO tbl_address (address, city_name, zip_code, id_state) VALUES
 INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id_address) VALUES
 ('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),
 ('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2');
+
+INSERT INTO tbl_user (id_customer, email, password, role) VALUES
+(1, "jessy@rodrigue.com", "ValidPassword", 1),
+(2, "yannick@jacques.com", "ValidPassword", DEFAULT);
 
 INSERT INTO tbl_phone_number (phone, id_phone_type,id_customer) VALUES
 ('(418) 774-3835', 1,1),

@@ -14,6 +14,19 @@ if (isset($_GET['setLocale'])) {
     $_SESSION['locale'] = $_GET['setLocale'];
 }
 
+function error($errorCode) {
+    require('views/error.php');
+    die();
+}
+
+function userHasPermission(String $permission): bool
+{
+    return CallAPI('GET', 'Users/HasPermission', array(
+        "idUser" => isset($_SESSION['userid']) ? $_SESSION['userid'] : "0",
+        "permission" => $permission
+        ))['response'];
+}
+
 function localize($phrase)
 {
     global $default_locale;
@@ -324,76 +337,57 @@ function SendAskForAppointment()
 }
 
 function NewAppointments(){
-    $result = CallAPI('GET','Appointments/NewAppointments');
-    $newAppointments = $result['response'];
-    if($newAppointments)
-    {
-        require('views/new_appointments.php');
-    }
-    else
-    {
-        require('views/appointments.php');
-    }
+    if (userHasPermission('appointments_read')) {
+        $result = CallAPI('GET','Appointments/NewAppointments');
+        $newAppointments = $result['response'];
+        if($newAppointments)
+        {
+            require('views/new_appointments.php');
+        }
+        else
+        {
+            require('views/appointments.php');
+        }
+    } else error(403);
 }
 
 function Appointments(){
   require('views/appointments.php');
 }
 
-function ChangeAppointmentIsNewStatus()
-{
-    if(isset($_POST['newAppointmentIds']))
-    {
-        CallAPI('POST', 'Appointments/ChangeIsNewStatus',json_encode($_POST['newAppointmentIds']));
-        echo 'success';
-    }
-}
-
-function MakeAppointment(){
-    if (isset($_POST)){
-        $appointment = array(
-            'AppointmentDateTime' => htmlentities($_POST['appointmentDate'].' '.$_POST['appointmentTime']),
-            'DurationTime' => htmlentities($_POST['appointmentDuration']),
-            'IdCustomer' => htmlentities($_POST['idCustomer'])
-        );
-        $result = CallAPI('POST', 'Appointments/CheckAppointmentIsAvailable/%23definition', json_encode($appointment));
-        if (!$result->title){
-            echo  'success';
+function ChangeAppointmentIsNewStatus() {
+    if(isset($_POST['newAppointmentIds'])) {
+        if (userHasPermission('appointments-write')) {
+            CallAPI('POST', 'Appointments/ChangeIsNewStatus',json_encode($_POST['newAppointmentIds']));
+            echo 'success';
         } else {
-            echo $result->title;
+            echo 'Permission Denied';
         }
     } else {
         echo 'No data received';
     }
 }
 
-function Api()
-{
-    //https://www.weichieprojects.com/blog/curl-api-calls-with-php/
-    //******* Prendre l'objet JSON dans SWAGGER, et ne pas oublier les foreign keys
-    //$customer = array('H','Yannick','Jacques','2019-08-31','developper','1');
-
-    require('services/callApiExtension.php');
-    //$id = '1';
-    //$get_Data = CallAPI('GET','Customers/FullName/' . $id);
-    // $response = json_decode($get_Data,true);
-    //$errors = $response['response']['errors'];
-    //$data = $response['response']['data'][0];
-
-   /* $new_object = array(
-        "sex" => "H",
-  "firstName"=> "Yannick",
-  "lastName"=> "Jacques",
-  "birthDate"=> "2019-03-25T17:12:40.000Z",
-  "occupation"=> "Programmer",
-  "idAddress"=> 1,
-  "id"=> 0,
-  "isActive" => "true"
-    );*/
-   // echo CallAPI("POST","Customers", json_encode($new_object));
-
-  /* CallAPI("DELETE","Customers/4");
-  echo  CallAPI("GET","Customers");*/
+function MakeAppointment(){
+    if (isset($_POST)){
+        if (userHasPermission('appointments-write')) {
+            $appointment = array(
+                'AppointmentDateTime' => htmlentities($_POST['appointmentDate'].' '.$_POST['appointmentTime']),
+                'DurationTime' => htmlentities($_POST['appointmentDuration']),
+                'IdCustomer' => htmlentities($_POST['idCustomer'])
+            );
+            $result = CallAPI('POST', 'Appointments/CheckAppointmentIsAvailable/%23definition', json_encode($appointment));
+            if (!$result->title){
+                echo  'success';
+            } else {
+                echo $result->title;
+            }
+        } else {
+            echo 'Permission Denied';
+        }
+    } else {
+        echo 'No data received';
+    }
 }
 
 function AppointmentCreator()

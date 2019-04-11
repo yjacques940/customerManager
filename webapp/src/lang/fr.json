@@ -108,7 +108,6 @@
   "PageTitle-NewAppointments" :"Nouveaux rendez-vous",
   "NewAppointments-ShowAppointments" : "Afficher tous les rendez-vous",
   "NewAppointments-ShowAppointmentsAndSave" : "Enregistrer et afficher tous les rendez-vous",
-  "Appointment-ChangeNewStatus" : "A été vu",
   "Appointment-AskForAppointmentDescription" : "Informations supplémentaires",
   "AskForAppointment-Evening" : "Soir",
   "AskForAppointment-TimeOfDay" : "Période de la journée",
@@ -116,5 +115,14 @@
   "AskForAppointment-Treatment-HotStones" : "Pierres chaudes",
   "AskForAppointment-Treatment-Regular" : "Régulier",
   "AskForAppointment-Treatment-1h30" : "Une heure trente",
-  "Appointment-DateRequested" : "Date désirée"
+  "Appointment-DateRequested" : "Date désirée",
+  "Error-Help":"Si vous croyez que ceci est une erreur et que vous avez droit à accéder cette page, veuillez <em>contacter l'administrateur.</em>",
+  "Appointment-ChangeNewStatus" : "Marquer comme vu",
+  "PageTitle-Error":"Erreur",
+  "Error-Title":"Erreur ",
+  "Error-Reason-403":"Vous n'avez pas les permissions requises pour accéder à ce contenu.",
+  "Error-Reason-404":"Cette page est inexistante.",
+  "Error-Reason-500":"Le serveur n'a pas pu répondre à votre requête. Veuillez réessayer plus tard.",
+  "Error-Reason-Unknown":"Une erreur inattendue c'est produite. Veuillez réessayer plus tard.",
+  "Error-Help":"Vous n'êtes pas autorisé à afficher cette page. Si vous avez des questions, veuillez contacter l'administrateur du site."
 }

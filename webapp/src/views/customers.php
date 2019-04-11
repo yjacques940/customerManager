@@ -1,4 +1,5 @@
 <?php
+if (!userHasPermission('customers-read')) error(403);
 $title = localize('CustomersList');
 ob_start(); ?>
 
