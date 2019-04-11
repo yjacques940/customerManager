@@ -1,4 +1,5 @@
 {
+  "About-EmailChanged": "Email successfully updated",
   "About-InformationChanged": "Personal information updated",
   "About-Introduction": "Preface about the company.",
   "About-OurGoals": "Our goals",
@@ -22,6 +23,10 @@
   "Company-Phone": "(418) 774-0246",
   "Company-Rights": "All rights reserved",
   "CustomersList": "Customers list",
+  "EmailUpdate-Error-password": "Invalid password",
+  "EmailUpdate-NewEmail": "New email",
+  "EmailUpdate-NewEmailConfirmed": "Confirm the email",
+  "EmailUpdate-PasswordConfirm" : "Password verification",
   "Footer-Text-Address": "Address",
   "Footer-Text-Email": "Email",
   "Footer-Text-Phone": "Phone",
