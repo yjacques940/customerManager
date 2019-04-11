@@ -225,6 +225,9 @@ $(document).ready(function(){
             },
             extension3:{
                 number:true
+            },
+            province:{
+                required:true
             }
         },
         messages:{
@@ -261,6 +264,9 @@ $(document).ready(function(){
             },
             extension3:{
                 number:'<?php echo localize('Validate-Error-Number'); ?>.'
+            },
+            province:{
+                required:'<?php echo localize('Validate-Error-RequiredField'); ?>'
             }
         },
         submitHandler:function(){
