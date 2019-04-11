@@ -41,14 +41,14 @@
               if (!isset($_SESSION['username'])) {
             ?>
             <li>
+                <a href="index.php?action=inscription"><?php echo localize('PageTitle-Inscription') ?></a>
+            </li>
+            <li>
               <a href="index.php?action=login"><?php echo localize('PageTitle-Login'); ?></a>
             </li>
-
             <?php
               } else {
             ?>
-            <li>
-            <a href="index.php?action=inscription"><?php echo localize('PageTitle-Inscription') ?></a>
             <li>
               <label for="drop-3" class="toggle toogle-2">
                 <?php echo $_SESSION['username']; ?>
