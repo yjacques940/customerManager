@@ -35,3 +35,10 @@ namespace WebApi.Services
         }
     }
 }
+
+        public List<TimeSlot> GetTimeSlotForTheDay(DateTime date)
+        {
+            List<TimeSlot> timeSlots = (from c in Context.TimeSlot where c.SlotDateTime >= date &&
+                                        c.SlotDateTime < date.AddDays(1) select c).ToList();
+            return timeSlots;
+        }
