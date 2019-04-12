@@ -85,8 +85,23 @@ namespace WebApi.Controllers
         public virtual ActionResult Delete(int id)
         {
             if (Service.Remove(id))
+            {
                 return NoContent();
+            }
+            return BadRequest();
+        }
 
+        [HttpPost, Route("ReserveAnAppointment")]
+        public ActionResult ReserveAnAppointment([FromBody]AppointmentUserInformation appointmentService)
+        {
+            if(appointmentService.IdUser != 0)
+            {
+                if (Service.ReserveAnAppointment(appointmentService))
+                {
+                    return Ok();
+                }
+                return Conflict();
+            }
             return BadRequest();
         }
     }

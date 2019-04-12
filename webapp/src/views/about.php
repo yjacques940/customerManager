@@ -1,5 +1,5 @@
 <?php
-$titre = 'Connection';
+$title = 'Connection';
  ob_start(); ?>
     <section class="about-inner py-lg-4 py-md-3 py-sm-3 py-3">
       <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
@@ -19,6 +19,10 @@ $titre = 'Connection';
             unset($_SESSION['emailchanged']);
             ?> <h4 class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"> <?php
             echo localize('About-EmailChanged') ; ?> </h4> <?php
+          }else if(isset($_SESSION['appointmenttaken'])){
+            unset($_SESSION['appointmenttaken']);
+            ?> <h4 class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"> 
+             <?php echo localize("TakeAppointment-AppointementTaken") ?> </h4> <?php
           }
         }
         ?>

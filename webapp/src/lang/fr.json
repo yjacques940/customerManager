@@ -37,6 +37,7 @@
   "Header-Manage-Password": "Modification du mot de passe",
   "Header-Manage-PersonalInfo": "Modifier mes informations personnelles",
   "Header-Menu": "Menu",
+  "Header-TakeAppointment": "Prise de rendez-vous",
   "Home-Button": "Inscrivez-vous",
   "Home-Text-Bold": "À partir de x$",
   "Home-Text-Details": "Des conditions s'appliquent.",
@@ -128,5 +129,10 @@
   "Timeslot-At" : "à",
   "Timeslot-From" : "de",
   "Timeslot-Le" : "le",
-  "Timeslot-To" : "jusqu'à"
+  "Timeslot-To" : "jusqu'à",
+  "TakeAppointment-AvailableTimeSlot": "Plages horaire disponibles",
+  "TakeAppointment-Therapist": "Thérapeute",
+  "TakeAppointment-Either": "Peu importe",
+  "TakeAppointment-TimeSlotTaken": "La plage horaire n'est plus disponible",
+  "TakeAppointment-AppointementTaken": "Rendez-vous enregistré avec succès"
 }

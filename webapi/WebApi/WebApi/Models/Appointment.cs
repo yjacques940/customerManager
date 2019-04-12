@@ -8,5 +8,6 @@ namespace WebApi.Models
         public bool IsNew { get; set; }
         public int IdCustomer { get; set; }
         public int IdTimeSlot { get; set; }
+        public string Therapist { get; set; }
     }
 }

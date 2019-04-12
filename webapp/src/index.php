@@ -64,6 +64,9 @@ try
         case 'ajaxGetTimeSlots':
             ajaxGetTimeSlots();
             break;
+        case 'reserveappointment':
+            ReserveAppointment();
+            break;
         default :
             error(404);
             break;
@@ -77,6 +80,9 @@ try
     }
     else if(isset($_POST['newemail'])){
         CheckNewEmailAvaillable();
+    }
+    else if(isset($_POST['timeslot'])){
+        CheckTimeSlotAvailable();
     }
     else
     {
