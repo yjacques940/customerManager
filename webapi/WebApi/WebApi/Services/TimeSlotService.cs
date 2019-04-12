@@ -16,6 +16,7 @@ namespace WebApi.Services
         {
             if (timeSlot != null)
             {
+                timeSlot.IsActive = true;
                 Context.Add(timeSlot);
                 Context.SaveChanges();
                 return true;
@@ -26,7 +27,7 @@ namespace WebApi.Services
         public bool IsAvailable(TimeSlot newTimeSlot)
         {
             List<TimeSlot> timeslots = Context.TimeSlots
-                .Where(c => c.SlotDateTime.Date == newTimeSlot.SlotDateTime.Date).ToList();
+                .Where(c => c.StartDateTime.Date == newTimeSlot.StartDateTime.Date).ToList();
             return TimeSlotValidator.IsAvailable(newTimeSlot, timeslots);
         }
     }

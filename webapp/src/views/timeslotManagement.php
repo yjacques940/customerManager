@@ -32,28 +32,46 @@ ob_start(); ?>
         unselectAuto: false,
         minTime: '8:00',
         maxTime: '22:00',
+        selectConstraint: {
+            start: '00:01',
+            end: '23:59',
+        },
         select: function(info) {
-            var startDatetime = info.start;
-            var endDatetime = info.end;
-            if (info.allDay)
-                endDatetime.setDate(endDatetime.getDate() - 1);
-            var start = {};
-            var end = {};
-            var dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-            var timeOptions = {hour: '2-digit', minute: '2-digit'};
-            start.date = startDatetime.toLocaleDateString(locale + '-ca', dateOptions);
-            end.date = endDatetime.toLocaleDateString(locale + '-ca', dateOptions);
-            start.time = (info.allDay) ? null : ' ' + startDatetime.toLocaleTimeString('it-IT', timeOptions);
-            end.time = (info.allDay) ? null : ' ' + endDatetime.toLocaleTimeString('it-IT', timeOptions);
-            timeslot = {
-                allDay: (info.allDay),
-                startDatetime: startDatetime.toLocaleString('it-IT'),
-                startDateStr: start.date,
-                startTimeStr: start.time,
-                endDatetime: endDatetime.toLocaleString('it-IT'),
-                endDateStr: end.date,
-                endTimeStr: end.time
-            };
+            if ((info.start.getDate() != info.end.getDate() && !info.allDay)
+                || (info.start.getDate() != info.end.getDate() - 1 && info.allDay)) {
+                calendar.unselect();
+                Swal.fire({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: 'Sélection invalide',
+                    text: 'Veuillez sélectionner une plage horaire qui débute et se termine dans la même journée.',
+                    backdrop: `
+                        rgba(1,1,0,0.11)
+                    `
+                })
+            } else {
+                var startDatetime = info.start;
+                var endDatetime = info.end;
+                if (info.allDay)
+                    endDatetime.setDate(endDatetime.getDate() - 1);
+                var start = {};
+                var end = {};
+                var dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+                var timeOptions = {hour: '2-digit', minute: '2-digit'};
+                start.date = startDatetime.toLocaleDateString(locale + '-ca', dateOptions);
+                end.date = endDatetime.toLocaleDateString(locale + '-ca', dateOptions);
+                start.time = (info.allDay) ? null : ' ' + startDatetime.toLocaleTimeString('it-IT', timeOptions);
+                end.time = (info.allDay) ? null : ' ' + endDatetime.toLocaleTimeString('it-IT', timeOptions);
+                timeslot = {
+                    allDay: (info.allDay),
+                    startDatetime: startDatetime.toLocaleString('it-IT'),
+                    startDateStr: start.date,
+                    startTimeStr: start.time,
+                    endDatetime: endDatetime.toLocaleString('it-IT'),
+                    endDateStr: end.date,
+                    endTimeStr: end.time
+                };
+            }
         },
         unselect: function(info) {
             timeslot = null;
@@ -83,9 +101,22 @@ ob_start(); ?>
                             title: "<strong>Nouvelle plage horaire</strong>",
                             text: infoString,
                             showCancelButton: true,
-                            confirmButtonText: 'Créer la plage horaire',
-                            onConfirm: () => {
-                                Swal.showLoading();
+                            confirmButtonText: 'Créer la plage horaire'
+                        }).then((result) => {
+                            if (result.value) {
+                                Swal.fire({
+                                    title: 'Enregistrement en cours...',
+                                    timer: 7500,
+                                    onBeforeOpen: () => { Swal.showLoading() },
+                                    allowOutsideClick: () => !Swal.isLoading(),
+                                    onClose: () => {
+                                        Swal.fire(
+                                            'Error',
+                                            'Aucune réponse reçue. Veuillez réessayer plus tard...',
+                                            'warning'
+                                        )
+                                    }
+                                });
                                 var startDatetime = timeslot.startDatetime;
                                 var endDatetime = timeslot.endDatetime;
                                 $.ajax({
@@ -97,16 +128,22 @@ ob_start(); ?>
                                         isPublic: true
                                     }
                                 }).done(function(response){
-                                    if (response == 'success')
+                                    if (response == 'success') {
                                         Swal.fire({
                                             text: 'Enregistrement effectué avec succès!',
                                             type: 'success',
                                             timer: 1750,
                                             showConfirmButton: false
                                         });
-                                    else {
-                                        Swal.fire('Erreur', 'Réponse: \n' + response, 'error');
+                                        calendar.addEvent({
+                                            title: 'New TimeSlot',
+                                            start: timeslot.startDateTime,
+                                            end: timeslot.endDateTime
+                                        });
+                                        //calendar.unselect();
+                                        calendar.render();
                                     }
+                                    else Swal.fire('Erreur', response, 'error');
                                 }).fail(function(){
                                     Swal.fire(
                                         'Erreur',
@@ -114,23 +151,7 @@ ob_start(); ?>
                                         'error'
                                     );
                                 });
-                            },
-                            allowOutsideClick: () => !Swal.isLoading()
-                        }).then((result) => {
-                            Swal.fire({
-                                title: 'Enregistrement en cours...',
-                                timer: 7500,
-                                onBeforeOpen: () => {
-                                        Swal.showLoading()
-                                },
-                                onClose: () => {
-                                    Swal.fire(
-                                        'Error',
-                                        'Aucune réponse reçue. Veuillez réessayer plus tard...',
-                                        'warning'
-                                    )
-                                }
-                            })
+                            }
                         });
                     } else {
                         alert('No selection');
@@ -145,7 +166,21 @@ ob_start(); ?>
         }
     });
 
-    calendar.render();
+    $.getJSON('?action=ajaxGetTimeSlots', { get_param: 'value' }, function(timeSlots) {
+        $.each(timeSlots, function(index, timeSlot) {
+            addTimeSlotToCalendar(timeSlot);
+        });
+        calendar.render();
+    });
+
+    function addTimeSlotToCalendar(timeSlot) {
+        calendar.addEvent({
+            id: timeSlot.id,
+            title: 'TimeSlot #' + timeSlot.id,
+            start: timeSlot.startDateTime,
+            end: timeSlot.endDateTime
+        });
+    }
   });
 
 </script>

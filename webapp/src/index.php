@@ -61,6 +61,9 @@ try
         case 'ajaxAddNewTimeslot':
             ajaxAddNewTimeslot();
             break;
+        case 'ajaxGetTimeSlots':
+            ajaxGetTimeSlots();
+            break;
         default :
             error(404);
             break;

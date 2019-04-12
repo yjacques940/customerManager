@@ -52,7 +52,7 @@ namespace WebApi.Services
                 appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
             }
-            return appointments.OrderBy(c => c.Timeslot.SlotDateTime).ToList();
+            return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
 
         public bool ChangeIsNewStatus(List<int> ids)
@@ -92,7 +92,7 @@ namespace WebApi.Services
                 appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
             }
-            return appointments.OrderBy(c => c.Timeslot.SlotDateTime).ToList();
+            return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
 
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)

@@ -17,13 +17,13 @@ namespace WebApi.Controllers
         {
             if (Service.IsAvailable(timeSlot))
             {
-                return Conflict();
+                if (Service.CreateNewTimeSlot(timeSlot))
+                {
+                    return Ok();
+                }
+                return BadRequest();
             }
-            else if (!Service.CreateNewTimeSlot(timeSlot))
-            {
-                return Conflict();
-            }
-            return Ok();
+            return Conflict();
         }
     }
 }

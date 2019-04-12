@@ -24,15 +24,9 @@ namespace WebApi.Validators
 
         private static bool IsOverlapping(TimeSlot newTimeSlot, TimeSlot timeSlots)
         {
-            TimeRange newTimeSlotTime = new TimeRange(newTimeSlot.SlotDateTime, GetEndHour(newTimeSlot));
-            TimeRange existingTimeSlotTime = new TimeRange(timeSlots.SlotDateTime, GetEndHour(timeSlots));
+            TimeRange newTimeSlotTime = new TimeRange(newTimeSlot.StartDateTime, newTimeSlot.EndDateTime);
+            TimeRange existingTimeSlotTime = new TimeRange(timeSlots.StartDateTime, timeSlots.EndDateTime);
             return newTimeSlotTime.OverlapsWith(existingTimeSlotTime);
-        }
-
-        private static DateTime GetEndHour(TimeSlot timeSlot)
-        {
-            return timeSlot.SlotDateTime.AddHours(timeSlot.DurationTime.Hour)
-                .AddMinutes(timeSlot.DurationTime.Minute);
         }
 
         public static bool HasATimeSlotForTheDay(List<TimeSlot> timeSlots)
