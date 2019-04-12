@@ -95,6 +95,23 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
 
+        public Appointment ReserveAnAppointment(AppointmentInformation appointmentService)
+        {
+            Appointment appointment = new Appointment();
+            if (appointmentService != null)
+            {
+                appointment.CreatedOn = DateTime.Now;
+                appointment.IdCustomer = Context.Users.First(c => c.Id == appointmentService.IdCustomer).IdCustomer;
+                appointment.IdTimeSlot = appointmentService.IdTimeSlot;
+                appointment.Therapist = appointmentService.Therapist;
+                appointment.IsNew = true;
+                appointment.IsActive = true;
+                Context.Add(appointment);
+                Context.SaveChanges();
+            }
+            return appointment;
+        }
+
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
         {
             if (requestInfo.UserId != "")

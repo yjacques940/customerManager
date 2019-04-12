@@ -129,5 +129,9 @@
   "Timeslot-At" : "à",
   "Timeslot-From" : "de",
   "Timeslot-Le" : "le",
-  "Timeslot-To" : "jusqu'à"
+  "Timeslot-To" : "jusqu'à",
+  "TakeAppointment-AvailableTimeSlot": "Plages horaire disponibles",
+  "TakeAppointment-Therapist": "Thérapeute",
+  "TakeAppointment-Either": "Peu importe",
+  "TakeAppointment-TimeSlotTaken": "La plage horaire n'est plus disponible"
 }

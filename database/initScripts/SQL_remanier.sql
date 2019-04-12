@@ -168,7 +168,8 @@ CREATE TABLE tbl_appointment(
         is_active      Bool NOT NULL ,
         is_new         Bool NOT NULL ,
         id_customer    Int NOT NULL ,
-        id_time_slot   Int NOT NULL
+        id_time_slot   Int NOT NULL,
+        therapist      VARCHAR(50) NOT NULL DEFAULT ''
 	,CONSTRAINT tbl_appointment_PK PRIMARY KEY (id_appointment)
 )ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -298,3 +299,6 @@ INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public, is_availab
 ( '2019-04-30 11:30:00', '2019-04-30 13:00:00', 0, 1),
 ( '2019-04-30 13:00:00', '2019-04-30 14:30:00', 0, 0),
 ( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 0, 0);
+
+INSERT INTO tbl_appointment(created_on, is_active, is_new, id_customer, id_time_slot)
+VALUES (NOW(), 1,1,1,1);

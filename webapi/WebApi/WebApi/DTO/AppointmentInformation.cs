@@ -9,5 +9,6 @@ namespace WebApi.DTO
     {
         public int IdTimeSlot { get; set; }
         public int IdCustomer { get; set; }
+        public string Therapist { get; set; } = "";
     }
 }

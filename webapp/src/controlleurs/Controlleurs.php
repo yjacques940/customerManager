@@ -444,5 +444,31 @@ function Customers()
 }
 
 function ReserveAppointment(){
-    require('views/reserveAppointment.php');
+    if(isset($_SESSION['userid'])){
+        $availableTimeSlots = CallAPI('GET','TimeSlots/GetFreeTimeSlots')['response'];
+        require('views/reserveAppointment.php');
+    }else{
+        About();
+    }
+}
+
+function CheckTimeSlotAvailable(){
+    $result = CallAPI('Get','TimeSlots/CheckTimeSlotAvailable/'.$_POST['timeslot']);
+    if($result['statusCode']== 200){
+        echo 'available';
+        ReserveTimeSlotForAppointment(htmlentities($_POST['timeslot']), htmlentities($_POST['therapist']));
+        $_SESSION['appointmenttaken'] = true;
+    }else{
+        echo $result['statusCode'];
+    }
+}
+
+function ReserveTimeSlotForAppointment($timeslot, $therapist){
+    $appointment = array(
+        'idTimeslot' => $timeslot,
+        'therapist' => $therapist,
+        'idCustomer' => isset($_SESSION['userid']? htmlentities($_SESSION['userid']):0;
+    );
+    CallAPI('POST','Appointments/ReserveAnAppointment',json_encode($appointment));
+    $_SESSION['appointmenttaken'] = true;
 }

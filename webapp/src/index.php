@@ -81,6 +81,9 @@ try
     else if(isset($_POST['newemail'])){
         CheckNewEmailAvaillable();
     }
+    else if(isset($_POST['timeslot'])){
+        CheckTimeSlotAvailable();
+    }
     else
     {
     Home();
