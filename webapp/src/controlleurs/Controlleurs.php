@@ -274,18 +274,29 @@ function UpdateEmail(){
                     ];
                     $emailUpdate = CallAPI('POST', 'Users/UpdateUserEmail',json_encode($newEmail));
                     $_SESSION['emailchanged'] = true;
-                    About();
                 }else{
-                    $_SESSION['emailerror'] = 1;
-                    require('views/updateEmail.php');
+                    echo 'emailerror';
                 }
             }else{
-                $_SESSION['emaildontmatch'] = 1;
-                require('views/updateEmail.php');
+                echo 'emaildontmatch';
             }
         }
     }else{
         require('views/updateEmail.php');
+    }
+}
+
+function CheckNewEmailAvaillable(){
+    $email = [
+        "email" => htmlentities($_POST['newemail'])
+    ];
+    $emailInUse = CallAPI('POST','Users/CheckEmailInUse',json_encode($email));
+    if($emailInUse['statusCode'] == 200)
+    {
+        echo 'taken';
+    }else{
+        UpdateEmail();
+        echo 'available';
     }
 }
 

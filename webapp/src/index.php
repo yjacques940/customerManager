@@ -75,6 +75,9 @@ try
     else if(isset($_POST['newpassword'])){
         CheckPasswords();
     }
+    else if(isset($_POST['newemail'])){
+        CheckNewEmailAvaillable();
+    }
     else
     {
     Home();
