@@ -1,6 +1,4 @@
-﻿# Placer ce fichier dans un contexte plus haut, donc à côté du dossier customerManager et du site web.
-
-version: '2.4'
+﻿version: '2.4'
 services:
     webapp:
         build:

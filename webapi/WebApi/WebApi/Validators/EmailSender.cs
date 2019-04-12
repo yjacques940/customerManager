@@ -74,8 +74,8 @@ namespace WebApi.Validators
                 html +=
                     $"<div class=\"moreInfoBorder\" style=\"padding:10px\">" +
                     $"<div>Nom du client: {appointment.Customer.FirstName} {appointment.Customer.LastName}</div>" +
-                    $"<div>Rendez-vous : {appointment.Appointment.AppointmentDateTime.Date.ToShortDateString()} à " +
-                    $"{appointment.Appointment.AppointmentDateTime.ToString("HH:mm")}</div>" +
+                    $"<div>Rendez-vous : {appointment.Timeslot.StartDateTime.Date.ToShortDateString()} à " +
+                    $"{appointment.Timeslot.StartDateTime.ToString("HH:mm")}</div>" +
                     $"</div></br>";
             }
             return html;

@@ -2,6 +2,6 @@
 
 set -e 
 
-touch result.log
+touch /var/log/api.log
 
-curl -X GET "http://webapi/api/Job/NewAppointments" -H "accept: application/json">> result.log
+curl -X GET "http://webapi/api/Job/NewAppointments" -H "accept: application/json"
