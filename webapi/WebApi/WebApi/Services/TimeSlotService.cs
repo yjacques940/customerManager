@@ -17,6 +17,9 @@ namespace WebApi.Services
             if (timeSlot != null)
             {
                 timeSlot.IsActive = true;
+                if (!timeSlot.IsAvailable) {
+                    timeSlot.IsPublic = false;
+                }
                 Context.Add(timeSlot);
                 Context.SaveChanges();
                 return true;

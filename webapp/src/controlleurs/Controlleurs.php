@@ -401,7 +401,8 @@ function ajaxAddNewTimeslot() {
                 "startDateTime" => $startDatetime->format("Y-m-d H:i"),
                 "endDateTime" => $endDatetime->format("Y-m-d H:i"),
                 "durationTime" => $endDatetime->format("Y-m-d H:i"),
-                "isPublic" => htmlentities($_POST['isPublic'])
+                "isPublic" => htmlentities($_POST['isPublic']),
+                "isAvailable" => htmlentities($_POST['isAvailable'])
             );
             $result = CallAPI('POST', 'TimeSlots/Add', json_encode($newTimeslot));
             if ($result['statusCode'] == 200)
