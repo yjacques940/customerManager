@@ -467,7 +467,7 @@ function ReserveTimeSlotForAppointment($timeslot, $therapist){
     $appointment = array(
         'idTimeslot' => $timeslot,
         'therapist' => $therapist,
-        'idCustomer' => isset($_SESSION['userid']? htmlentities($_SESSION['userid']):0;
+        'idCustomer' => (isset($_SESSION['userid']))? htmlentities($_SESSION['userid']):0
     );
     CallAPI('POST','Appointments/ReserveAnAppointment',json_encode($appointment));
     $_SESSION['appointmenttaken'] = true;

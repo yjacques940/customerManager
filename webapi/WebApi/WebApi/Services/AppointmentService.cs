@@ -95,7 +95,7 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
 
-        public Appointment ReserveAnAppointment(AppointmentInformation appointmentService)
+        public bool ReserveAnAppointment(AppointmentInformation appointmentService)
         {
             Appointment appointment = new Appointment();
             if (appointmentService != null)
@@ -108,8 +108,9 @@ namespace WebApi.Services
                 appointment.IsActive = true;
                 Context.Add(appointment);
                 Context.SaveChanges();
+                return true;
             }
-            return appointment;
+            return false;
         }
 
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
