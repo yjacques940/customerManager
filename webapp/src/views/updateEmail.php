@@ -4,19 +4,7 @@ $title = Localize('Header-Manage-Email');
  <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Header-Manage-Email');?></h3>
-    <?php 
-        if (isset($_SESSION['emailerror'])){
-          unset($_SESSION['emailerror']);
-            ?>
-            <p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('EmailUpdate-Error-password');?>.</p>
-            <?php
-        }else if(isset($_SESSION['emaildontmatch'])){
-          unset($_SESSION['emaildontmatch']);
-          ?>
-            <p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Validate-Error-EmailDontMatch');?>.</p>
-          <?php
-        }
-    ?>
+    <div id="error" name="error"></div>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-6 col-md-6">
         <form action="?action=updateemail" name="updateemail" id="updateemail" method="post">
@@ -24,6 +12,7 @@ $title = Localize('Header-Manage-Email');
             <div class="form-group contact-forms">
               <label for="newemail"><h4><?php echo Localize('EmailUpdate-NewEmail');?></h4></label>
               <input type="email" name="newemail" id="newemail" class="form-control" placeholder="<?php echo Localize('EmailUpdate-NewEmail');?>">
+              <div id="emailinuse" style="color:#F00"></div>
             </div>
             <div class="form-group contact-forms">
               <label for="newemailconfirmed"><h4><?php echo Localize('EmailUpdate-NewEmailConfirmed');?></h4></label>
@@ -76,7 +65,25 @@ $(document).ready(function(){
         submitHandler:function(){
           if(confirm('<?php echo localize("PasswordUpdate-UpdateConfirmation"); ?>'))
           {
-            form.submit();
+            var output = $.ajax({
+                url:"index.php",
+                type:'POST',
+                dataType: 'html',
+                data:{newemail:$("#newemail").val(),newemailconfirmed:$("#newemailconfirmed").val(),password:$("#password").val()},
+                success:function(output){
+                    if(output.trim() == 'available'){
+                      window.location = 'index.php?action=about';
+                    }else if(output.trim() == 'taken'){
+                        $("#emailinuse").html("<p><?php echo localize('Validate-Error-EmailInUse'); ?>.</p>");
+                    }else if(output.trim() == 'emailerror'){
+                      $("#error").html('<p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
+                      localize("EmailUpdate-Error-password");?></p>');
+                    }else if(output.trim()== 'emaildontmatch'){
+                      $("#error").html('<p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
+                      localize("Validate-Error-EmailDontMatch");?></p>');
+                    }
+                },
+            });
           }
         }
     });
