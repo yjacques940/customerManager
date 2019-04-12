@@ -398,10 +398,10 @@ function ajaxAddNewTimeslot() {
             $startDatetime = DateTime::createFromFormat('d/m/Y, H:i:s', htmlentities($_POST['startDatetime']));
             $endDatetime = DateTime::createFromFormat('d/m/Y, H:i:s', htmlentities($_POST['endDatetime']));
             $newTimeslot = array(
-                "StartDateTime" => $startDatetime->format("Y-m-d H:i"),
-                "EndDateTime" => $endDatetime,
-                "DurationTime" => $endDatetime,
-                "IsPublic" => htmlentities($_POST['isPublic'])
+                "startDateTime" => $startDatetime->format("Y-m-d H:i"),
+                "endDateTime" => $endDatetime->format("Y-m-d H:i"),
+                "durationTime" => $endDatetime->format("Y-m-d H:i"),
+                "isPublic" => htmlentities($_POST['isPublic'])
             );
             $result = CallAPI('POST', 'TimeSlots/Add', json_encode($newTimeslot));
             if ($result['statusCode'] == 200)

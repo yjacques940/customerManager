@@ -152,9 +152,10 @@ CREATE TABLE tbl_follow_up(
 
 CREATE TABLE tbl_time_slot(
         id_time_slot   Int  Auto_increment  NOT NULL ,
-        slot_date_time Datetime NOT NULL ,
-        duration_time  Datetime NOT NULL ,
-        is_active      Bool NOT NULL ,
+        start_date_time Datetime NOT NULL ,
+        end_date_time Datetime NOT NULL ,
+        duration_time  Datetime NOT NULL Default now(),
+        is_active      Bool NOT NULL DEFAULT 1 ,
         is_public      Bool NOT NULL
 	,CONSTRAINT tbl_time_slot_PK PRIMARY KEY (id_time_slot)
 )ENGINE=InnoDB;

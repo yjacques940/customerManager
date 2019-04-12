@@ -8,6 +8,7 @@ ob_start(); ?>
 <link href='addons/fullcalendar-4.0.2/bootstrap/main.css' rel='stylesheet' />
 
 <script src='addons/fullcalendar-4.0.2/core/main.min.js'></script>
+<script src='addons/fullcalendar-4.0.2/moment/main.min.js'></script>
 <script src='addons/fullcalendar-4.0.2/core/locales/fr.js'></script>
 <script src='addons/fullcalendar-4.0.2/daygrid/main.min.js'></script>
 <script src='addons/fullcalendar-4.0.2/timegrid/main.min.js'></script>
@@ -136,12 +137,13 @@ ob_start(); ?>
                                             showConfirmButton: false
                                         });
                                         calendar.addEvent({
+                                            id: 0,
                                             title: 'New TimeSlot',
-                                            start: timeslot.startDateTime,
-                                            end: timeslot.endDateTime
+                                            start: startDatetime,
+                                            end: endDatetime
                                         });
-                                        //calendar.unselect();
-                                        calendar.render();
+                                        calendar.unselect();
+                                        //calendar.render();
                                     }
                                     else Swal.fire('Erreur', response, 'error');
                                 }).fail(function(){
