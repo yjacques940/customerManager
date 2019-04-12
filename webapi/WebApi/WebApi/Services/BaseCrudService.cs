@@ -60,7 +60,7 @@ namespace WebApi.Services
 
         public virtual List<T> GetList()
         {
-            return Context.Set<T>().ToList();
+            return Context.Set<T>().Where(c => c.IsActive).ToList();
         }
     }
 }
