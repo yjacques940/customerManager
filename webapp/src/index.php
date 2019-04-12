@@ -1,5 +1,6 @@
 <?php
 require('controlleurs/Controlleurs.php');
+
 try
 {
     if (isset($_GET['action'])) {
@@ -51,8 +52,17 @@ try
         case 'changeAppointmentIsNewStatus':
             ChangeAppointmentIsNewStatus();
             break;
+        case 'timeslotManagement':
+            require('views/timeslotManagement.php');
+            break;
         case 'updateemail':
             UpdateEmail();
+            break;
+        case 'ajaxAddNewTimeslot':
+            ajaxAddNewTimeslot();
+            break;
+        case 'ajaxGetTimeSlots':
+            ajaxGetTimeSlots();
             break;
         default :
             error(404);

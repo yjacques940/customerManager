@@ -147,23 +147,34 @@ CREATE TABLE tbl_follow_up(
 
 
 #------------------------------------------------------------
+# Table: tbl_time_slot
+#------------------------------------------------------------
+
+CREATE TABLE tbl_time_slot(
+        id_time_slot   Int  Auto_increment  NOT NULL ,
+        start_date_time Datetime NOT NULL ,
+        end_date_time Datetime NOT NULL ,
+        duration_time  Datetime NOT NULL Default now(),
+        is_active      Bool NOT NULL DEFAULT 1 ,
+        is_public      Bool NOT NULL
+	,CONSTRAINT tbl_time_slot_PK PRIMARY KEY (id_time_slot)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
 # Table: tbl_appointment
 #------------------------------------------------------------
 
 CREATE TABLE tbl_appointment(
-        id_appointment   Int  Auto_increment  NOT NULL ,
-        appointment_date_time datetime NOT NULL ,
-        duration_time    datetime NOT NULL ,
-        is_active        Bool NOT NULL DEFAULT 1,
-        is_new        Bool NOT NULL DEFAULT 1,
-        id_customer      Int NOT NULL
+        id_appointment Int  Auto_increment  NOT NULL ,
+        created_on     Datetime NOT NULL ,
+        is_active      Bool NOT NULL ,
+        is_new         Bool NOT NULL ,
+        id_customer    Int NOT NULL ,
+        id_time_slot   Int NOT NULL
 	,CONSTRAINT tbl_appointment_PK PRIMARY KEY (id_appointment)
 )ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-ALTER TABLE tbl_appointment
-	ADD CONSTRAINT tbl_appointment_tbl_customer0_FK
-	FOREIGN KEY (id_customer)
-	REFERENCES tbl_customer(id_customer);
 
 #------------------------------------------------------------
 # Inserting basic data
@@ -284,9 +295,9 @@ INSERT INTO tbl_phone_number (phone, id_phone_type,id_customer) VALUES
 ('(418) 420-6969', 2,2),
 ('(418) 313-8034', 3,2);
 
-INSERT INTO tbl_appointment (appointment_date_time, duration_time, id_customer) VALUES
-( '1000-01-01 09:00:00', '1000-01-01 01:00:00', 1),
-( '1000-01-01 10:30:00', '1000-01-01 01:00:00', 1),
-( '1000-01-01 11:00:00', '1000-01-01 01:30:00', 1),
-( '1000-01-01 13:00:00', '1000-01-01 01:30:00', 1),
-( '1000-01-01 19:00:00', '1000-01-01 01:30:00', 1);
+INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public) VALUES
+( '2019-04-30 09:00:00', '2019-04-30 10:00:00', 1),
+( '2019-04-30 10:30:00', '2019-04-30 11:30:00', 1),
+( '2019-04-30 11:30:00', '2019-04-30 13:00:00', 1),
+( '2019-04-30 13:00:00', '2019-04-30 14:30:00', 1),
+( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 1);

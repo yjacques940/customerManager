@@ -14,6 +14,7 @@ namespace WebApi.Data
         DbSet<Permission> Permissions { get; set; }
         DbSet<Address> Addresses { get; set; }
         DbSet<State> States { get; set; }
+        DbSet<TimeSlot> TimeSlots { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;

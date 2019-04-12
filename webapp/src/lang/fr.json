@@ -116,7 +116,6 @@
   "AskForAppointment-Treatment-Regular" : "Régulier",
   "AskForAppointment-Treatment-1h30" : "Une heure trente",
   "Appointment-DateRequested" : "Date désirée",
-  "Error-Help":"Si vous croyez que ceci est une erreur et que vous avez droit à accéder cette page, veuillez <em>contacter l'administrateur.</em>",
   "Appointment-ChangeNewStatus" : "Marquer comme vu",
   "PageTitle-Error":"Erreur",
   "Error-Title":"Erreur ",
@@ -124,5 +123,10 @@
   "Error-Reason-404":"Cette page est inexistante.",
   "Error-Reason-500":"Le serveur n'a pas pu répondre à votre requête. Veuillez réessayer plus tard.",
   "Error-Reason-Unknown":"Une erreur inattendue c'est produite. Veuillez réessayer plus tard.",
-  "Error-Help":"Si vous avez des questions, veuillez contacter l'administrateur du site."
+  "Error-Help":"Si vous avez des questions, veuillez contacter l'administrateur du site.",
+  "Timeslot-Add" : "Ajouter",
+  "Timeslot-At" : "à",
+  "Timeslot-From" : "de",
+  "Timeslot-Le" : "le",
+  "Timeslot-To" : "jusqu'à"
 }

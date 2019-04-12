@@ -392,6 +392,36 @@ function MakeAppointment(){
     }
 }
 
+function ajaxAddNewTimeslot() {
+    if (isset($_POST)) {
+        if (isset($_POST['startDatetime']) && isset($_POST['endDatetime']) && isset($_POST['isPublic'])) {
+            $startDatetime = DateTime::createFromFormat('d/m/Y, H:i:s', htmlentities($_POST['startDatetime']));
+            $endDatetime = DateTime::createFromFormat('d/m/Y, H:i:s', htmlentities($_POST['endDatetime']));
+            $newTimeslot = array(
+                "startDateTime" => $startDatetime->format("Y-m-d H:i"),
+                "endDateTime" => $endDatetime->format("Y-m-d H:i"),
+                "durationTime" => $endDatetime->format("Y-m-d H:i"),
+                "isPublic" => htmlentities($_POST['isPublic'])
+            );
+            $result = CallAPI('POST', 'TimeSlots/Add', json_encode($newTimeslot));
+            if ($result['statusCode'] == 200)
+                echo 'success';
+            else if ($result['statusCode'] == 409)
+                echo 'La nouvelle plage horaire est en conflit avec une ou plusieurs autres plages horaire.';
+            else if ($result['statusCode'] == 400)
+                echo "La nouvelle plage horaire n'a pas pu être créée.";
+        } else echo 'Incomplete or invalid data received';
+    } else echo 'No data received';
+}
+
+function ajaxGetTimeSlots() {
+    $result = CallAPI('Get', 'TimeSlots');
+    if ($result['statusCode'] == 200)
+        echo json_encode($result['response']);
+    else
+        echo 'error';
+}
+
 function AppointmentCreator()
 {
     require('views/appointment_creator.php');

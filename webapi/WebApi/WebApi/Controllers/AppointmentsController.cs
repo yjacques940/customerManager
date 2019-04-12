@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet, Route("GetByDate/{date}")]
-        public ActionResult<IEnumerable<Appointment>> GetAppointmentsByDate(string date)
+        public ActionResult<IEnumerable<AppointmentTimeSlotInformation>> GetAppointmentsByDate(string date)
         {
             return Service.GetAppointmentsByDate(date);
         }
@@ -57,16 +57,16 @@ namespace WebApi.Controllers
         {
             if (appointment == null)
                 return BadRequest();
-                var newAppointment = Service.CheckAppointmentIsAvailable(appointment);
+            var newAppointment = Service.CheckAppointmentIsAvailable(appointment);
             if (newAppointment == null)
                 return Conflict();
-			newAppointment.IsNew = true;
+            newAppointment.IsNew = true;
             newAppointment.IsActive = true;
- 			var appointmentAdded = Service.AddOrUpdate(newAppointment);
+            var appointmentAdded = Service.AddOrUpdate(newAppointment);
             var user = Service.GetUser(appointmentAdded);
-            if(user != null)
-                EmailSender.SendConfirmationEmail(user.Email,
-                Convert.ToDateTime(appointment.AppointmentDateTime), configuration);
+            var appointmentDate = Service.GetAppointmentTimeSlot(newAppointment).StartDateTime;
+            if (user != null)
+                EmailSender.SendConfirmationEmail(user.Email, appointmentDate, configuration);
             return Ok(appointmentAdded);
         }
 

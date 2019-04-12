@@ -13,6 +13,7 @@
       <script type="text/javascript" src="JavaScript/jquery-validation-1.17.0/lib/jquery-1.11.1.js"></script>
       <script type="text/javascript" src="JavaScript/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
       <script type="text/javascript" src="JavaScript/jquery-validation-1.17.0/dist/localization/messages_fr.js"></script>
+      <script type="text/javascript" src="addons/sweetalert2.all.min.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
    </head>
   <body>

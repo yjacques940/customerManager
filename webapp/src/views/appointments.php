@@ -18,8 +18,8 @@ ob_start();
         <tr>
             <th scope="col"><?php echo localize('Appointment-Date'); ?></th>
             <th scope="col"><?php echo localize('Appointment-Time'); ?></th>
-            <th scope="col"><?php echo localize('Appointment-Duration'); ?></th>
             <th scope="col"><?php echo localize('Appointment-Customer'); ?></th>
+            <th scope="col"><?php echo localize('Personal-Phone'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@ ob_start();
             <tr id="<?php echo $appointment->appointment->idCustomer; ?>">
                 <td scope="row">
                 <?php
-                    $appointmentDate = new DateTime($appointment->appointment->appointmentDateTime);
+                    $appointmentDate = new DateTime($appointment->timeslot->startDateTime);
                     echo $appointmentDate->format('Y-m-d');
                 ?>
                 </td>
