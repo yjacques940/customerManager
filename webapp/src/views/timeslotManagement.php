@@ -39,7 +39,7 @@ ob_start(); ?>
         },
         select: function(info) {
             if ((info.start.getDate() != info.end.getDate() && !info.allDay)
-                || (info.start.getDate() != info.end.getDate() - 1 && info.allDay)) {
+                || (info.start.getDate() != (info.end.getDate() - 1) && info.allDay)) {
                 calendar.unselect();
                 Swal.fire({
                     position: 'bottom-end',

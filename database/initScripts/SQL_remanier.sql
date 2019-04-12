@@ -1,7 +1,3 @@
-﻿#------------------------------------------------------------
-#        DB Generator for main_db
-#------------------------------------------------------------
-
 create database if not exists main_db
 CHARACTER SET utf8
 COLLATE utf8_bin;
@@ -156,7 +152,8 @@ CREATE TABLE tbl_time_slot(
         end_date_time Datetime NOT NULL ,
         duration_time  Datetime NOT NULL Default now(),
         is_active      Bool NOT NULL DEFAULT 1 ,
-        is_public      Bool NOT NULL
+        is_public      Bool NOT NULL ,
+        is_available   Bool NOT NULL
 	,CONSTRAINT tbl_time_slot_PK PRIMARY KEY (id_time_slot)
 )ENGINE=InnoDB;
 
@@ -295,9 +292,9 @@ INSERT INTO tbl_phone_number (phone, id_phone_type,id_customer) VALUES
 ('(418) 420-6969', 2,2),
 ('(418) 313-8034', 3,2);
 
-INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public) VALUES
-( '2019-04-30 09:00:00', '2019-04-30 10:00:00', 1),
-( '2019-04-30 10:30:00', '2019-04-30 11:30:00', 1),
-( '2019-04-30 11:30:00', '2019-04-30 13:00:00', 1),
-( '2019-04-30 13:00:00', '2019-04-30 14:30:00', 1),
-( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 1);
+INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public, is_available) VALUES
+( '2019-04-30 09:00:00', '2019-04-30 10:00:00', 1, 1),
+( '2019-04-30 10:30:00', '2019-04-30 11:30:00', 1, 1),
+( '2019-04-30 11:30:00', '2019-04-30 13:00:00', 0, 1),
+( '2019-04-30 13:00:00', '2019-04-30 14:30:00', 0, 0),
+( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 0, 0);
