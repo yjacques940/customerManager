@@ -77,10 +77,10 @@ $(document).ready(function(){
                         $("#emailinuse").html("<p><?php echo localize('Validate-Error-EmailInUse'); ?>.</p>");
                     }else if(output.trim() == 'emailerror'){
                       $("#error").html('<p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
-                      localize("EmailUpdate-Error-password");?></p>');
+                      echo localize("EmailUpdate-Error-password");?></p>');
                     }else if(output.trim()== 'emaildontmatch'){
                       $("#error").html('<p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
-                      localize("Validate-Error-EmailDontMatch");?></p>');
+                      echo localize("Validate-Error-EmailDontMatch");?></p>');
                     }
                 },
             });
