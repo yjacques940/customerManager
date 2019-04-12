@@ -95,13 +95,13 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
 
-        public bool ReserveAnAppointment(AppointmentInformation appointmentService)
+        public bool ReserveAnAppointment(AppointmentUserInformation appointmentService)
         {
             Appointment appointment = new Appointment();
             if (appointmentService != null)
             {
                 appointment.CreatedOn = DateTime.Now;
-                appointment.IdCustomer = Context.Users.First(c => c.Id == appointmentService.IdCustomer).IdCustomer;
+                appointment.IdCustomer = Context.Users.First(c => c.Id == appointmentService.IdUser).IdCustomer;
                 appointment.IdTimeSlot = appointmentService.IdTimeSlot;
                 appointment.Therapist = appointmentService.Therapist;
                 appointment.IsNew = true;
