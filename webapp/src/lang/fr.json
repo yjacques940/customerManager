@@ -133,5 +133,6 @@
   "TakeAppointment-AvailableTimeSlot": "Plages horaire disponibles",
   "TakeAppointment-Therapist": "Thérapeute",
   "TakeAppointment-Either": "Peu importe",
-  "TakeAppointment-TimeSlotTaken": "La plage horaire n'est plus disponible"
+  "TakeAppointment-TimeSlotTaken": "La plage horaire n'est plus disponible",
+  "TakeAppointment-AppointementTaken": "Rendez-vous enregistré avec succès"
 }

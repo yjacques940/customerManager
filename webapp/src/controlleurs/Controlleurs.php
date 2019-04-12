@@ -448,7 +448,7 @@ function ReserveAppointment(){
         $availableTimeSlots = CallAPI('GET','TimeSlots/GetFreeTimeSlots')['response'];
         require('views/reserveAppointment.php');
     }else{
-        About();
+        error(403);
     }
 }
 
