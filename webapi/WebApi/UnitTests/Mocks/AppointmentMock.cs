@@ -5,7 +5,7 @@ using WebApi.Models;
 namespace UnitTests.Mocks
 {
     public class AppointmentMock
-    {
+    {/*
         public Appointment GetNewAppointment()
         {
            return new Appointment()
@@ -35,6 +35,6 @@ namespace UnitTests.Mocks
                     });
             }
             return appointments;
-        }
+        }*/
     }
 }
