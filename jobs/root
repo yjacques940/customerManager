@@ -1,0 +1,4 @@
+# do daily/weekly/monthly maintenance
+# min	hour	day	month	weekday	command
+0	16	*	*	*	curl -m 15 -X GET "http://webapi/api/Job/NewAppointments" -H "accept: application/json"
+

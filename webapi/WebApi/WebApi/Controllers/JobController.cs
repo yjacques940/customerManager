@@ -25,9 +25,13 @@ namespace WebApi.Controllers
         }
 
         [HttpGet, Route("NewAppointments")]
-        public bool SendNewAppointmentsToEmployees()
+        public ActionResult SendNewAppointmentsToEmployees()
         {
-            return Service.SendNewAppointments(Configuration,AppointmentService,PhoneService);
+            if (Service.SendNewAppointments(Configuration,AppointmentService,PhoneService))
+                return Ok();
+
+            return BadRequest();
+
         }
     }
 }

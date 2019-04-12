@@ -18,7 +18,7 @@ services:
     webapi:
         build:
             context: ./webapi/WebApi/
-            dockerfile: ./WebApi/Dockerfile
+            dockerfile: WebApi/Dockerfile
         networks:
         - local
         ports:
@@ -35,9 +35,9 @@ services:
         - local
         ports:
         - '3306:3306'
-    cronjobs:
-        build: 
-            context: ./cronjobs/
+    jobs:
+        build:
+            context: ./jobs/
             dockerfile: Dockerfile
         networks:
         - local
