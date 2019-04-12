@@ -442,3 +442,7 @@ function Customers()
 {
     require('views/customers.php');
 }
+
+function ReserveAppointment(){
+    require('views/reserveAppointment.php');
+}

@@ -64,6 +64,9 @@ try
         case 'ajaxGetTimeSlots':
             ajaxGetTimeSlots();
             break;
+        case 'reserveappointment':
+            ReserveAppointment();
+            break;
         default :
             error(404);
             break;

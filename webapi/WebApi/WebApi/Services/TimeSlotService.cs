@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WebApi.Data;
+using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Validators;
 
@@ -38,7 +39,40 @@ namespace WebApi.Services
 
         public List<TimeSlot> GetTimeSlotForTheDay(DateTime date)
         {
-            List<TimeSlot> timeSlots = (from c in Context.TimeSlot where c.SlotDateTime >= date &&
-                                        c.SlotDateTime < date.AddDays(1) select c).ToList();
-            return timeSlots;
+            List<TimeSlot> timeSlots = Context.TimeSlot.Where(c => c.SlotDateTime.Date == date.Date && c.IsActive && c.IsPublic).ToList();
+            List<TimeSlot> timeSlotsToReturn = new List<TimeSlot>();
+            timeSlotsToReturn.AddRange(timeSlots);
+            List<Appointment> appointments = Context.Appointments.Where(c => c.AppointmentDateTime.Date == date.Date).ToList();
+            foreach (var timeSlot in timeSlots)
+            {
+                foreach (var appointment in appointments)
+                {
+                    if(appointment.IdTimeSlot == timeSlot.Id)
+                    {
+                        timeSlotsToReturn.Remove(timeSlot);
+                    }
+                }
+            }
+            return timeSlotsToReturn;
         }
+
+        public List<TimeSlot> GetFreeTimeSlots()
+        {
+            List<TimeSlot> timeSlots = Context.TimeSlot.Where(c => c.SlotDateTime > DateTime.Now).ToList();
+            List<Appointment> appointments = Context.Appointments.ToList();
+            List<TimeSlot> timeSlotsToReturn = new List<TimeSlot>();
+            timeSlotsToReturn.AddRange(timeSlots);
+            foreach (var timeSlot in timeSlots)
+            {
+                foreach (var appointment in appointments)
+                {
+                    if (appointment.IdTimeSlot == timeSlot.Id)
+                    {
+                        timeSlotsToReturn.Remove(timeSlot);
+                    }
+                }
+            }
+            return timeSlotsToReturn;
+        }
+    }
+}
