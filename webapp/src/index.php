@@ -26,6 +26,7 @@ try
         case 'logout':
             unset($_SESSION['userid']);
             unset($_SESSION['username']);
+            unset($_SESSION['isfirstlogin']);
             Home();
             break;
         case 'ask_for_appointment' :

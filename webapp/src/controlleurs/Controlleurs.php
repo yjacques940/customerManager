@@ -76,6 +76,7 @@ function Login(){
         {
             $_SESSION['username'] = $userAPI['response']->fullName;
             $_SESSION['userid'] = $userAPI['response']->id;
+            $_POST['isfirstlogin'] = $userAPI['response']->isFirstLogin;
             About();
         }
         else

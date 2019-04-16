@@ -21,9 +21,10 @@ namespace WebApi.Services
             {
                 return null;
             }
+            UserInformation userInfo = new UserInformation();
+            userInfo.IsFirstLogin = user.LastLogin == user.CreatedOn;
             user.LastLogin = DateTime.Now;
             Context.SaveChanges();
-            UserInformation userInfo = new UserInformation();
             userInfo.Id = user.Id;
             var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
             userInfo.FullName = $"{customer.FirstName} {customer.LastName}";
