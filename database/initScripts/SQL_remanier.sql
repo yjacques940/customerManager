@@ -194,81 +194,111 @@ CREATE TABLE tbl_question(
 # Inserting basic data
 #------------------------------------------------------------
 
-INSERT INTO tbl_question(id_parent,question_fr,question_en,answer_type,display_order) VALUES
-(null,
+INSERT INTO tbl_question(id_question,id_parent,question_fr,question_en,answer_type,display_order) VALUES
+(1,null,
 'Avez-vous déjà consulté un autre thérapeute (Massothérapeute, Kinésithérapeute, Orthothérapeute, Physiothérapeute, Chirothérapeute, etc.)?',
 'Have you ever consulted another therapist (Massage Therapist, Physiotherapist, Orthotherapist, Physiotherapist, Therapist, etc.)?',
 'bool',1
 ),
-(null,
+(2,null,
 'Avez-vous déjà subi une opération ou une fracture?',
 'Have you ever had an operation or a fracture?',
 'bool',2
 ),
-(null,
+(3,null,
 'Avez-vous déjà eu un accident?',
 'Have you ever had an accident?',
 'bool',3
 ),
-(null,
+(4,null,
 'Avez-vous déjà eu varices ou phlébite?',
 'Have you ever had varicose veins or phlebitis?',
 'bool',4
 ),
-(null,
+(5,null,
 'Souffrez-vous de problèmes digestifs, de diabète ou d\'hypoglycémie?',
 'Do you suffer from digestive problems, diabetes or hypoglycemia?',
 'bool',5
 ),
-(null,
+(6,null,
 'Avez-vous des problèmes cardiaques ou circulatoires (Hypertension, Hypotension, Palpitations, Infarctus, Angine, AVC)?',
 'Do you have heart or circulatory problems (Hypertension, Hypotension, Palpitations, Infarction, Angina, Stroke)?',
 'bool',6
 ),
-(null,
+(7,null,
 'Souffrez-vous d\'athérosclérose, d\'athérosclérose ou d\'hémophilie?',
 'Do you suffer from atherosclerosis, atheropathy, or hemophilia?',
 'bool',7
 ),
-(null,
+(8,null,
 'Avez-vous des problèmes respiratoires (Asthme, Emphysème, etc.)?',
 'Do you have breathing problems (Asthma, Emphysema, etc.)?',
 'bool',8
 ),
-(null,
+(9,null,
 'Êtes-vous enceinte?',
 'Are you pregnant?',
 'bool',10
 ),
-(null,
+(10,null,
 'Avez-vous un cancer?',
 'Do you have cancer?',
 'bool',9
 ),
-(null,
+(11,null,
 'Prenez-vous des médicaments?',
 'Do you take medication?',
 'bool',11
 ),
-(null,
+(12,null,
 'Avez-vous des allergies?',
 'Do you have allergies?',
 'bool',12
 ),
-(null,
+(13,null,
 'Portez-vous des orthèses, verres de contact, prothèses ou autre?',
 'Do you wear orthotics, contact lenses, prostheses or other?',
 'bool',13
 ),
-(null,
+(14,null,
 'Avez-vous des maux de tête réguliers?',
 'Do you have regular headaches?',
 'bool',14
 ),
-(null,
+(15,null,
 'Avez-vous une alimentation saine et équilibrée?',
 'Do you have a healthy and balanced diet?',
 'string',15
+),
+(16,4,
+'Quand?',
+'When?',
+'string',10
+),
+(17,6,
+'Quand?',
+'When?',
+'string',0
+),
+(18,8,
+'Autre',
+'Other',
+'string',0
+),
+(19,13,
+'Autre',
+'Other',
+'string',0
+),
+(20,11,
+'Pour quelle(s) raison(s)?',
+'For what reason(s)?',
+'string',0
+),
+(21,10,
+'Lequel?',
+'Wich one?',
+'string',0
 );
 
 # 'bit' must be a multiple of 2
