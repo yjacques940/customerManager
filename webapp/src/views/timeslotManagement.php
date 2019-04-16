@@ -14,6 +14,7 @@ ob_start(); ?>
 <script src='addons/fullcalendar-4.0.2/timegrid/main.min.js'></script>
 <script src='addons/fullcalendar-4.0.2/bootstrap/main.min.js'></script>
 <script src='addons/fullcalendar-4.0.2/interaction/main.min.js'></script>
+<script src='addons/jquery.ui.touch-punch.min.js'></script>
 
 <script>
   var locale = '<?php echo $_SESSION['locale']; ?>';
@@ -37,6 +38,42 @@ ob_start(); ?>
             start: '00:01',
             end: '23:59',
         },
+        eventClick: function(info) {
+            var dateOptions = {weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+            var notes = (info.event.title != 'Aucune note') ? info.event.title : 'Notes'
+            Swal.fire({
+                title: info.event.start.toLocaleDateString(locale + '-ca', dateOptions),
+                text: (info.event.title != 'Aucune note') ? 'Notes: ' + info.event.title : 'Aucune note',
+                showCancelButton: true,
+                cancelButtonText: "Fermer",
+                confirmButtonText: "Modifier",
+                confirmButtonColor: '#d93',
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        title: info.event.start.toLocaleDateString(locale + '-ca', dateOptions),
+                        html: 'Mode édition'
+                            + '<br/><input class="swal2-input" type="text" id="notes" placeholder="'
+                            + notes
+                            + '"></input><br/><button id="timeslotDelete" class="swal2-confirm swal2-styled" '
+                            + 'style="background-color: rgb(221, 153, 51)">Modifier</button>',
+                        showCancelButton: true,
+                        cancelButtonText: "Fermer",
+                        confirmButtonText: "Supprimer",
+                        confirmButtonColor: '#d33',
+                        onBeforeOpen: () => {
+                            const content = Swal.getContent()
+                            const $ = content.querySelector.bind(content)
+                            const timeslotDelete = $('#timeslotDelete')
+                            timeslotDelete.addEventListener('click', () => {
+                                //updateEvent();
+                                alert('deleted! D:')
+                            })
+                        }
+                    });
+                }
+            });
+        },
         select: function(info) {
             Swal.close();
             if ((info.start.getDate() != info.end.getDate() && !info.allDay)
@@ -54,7 +91,7 @@ ob_start(); ?>
                 var endDatetime = info.end;
                 var start = {};
                 var end = {};
-                var dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+                var dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
                 var timeOptions = {hour: '2-digit', minute: '2-digit'};
                 start.date = startDatetime.toLocaleDateString(locale + '-ca', dateOptions);
                 end.date = endDatetime.toLocaleDateString(locale + '-ca', dateOptions);
