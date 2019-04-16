@@ -9,5 +9,6 @@ namespace WebApi.Models
         public DateTime DurationTime { get; set; }
         public bool IsPublic { get; set; }
         public bool IsAvailable { get; set; }
+        public string Notes { get; set; }
     }
 }

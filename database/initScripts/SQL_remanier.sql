@@ -147,13 +147,14 @@ CREATE TABLE tbl_follow_up(
 #------------------------------------------------------------
 
 CREATE TABLE tbl_time_slot(
-        id_time_slot   Int  Auto_increment  NOT NULL ,
+        id_time_slot    Int  Auto_increment  NOT NULL ,
         start_date_time Datetime NOT NULL ,
-        end_date_time Datetime NOT NULL ,
-        duration_time  Datetime NOT NULL Default now(),
-        is_active      Bool NOT NULL DEFAULT 1 ,
-        is_public      Bool NOT NULL ,
-        is_available   Bool NOT NULL
+        end_date_time   Datetime NOT NULL ,
+        duration_time   Datetime NOT NULL Default now(),
+        notes           varchar (1000) ,
+        is_active       Bool NOT NULL DEFAULT 1 ,
+        is_public       Bool NOT NULL ,
+        is_available    Bool NOT NULL
 	,CONSTRAINT tbl_time_slot_PK PRIMARY KEY (id_time_slot)
 )ENGINE=InnoDB;
 
@@ -293,12 +294,12 @@ INSERT INTO tbl_phone_number (phone, id_phone_type,id_customer) VALUES
 ('(418) 420-6969', 2,2),
 ('(418) 313-8034', 3,2);
 
-INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public, is_available) VALUES
-( '2019-04-30 09:00:00', '2019-04-30 10:00:00', 1, 1),
-( '2019-04-30 10:30:00', '2019-04-30 11:30:00', 1, 1),
-( '2019-04-30 11:30:00', '2019-04-30 13:00:00', 0, 1),
-( '2019-04-30 13:00:00', '2019-04-30 14:30:00', 0, 0),
-( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 0, 0);
+INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public, is_available, notes) VALUES
+( '2019-04-30 09:00:00', '2019-04-30 10:00:00', 1, 1, null),
+( '2019-04-30 10:30:00', '2019-04-30 11:30:00', 1, 1, null),
+( '2019-04-30 11:30:00', '2019-04-30 13:00:00', 0, 1, null),
+( '2019-04-30 13:00:00', '2019-04-30 14:30:00', 0, 0, "Passer chercher les enfants"),
+( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 0, 0, "Film avec la famille");
 
 INSERT INTO tbl_appointment(created_on, is_active, is_new, id_customer, id_time_slot)
 VALUES (NOW(), 1,1,1,1);

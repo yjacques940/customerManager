@@ -42,13 +42,10 @@ ob_start(); ?>
                 || (info.start.getDate() != (info.end.getDate() - 1) && info.allDay)) {
                 calendar.unselect();
                 Swal.fire({
-                    position: 'bottom-end',
+                    position: 'top',
                     type: 'warning',
-                    title: 'Sélection invalide',
-                    text: 'Veuillez sélectionner une plage horaire qui débute et se termine dans la même journée.',
-                    backdrop: `
-                        rgba(1,1,0,0.11)
-                    `
+                    toast: true,
+                    text: 'Vous devez sélectionner une plage horaire contenu dans la même journée.'
                 })
             } else {
                 var startDatetime = info.start;
@@ -108,14 +105,26 @@ ob_start(); ?>
                                     + from + timeslot.startTimeStr + at + timeslot.endTimeStr;
                         Swal.fire({
                             title: "<strong>Nouvelle plage horaire</strong>",
-                            html: 'Souhaitez-vous créer une plage horaire</br><em>' + infoString + '</em> ?',
-                            input: 'checkbox',
-                            inputPlaceholder: 'Créer une plage horaire publique',
+                            html:
+                                'Souhaitez-vous créer une plage horaire</br><em>' + infoString + '</em> ?' +
+                                '<input id="newTimeslotNotes" class="swal2-input" placeholder="Notes (optionnel)">' +
+                                '<label for="newTimeslotIsPublic"><p>Créer une plage horaire publique</p></label>' +
+                                '<input id="newTimeslotIsPublic" type="checkbox" name="isPublic" value="true">',
                             showCancelButton: true,
-                            confirmButtonText: 'Créer'
+                            confirmButtonText: 'Créer',
+                            preConfirm: () => {
+                                return [
+                                    document.getElementById('newTimeslotIsPublic').checked,
+                                    document.getElementById('newTimeslotNotes').value
+                                ]
+                            }
                         }).then((result) => {
-                            if (typeof result.value === 'number')
-                                addNewEvent((result.value) ? true : false, true);
+                            if (result)
+                                addNewEvent({
+                                    "isAvailable": true,
+                                    "isPublic": result.value[0],
+                                    "notes": result.value[1]
+                                });
                         });
                     } else {
                         alert('No selection');
@@ -143,17 +152,19 @@ ob_start(); ?>
     function addTimeSlotToCalendar(timeSlot) {
         calendar.addEvent({
             id: timeSlot.id,
-            title: 'TimeSlot #' + timeSlot.id,
+            title: (timeSlot.notes) ? timeSlot.notes : "Aucune note",
             backgroundColor: (timeSlot.isPublic) ? '#0a0' : (timeSlot.isAvailable) ? '' : '#a00',
             start: timeSlot.startDateTime,
             end: timeSlot.endDateTime
         });
     }
 
-    function addNewEvent(isPublic, isAvailable) {
+    function addNewEvent(form) {
         Swal.fire({
             title: 'Enregistrement en cours...',
             timer: 7500,
+            toast: true,
+            position: 'top',
             onBeforeOpen: () => { Swal.showLoading() },
             allowOutsideClick: () => !Swal.isLoading(),
             onClose: () => {
@@ -172,15 +183,19 @@ ob_start(); ?>
             data: {
                 startDatetime: startDatetime,
                 endDatetime: endDatetime,
-                isPublic: isPublic,
-                isAvailable: isAvailable
+                notes: form.notes.replace(/"/g, "''"),
+                isPublic: form.isPublic,
+                isAvailable: form.isAvailable
             }
         }).done(function(response){
             if (response == 'success') {
                 Swal.fire({
                     text: 'Enregistrement effectué avec succès!',
+                    toast: true,
                     type: 'success',
                     timer: 1750,
+                    position: 'top',
+                    toast: true,
                     showConfirmButton: false
                 });
                 //2019-04-30T09:00:00

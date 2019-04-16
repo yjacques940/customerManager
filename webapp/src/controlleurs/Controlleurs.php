@@ -412,6 +412,7 @@ function ajaxAddNewTimeslot() {
                 "startDateTime" => $startDatetime->format("Y-m-d H:i"),
                 "endDateTime" => $endDatetime->format("Y-m-d H:i"),
                 "durationTime" => $endDatetime->format("Y-m-d H:i"),
+                "notes" => htmlentities($_POST['notes']),
                 "isPublic" => htmlentities($_POST['isPublic']),
                 "isAvailable" => htmlentities($_POST['isAvailable'])
             );
