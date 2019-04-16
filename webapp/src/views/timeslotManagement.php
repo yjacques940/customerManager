@@ -38,6 +38,7 @@ ob_start(); ?>
             end: '23:59',
         },
         select: function(info) {
+            Swal.close();
             if ((info.start.getDate() != info.end.getDate() && !info.allDay)
                 || (info.start.getDate() != (info.end.getDate() - 1) && info.allDay)) {
                 calendar.unselect();
@@ -45,8 +46,9 @@ ob_start(); ?>
                     position: 'top',
                     type: 'warning',
                     toast: true,
-                    text: 'Vous devez sélectionner une plage horaire contenu dans la même journée.'
-                })
+                    showConfirmButton: false,
+                    text: 'La plage horaire doit être contenu dans la même journée.'
+                });
             } else {
                 var startDatetime = info.start;
                 var endDatetime = info.end;
@@ -79,7 +81,13 @@ ob_start(); ?>
                     if (timeslot !== null) {
                         addNewEvent(false, false);
                     } else {
-                        alert('No selection');
+                        Swal.fire({
+                            position: 'top',
+                            type: 'info',
+                            toast: true,
+                            showConfirmButton: false,
+                            text: 'Veuillez sélectionner une plage horaire.'
+                        });
                     }
                 }
             },
@@ -127,7 +135,13 @@ ob_start(); ?>
                                 });
                         });
                     } else {
-                        alert('No selection');
+                        Swal.fire({
+                            position: 'top',
+                            type: 'info',
+                            toast: true,
+                            showConfirmButton: false,
+                            text: 'Veuillez sélectionner une plage horaire.'
+                        });
                     }
                 }
             }
