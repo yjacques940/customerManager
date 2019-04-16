@@ -1,6 +1,6 @@
 create database if not exists main_db
-CHARACTER SET utf8
-COLLATE utf8_bin;
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_general_ci;
 use main_db;
 
 #------------------------------------------------------------
@@ -12,7 +12,7 @@ CREATE TABLE tbl_country(
         name       Varchar (25) NOT NULL UNIQUE ,
         is_active  Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_country_PK PRIMARY KEY (id_country)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB ;
 
 
 #------------------------------------------------------------
@@ -28,7 +28,7 @@ CREATE TABLE tbl_state(
 	,CONSTRAINT tbl_state_PK PRIMARY KEY (id_state)
 
 	,CONSTRAINT tbl_state_tbl_country_FK FOREIGN KEY (id_country) REFERENCES tbl_country(id_country)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
@@ -45,7 +45,7 @@ CREATE TABLE tbl_address(
 	,CONSTRAINT tbl_address_PK PRIMARY KEY (id_address)
 
 	,CONSTRAINT tbl_address_tbl_state_FK FOREIGN KEY (id_state) REFERENCES tbl_state(id_state)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
 #------------------------------------------------------------
 # Table: tbl_phone_type
@@ -56,7 +56,7 @@ CREATE TABLE tbl_phone_type(
         name          Varchar (15) NOT NULL UNIQUE,
         is_active     Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_phone_type_PK PRIMARY KEY (id_phone_type)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
 #------------------------------------------------------------
 # Table: tbl_customer
@@ -73,7 +73,7 @@ CREATE TABLE tbl_customer(
         id_address  Int NOT NULL
 	,CONSTRAINT tbl_customer_PK PRIMARY KEY (id_customer)
 	,CONSTRAINT tbl_customer_tbl_address_FK FOREIGN KEY (id_address) REFERENCES tbl_address(id_address)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
 #------------------------------------------------------------
 # Table: tbl_phone_number   --- VOIR À RENDRE UNIQUE LE NUMÉRO DE TÉLÉPHONE ET EXTENSION COMBINÉ ---
@@ -89,7 +89,7 @@ CREATE TABLE tbl_phone_number(
 	,CONSTRAINT tbl_phone_number_PK PRIMARY KEY (id_phone_number)
     ,CONSTRAINT tbl_customer_tbl_phone_number_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
 	,CONSTRAINT tbl_phone_number_tbl_phone_type_FK FOREIGN KEY (id_phone_type) REFERENCES tbl_phone_type(id_phone_type)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
 #------------------------------------------------------------
 # Table: tbl_user
@@ -108,7 +108,7 @@ CREATE TABLE tbl_user(
 
 	,CONSTRAINT tbl_user_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
 	,CONSTRAINT tbl_user_tbl_customer_AK UNIQUE (id_customer)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
@@ -122,7 +122,7 @@ CREATE TABLE tbl_permission(
         name           Varchar (64) NOT NULL UNIQUE
 	,CONSTRAINT tbl_permissions_PK PRIMARY KEY (id_permissions)
     ,CONSTRAINT tbl_permissions_CHK_bit CHECK (mod(bit, 2) = 0)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
@@ -139,7 +139,7 @@ CREATE TABLE tbl_follow_up(
 	,CONSTRAINT tbl_follow_up_PK PRIMARY KEY (id_follow_up)
 
 	,CONSTRAINT tbl_follow_up_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
@@ -172,12 +172,104 @@ CREATE TABLE tbl_appointment(
         id_time_slot   Int NOT NULL,
         therapist      VARCHAR(50) NOT NULL DEFAULT ''
 	,CONSTRAINT tbl_appointment_PK PRIMARY KEY (id_appointment)
-)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+)ENGINE=InnoDB;
 
+
+#------------------------------------------------------------
+# Table: tbl_question
+#------------------------------------------------------------
+
+CREATE TABLE tbl_question(
+        id_question   Int  Auto_increment  NOT NULL ,
+        id_parent     Int ,
+        question_fr   Varchar (300) NOT NULL ,
+        question_en   Varchar (300) NOT NULL ,
+        answer_type   Varchar (20) NOT NULL ,
+        display_order Int NOT NULL ,
+        is_active     Bool NOT NULL DEFAULT 1
+	,CONSTRAINT tbl_question_PK PRIMARY KEY (id_question)
+)ENGINE=InnoDB;
 
 #------------------------------------------------------------
 # Inserting basic data
 #------------------------------------------------------------
+
+INSERT INTO tbl_question(id_parent,question_fr,question_en,answer_type,display_order) VALUES
+(null,
+'Avez-vous déjà consulté un autre thérapeute (Massothérapeute, Kinésithérapeute, Orthothérapeute, Physiothérapeute, Chirothérapeute, etc.)?',
+'Have you ever consulted another therapist (Massage Therapist, Physiotherapist, Orthotherapist, Physiotherapist, Therapist, etc.)?',
+'bool',1
+),
+(null,
+'Avez-vous déjà subi une opération ou une fracture?',
+'Have you ever had an operation or a fracture?',
+'bool',2
+),
+(null,
+'Avez-vous déjà eu un accident?',
+'Have you ever had an accident?',
+'bool',3
+),
+(null,
+'Avez-vous déjà eu varices ou phlébite?',
+'Have you ever had varicose veins or phlebitis?',
+'bool',4
+),
+(null,
+'Souffrez-vous de problèmes digestifs, de diabète ou d\'hypoglycémie?',
+'Do you suffer from digestive problems, diabetes or hypoglycemia?',
+'bool',5
+),
+(null,
+'Avez-vous des problèmes cardiaques ou circulatoires (Hypertension, Hypotension, Palpitations, Infarctus, Angine, AVC)?',
+'Do you have heart or circulatory problems (Hypertension, Hypotension, Palpitations, Infarction, Angina, Stroke)?',
+'bool',6
+),
+(null,
+'Souffrez-vous d\'athérosclérose, d\'athérosclérose ou d\'hémophilie?',
+'Do you suffer from atherosclerosis, atheropathy, or hemophilia?',
+'bool',7
+),
+(null,
+'Avez-vous des problèmes respiratoires (Asthme, Emphysème, etc.)?',
+'Do you have breathing problems (Asthma, Emphysema, etc.)?',
+'bool',8
+),
+(null,
+'Êtes-vous enceinte?',
+'Are you pregnant?',
+'bool',10
+),
+(null,
+'Avez-vous un cancer?',
+'Do you have cancer?',
+'bool',9
+),
+(null,
+'Prenez-vous des médicaments?',
+'Do you take medication?',
+'bool',11
+),
+(null,
+'Avez-vous des allergies?',
+'Do you have allergies?',
+'bool',12
+),
+(null,
+'Portez-vous des orthèses, verres de contact, prothèses ou autre?',
+'Do you wear orthotics, contact lenses, prostheses or other?',
+'bool',13
+),
+(null,
+'Avez-vous des maux de tête réguliers?',
+'Do you have regular headaches?',
+'bool',14
+),
+(null,
+'Avez-vous une alimentation saine et équilibrée?',
+'Do you have a healthy and balanced diet?',
+'string',15
+);
 
 # 'bit' must be a multiple of 2
 INSERT INTO tbl_permission (bit,name) VALUES
