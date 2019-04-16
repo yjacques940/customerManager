@@ -10,7 +10,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionsController : BaseController<QuestionService, Question>
+    public class QuestionsController : BaseReaderController<QuestionService, Question>
     {
         public QuestionsController(QuestionService service) : base(service)
         {
