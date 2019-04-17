@@ -418,7 +418,7 @@ function ajaxAddNewTimeslot() {
             );
             $result = CallAPI('POST', 'TimeSlots/Add', json_encode($newTimeslot));
             if ($result['statusCode'] == 200)
-                echo 'success';
+                echo json_encode($result['response']);
             else if ($result['statusCode'] == 409)
                 echo 'La nouvelle plage horaire est en conflit avec une ou plusieurs autres plages horaire.';
             else if ($result['statusCode'] == 400)
@@ -495,6 +495,29 @@ function GetCustomerInformation(){
     }else{
         echo '';
     }
+}
+
+function ajaxUpdateTimeslot() {
+    if (isset($_POST)) {
+        if (isset($_POST['idTimeslot']) && isset($_POST['notes'])) {
+            $originalTimeslot = CallAPI('GET', 'TimeSlots/'.htmlentities($_POST['idTimeslot']))['response'];
+            $updatedTimeslot = array(
+                "startDateTime" => $originalTimeslot->startDateTime,
+                "endDateTime" => $originalTimeslot->endDateTime,
+                "durationTime" => $originalTimeslot->durationTime,
+                "isPublic" => $originalTimeslot->isPublic,
+                "isAvailable" => $originalTimeslot->isAvailable,
+                "notes" => htmlentities($_POST['notes']),
+                "id" => $originalTimeslot->id,
+                "isActive" => $originalTimeslot->isActive
+            );
+            $result = CallAPI('POST', 'TimeSlots', json_encode($updatedTimeslot));
+            if ($result['statusCode'] == 200)
+                echo 'success';
+            else
+                echo "La plage horaire n'a pas pu être mise à jour";
+        } else echo 'Incomplete or invalid data received';
+    } else echo 'No data received';
 }
 
 function ajaxGetTimeSlots() {
