@@ -21,9 +21,7 @@ ob_start(); ?>
   var timeslot = null;
 
   document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
         plugins: [ 'dayGrid', 'timeGrid', 'bootstrap', 'interaction' ],
         locale: '<?php echo $_SESSION['locale']; ?>',
         themeSystem: 'bootstrap',
@@ -34,153 +32,31 @@ ob_start(); ?>
         unselectAuto: false,
         minTime: '8:00',
         maxTime: '22:00',
-        selectConstraint: {
-            start: '00:01',
-            end: '23:59',
-        },
-        eventClick: function(info) {
-            var dateOptions = {weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
-            var notes = (info.event.title != 'Aucune note') ? info.event.title : 'Notes'
-            Swal.fire({
-                title: info.event.start.toLocaleDateString(locale + '-ca', dateOptions),
-                text: (info.event.title != 'Aucune note') ? 'Notes: ' + info.event.title : 'Aucune note',
-                showCancelButton: true,
-                cancelButtonText: "Fermer",
-                confirmButtonText: "Modifier",
-                confirmButtonColor: '#d93',
-            }).then((result) => {
-                if (result.value) {
-                    Swal.fire({
-                        title: info.event.start.toLocaleDateString(locale + '-ca', dateOptions),
-                        html: 'Mode édition'
-                            + '<br/><input class="swal2-input" type="text" id="notes" placeholder="'
-                            + notes
-                            + '"></input><br/><button id="timeslotDelete" class="swal2-confirm swal2-styled" '
-                            + 'style="background-color: rgb(221, 153, 51)">Modifier</button>',
-                        showCancelButton: true,
-                        cancelButtonText: "Fermer",
-                        confirmButtonText: "Supprimer",
-                        confirmButtonColor: '#d33',
-                        onBeforeOpen: () => {
-                            const content = Swal.getContent()
-                            const $ = content.querySelector.bind(content)
-                            const timeslotDelete = $('#timeslotDelete')
-                            timeslotDelete.addEventListener('click', () => {
-                                //updateEvent();
-                                alert('deleted! D:')
-                            })
-                        }
-                    });
-                }
-            });
-        },
+        eventClick: function(info) { showTimeslotDetails(info) },
+        unselect: function(info) { timeslot = null },
         select: function(info) {
             Swal.close();
             if ((info.start.getDate() != info.end.getDate() && !info.allDay)
-                || (info.start.getDate() != (info.end.getDate() - 1) && info.allDay)) {
+                || (info.start.getDate() != (info.end.getDate() - 1) && info.allDay))
+            {
                 calendar.unselect();
-                Swal.fire({
-                    position: 'top',
-                    type: 'warning',
-                    toast: true,
-                    showConfirmButton: false,
-                    text: 'La plage horaire doit être contenu dans la même journée.'
-                });
+                showErrorSelectionWithinDay();
             } else {
-                var startDatetime = info.start;
-                var endDatetime = info.end;
-                var start = {};
-                var end = {};
-                var dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
-                var timeOptions = {hour: '2-digit', minute: '2-digit'};
-                start.date = startDatetime.toLocaleDateString(locale + '-ca', dateOptions);
-                end.date = endDatetime.toLocaleDateString(locale + '-ca', dateOptions);
-                start.time = (info.allDay) ? null : ' ' + startDatetime.toLocaleTimeString('it-IT', timeOptions);
-                end.time = (info.allDay) ? null : ' ' + endDatetime.toLocaleTimeString('it-IT', timeOptions);
-                timeslot = {
-                    allDay: (info.allDay),
-                    startDatetime: startDatetime.toLocaleString('it-IT'),
-                    startDateStr: start.date,
-                    startTimeStr: start.time,
-                    endDatetime: endDatetime.toLocaleString('it-IT'),
-                    endDateStr: end.date,
-                    endTimeStr: end.time
-                };
+                addSelectionInArray(info);
             }
-        },
-        unselect: function(info) {
-            timeslot = null;
         },
         customButtons: {
             block_event: {
                 text: 'Rendre indisponible',
                 click: function() {
-                    if (timeslot !== null) {
-                        addNewEvent(false, false);
-                    } else {
-                        Swal.fire({
-                            position: 'top',
-                            type: 'info',
-                            toast: true,
-                            showConfirmButton: false,
-                            text: 'Veuillez sélectionner une plage horaire.'
-                        });
-                    }
+                    (timeslot !== null)
+                        ? ajaxAddNewEvent({"isAvailable": false, "isPublic": false, "notes": ''})
+                        : showErrorNoSelection();
                 }
             },
             add_event: {
                 text: '<?php echo localize("Timeslot-Add") ?>',
-                click: function() {
-                    var at = " <?php echo localize("Timeslot-At") ?> "
-                    var from = "<?php echo localize("Timeslot-From") ?> ";
-                    var le = "<?php echo localize("Timeslot-Le") ?> ";
-                    var to = " <?php echo localize("Timeslot-To") ?> ";
-                    if (timeslot !== null) {
-                        if (timeslot.startDateStr != timeslot.endDateStr)
-                            if (timeslot.allDay)
-                                infoString = from + timeslot.startDateStr + to + timeslot.endDateStr;
-                            else
-                                infoString = from + timeslot.startDateStr + at + timeslot.startTimeStr
-                                    + to + timeslot.endDateStr + at + timeslot.endTimeStr;
-                        else
-                            if (timeslot.allDay)
-                                infoString = le + timeslot.startDateStr;
-                            else
-                                infoString = le + timeslot.startDateStr + ' '
-                                    + from + timeslot.startTimeStr + at + timeslot.endTimeStr;
-                        Swal.fire({
-                            title: "<strong>Nouvelle plage horaire</strong>",
-                            html:
-                                'Souhaitez-vous créer une plage horaire</br><em>' + infoString + '</em> ?' +
-                                '<input id="newTimeslotNotes" class="swal2-input" placeholder="Notes (optionnel)">' +
-                                '<label for="newTimeslotIsPublic"><p>Créer une plage horaire publique</p></label>' +
-                                '<input id="newTimeslotIsPublic" type="checkbox" name="isPublic" value="true">',
-                            showCancelButton: true,
-                            confirmButtonText: 'Créer',
-                            preConfirm: () => {
-                                return [
-                                    document.getElementById('newTimeslotIsPublic').checked,
-                                    document.getElementById('newTimeslotNotes').value
-                                ]
-                            }
-                        }).then((result) => {
-                            if (result)
-                                addNewEvent({
-                                    "isAvailable": true,
-                                    "isPublic": result.value[0],
-                                    "notes": result.value[1]
-                                });
-                        });
-                    } else {
-                        Swal.fire({
-                            position: 'top',
-                            type: 'info',
-                            toast: true,
-                            showConfirmButton: false,
-                            text: 'Veuillez sélectionner une plage horaire.'
-                        });
-                    }
-                }
+                click: function() { (timeslot !== null) ? showConfirmNewEvent() : showErrorNoSelection(); }
             }
         },
         header: {
@@ -190,13 +66,121 @@ ob_start(); ?>
         }
     });
 
+    function addSelectionInArray(info){
+        var dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+        var timeOptions = {hour: '2-digit', minute: '2-digit'};
+        var startDatetime = info.start;
+        var endDatetime = info.end;
+        timeslot = {
+            allDay: (info.allDay),
+            startDatetime: startDatetime.toLocaleString('it-IT'),
+            startDateStr: startDatetime.toLocaleDateString(locale + '-ca', dateOptions),
+            startTimeStr: (info.allDay) ? null : ' ' + startDatetime.toLocaleTimeString('it-IT', timeOptions),
+            endDatetime: endDatetime.toLocaleString('it-IT'),
+            endDateStr: endDatetime.toLocaleDateString(locale + '-ca', dateOptions),
+            endTimeStr: (info.allDay) ? null : ' ' + endDatetime.toLocaleTimeString('it-IT', timeOptions)
+        };
+    }
+
+    function showTimeslotDetails(info){
+        var dateOptions = {weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+        var notes = (info.event.title != 'Aucune note') ? info.event.title : 'Notes';
+        Swal.fire({
+            title: info.event.start.toLocaleDateString(locale + '-ca', dateOptions),
+            text: (info.event.title != 'Aucune note') ? 'Notes: ' + info.event.title : 'Aucune note',
+            showCancelButton: true,
+            cancelButtonText: "Fermer",
+            confirmButtonText: "Modifier",
+            confirmButtonColor: '#d93',
+        }).then((result) => {
+            if (result.value)
+                showTimeslotEditor(info);
+        });
+    }
+
+    function showTimeslotEditor(info){
+        var dateOptions = {weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+        var notes = (info.event.title != 'Aucune note') ? info.event.title : 'Notes';
+        Swal.fire({
+            title: info.event.start.toLocaleDateString(locale + '-ca', dateOptions),
+            html: 'Mode édition'
+                + '<br/><input class="swal2-input" type="text" id="notes" placeholder="'
+                + notes
+                + '"></input><br/><button id="timeslotDelete" class="swal2-confirm swal2-styled" '
+                + 'style="background-color: rgb(221, 153, 51)">Modifier</button>',
+            showCancelButton: true,
+            cancelButtonText: "Fermer",
+            confirmButtonText: "Supprimer",
+            confirmButtonColor: '#d33',
+            onBeforeOpen: () => {
+                const content = Swal.getContent()
+                const $ = content.querySelector.bind(content)
+                const timeslotDelete = $('#timeslotDelete')
+                timeslotDelete.addEventListener('click', () => {
+                    //updateEvent();
+                    alert('deleted! D:')
+                });
+            }
+        });
+    }
+
     getTimeSlots();
     function getTimeSlots() {
         $.getJSON('?action=ajaxGetTimeSlots', { get_param: 'value' }, function(timeSlots) {
-            $.each(timeSlots, function(index, timeSlot) {
-                addTimeSlotToCalendar(timeSlot);
-            });
+            $.each(timeSlots, function(index, timeSlot) { addTimeSlotToCalendar(timeSlot) });
             calendar.render();
+        });
+    }
+
+    function showConfirmNewEvent(){
+        var at = " <?php echo localize("Timeslot-At") ?> "
+        var from = "<?php echo localize("Timeslot-From") ?> ";
+        var le = "<?php echo localize("Timeslot-Le") ?> ";
+        var to = " <?php echo localize("Timeslot-To") ?> ";
+        if (timeslot.startDateStr != timeslot.endDateStr)
+            if (timeslot.allDay)
+                infoString = from + timeslot.startDateStr + to + timeslot.endDateStr;
+            else
+                infoString = from + timeslot.startDateStr + at + timeslot.startTimeStr
+                    + to + timeslot.endDateStr + at + timeslot.endTimeStr;
+        else
+            if (timeslot.allDay)
+                infoString = le + timeslot.startDateStr;
+            else
+                infoString = le + timeslot.startDateStr + ' '
+                    + from + timeslot.startTimeStr + at + timeslot.endTimeStr;
+        Swal.fire({
+            title: "<strong>Nouvelle plage horaire</strong>",
+            html:
+                'Souhaitez-vous créer une plage horaire</br><em>' + infoString + '</em> ?' +
+                '<input id="newTimeslotNotes" class="swal2-input" placeholder="Notes (optionnel)">' +
+                '<label for="newTimeslotIsPublic"><p>Créer une plage horaire publique</p></label>' +
+                '<input id="newTimeslotIsPublic" type="checkbox" name="isPublic" value="true">',
+            showCancelButton: true,
+            confirmButtonText: 'Créer',
+            preConfirm: () => {
+                return [
+                    document.getElementById('newTimeslotIsPublic').checked,
+                    document.getElementById('newTimeslotNotes').value
+                ]
+            }
+        }).then((result) => {
+            if (result)
+                ajaxAddNewEvent({
+                    "isAvailable": true,
+                    "isPublic": result.value[0],
+                    "notes": result.value[1]
+                });
+        });
+    }
+
+    function showErrorNoSelection(){
+        Swal.fire({
+            position: 'top',
+            type: 'info',
+            toast: true,
+            showConfirmButton: false,
+            text: 'Veuillez sélectionner une plage horaire.'
         });
     }
 
@@ -210,22 +194,49 @@ ob_start(); ?>
         });
     }
 
-    function addNewEvent(form) {
+    function showAjaxError() {
+        Swal.fire("Erreur", "Une erreur c'est produite lors de l'envoi de la requête", "error");
+    }
+
+    function showErrorSelectionWithinDay() {
+        Swal.fire({
+            position: 'top',
+            type: 'warning',
+            toast: true,
+            showConfirmButton: false,
+            text: 'La plage horaire doit être contenu dans la même journée.'
+        });
+    }
+
+    function showConnectionError() {
+        Swal.fire("Error", "Aucune réponse reçue. Veuillez réessayer plus tard...", "warning");
+    }
+
+    function showCurrentlySaving() {
         Swal.fire({
             title: 'Enregistrement en cours...',
             timer: 7500,
             toast: true,
             position: 'top',
             onBeforeOpen: () => { Swal.showLoading() },
-            allowOutsideClick: () => !Swal.isLoading(),
-            onClose: () => {
-                Swal.fire(
-                    'Error',
-                    'Aucune réponse reçue. Veuillez réessayer plus tard...',
-                    'warning'
-                )
-            }
+            onClose: () => { showConnectionError() }
         });
+    }
+
+    function showSavingSuccess() {
+        Swal.fire({
+            text: 'Enregistrement effectué avec succès!',
+            toast: true,
+            type: 'success',
+            timer: 1750,
+            position: 'top',
+            toast: true,
+            showConfirmButton: false
+        });
+    }
+
+    function ajaxAddNewEvent(form) {
+        showCurrentlySaving();
         var startDatetime = timeslot.startDatetime;
         var endDatetime = timeslot.endDatetime;
         $.ajax({
@@ -238,17 +249,9 @@ ob_start(); ?>
                 isPublic: form.isPublic,
                 isAvailable: form.isAvailable
             }
-        }).done(function(response){
+        }).done(function(response) {
             if (response == 'success') {
-                Swal.fire({
-                    text: 'Enregistrement effectué avec succès!',
-                    toast: true,
-                    type: 'success',
-                    timer: 1750,
-                    position: 'top',
-                    toast: true,
-                    showConfirmButton: false
-                });
+                showSavingSuccess();
                 //2019-04-30T09:00:00
                 //alert(startDatetime.toDateString('Y-m-d'));
                 calendar.addEvent({
@@ -260,13 +263,38 @@ ob_start(); ?>
                 calendar.unselect();
             }
             else Swal.fire('Erreur', response, 'error');
-        }).fail(function(){
-            Swal.fire(
-                'Erreur',
-                "Une erreur c'est produite lors de l'envoi de la requête",
-                'error'
-            );
-        });
+        }).fail(function() { showAjaxError() });
+    }
+
+    function ajaxUpdateEvent(form) {
+        showCurrentlySaving();
+        var startDatetime = timeslot.startDatetime;
+        var endDatetime = timeslot.endDatetime;
+        $.ajax({
+            url: '?action=ajaxAddNewTimeslot',
+            type: 'POST',
+            data: {
+                startDatetime: startDatetime,
+                endDatetime: endDatetime,
+                notes: form.notes.replace(/"/g, "''"),
+                isPublic: form.isPublic,
+                isAvailable: form.isAvailable
+            }
+        }).done(function(response) {
+            if (response == 'success') {
+                showSavingSuccess();
+                //2019-04-30T09:00:00
+                //alert(startDatetime.toDateString('Y-m-d'));
+                calendar.addEvent({
+                    id: 0,
+                    title: 'New TimeSlot',
+                    start: startDatetime,
+                    end: endDatetime
+                });
+                calendar.unselect();
+            }
+            else Swal.fire('Erreur', response, 'error');
+        }).fail(function() { showAjaxError() });
     }
   });
 
