@@ -497,6 +497,17 @@ function GetCustomerInformation(){
     }
 }
 
+function ajaxDeleteTimeslot() {
+    if (isset($_POST)){
+        if (isset($_POST["idTimeslot"])) {
+            $result = CallAPI('DELETE', 'TimeSlots/'.htmlentities($_POST['idTimeslot']));
+            echo ($result['statusCode'] == 204)
+                ? 'success'
+                : "Une erreur c'est produite lors de la suppression";
+        } else echo 'Invalid data received';
+    } else echo 'No data received';
+}
+
 function ajaxUpdateTimeslot() {
     if (isset($_POST)) {
         if (isset($_POST['idTimeslot']) && isset($_POST['notes'])) {

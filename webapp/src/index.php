@@ -64,8 +64,11 @@ try
         case 'ajaxUpdateTimeslot':
             ajaxUpdateTimeslot();
             break;
-        case 'ajaxGetTimeSlots':
+        case 'ajaxGetTimeslots':
             ajaxGetTimeSlots();
+            break;
+        case 'ajaxDeleteTimeslot':
+            ajaxDeleteTimeSlot();
             break;
         case 'reserveappointment':
             ReserveAppointment();
