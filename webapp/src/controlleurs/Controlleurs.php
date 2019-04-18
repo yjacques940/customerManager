@@ -603,21 +603,28 @@ function MedicalSurvey()
 }
 
 function SaveMedicalSurvey(){
-    $questionsToSave = [];
-    foreach ($_POST as $key => $value) {
+    if(isset($_POST))
+    {
+        $questionsToSave = [];
+        foreach ($_POST as $key => $value) {
         $questionIdAndType = explode('-', $key);
-        array_push($questionsToSave, array(
-            "idQuestion" => $questionIdAndType[1],
-            "responseBool" => $questionIdAndType[0] == "bool" ? $value : null,
-            "responseString" => $questionIdAndType[0] != "bool" ? $value : '',
-            "answerType" => $questionIdAndType[0]
-        ));
+        if($questionIdAndType[0] == 'bool' || $questionIdAndType[0] == 'string'
+            ||$questionIdAndType[0] == 'string_multiple')
+            {
+                array_push($questionsToSave, array(
+                    "idQuestion" => $questionIdAndType[1],
+                    "responseBool" => $questionIdAndType[0] == "bool" ? $value : null,
+                    "responseString" => $questionIdAndType[0] != "bool" ? $value : '',
+                    "answerType" => $questionIdAndType[0]
+                ));
+            }
+            $data = array(
+                "userId" => $_SESSION['userid'],
+                "responses" => $questionsToSave
+            );
+            require('views/confirmation_message.php');
+            CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
+        }
     }
-    $data = array(
-        "userId" => $_SESSION['userid'],
-        "responses" => $questionsToSave
-    );
-    require('views/confirmation_message.php');
-    CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
 }
 ?>
