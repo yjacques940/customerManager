@@ -434,7 +434,7 @@ function GetCustomersWithPhone(){
     $customerNames = CallAPI('GET', 'Customers/GetCustomersWithPhone/'.htmlentities($_POST['customerPhone']));
     if($customerNames['response'] != null){
         $select = '<select id="customerNames" name="customerNames">
-            <option></option>';
+            <option value="0"></option>';
         foreach($customerNames['response'] as $customer){
             $select = $select .'<option value="'. $customer->id.'">'.$customer->firstName.' '. $customer->lastName.'</option>';
         }
@@ -449,7 +449,7 @@ function GetCustomersWithName(){
     $customerNames = CallAPI('GET', 'Customers/GetCustomersWithName/'.htmlentities($_POST['customerName']));
     if($customerNames['response'] != null){
         $select = '<select id="customerSelect" onchange="GetCustomerWithId();" name="customerSelect">
-            <option></option>';
+            <option value="0"></option>';
         foreach($customerNames['response'] as $customer){
             $select = $select .'<option value="'. $customer->id.'">'.$customer->firstName.' '. $customer->lastName.'</option>';
         }
@@ -462,42 +462,40 @@ function GetCustomersWithName(){
 
 function GetCustomerInformation(){
     $customerId = htmlentities($_POST['customerId']);
-    $customer = CallAPI('GET','Customers/'.$customerId);
-    $output = '<table class="table table-sm table-hover" id="tbl_customers">
-                            <thead class="thead-dark">
-                                <tr> 
-                                    <th scope="col">';
-    $output = $output. localize('Appointment-Customer').'</th>
-                            <th scope="col">'. localize('Personal-Occupation').'</th>
-                            <th scope="col">'. localize('Personal-Phone').'</th>
-                                </tr>
-                            </thead>
-                            <tbody>';
-    $output = $output . '<tr class="clickable-row" id="'.$customerId.'">
-                                    <td scope="row">'.
-                                     $customer['response']->firstName.' '.
-                                     $customer['response']->lastName.'</td><td>'.
-                                     $customer['response']->occupation.'</td><td>';
-    $phoneResult = CallAPI('GET', 'CustomerPhoneNumbers/ForCustomer/'.$customerId);
-    $phoneNumbers = $phoneResult['response']; 
-    foreach ($phoneNumbers as $phoneNumber) {
-        $output = $output . '
-        <table style="width:100%; background-color: rgba(255,255,255,0)">
-            <tr>
-                <th>'.$phoneNumber->idPhoneType.'</th>
-                <td>'.$phoneNumber->phone.$phoneNumber->extension.'</td>
-            </tr>
-        </table>';
+    if($customerId != '0'){
+        $customer = CallAPI('GET','Customers/'.$customerId);
+        $output = '<table class="table table-sm table-hover" id="tbl_customers">
+                                <thead class="thead-dark">
+                                    <tr> 
+                                        <th scope="col">';
+        $output = $output. localize('Appointment-Customer').'</th>
+                                <th scope="col">'. localize('Personal-Occupation').'</th>
+                                <th scope="col">'. localize('Personal-Phone').'</th>
+                                    </tr>
+                                </thead>
+                                <tbody>';
+        $output = $output . '<tr class="clickable-row" id="'.$customerId.'">
+                                        <td scope="row">'.
+                                        $customer['response']->firstName.' '.
+                                        $customer['response']->lastName.'</td><td>'.
+                                        $customer['response']->occupation.'</td><td>';
+        $phoneResult = CallAPI('GET', 'PhoneNumbers/ForCustomer/'.$customerId);
+        $phoneNumbers = $phoneResult['response']; 
+        foreach ($phoneNumbers as $phoneNumber) {
+            $output = $output . '
+            <table style="width:100%; background-color: rgba(255,255,255,0)">
+                <tr>
+                    <th>'.$phoneNumber->idPhoneType.'</th>
+                    <td>'.$phoneNumber->phone.$phoneNumber->extension.'</td>
+                </tr>
+            </table>';
+        }
+        $output = $output . '</td> </tr></tbody></table>';
+        echo $output;
+    }else{
+        echo '';
     }
-    $output = $output . '</td> </tr></tbody></table>';
-    echo $output;
 }
-
-function Api()
-{
-    //https://www.weichieprojects.com/blog/curl-api-calls-with-php/
-    //******* Prendre l'objet JSON dans SWAGGER, et ne pas oublier les foreign keys
-    //$customer = array('H','Yannick','Jacques','2019-08-31','developper','1');
 
 function ajaxGetTimeSlots() {
     $result = CallAPI('Get', 'TimeSlots');
@@ -545,3 +543,5 @@ function ReserveTimeSlotForAppointment($timeslot, $therapist){
     CallAPI('POST','Appointments/ReserveAnAppointment',json_encode($appointment));
     $_SESSION['appointmenttaken'] = true;
 }
+
+?>
