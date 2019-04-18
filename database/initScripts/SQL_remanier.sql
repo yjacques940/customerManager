@@ -191,6 +191,23 @@ CREATE TABLE tbl_question(
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------
+# Table: tbl_response
+#------------------------------------------------------------
+
+CREATE TABLE tbl_response(
+        id_response Int  Auto_increment  NOT NULL ,
+        is_active   Bool NOT NULL default 1,
+        response_bool Bool default null,
+        response_string Varchar(300) default null,
+        id_customer Int NOT NULL ,
+        id_question Int NOT NULL
+	,CONSTRAINT tbl_response_PK PRIMARY KEY (id_response)
+
+	,CONSTRAINT tbl_response_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
+	,CONSTRAINT tbl_response_tbl_question0_FK FOREIGN KEY (id_question) REFERENCES tbl_question(id_question)
+)ENGINE=InnoDB;
+
+#------------------------------------------------------------
 # Inserting basic data
 #------------------------------------------------------------
 
@@ -268,7 +285,7 @@ INSERT INTO tbl_question(id_question,id_parent,question_fr,question_en,answer_ty
 (15,null,
 'Avez-vous une alimentation saine et équilibrée?',
 'Do you have a healthy and balanced diet?',
-'string',15
+'string_multiple',15
 ),
 (16,4,
 'Quand?',
@@ -404,6 +421,29 @@ INSERT INTO tbl_address (physical_address, city_name, zip_code, id_state) VALUES
 INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id_address) VALUES
 ('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),
 ('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2');
+
+INSERT INTO tbl_response(id_customer,id_question,response_bool,response_string)VALUES
+(1,1,1),
+(1,2,1),
+(1,3,0),
+(1,4,0),
+(1,5,0),
+(1,6,1),
+(1,7,0),
+(1,8,1),
+(1,9,0),
+(1,10,0),
+(1,11,1),
+(1,12,1),
+(1,13,1),
+(1,14,1),
+(1,15,null,'Moyennement'),
+(1,16,null,'Il y a deux ans'),
+(1,17,null,'Depuis 3 ans'),
+(1,18,null,'Rien d\'autre'),
+(1,19,null,'Beaucoup de douleur'),
+(1,20,null,'Anxiété'),
+(1,21,null, 'Celui là');
 
 INSERT INTO tbl_user (id_customer, email, password, role) VALUES
 (1, "jessy@rodrigue.com", "ValidPassword", 1),

@@ -135,4 +135,10 @@
   "TakeAppointment-Either": "Either",
   "TakeAppointment-TimeSlotTaken": "This timeslot is no longer available",
   "TakeAppointment-AppointementTaken": "Appointment has been registered successfully"
+  "Header-MedicalSurvey" : "Medical survey",
+  "MedicalSurvey-Very" : "Very good",
+  "MedicalSurvey-NotAtAll" : "Not at all",
+  "MedicalSurvey-Moderatly" : "Moderatly",
+  "Answer-Yes" : "Yes",
+  "Answer-No" : "No"
 }

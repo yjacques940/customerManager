@@ -80,6 +80,12 @@ try
         case "showCustomerInfo":
             ShowCustomerInfo();
             break;
+        case 'medicalSurvey':
+            MedicalSurvey();
+            break;
+        case 'saveMedicalSurvey':
+            SaveMedicalSurvey();
+            break;
         default :
             error(404);
             break;

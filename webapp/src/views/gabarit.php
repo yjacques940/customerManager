@@ -83,6 +83,11 @@
                     <?php echo localize('Header-Account-Manage'); ?>
                   </a>
                 </li>
+                  <li>
+                      <a href="index.php?action=medicalSurvey" class="drop-text">
+                          <?php echo localize('Header-MedicalSurvey'); ?>
+                      </a>
+                  </li>
                 <li>
                   <a href="index.php?action=searchCustomer" class="drop-down">
                   <?php echo localize('searchClient'); ?>

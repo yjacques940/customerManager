@@ -139,5 +139,12 @@
   "TakeAppointment-Therapist": "Thérapeute",
   "TakeAppointment-Either": "Peu importe",
   "TakeAppointment-TimeSlotTaken": "La plage horaire n'est plus disponible",
-  "TakeAppointment-AppointementTaken": "Rendez-vous enregistré avec succès"
+  "TakeAppointment-AppointementTaken": "Rendez-vous enregistré avec succès",
+  "Header-MedicalSurvey" : "Questionnaire médical",
+  "MedicalSurvey-Instructions" : "Veuillez répondre au questionnaire suivant. Toutes les questions sont obligatoires.",
+  "MedicalSurvey-Very" : "Très",
+  "MedicalSurvey-Moderatly" : "Moyennement",
+  "MedicalSurvey-NotAtAll" : "Pas du tout",
+  "Answer-Yes" : "Oui",
+  "Answer-No" : "Non"
 }

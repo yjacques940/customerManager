@@ -594,4 +594,30 @@ function ShowCustomerInfo()
         error(403);
     }
 }
+function MedicalSurvey()
+{
+    $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey',
+        ['userId' => htmlentities($_SESSION['userid'])]);
+    $questions = CallAPI('GET','Questions')['response'];
+    require('views/Questions/medical_information.php');
+}
+
+function SaveMedicalSurvey(){
+    $questionsToSave = [];
+    foreach ($_POST as $key => $value) {
+        $questionIdAndType = explode('-', $key);
+        array_push($questionsToSave, array(
+            "idQuestion" => $questionIdAndType[1],
+            "responseBool" => $questionIdAndType[0] == "bool" ? $value : null,
+            "responseString" => $questionIdAndType[0] != "bool" ? $value : '',
+            "answerType" => $questionIdAndType[0]
+        ));
+    }
+    $data = array(
+        "userId" => $_SESSION['userid'],
+        "responses" => $questionsToSave
+    );
+    require('views/confirmation_message.php');
+    CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
+}
 ?>
