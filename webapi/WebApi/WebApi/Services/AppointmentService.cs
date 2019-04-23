@@ -120,9 +120,25 @@ namespace WebApi.Services
             return false;
         }
 
-        internal object GetAppointmentsForCustomer(int userid)
+        public List<AppointmentsForCustomer> GetAppointmentsForCustomer(int userId)
         {
-            throw new NotImplementedException();
+            var user = Context.Users.Where(c => c.Id == userId).First();
+            List<AppointmentsForCustomer> appointmentsForCustomers = new List<AppointmentsForCustomer>();
+            Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
+            List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id).ToList();
+            foreach (var appointment in appointments)
+            {
+                DateTime startTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().StartDateTime;
+                DateTime endTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().EndDateTime;
+                AppointmentsForCustomer oneAppointment = new AppointmentsForCustomer();
+                oneAppointment.appointment = appointment;
+                oneAppointment.Date = startTime.Date.ToString();
+                oneAppointment.StartTime = startTime.TimeOfDay.ToString();
+                oneAppointment.EndTime = endTime.TimeOfDay.ToString();
+                appointmentsForCustomers.Add(oneAppointment);
+            }
+
+            return appointmentsForCustomers;
         }
 
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
