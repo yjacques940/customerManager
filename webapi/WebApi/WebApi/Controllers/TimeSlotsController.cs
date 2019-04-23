@@ -16,13 +16,13 @@ namespace WebApi.Controllers
         }
 
         [HttpPost, Route("Add")]
-        public ActionResult AddNewTimeSlot([FromBody]TimeSlot timeSlot)
+        public ActionResult<TimeSlot> AddNewTimeSlot([FromBody]TimeSlot timeSlot)
         {
             if (Service.IsAvailable(timeSlot))
             {
                 if (Service.CreateNewTimeSlot(timeSlot))
                 {
-                    return Ok();
+                    return Ok(timeSlot);
                 }
                 return BadRequest();
             }

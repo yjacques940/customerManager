@@ -17,15 +17,17 @@ function CallAPI($method, $url, $data = false)
             if ($data)
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
             break;
+        case "DELETE":
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+            if ($data)
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         default:
             if ($data)
                 $api_url = sprintf("%s?%s", $api_url, http_build_query($data));
     }
 
     curl_setopt($curl, CURLOPT_URL, $api_url);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-        'Content-Type: application/json'
-    ));
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
     curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);

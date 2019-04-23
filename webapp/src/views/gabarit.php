@@ -35,15 +35,32 @@
             <li class="mx-lg-3 mx-md-2 my-md-0 my-1">
               <a href="index.php?action=about"><?php echo localize('PageTitle-About'); ?></a>
             </li>
-              <li>
+
+            <li>
+              <label for="drop-3" class="toggle toogle-2">
+                <?php echo localize('Header-Administration'); ?>
+                <span class="fa fa-angle-down" aria-hidden="true"></span>
+              </label>
+              <a href="#">
+                <?php echo localize('Header-Administration'); ?>
+                <span class="fa fa-angle-down" aria-hidden="true"></span>
+              </a>
+              <input type="checkbox" id="drop-3" />
+              <ul>
+                <li>
+                  <a href="index.php?action=timeslotManagement" class="drop-text">
+                    <?php echo localize('PageTitle-TimeslotManagement'); ?>
+                  </a>
+                </li>
+                <li>
                   <a href="?action=newAppointments"><?php echo localize('PageTitle-Appointments'); ?></a>
-              </li>
+                </li>
+              </ul>
+            </li>
+
             <?php
               if (!isset($_SESSION['username'])) {
             ?>
-            <li>
-                <a href="index.php?action=inscription"><?php echo localize('PageTitle-Inscription') ?></a>
-            </li>
             <li>
               <a href="index.php?action=login"><?php echo localize('PageTitle-Login'); ?></a>
             </li>

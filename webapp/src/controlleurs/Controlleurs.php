@@ -412,12 +412,13 @@ function ajaxAddNewTimeslot() {
                 "startDateTime" => $startDatetime->format("Y-m-d H:i"),
                 "endDateTime" => $endDatetime->format("Y-m-d H:i"),
                 "durationTime" => $endDatetime->format("Y-m-d H:i"),
+                "notes" => (htmlentities($_POST['notes']) != '') ? htmlentities($_POST['notes']) : null,
                 "isPublic" => htmlentities($_POST['isPublic']),
                 "isAvailable" => htmlentities($_POST['isAvailable'])
             );
             $result = CallAPI('POST', 'TimeSlots/Add', json_encode($newTimeslot));
             if ($result['statusCode'] == 200)
-                echo 'success';
+                echo json_encode($result['response']);
             else if ($result['statusCode'] == 409)
                 echo 'La nouvelle plage horaire est en conflit avec une ou plusieurs autres plages horaire.';
             else if ($result['statusCode'] == 400)
@@ -494,6 +495,40 @@ function GetCustomerInformation(){
     }else{
         echo '';
     }
+}
+
+function ajaxDeleteTimeslot() {
+    if (isset($_POST)){
+        if (isset($_POST["idTimeslot"])) {
+            $result = CallAPI('DELETE', 'TimeSlots/'.htmlentities($_POST['idTimeslot']));
+            echo ($result['statusCode'] == 204)
+                ? 'success'
+                : "Une erreur c'est produite lors de la suppression";
+        } else echo 'Invalid data received';
+    } else echo 'No data received';
+}
+
+function ajaxUpdateTimeslot() {
+    if (isset($_POST)) {
+        if (isset($_POST['idTimeslot']) && isset($_POST['notes'])) {
+            $originalTimeslot = CallAPI('GET', 'TimeSlots/'.htmlentities($_POST['idTimeslot']))['response'];
+            $updatedTimeslot = array(
+                "startDateTime" => $originalTimeslot->startDateTime,
+                "endDateTime" => $originalTimeslot->endDateTime,
+                "durationTime" => $originalTimeslot->durationTime,
+                "isPublic" => $originalTimeslot->isPublic,
+                "isAvailable" => $originalTimeslot->isAvailable,
+                "notes" => (htmlentities($_POST['notes']) != '') ? htmlentities($_POST['notes']) : null,
+                "id" => $originalTimeslot->id,
+                "isActive" => $originalTimeslot->isActive
+            );
+            $result = CallAPI('POST', 'TimeSlots', json_encode($updatedTimeslot));
+            if ($result['statusCode'] == 200)
+                echo 'success';
+            else
+                echo "La plage horaire n'a pas pu être mise à jour";
+        } else echo 'Incomplete or invalid data received';
+    } else echo 'No data received';
 }
 
 function ajaxGetTimeSlots() {

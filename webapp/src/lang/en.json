@@ -122,5 +122,17 @@
   "Error-Reason-404":"This page doesn't exist.",
   "Error-Reason-500":"The server could not handle this request. Please retry later.",
   "Error-Reason-Unknown":"Something unexpected happened. Please retry later..",
-  "Error-Help":"If you have any questions, please contact the site administrator."
+  "Error-Help":"If you have any questions, please contact the site administrator.",
+  "PageTitle-TimeslotManagement" : "Timeslots",
+  "Header-Administration" : "Administration",
+  "Timeslot-Add" : "Add",
+  "Timeslot-At" : "at",
+  "Timeslot-From" : "from",
+  "Timeslot-Le" : "",
+  "Timeslot-To" : "to",
+  "TakeAppointment-AvailableTimeSlot": "Available Timeslots",
+  "TakeAppointment-Therapist": "Therapist",
+  "TakeAppointment-Either": "Either",
+  "TakeAppointment-TimeSlotTaken": "This timeslot is no longer available",
+  "TakeAppointment-AppointementTaken": "Appointment has been registered successfully"
 }
