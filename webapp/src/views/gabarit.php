@@ -117,6 +117,11 @@
                   </a>
                 </li>
                 <li>
+                  <a href="index.php?action=cancelappointment" class="drop-text">
+                    <?php echo localize('CancelAppointment-Title'); ?>
+                  </a>
+                </li>
+                <li>
                   <a href="index.php?action=logout" class="drop-text">
                     <?php echo localize('Header-Logout'); ?>
                   </a>

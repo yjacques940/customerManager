@@ -614,6 +614,18 @@ function MedicalSurveyUpdate()
     $questions = CallAPI('GET','Questions')['response'];
     require('views/Questions/medical_survey_update.php');
 }
+function CancelAppointment()
+{
+    if(isset($_POST)){
+        var_dump($_POST);
+        $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
+    require ('views/cancelAppointments.php');
+    }
+    $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
+    require ('views/cancelAppointments.php');
+}
+
+?>
 
 function SaveMedicalSurvey(){
     if(isset($_POST))
