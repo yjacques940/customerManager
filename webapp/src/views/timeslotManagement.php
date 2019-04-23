@@ -115,7 +115,7 @@ ob_start(); ?>
                         var response = JSON.parse(content);
                         calendar.addEvent({
                             id: response.id,
-                            title: (response.notes != '') ? response.notes : "Aucune note",
+                            title: (response.notes) ? response.notes : "Aucune note",
                             backgroundColor: (response.isPublic) ? '#0a0' : (response.isAvailable) ? '' : '#a00',
                             start: response.startDateTime,
                             end: response.endDateTime
@@ -194,10 +194,9 @@ ob_start(); ?>
             var from = "<?php echo localize("Timeslot-From") ?> ";
             var le = "<?php echo localize("Timeslot-Le") ?> ";
             var to = " <?php echo localize("Timeslot-To") ?> ";
-
             if (currentSelection.allDay)
             {
-                var endDatetime = currentSelection.endDatetime;
+                var endDatetime = new Date(currentSelection.endDatetime.getTime());
                 endDatetime.setDate(endDatetime.getDate() - 1);
                 if (currentSelection.startDatetime.getTime() == endDatetime.getTime())
                 {
