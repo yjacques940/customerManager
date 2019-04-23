@@ -67,6 +67,11 @@
                   </a>
                 </li>
                 <li>
+                  <a href="index.php?action=searchCustomer" class="drop-down">
+                  <?php echo localize('searchClient'); ?>
+                  </a>
+                </li>
+                <li>
                   <a href="index.php?action=updatepassword" class="drop-text">
                     <?php echo localize('Header-Manage-Password'); ?>
                   </a>

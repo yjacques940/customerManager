@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
 using WebApi.Models;
 
@@ -42,6 +46,19 @@ namespace WebApi.Services
             Context.SaveChanges();
             //Renvoyer le id du customer qui a été assigné : customer.Id
             return customer.IdAddress;
+        }
+
+        public List<Customer> GetCustomersByPhone(string phone)
+        {
+            List<int> listPhoneIds = Context.PhoneNumbers.Where(c => c.Phone.Contains(phone)).Select(c => c.Id).ToList();
+            List<Customer> customers = Context.Customers.Where(c => listPhoneIds.Contains(c.Id)).ToList();
+            return customers;
+        }
+
+        public List<Customer> GetCustomersByName(string name)
+        {
+            List<Customer> customers = Context.Customers.Where(c => c.LastName.Contains(name) || c.FirstName.Contains(name)).ToList();
+            return customers;
         }
     }
 }

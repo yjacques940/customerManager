@@ -44,7 +44,6 @@ ob_start(); ?>
                                 <?php
                                 $result = CallAPI('GET', 'Customers');
                                 $customers = $result['response'];
-                                $count = 0;
                                 foreach ($customers as $customer) {
                                     ?>
                                 <tr class="clickable-row" id="<?php echo $customer->id; ?>">
@@ -84,7 +83,6 @@ ob_start(); ?>
                                     </td>
                                 </tr>
                                 <?php
-                                    $count++;
                                 }
                                 ?>
                             </tbody>
