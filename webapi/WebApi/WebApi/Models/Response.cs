@@ -11,5 +11,6 @@ namespace WebApi.Models
         public int IdQuestion { get; set; }
         public bool? ResponseBool { get; set; }
         public string ResponseString { get; set; } = "";
+        public DateTime CreatedOn { get; set; }
     }
 }

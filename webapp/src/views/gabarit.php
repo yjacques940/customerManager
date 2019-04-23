@@ -84,7 +84,7 @@
                   </a>
                 </li>
                   <li>
-                      <a href="index.php?action=medicalSurvey" class="drop-text">
+                      <a href="index.php?action=mainMedicalSurvey" class="drop-text">
                           <?php echo localize('Header-MedicalSurvey'); ?>
                       </a>
                   </li>

@@ -139,6 +139,9 @@
   "MedicalSurvey-Very" : "Very good",
   "MedicalSurvey-NotAtAll" : "Not at all",
   "MedicalSurvey-Moderatly" : "Moderatly",
+  "MedicalSurvey-Update" : "Update the survey",
+  "MedicalSurvey-DeletionWarning" : "Any previously completed survey will be deleted",
+  "MedicalSurvey-CreatedOn" : "Survey creation date",
   "Answer-Yes" : "Yes",
   "Answer-No" : "No"
 }

@@ -23,6 +23,15 @@ namespace WebApi.Controllers
             return Service.HasDoneTheSurvey(userId);
         }
 
+        [HttpGet, Route("ForUser/{userId}")]
+        public ActionResult<IEnumerable<Response>> ResponsesForAUser(int userId)
+        {
+            var responses = Service.GetResponsesForAUser(userId);
+            if (responses == null || responses.Count == 0)
+                return BadRequest();
+            return Ok(responses);
+        }
+
         [HttpPost, Route("InsertNewSurvey")]
         public ActionResult InsertNewSurveyForAUser([FromBody] ResponseInformation responses)
         {

@@ -594,12 +594,15 @@ function ShowCustomerInfo()
         error(403);
     }
 }
-function MedicalSurvey()
+function MedicalSurveyEdit()
 {
-    $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey',
-        ['userId' => htmlentities($_SESSION['userid'])]);
+    if(!isset($hasDoneTheSurvey))
+    {
+        $userId = $_SESSION['userid'];
+        $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
+    }
     $questions = CallAPI('GET','Questions')['response'];
-    require('views/Questions/medical_information.php');
+    require('views/Questions/medical_survey.php');
 }
 
 function SaveMedicalSurvey(){
@@ -625,6 +628,23 @@ function SaveMedicalSurvey(){
             require('views/confirmation_message.php');
             CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
         }
+    }
+}
+function MainMedicalSurvey()
+{
+   $userId = $_SESSION['userid'];
+   $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
+   if($hasDoneTheSurvey)
+    {
+        $questions = CallAPI('GET','Questions')['response'];
+        $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
+        $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
+        $customerName = CallAPI('GET','Customers/FullName/'.$userId);
+        require('views/Questions/medical_survey_main.php');
+    }
+    else
+    {
+        MedicalSurveyEdit();
     }
 }
 ?>

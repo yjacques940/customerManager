@@ -81,10 +81,13 @@ try
             ShowCustomerInfo();
             break;
         case 'medicalSurvey':
-            MedicalSurvey();
+            MedicalSurveyEdit();
             break;
         case 'saveMedicalSurvey':
             SaveMedicalSurvey();
+            break;
+        case 'mainMedicalSurvey':
+            MainMedicalSurvey();
             break;
         default :
             error(404);

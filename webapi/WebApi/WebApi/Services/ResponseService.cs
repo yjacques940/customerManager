@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,12 +46,22 @@ namespace WebApi.Services
                 {
                     newResponse.ResponseString = response.ResponseString;
                 }
+                newResponse.CreatedOn = DateTime.Now;
                 newResponse.IsActive = true;
                 Context.Add(newResponse);
             }
 
             Context.SaveChanges();
             return 1;
+        }
+
+        internal List<Response> GetResponsesForAUser(int userId)
+        {
+            var customer = Context.Users.First(c => c.Id == userId);
+            if (customer == null)
+                return null;
+
+            return Context.Responses.Where(c => c.IdCustomer == customer.IdCustomer && c.IsActive).ToList();
         }
 
         private void DisableOldQuestionsIfExists(ResponseFromWebInformation response, int idCustomer)

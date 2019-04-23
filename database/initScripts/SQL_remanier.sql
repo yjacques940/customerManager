@@ -200,7 +200,8 @@ CREATE TABLE tbl_response(
         response_bool Bool default null,
         response_string Varchar(300) default null,
         id_customer Int NOT NULL ,
-        id_question Int NOT NULL
+        id_question Int NOT NULL,
+        created_on DateTime NOT NULL default now()
 	,CONSTRAINT tbl_response_PK PRIMARY KEY (id_response)
 
 	,CONSTRAINT tbl_response_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
@@ -422,7 +423,7 @@ INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id
 ('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),
 ('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2');
 
-INSERT INTO tbl_response(id_customer,id_question,response_bool,response_string)VALUES
+INSERT INTO tbl_response(id_customer,id_question,response_bool)VALUES
 (1,1,1),
 (1,2,1),
 (1,3,0),
@@ -436,14 +437,15 @@ INSERT INTO tbl_response(id_customer,id_question,response_bool,response_string)V
 (1,11,1),
 (1,12,1),
 (1,13,1),
-(1,14,1),
-(1,15,null,'Moyennement'),
-(1,16,null,'Il y a deux ans'),
-(1,17,null,'Depuis 3 ans'),
-(1,18,null,'Rien d\'autre'),
-(1,19,null,'Beaucoup de douleur'),
-(1,20,null,'Anxiété'),
-(1,21,null, 'Celui là');
+(1,14,1);
+INSERT INTO tbl_response(id_customer,id_question,response_string)VALUES
+(1,15,'Moderatly'),
+(1,16,'Il y a deux ans'),
+(1,17,'Depuis 3 ans'),
+(1,18,'Rien d\'autre'),
+(1,19,'Beaucoup de douleur'),
+(1,20,'Anxiété'),
+(1,21, 'Celui là');
 
 INSERT INTO tbl_user (id_customer, email, password, role) VALUES
 (1, "jessy@rodrigue.com", "ValidPassword", 1),
