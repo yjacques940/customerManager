@@ -173,6 +173,11 @@ namespace WebApi.Services
             return appointmentsForCustomers;
         }
 
+        internal object GetAppointmentsForCustomer(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
         {
             if (requestInfo.UserId != "")
