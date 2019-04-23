@@ -178,7 +178,7 @@ namespace WebApi.Services
             var user = Context.Users.Where(c => c.Id == userId).First();
             List<AppointmentsForCustomer> appointmentsForCustomers = new List<AppointmentsForCustomer>();
             Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
-            List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id).ToList();
+            List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id && c.IsActive == true).ToList();
             foreach (var appointment in appointments)
             {
                 DateTime startTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().StartDateTime;
