@@ -1,4 +1,5 @@
 <?php
+if (!userHasPermission('Timeslots-Read') || !userHasPermission('Timeslots-Write')) error(403);
 $titre = 'AppointmentCreation';
 ob_start(); ?>
 
