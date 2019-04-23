@@ -126,5 +126,11 @@ namespace WebApi.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet, Route("GetAppointmentsForCustomer/userId")]
+        public ActionResult GetAppointmentsForCustomer(int userId)
+        {
+            return Ok(Service.GetAppointmentsForCustomer(userId));
+        }
     }
 }
