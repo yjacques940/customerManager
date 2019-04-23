@@ -16,7 +16,9 @@ ob_start(); ?>
 <script src='addons/jquery.ui.touch-punch.min.js'></script>
 
 <script>
-    var dateTimeOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'};
+    var dateTimeOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var timeOptions = { hour: '2-digit', minute: '2-digit' };
     var locale = '<?php echo $_SESSION['locale']; ?>';
     var currentSelection = null;
 
@@ -71,16 +73,15 @@ ob_start(); ?>
         });
 
         function addSelectionInArray(info){
-            var timeOptions = {hour: '2-digit', minute: '2-digit'};
             var startDatetime = info.start;
             var endDatetime = info.end;
             currentSelection = {
                 allDay: (info.allDay),
-                startDatetime: startDatetime.toLocaleString('it-IT'),
-                startDateStr: startDatetime.toLocaleDateString(locale + '-ca', dateTimeOptions),
+                startDatetime: startDatetime,
+                startDateStr: startDatetime.toLocaleDateString(locale + '-ca', dateOptions),
                 startTimeStr: (info.allDay) ? null : ' ' + startDatetime.toLocaleTimeString('it-IT', timeOptions),
-                endDatetime: endDatetime.toLocaleString('it-IT'),
-                endDateStr: endDatetime.toLocaleDateString(locale + '-ca', dateTimeOptions),
+                endDatetime: endDatetime,
+                endDateStr: endDatetime.toLocaleDateString(locale + '-ca', dateOptions),
                 endTimeStr: (info.allDay) ? null : ' ' + endDatetime.toLocaleTimeString('it-IT', timeOptions)
             };
         }
@@ -90,21 +91,19 @@ ob_start(); ?>
                 id: timeslot.id,
                 title: (timeslot.notes) ? timeslot.notes : "Aucune note",
                 backgroundColor: (timeslot.isPublic) ? '#0a0' : (timeslot.isAvailable) ? '' : '#a00',
-                start: timeslot.startDateTime,
-                end: timeslot.endDateTime
+                start: timeslot.startDateTime.toLocaleString('it-IT'),
+                end: timeslot.endDateTime.toLocaleString('it-IT')
             });
         }
 
         function ajaxAddNewTimeslot(form) {
             showToastCurrentlySaving();
-            var startDatetime = currentSelection.startDatetime;
-            var endDatetime = currentSelection.endDatetime;
             $.ajax({
                 url: '?action=ajaxAddNewTimeslot',
                 type: 'POST',
                 data: {
-                    startDatetime: startDatetime,
-                    endDatetime: endDatetime,
+                    startDatetime: currentSelection.startDatetime.toLocaleString('it-IT'),
+                    endDatetime: currentSelection.endDatetime.toLocaleString('it-IT'),
                     notes: form.notes.replace(/"/g, "''"),
                     isPublic: form.isPublic,
                     isAvailable: form.isAvailable
@@ -171,7 +170,7 @@ ob_start(); ?>
                     event.remove();
                     calendar.addEvent({
                         id: event.id,
-                        title: notes,
+                        title: (notes != '') ? notes : "Aucune note",
                         start: event.start,
                         end: event.end
                     });
@@ -194,18 +193,27 @@ ob_start(); ?>
             var from = "<?php echo localize("Timeslot-From") ?> ";
             var le = "<?php echo localize("Timeslot-Le") ?> ";
             var to = " <?php echo localize("Timeslot-To") ?> ";
-            if (currentSelection.startDateStr != currentSelection.endDateStr) {
-                if (currentSelection.allDay)
-                    infoString = from + currentSelection.startDateStr + to + currentSelection.endDateStr;
-                else
-                    infoString = from + currentSelection.startDateStr + at + currentSelection.startTimeStr
-                        + to + currentSelection.endDateStr + at + currentSelection.endTimeStr;
-            } else {
-                if (currentSelection.allDay)
+
+            if (currentSelection.allDay)
+            {
+                var endDatetime = currentSelection.endDatetime;
+                endDatetime.setDate(endDatetime.getDate() - 1);
+                if (currentSelection.startDatetime.getTime() == endDatetime.getTime())
+                {
                     infoString = le + currentSelection.startDateStr;
-                else
+                } else {
+                    infoString = from + currentSelection.startDateStr
+                        + to + endDatetime.toLocaleDateString(locale + '-ca', dateOptions);
+                }
+            } else {
+                if (currentSelection.startDateStr == currentSelection.endDateStr)
+                {
                     infoString = le + currentSelection.startDateStr + ' '
                         + from + currentSelection.startTimeStr + at + currentSelection.endTimeStr;
+                } else {
+                    infoString = from + currentSelection.startDateStr + at + currentSelection.startTimeStr
+                        + to + currentSelection.endDateStr + at + currentSelection.endTimeStr;
+                }
             }
             Swal.fire({
                 title: "Nouvelle plage horaire",
@@ -354,6 +362,7 @@ ob_start(); ?>
 
 </script>
 
+<h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('PageTitle-TimeslotManagement') ?></h3>
 <div id="calendar" class="container py-lg-5 py-md-4 py-sm-4 py-3"></div>
 
 <?php

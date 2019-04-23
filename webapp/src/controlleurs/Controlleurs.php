@@ -412,7 +412,7 @@ function ajaxAddNewTimeslot() {
                 "startDateTime" => $startDatetime->format("Y-m-d H:i"),
                 "endDateTime" => $endDatetime->format("Y-m-d H:i"),
                 "durationTime" => $endDatetime->format("Y-m-d H:i"),
-                "notes" => htmlentities($_POST['notes']),
+                "notes" => (htmlentities($_POST['notes']) != '') ? htmlentities($_POST['notes']) : null,
                 "isPublic" => htmlentities($_POST['isPublic']),
                 "isAvailable" => htmlentities($_POST['isAvailable'])
             );
@@ -518,7 +518,7 @@ function ajaxUpdateTimeslot() {
                 "durationTime" => $originalTimeslot->durationTime,
                 "isPublic" => $originalTimeslot->isPublic,
                 "isAvailable" => $originalTimeslot->isAvailable,
-                "notes" => htmlentities($_POST['notes']),
+                "notes" => (htmlentities($_POST['notes']) != '') ? htmlentities($_POST['notes']) : null,
                 "id" => $originalTimeslot->id,
                 "isActive" => $originalTimeslot->isActive
             );
