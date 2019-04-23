@@ -631,6 +631,8 @@ function CancelAppointment()
     }
 }
 
+?>
+
 function SaveMedicalSurvey(){
     if(isset($_POST))
     {
