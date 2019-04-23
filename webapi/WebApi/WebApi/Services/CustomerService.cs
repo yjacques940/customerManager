@@ -48,14 +48,14 @@ namespace WebApi.Services
             return customer.IdAddress;
         }
 
-        public List<Customer> GetCustomersWithPhone(string phone)
+        public List<Customer> GetCustomersByPhone(string phone)
         {
             List<int> listPhoneIds = Context.PhoneNumbers.Where(c => c.Phone == phone).Select(c => c.Id).ToList();
             List<Customer> customers = Context.Customers.Where(c => listPhoneIds.Contains(c.Id)).ToList();
             return customers;
         }
 
-        public List<Customer> GetCustomersWithName(string name)
+        public List<Customer> GetCustomersByName(string name)
         {
             List<Customer> customers = Context.Customers.Where(c => c.LastName.Contains(name) || c.FirstName.Contains(name)).ToList();
             return customers;

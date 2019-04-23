@@ -31,7 +31,7 @@ ob_start();
 </div>
 <script>
 $(document).ready(function(){
-    $('#phoneNumber').mask('(000)000-0000');
+    $('#phoneNumber').mask('(000) 000-0000');
 });
 
 function SearchCustomer(){
@@ -58,7 +58,7 @@ function SearchCustomer(){
     }
 }
 
-function GetCustomerWithId(){
+function GetCustomerById(){
     var output = $.ajax({
         url:'index.php',
         type:'POST',

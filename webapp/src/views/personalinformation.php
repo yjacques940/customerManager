@@ -185,9 +185,9 @@ if(isset($_SESSION['userid'])){
 
 <script>
 $(document).ready(function(){
-    $('#phone1').mask('(000)000-0000');
-    $('#phone2').mask('(000)000-0000');
-    $('#phone3').mask('(000)000-0000');
+    $('#phone1').mask('(000) 000-0000');
+    $('#phone2').mask('(000) 000-0000');
+    $('#phone3').mask('(000) 000-0000');
     $("#personalinformation").validate({
         errorClass : "error_class",
         errorelement : "em",

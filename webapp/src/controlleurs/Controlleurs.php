@@ -429,9 +429,8 @@ function SearchCustomer(){
     require('views/customerSearch.php');
 }
 
-function GetCustomersWithPhone(){
-    $data = array("phone" => htmlentities($_POST['customerPhone']));
-    $customerNames = CallAPI('GET', 'Customers/GetCustomersWithPhone/'.htmlentities($_POST['customerPhone']));
+function GetCustomersByPhone(){
+    $customerNames = CallAPI('POST', 'Customers/GetCustomersByPhone/',json_encode(htmlentities($_POST['customerPhone'])));
     if($customerNames['response'] != null){
         $select = '<select id="customerNames" name="customerNames">
             <option value="0"></option>';
@@ -441,14 +440,14 @@ function GetCustomersWithPhone(){
         $select = $select . '</select>';
         echo $select;
     }else{
-        echo'';
+        echo localize('CustomerSearch-InvalidNumber');
     }
 }
 
-function GetCustomersWithName(){
-    $customerNames = CallAPI('GET', 'Customers/GetCustomersWithName/'.htmlentities($_POST['customerName']));
+function GetCustomersByName(){
+    $customerNames = CallAPI('GET', 'Customers/GetCustomersByName/'.htmlentities($_POST['customerName']));
     if($customerNames['response'] != null){
-        $select = '<select id="customerSelect" onchange="GetCustomerWithId();" name="customerSelect">
+        $select = '<select id="customerSelect" onchange="GetCustomerById();" name="customerSelect">
             <option value="0"></option>';
         foreach($customerNames['response'] as $customer){
             $select = $select .'<option value="'. $customer->id.'">'.$customer->firstName.' '. $customer->lastName.'</option>';

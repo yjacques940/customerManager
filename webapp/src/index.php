@@ -88,10 +88,10 @@ try
         CheckTimeSlotAvailable();
     }
     else if(isset($_POST['customerPhone'])){
-        GetCustomersWithPhone();
+        GetCustomersByPhone();
     }
     else if(isset($_POST['customerName'])){
-        GetCustomersWithName();
+        GetCustomersByName();
     }
     else if(isset($_POST['customerId'])){
         GetCustomerInformation();
