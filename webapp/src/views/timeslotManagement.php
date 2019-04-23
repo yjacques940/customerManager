@@ -172,6 +172,7 @@ ob_start(); ?>
                     calendar.addEvent({
                         id: event.id,
                         title: (notes != '') ? notes : "Aucune note",
+                        backgroundColor: event.backgroundColor,
                         start: event.start,
                         end: event.end
                     });
