@@ -50,7 +50,7 @@ namespace WebApi.Services
 
         public List<Customer> GetCustomersByPhone(string phone)
         {
-            List<int> listPhoneIds = Context.PhoneNumbers.Where(c => c.Phone == phone).Select(c => c.Id).ToList();
+            List<int> listPhoneIds = Context.PhoneNumbers.Where(c => c.Phone.Contains(phone)).Select(c => c.Id).ToList();
             List<Customer> customers = Context.Customers.Where(c => listPhoneIds.Contains(c.Id)).ToList();
             return customers;
         }
