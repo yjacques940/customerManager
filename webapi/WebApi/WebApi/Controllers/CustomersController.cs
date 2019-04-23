@@ -50,13 +50,13 @@ namespace WebApi.Controllers
         }
 
         [HttpPost, Route("GetCustomersByPhone/")]
-        public ActionResult GetCustomersWithPhone([FromBody]string phone)
+        public ActionResult GetCustomersByPhone([FromBody]string phone)
         {
             return Ok(Service.GetCustomersByPhone(phone));
         }
 
         [HttpGet, Route("GetCustomersByName/{name}")]
-        public ActionResult GetCustomersWithName(string name)
+        public ActionResult GetCustomersByName(string name)
         {
             return Ok(Service.GetCustomersByName(name));
         }
