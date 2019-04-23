@@ -616,13 +616,14 @@ function MedicalSurveyUpdate()
 }
 function CancelAppointment()
 {
-    if(isset($_POST)){
-        var_dump($_POST);
+    if(isset($_POST['checkboxAppointments'])){
+        $tooLateToCancel = CallAPI('POST','Appointments/CancelAppointments', json_encode($_POST['checkboxAppointments']));
         $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
-    require ('views/cancelAppointments.php');
+        require ('views/cancelAppointments.php');
+    }else{
+        $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
+        require ('views/cancelAppointments.php');
     }
-    $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
-    require ('views/cancelAppointments.php');
 }
 
 ?>

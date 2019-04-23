@@ -37,6 +37,15 @@ $title = localize('CancelAppointment-Title');
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-10 col-md-10">
         <form action="index.php?action=cancelappointment" id="cancelappointment" method="post">
+        <?php
+        if($tooLateToCancel = true){
+            echo '<h4>'. localize('CancelAppointment-TooLate') . ' ' .
+            localize('Company-Phone') . ' ' . localize('CancelAppointment-TooLateToCancel') . '</h4>';
+        } 
+        else if(isset($_POST['checkboxAppointments'])){
+            echo '<h4>'. localize('CancelAppointment-Success') .'</h4>';
+        }
+        ?>
         <table class="table table-sm table-striped table-hover table-bordered" id="tbl_appointments">
         <thead class="thead-dark">
             <tr class="text-center">

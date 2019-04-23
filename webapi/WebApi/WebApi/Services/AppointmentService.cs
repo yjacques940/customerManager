@@ -120,12 +120,34 @@ namespace WebApi.Services
             return false;
         }
 
+        public bool CancelAppointments(List<int> appointmentsToCancel)
+        {
+            bool tooLateToCancel = false;
+            foreach (var appointmentId in appointmentsToCancel)
+            {
+                var appointment = Context.Appointments.Where(c => c.Id == appointmentId).First();
+                var timeSlot = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First();
+                DateTime now = DateTime.Now;
+                if(timeSlot.StartDateTime > now.AddHours(24))
+                {
+                    timeSlot.IsPublic = false;
+                    appointment.IsActive = false;
+                    Context.SaveChanges();
+                }
+                else
+                {
+                    tooLateToCancel = true;
+                }
+            }
+            return tooLateToCancel;
+        }
+
         public List<AppointmentsForCustomer> GetAppointmentsForCustomer(int userId)
         {
             var user = Context.Users.Where(c => c.Id == userId).First();
             List<AppointmentsForCustomer> appointmentsForCustomers = new List<AppointmentsForCustomer>();
             Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
-            List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id).ToList();
+            List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id && c.IsActive == true).ToList();
             foreach (var appointment in appointments)
             {
                 DateTime startTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().StartDateTime;

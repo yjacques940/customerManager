@@ -110,5 +110,11 @@ namespace WebApi.Controllers
         {
             return Ok(Service.GetAppointmentsForCustomer(userId));
         }
+
+        [HttpPost, Route("CancelAppointments")]
+        public ActionResult CancelAppointments([FromBody]List<int> appointmentsToCancel)
+        {
+            return Ok(Service.CancelAppointments(appointmentsToCancel));
+        }
     }
 }
