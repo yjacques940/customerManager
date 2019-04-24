@@ -114,14 +114,18 @@ namespace WebApi.Controllers
         [HttpPost, Route("CancelAppointments")]
         public ActionResult CancelAppointments([FromBody]List<int> appointmentsToCancel)
         {
-            var tooLateToCancel = Service.CancelAppointments(appointmentsToCancel);
-            var user = Service.GetUser(appointmentsToCancel[0]);
-            int numberOfAppointmentsCancelled = Service.NumberOfCancellableAppointments(appointmentsToCancel);
-            if(numberOfAppointmentsCancelled > 0)
+            if(appointmentsToCancel != null)
             {
-                EmailSender.SendCancellationEmail(user.Email, tooLateToCancel, appointmentsToCancel.Count, configuration);
+                var tooLateToCancel = Service.CancelAppointments(appointmentsToCancel);
+                var user = Service.GetUser(appointmentsToCancel[0]);
+                int numberOfAppointmentsCancelled = Service.NumberOfCancellableAppointments(appointmentsToCancel);
+                if (numberOfAppointmentsCancelled > 0)
+                {
+                    EmailSender.SendCancellationEmail(user.Email, tooLateToCancel, appointmentsToCancel.Count, configuration);
+                }
+                return Ok(tooLateToCancel);
             }
-            return Ok(tooLateToCancel);
+            return BadRequest();
         }
     }
 }
