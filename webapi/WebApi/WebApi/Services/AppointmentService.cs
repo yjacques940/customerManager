@@ -120,6 +120,22 @@ namespace WebApi.Services
             return false;
         }
 
+        public int NumberOfCancellableAppointments(List<int> appointmentsToCancel)
+        {
+            int count = 0;
+            foreach (var appointmentId in appointmentsToCancel)
+            {
+                var appointment = Context.Appointments.Where(c => c.Id == appointmentId).First();
+                var timeSlot = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First();
+                DateTime now = DateTime.Now;
+                if (timeSlot.StartDateTime >= now.AddHours(24))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
         public bool CancelAppointments(List<int> appointmentsToCancel)
         {
             bool tooLateToCancel = false;
@@ -159,7 +175,7 @@ namespace WebApi.Services
                 oneAppointment.EndTime = endTime.TimeOfDay.ToString();
                 appointmentsForCustomers.Add(oneAppointment);
             }
-
+            appointmentsForCustomers = appointmentsForCustomers.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
             return appointmentsForCustomers;
         }
 

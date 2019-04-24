@@ -79,6 +79,56 @@ namespace WebApi.Validators
             }
         }
 
+        public static bool SendCancellationEmail(string userEmail, bool tooLateToCancel, int appointmentCount, IConfiguration configuration)
+        {
+            SmtpClient client = GetSmtpClient(configuration);
+            MailMessage MailMessageForCancellationAppointment = GetMailMessageToCancelAppointment(userEmail, tooLateToCancel, appointmentCount);
+
+            try
+            {
+                client.Send(MailMessageForCancellationAppointment);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static MailMessage GetMailMessageToCancelAppointment(string userEmail, bool tooLateToCancel, int appointmentCount)
+        {
+            using (StreamReader reader = File.OpenText("EmailTemplate/cancelAppointment.html"))
+            {
+                string newHtml = "";
+                MailMessage mailmessage = new MailMessage();
+                mailmessage.IsBodyHtml = true;
+                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                mailmessage.To.Add(new MailAddress(userEmail));
+                mailmessage.Subject = "Confirmation d'annulation";
+                tooLateToCancel = true;
+                var htmlFile = reader.ReadToEnd();
+                if (appointmentCount > 1)
+                {
+                    newHtml = htmlFile.Replace("[AppointmentAmount]", "Vos rendez-vous ont étés annulés avec succès.");
+                }
+                else
+                {
+                    newHtml = htmlFile.Replace("[AppointmentAmount]", "Votre rendez-vous à été annulé avec succès.");
+                }
+                if(tooLateToCancel)
+                {
+                    newHtml = newHtml.Replace("[TooLateToCancel]", "Cependant, au moins un rendez-vous est dans moins de 24 heures et n'a pu être annulé." +
+                        " S'il-vous-plâit veuillez nous appeler au (418) 774-0246 pour l'annulation de ce dernier.");
+                }
+                else
+                {
+                    newHtml = newHtml.Replace("[TooLateToCancel]", "");
+                }
+                mailmessage.Body = newHtml;
+                return mailmessage;
+            }
+        }
+
         private static MailMessage GetMailMessageToConfirmAppointment(string emailTo, DateTime AppointmentDateTime)
         {
             using (StreamReader reader = File.OpenText("EmailTemplate/index.html"))

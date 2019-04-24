@@ -621,6 +621,7 @@ function CancelAppointment()
         $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
         require ('views/cancelAppointments.php');
     }else{
+        $tooLateToCancel = false;
         $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
         require ('views/cancelAppointments.php');
     }
