@@ -190,7 +190,7 @@ namespace WebApi.Services
                 oneAppointment.EndTime = endTime.TimeOfDay.ToString();
                 appointmentsForCustomers.Add(oneAppointment);
             }
-
+            appointmentsForCustomers = appointmentsForCustomers.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
             return appointmentsForCustomers;
         }
 
