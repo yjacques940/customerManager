@@ -76,6 +76,9 @@ try
         case "searchCustomer":
             SearchCustomer();
             break;
+        case "showCustomerInfo":
+            ShowCustomerInfo();
+            break;
         default :
             error(404);
             break;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
+using WebApi.DTO;
 using WebApi.Models;
 
 namespace WebApi.Services
@@ -59,6 +60,39 @@ namespace WebApi.Services
         {
             List<Customer> customers = Context.Customers.Where(c => c.LastName.Contains(name) || c.FirstName.Contains(name)).ToList();
             return customers;
+        }
+
+        internal ActionResult<List<CustomerAndPhoneNumberInformation>> GetCustomersWithPhone()
+        {
+            List<CustomerAndPhoneNumberInformation> customers = new List<CustomerAndPhoneNumberInformation>();
+            foreach (var customer in Context.Customers)
+            {
+                if (customer.IsActive)
+                {
+                    var newCustomer = new CustomerAndPhoneNumberInformation();
+                    newCustomer.Customer = customer;
+                    newCustomer.PhoneNumberAndTypes = GetPhoneNumberAndTypes(customer.Id);
+                    customers.Add(newCustomer);
+                }
+            }
+
+            return customers;
+        }
+
+        private List<PhoneNumberAndTypesInformation> GetPhoneNumberAndTypes(int customerId)
+        {
+            var query = (from phoneNumber in Context.PhoneNumbers
+                join phoneType in Context.PhoneTypes on phoneNumber.IdPhoneType equals phoneType.Id
+                where phoneNumber.IdCustomer == customerId && phoneNumber.IsActive && phoneType.IsActive
+                select new PhoneNumberAndTypesInformation()
+                {
+                    Phone = phoneNumber.Phone,
+                    PhoneType = phoneType.Name,
+                    IdPhoneType = phoneType.Id,
+                    Extension = phoneNumber.Extension,
+                    IdCustomer = customerId
+                }).ToList();
+            return query;
         }
     }
 }
