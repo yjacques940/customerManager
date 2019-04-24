@@ -594,7 +594,7 @@ function ShowCustomerInfo()
         error(403);
     }
 }
-function MedicalSurveyEdit()
+function MedicalSurveyUpdate()
 {
     if(!isset($hasDoneTheSurvey))
     {
@@ -632,19 +632,44 @@ function SaveMedicalSurvey(){
 }
 function MainMedicalSurvey()
 {
-   $userId = $_SESSION['userid'];
-   $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
-   if($hasDoneTheSurvey)
+    if(!HasDoneTheSurvey())
     {
+        MedicalSurveyUpdate();
+    }
+    else{
+        require('views/Questions/medical_survey_gabarit.php');
+    }
+}
+function HasDoneTheSurvey(){
+    $userId = $_SESSION['userid'];
+    return CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
+}
+function OpenMedicalSurvey()
+{
+    $userId = $_SESSION['userid'];
+    if(isset($_POST['passwordToConfirm']) && $_SESSION['lastAuthentication'] + 1 * 60 < time())
+    {
+
+        $user = array('userId' => $userId,
+            'password' => htmlentities($_POST['passwordToConfirm']));
+        if(CallAPI('POST','Users/IsPasswordValid',$user)['response']){
+            $questions = CallAPI('GET','Questions')['response'];
+            $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
+            $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
+            $customerName = CallAPI('GET','Customers/FullName/'.$userId);
+             require('views/Questions/medical_survey_main.php');
+            $_SESSION['lastAuthentication'] = time();
+        }
+        else{
+            echo 'PasswordNotMatch';
+        }
+    }
+    else{
         $questions = CallAPI('GET','Questions')['response'];
         $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
         $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
         $customerName = CallAPI('GET','Customers/FullName/'.$userId);
         require('views/Questions/medical_survey_main.php');
-    }
-    else
-    {
-        MedicalSurveyEdit();
     }
 }
 ?>

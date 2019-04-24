@@ -59,6 +59,12 @@ namespace WebApi.Services
             return user;
         }
 
+        internal bool IsPasswordValid(UserLoginInformation userInfo)
+        {
+            var user = Context.Users.First(c => c.Id == userInfo.UserId && c.Password == userInfo.Password);
+            return user != null;
+        }
+
         public string CheckEmailInUse(string email)
         {
             User user = (from c in Context.Users where c.Email == email select c).First();

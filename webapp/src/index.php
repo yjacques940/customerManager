@@ -27,6 +27,7 @@ try
             unset($_SESSION['userid']);
             unset($_SESSION['username']);
             unset($_SESSION['isfirstlogin']);
+            unset($_SESSION['lastAuthentication']);
             Home();
             break;
         case 'ask_for_appointment' :
@@ -81,13 +82,16 @@ try
             ShowCustomerInfo();
             break;
         case 'medicalSurvey':
-            MedicalSurveyEdit();
+            OpenMedicalSurvey();
             break;
         case 'saveMedicalSurvey':
             SaveMedicalSurvey();
             break;
         case 'mainMedicalSurvey':
             MainMedicalSurvey();
+            break;
+        case 'medicalSurveyUpdate':
+            MedicalSurveyUpdate();
             break;
         default :
             error(404);
