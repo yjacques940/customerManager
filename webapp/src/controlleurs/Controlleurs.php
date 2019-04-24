@@ -500,13 +500,13 @@ function GetCustomerInformation(){
 function ajaxDeleteTimeslot() {
     if (isset($_POST)){
         if (isset($_POST["idTimeslot"])) {
-            $result = CallAPI('DELETE', 'TimeSlots/'.htmlentities($_POST['idTimeslot']));
+            $result = CallAPI('DELETE', 'TimeSlots/Delete/'.htmlentities($_POST['idTimeslot']));
             if ($result['statusCode'] == 200)
                 echo 'success';
-            else if ($result['statusCode'] == 400)
-                echo 'Une plage horaire est en conflit :O'
+            else if ($result['statusCode'] == 409)
+                echo 'Une plage horaire est en conflit :O'.var_dump($result['response']);
             else
-                echo "Une erreur c'est produite lors de la suppression";
+                echo "Une erreur c'est produite lors de la suppression: ".$result['statusCode'];
         } else echo 'Invalid data received';
     } else echo 'No data received';
 }

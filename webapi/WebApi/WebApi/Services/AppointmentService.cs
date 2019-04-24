@@ -55,7 +55,7 @@ namespace WebApi.Services
             foreach (var appointment in appointments)
             {
                 appointment.PhoneNumbers = phoneNumberService
-                    .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
+                    .GetPhoneNumbersFromCustomer(appointment.Customer.Id);
             }
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
@@ -95,7 +95,7 @@ namespace WebApi.Services
             foreach (var appointment in appointments)
             {
                 appointment.PhoneNumbers = phoneNumberService
-                    .GetPhoneNumbersFromCustomerList(appointment.Customer.Id);
+                    .GetPhoneNumbersFromCustomer(appointment.Customer.Id);
             }
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
@@ -162,18 +162,22 @@ namespace WebApi.Services
             return Context.Users.FirstOrDefault(c => c.IdCustomer == customerId);
         }
 
-        public AppointmentCustomerInformation GetAppointmentCustomerInformation(int idAppointment)
+        public AppointmentCustomerInformation GetAppointmentCustomerInformation(PhoneNumberService phoneNumberService, Appointment appointment)
         {
-            AppointmentCustomerInformation appointmentCustomerInformation = new AppointmentCustomerInformation();
-            Appointment appointment = Context.Appointments.First(c => c.Id == idAppointment);
-            appointmentCustomerInformation.Appointment = appointment;
-            appointmentCustomerInformation.Customer.Id = ;
-            String customerEmail = GetUser(idAppointment).Email;
-            appointmentCustomerInformation.Customer.Email = (customerEmail != null) ? customerEmail : "";
+            var appointmentCustomer = new AppointmentCustomerInformation();
+            appointmentCustomer.Appointment = new Appointment();
+            appointmentCustomer.Customer = new CustomerBasicInformation();
+            appointmentCustomer.Customer.phoneNumbers = new List<PhoneNumberAndTypesInformation>();
 
-            userInfo.Id = user.Id;
-            var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
-            userInfo.FullName = $"{customer.FirstName} {customer.LastName}";
+            Customer customer = Context.Customers.First(c => c.Id == appointment.IdCustomer);
+            String customerEmail = Context.Users.FirstOrDefault(c => c.IdCustomer == customer.Id).Email;
+
+            appointmentCustomer.Appointment = appointment;
+            appointmentCustomer.Customer.Id = customer.Id;
+            appointmentCustomer.Customer.Email = (customerEmail != null) ? customerEmail : "";
+            appointmentCustomer.Customer.FullName = $"{customer.FirstName} {customer.LastName}";
+            appointmentCustomer.Customer.phoneNumbers = phoneNumberService.GetPhoneNumbersFromCustomer(customer.Id);
+            return appointmentCustomer;
         }
     }
 }

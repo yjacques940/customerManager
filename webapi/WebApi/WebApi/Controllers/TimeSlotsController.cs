@@ -12,9 +12,15 @@ namespace WebApi.Controllers
     public class TimeSlotsController : BaseController<TimeSlotService, TimeSlot>
     {
         private readonly AppointmentService appointmentService;
-        public TimeSlotsController(TimeSlotService service, AppointmentService appointmentService) : base(service)
+        private readonly PhoneNumberService phoneNumberService;
+        public TimeSlotsController(
+            TimeSlotService service,
+            AppointmentService appointmentService,
+            PhoneNumberService phoneNumberService
+            ) : base(service)
         {
             this.appointmentService = appointmentService;
+            this.phoneNumberService = phoneNumberService;
         }
 
         [HttpPost, Route("Add")]
@@ -31,19 +37,22 @@ namespace WebApi.Controllers
             return Conflict();
         }
 
-        [HttpDelete, Route("Delete")]
-        public ActionResult<AppointmentCustomerInformation> DeleteTimeSlot([FromBody]int id)
+        [HttpDelete, Route("Delete/{idTimeSlot}")]
+        public ActionResult<AppointmentCustomerInformation> DeleteTimeSlot(int idTimeSlot)
         {
-            Appointment conflictingAppointment = appointmentService.GetAppointmentByTimeSlot(id);
+            Appointment conflictingAppointment = appointmentService.GetAppointmentByTimeSlot(idTimeSlot);
             if (conflictingAppointment == null)
             {
-                if (Service.Remove(id))
+                if (Service.Remove(idTimeSlot))
                 {
                     return Ok();
                 }
                 return BadRequest();
             }
-            return Conflict(appointmentService.GetAppointmentCustomerInformation(conflictingAppointment.Id));
+            else
+            {
+                return Conflict(appointmentService.GetAppointmentCustomerInformation(phoneNumberService, conflictingAppointment));
+            }
         }
 
         [HttpGet, Route("GetFreeTimeSlots")]

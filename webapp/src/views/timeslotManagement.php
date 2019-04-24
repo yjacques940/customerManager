@@ -133,7 +133,7 @@ ob_start(); ?>
             $.ajax({
                 url: '?action=ajaxDeleteTimeslot',
                 type: 'POST',
-                data: { "idTimeslot": event.id }
+                data: { idTimeslot: event.id }
             }).done(function(content) {
                 if (content) {
                     if (content == 'success') {

@@ -17,7 +17,7 @@ namespace WebApi.Controllers
         [HttpGet, Route("ForCustomer/{id}")]
         public List<PhoneNumberAndTypesInformation> GetPhoneNumberByCustomer(int id)
         {
-            return Service.GetPhoneNumbersFromCustomerList(id);
+            return Service.GetPhoneNumbersFromCustomer(id);
         }
     }
 }

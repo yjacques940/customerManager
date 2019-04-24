@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace WebApi.DTO
 {
     public class CustomerBasicInformation
@@ -5,6 +7,6 @@ namespace WebApi.DTO
         public int Id;
         public string Email { get; set; }
         public string FullName { get; set; }
-        public PhoneNumberAndTypesInformation phoneNumbers { get; set; }
+        public List<PhoneNumberAndTypesInformation> phoneNumbers { get; set; }
     }
 }
