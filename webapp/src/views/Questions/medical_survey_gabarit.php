@@ -5,7 +5,7 @@ session_start();
 <script type="text/javascript">
     <?php
     if($_SESSION['lastAuthentication'] + 10 * 60 < time()){
-        echo  'AskPassword();';
+        echo  'AskPassword(false);';
     }
     else {
         echo 'OpenMedicalSurvey();';
@@ -14,9 +14,9 @@ session_start();
     function AskPassword()
     {
         Swal.fire({
-        title: 'Enter your password',
+        title: '<?php echo localize('EmailUpdate-PasswordConfirm'); ?>',
         input: 'password',
-        inputPlaceholder: 'Enter your password',
+        inputPlaceholder: '<?php echo localize('Login-Password'); ?>',
         allowOutsideClick : false
         }).then((result) => {
             if(result.value)
@@ -34,10 +34,14 @@ session_start();
                     }
                     else
                     {
-                        throw new Error('Password not valid');
+                        AskPassword();
                     }
                 })
              }
+             else
+            {
+                AskPassword();
+            }
         })
     }
 

@@ -602,7 +602,7 @@ function MedicalSurveyUpdate()
         $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
     }
     $questions = CallAPI('GET','Questions')['response'];
-    require('views/Questions/medical_survey.php');
+    require('views/Questions/medical_survey_update.php');
 }
 
 function SaveMedicalSurvey(){
@@ -649,15 +649,15 @@ function OpenMedicalSurvey()
     $userId = $_SESSION['userid'];
     if(isset($_POST['passwordToConfirm']) && $_SESSION['lastAuthentication'] + 1 * 60 < time())
     {
-
         $user = array('userId' => $userId,
             'password' => htmlentities($_POST['passwordToConfirm']));
-        if(CallAPI('POST','Users/IsPasswordValid',$user)['response']){
+        if(CallAPI('POST','Users/IsPasswordValid',json_encode($user))['statusCode'] == 200){
+
             $questions = CallAPI('GET','Questions')['response'];
             $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
             $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
             $customerName = CallAPI('GET','Customers/FullName/'.$userId);
-             require('views/Questions/medical_survey_main.php');
+            require('views/Questions/medical_survey_view.php');
             $_SESSION['lastAuthentication'] = time();
         }
         else{
@@ -669,7 +669,6 @@ function OpenMedicalSurvey()
         $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
         $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
         $customerName = CallAPI('GET','Customers/FullName/'.$userId);
-        require('views/Questions/medical_survey_main.php');
+        require('views/Questions/medical_survey_view.php');
     }
 }
-?>
