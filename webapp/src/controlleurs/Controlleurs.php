@@ -455,7 +455,7 @@ function GetCustomersByName(){
         $select = $select . '</select>';
         echo $select;
     }else{
-        echo '';
+        echo '</p>' . localize('CustomerSearch-NoCustomerFound') . '</p>';
     }
 }
 
