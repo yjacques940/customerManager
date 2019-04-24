@@ -183,12 +183,15 @@ namespace WebApi.Services
             {
                 DateTime startTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().StartDateTime;
                 DateTime endTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().EndDateTime;
-                AppointmentsForCustomer oneAppointment = new AppointmentsForCustomer();
-                oneAppointment.appointment = appointment;
-                oneAppointment.Date = startTime.Date.ToString();
-                oneAppointment.StartTime = startTime.TimeOfDay.ToString();
-                oneAppointment.EndTime = endTime.TimeOfDay.ToString();
-                appointmentsForCustomers.Add(oneAppointment);
+                if(startTime > DateTime.Now)
+                {
+                    AppointmentsForCustomer oneAppointment = new AppointmentsForCustomer();
+                    oneAppointment.appointment = appointment;
+                    oneAppointment.Date = startTime.Date.ToString();
+                    oneAppointment.StartTime = startTime.TimeOfDay.ToString();
+                    oneAppointment.EndTime = endTime.TimeOfDay.ToString();
+                    appointmentsForCustomers.Add(oneAppointment);
+                }
             }
             appointmentsForCustomers = appointmentsForCustomers.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
             return appointmentsForCustomers;
