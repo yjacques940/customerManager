@@ -610,9 +610,9 @@ function SaveMedicalSurvey(){
     {
         $questionsToSave = [];
         foreach ($_POST as $key => $value) {
-        $questionIdAndType = explode('-', $key);
-        if($questionIdAndType[0] == 'bool' || $questionIdAndType[0] == 'string'
-            ||$questionIdAndType[0] == 'string_multiple')
+            $questionIdAndType = explode('-', $key);
+            if($questionIdAndType[0] == 'bool' || $questionIdAndType[0] == 'string'
+                ||$questionIdAndType[0] == 'string_multiple')
             {
                 array_push($questionsToSave, array(
                     "idQuestion" => $questionIdAndType[1],
@@ -625,9 +625,9 @@ function SaveMedicalSurvey(){
                 "userId" => $_SESSION['userid'],
                 "responses" => $questionsToSave
             );
-            require('views/confirmation_message.php');
-            CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
         }
+        CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
+        require('views/Questions/medical_survey_shell.php');
     }
 }
 function MainMedicalSurvey()

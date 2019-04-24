@@ -61,16 +61,16 @@ ob_start();
                       echo  ' </label><input class="form-control" id="'.$question->id.'" name="string-'. $question->id .'">';
                     }
                     elseif($question->answerType =='string_multiple'){
-                        echo   '<label for="tatata">';
+                        echo   '<label for="string_multiple-' . $question->id . '">';
                         if ($_SESSION['locale'] == 'fr') {
                             echo $question->questionFr;
                         } else {
                             echo $question->questionEn;
                         }
                         echo  ' </label><div class="form-group form-inline">'.
-                                '<input style="width:24px;height: 24px;" class="mx-sm-2" type="radio" value="Very" name="multiple_string-' . $question->id . '" required>'.localize('MedicalSurvey-Very').''.
-                                '<input style="width:24px;height: 24px;" class="mx-sm-2" type="radio" value="Moderatly" name="multiple_string-' . $question->id . '">'.localize('MedicalSurvey-Moderatly').''.
-                                '<input style="width:24px;height: 24px;" class="mx-sm-2" type="radio" value="NotAtAll" name="multiple_string-' . $question->id . '">'.localize('MedicalSurvey-NotAtAll').' </div>';
+                                '<input style="width:24px;height: 24px;" class="mx-sm-2" type="radio" value="Very" name="string_multiple-' . $question->id . '" required>'.localize('MedicalSurvey-Very').''.
+                                '<input style="width:24px;height: 24px;" class="mx-sm-2" type="radio" value="Moderatly" name="string_multiple-' . $question->id . '">'.localize('MedicalSurvey-Moderatly').''.
+                                '<input style="width:24px;height: 24px;" class="mx-sm-2" type="radio" value="NotAtAll" name="string_multiple-' . $question->id . '">'.localize('MedicalSurvey-NotAtAll').' </div>';
                     }
                 }?>
             </div>

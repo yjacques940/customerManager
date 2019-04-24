@@ -70,8 +70,7 @@ namespace WebApi.Services
                 Context.Responses.FirstOrDefault(c => c.IdCustomer == idCustomer && c.IdQuestion == response.IdQuestion && c.IsActive);
             if (oldQuestion != null)
             {
-                oldQuestion.IsActive = false;
-                Context.Update(oldQuestion);
+                Remove(oldQuestion.Id);
                 Context.SaveChanges();
             }
         }
