@@ -11,8 +11,10 @@ namespace WebApi.Controllers
     [ApiController]
     public class TimeSlotsController : BaseController<TimeSlotService, TimeSlot>
     {
-        public TimeSlotsController(TimeSlotService service) : base(service)
+        private readonly AppointmentService appointmentService;
+        public TimeSlotsController(TimeSlotService service, AppointmentService appointmentService) : base(service)
         {
+            this.appointmentService = appointmentService;
         }
 
         [HttpPost, Route("Add")]
@@ -27,6 +29,21 @@ namespace WebApi.Controllers
                 return BadRequest();
             }
             return Conflict();
+        }
+
+        [HttpDelete, Route("Delete")]
+        public ActionResult<AppointmentCustomerInformation> DeleteTimeSlot([FromBody]int id)
+        {
+            Appointment conflictingAppointment = appointmentService.GetAppointmentByTimeSlot(id);
+            if (conflictingAppointment == null)
+            {
+                if (Service.Remove(id))
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            return Conflict(appointmentService.GetAppointmentCustomerInformation(conflictingAppointment.Id));
         }
 
         [HttpGet, Route("GetFreeTimeSlots")]

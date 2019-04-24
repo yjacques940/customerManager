@@ -33,7 +33,7 @@ namespace WebApi.Controllers
         [HttpGet, Route("AppointmentsAndCustomers")]
         public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers()
         {
-            return Service.GetAppointmentAndCustomers(phoneNumberService);
+            return Service.GetAppointmentsAndCustomers(phoneNumberService);
         }
 
         [HttpGet, Route("NewAppointments")]

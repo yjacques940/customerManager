@@ -32,7 +32,7 @@ namespace WebApi.Services
         public bool IsAvailable(TimeSlot newTimeSlot)
         {
             List<TimeSlot> timeslots = Context.TimeSlots
-                .Where(c => c.IsActive && (c.StartDateTime.Date == newTimeSlot.StartDateTime.Date)).ToList();
+                .Where(c => c.StartDateTime.Date == newTimeSlot.StartDateTime.Date).ToList();
             return TimeSlotValidator.IsAvailable(newTimeSlot, timeslots);
         }
    

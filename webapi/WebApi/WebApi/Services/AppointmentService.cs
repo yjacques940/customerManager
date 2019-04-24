@@ -32,7 +32,12 @@ namespace WebApi.Services
                 }).AsNoTracking().ToList();
         }
 
-        public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentAndCustomers
+        public Appointment GetAppointmentByTimeSlot(int IdTimeSlot)
+        {
+            return Context.Appointments.FirstOrDefault(c => c.IdTimeSlot == IdTimeSlot);
+        }
+
+        public ActionResult<IEnumerable<CustomerAppointmentInformation>> GetAppointmentsAndCustomers
             (PhoneNumberService phoneNumberService)
         {
             var appointments = (
@@ -155,6 +160,20 @@ namespace WebApi.Services
         public User GetUser(int customerId)
         {
             return Context.Users.FirstOrDefault(c => c.IdCustomer == customerId);
+        }
+
+        public AppointmentCustomerInformation GetAppointmentCustomerInformation(int idAppointment)
+        {
+            AppointmentCustomerInformation appointmentCustomerInformation = new AppointmentCustomerInformation();
+            Appointment appointment = Context.Appointments.First(c => c.Id == idAppointment);
+            appointmentCustomerInformation.Appointment = appointment;
+            appointmentCustomerInformation.Customer.Id = ;
+            String customerEmail = GetUser(idAppointment).Email;
+            appointmentCustomerInformation.Customer.Email = (customerEmail != null) ? customerEmail : "";
+
+            userInfo.Id = user.Id;
+            var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
+            userInfo.FullName = $"{customer.FirstName} {customer.LastName}";
         }
     }
 }

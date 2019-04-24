@@ -466,7 +466,7 @@ function GetCustomerInformation(){
         $customer = CallAPI('GET','Customers/'.$customerId);
         $output = '<table class="table table-sm table-hover" id="tbl_customers">
                                 <thead class="thead-dark">
-                                    <tr> 
+                                    <tr>
                                         <th scope="col">';
         $output = $output. localize('Appointment-Customer').'</th>
                                 <th scope="col">'. localize('Personal-Occupation').'</th>
@@ -480,7 +480,7 @@ function GetCustomerInformation(){
                                         $customer['response']->lastName.'</td><td>'.
                                         $customer['response']->occupation.'</td><td>';
         $phoneResult = CallAPI('GET', 'PhoneNumbers/ForCustomer/'.$customerId);
-        $phoneNumbers = $phoneResult['response']; 
+        $phoneNumbers = $phoneResult['response'];
         foreach ($phoneNumbers as $phoneNumber) {
             $output = $output . '
             <table style="width:100%; background-color: rgba(255,255,255,0)">
@@ -501,9 +501,12 @@ function ajaxDeleteTimeslot() {
     if (isset($_POST)){
         if (isset($_POST["idTimeslot"])) {
             $result = CallAPI('DELETE', 'TimeSlots/'.htmlentities($_POST['idTimeslot']));
-            echo ($result['statusCode'] == 204)
-                ? 'success'
-                : "Une erreur c'est produite lors de la suppression";
+            if ($result['statusCode'] == 200)
+                echo 'success';
+            else if ($result['statusCode'] == 400)
+                echo 'Une plage horaire est en conflit :O'
+            else
+                echo "Une erreur c'est produite lors de la suppression";
         } else echo 'Invalid data received';
     } else echo 'No data received';
 }
