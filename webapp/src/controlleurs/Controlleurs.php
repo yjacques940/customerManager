@@ -549,7 +549,6 @@ function Customers()
         $customers = CallAPI('GET','Customers/CustomersWithPhoneInfo')['response'];
         require('views/customers_list.php');
     } else error(403);
-
 }
 
 function ReserveAppointment(){

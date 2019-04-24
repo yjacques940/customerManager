@@ -75,7 +75,6 @@ namespace WebApi.Services
                     customers.Add(newCustomer);
                 }
             }
-
             return customers;
         }
 
