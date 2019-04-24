@@ -12,14 +12,14 @@ ob_start();
                 <input type="radio" class="form-check-input" checked name="searchType" value="1">
                 <h4><?php echo localize('Personal-Phone');?></h4></label>
                 <input id="phoneNumber" type="text" class="form-control search-bar" 
-                name="phoneNumber" placeholder='phone' />
+                name="phoneNumber" placeholder='<?php echo localize('Personal-Phone'); ?>' />
             </div>
             <div class="form-check form-check-inline">
                 <label class="form-check-inline">
                 <input type="radio" class="form-check-input" name="searchType" value="2">
                 <h4><?php echo localize('Inscription-Lastname'); ?></h4></label>
                 <input id="customerName" type="text" class="form-control search-bar" 
-                name="customerName" placeholder='name' />
+                name="customerName" placeholder='<?php echo localize('Inscription-Lastname'); ?>' />
             </div>
             <input type="button" value="<?php echo localize("searchClient"); ?>" class="form-check-inline btn btn-success" onclick="SearchCustomer();">
         </div>

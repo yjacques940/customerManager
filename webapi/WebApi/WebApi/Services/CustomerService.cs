@@ -58,7 +58,8 @@ namespace WebApi.Services
 
         public List<Customer> GetCustomersByName(string name)
         {
-            List<Customer> customers = Context.Customers.Where(c => c.LastName.Contains(name) || c.FirstName.Contains(name)).ToList();
+            List<Customer> customers = Context.Customers.Where(c => c.LastName.Contains(name) || 
+            c.FirstName.Contains(name)|| (c.FirstName + " " + c.LastName).Contains(name)).ToList();
             return customers;
         }
 

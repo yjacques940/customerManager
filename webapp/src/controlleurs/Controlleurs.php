@@ -446,7 +446,7 @@ function GetCustomersByPhone(){
 }
 
 function GetCustomersByName(){
-    $customerNames = CallAPI('GET', 'Customers/GetCustomersByName/'.htmlentities($_POST['customerName']));
+    $customerNames = CallAPI('POST', 'Customers/GetCustomersByName', json_encode(htmlentities($_POST['customerName'])));
     if($customerNames['response'] != null){
         $select = '<select id="customerSelect" onchange="GetCustomerById();" name="customerSelect">
             <option value="0"></option>';
@@ -456,7 +456,7 @@ function GetCustomersByName(){
         $select = $select . '</select>';
         echo $select;
     }else{
-        echo'';
+        echo '</p>' . localize('CustomerSearch-NoCustomerFound') . '</p>';
     }
 }
 

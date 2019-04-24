@@ -50,14 +50,14 @@ namespace WebApi.Controllers
             return BadRequest();
         }
 
-        [HttpPost, Route("GetCustomersByPhone/")]
+        [HttpPost, Route("GetCustomersByPhone")]
         public ActionResult GetCustomersByPhone([FromBody]string phone)
         {
             return Ok(Service.GetCustomersByPhone(phone));
         }
 
-        [HttpGet, Route("GetCustomersByName/{name}")]
-        public ActionResult GetCustomersByName(string name)
+        [HttpPost, Route("GetCustomersByName")]
+        public ActionResult GetCustomersByName([FromBody]string name)
         {
             return Ok(Service.GetCustomersByName(name));
         }
