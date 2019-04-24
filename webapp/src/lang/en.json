@@ -89,7 +89,7 @@
   "Validate-Error-EmptyFields": "One or more fields are empty",
   "Validate-Error-InvalidEmail":"Please provide a valid email",
   "Validate-Error-Number": "Please provide a valid number",
-  "Validate-Error-PasswordDontMatch": "The passwords do not match",
+  "Validate-Error-PasswordDontMatch": "Passwords does not match",
   "Validate-Error-PasswordMinLength": "Password must contain at least 7 characters",
   "Validate-Error-RequiredField": "This field is required",
   "Website-Credits": "Courtesy of Yannick Jacques, Jessy Rodrigue and Nicolas Talbot",
@@ -143,5 +143,6 @@
   "MedicalSurvey-DeletionWarning" : "Any previously completed survey will be deleted",
   "MedicalSurvey-CreatedOn" : "Survey creation date",
   "Answer-Yes" : "Yes",
-  "Answer-No" : "No"
+  "Answer-No" : "No",
+  "Cancel" : "Cancel"
 }

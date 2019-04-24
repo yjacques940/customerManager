@@ -149,5 +149,6 @@
   "MedicalSurvey-NotAtAll" : "Pas du tout",
   "MedicalSurvey-Update" : "Mettre à jour le questionnaire",
   "Answer-Yes" : "Oui",
-  "Answer-No" : "Non"
+  "Answer-No" : "Non",
+  "Cancel" : "Annuler"
 }

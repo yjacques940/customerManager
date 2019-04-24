@@ -637,7 +637,7 @@ function MainMedicalSurvey()
         MedicalSurveyUpdate();
     }
     else{
-        require('views/Questions/medical_survey_gabarit.php');
+        require('views/Questions/medical_survey_shell.php');
     }
 }
 function HasDoneTheSurvey(){

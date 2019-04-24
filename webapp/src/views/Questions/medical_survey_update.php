@@ -1,10 +1,10 @@
 <?php
-$titre = localize('Header-MedicalSurvey');
+$title = localize('Header-MedicalSurvey');
 ob_start();
 ?>
 <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
     <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-        <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize($titre) ?></h3>
+        <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo $title ?></h3>
         <p style="text-align: center;"><b><?php echo localize('MedicalSurvey-Instructions')?></b></p>
         <?php
         if($hasDoneTheSurvey) {
@@ -72,9 +72,6 @@ ob_start();
                                 '<input style="width:24px;height: 24px;" class="mx-sm-2" type="radio" value="Moderatly" name="multiple_string-' . $question->id . '">'.localize('MedicalSurvey-Moderatly').''.
                                 '<input style="width:24px;height: 24px;" class="mx-sm-2" type="radio" value="NotAtAll" name="multiple_string-' . $question->id . '">'.localize('MedicalSurvey-NotAtAll').' </div>';
                     }
-                        ?>
-
-                <?php
                 }?>
             </div>
         <button type="submit" class="btn sent-butnn"><?php echo localize('Send') ?></button>

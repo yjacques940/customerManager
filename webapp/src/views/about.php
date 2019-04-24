@@ -135,7 +135,7 @@ $title = 'Connection';
             type: 'info'
         }).then((result) => {
             if (result.value) {
-               window.location = "?action=medicalSurvey"
+               window.location = "?action=mainMedicalSurvey"
             }
         });
     }
