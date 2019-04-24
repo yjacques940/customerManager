@@ -545,7 +545,10 @@ function AppointmentCreator()
 }
 function Customers()
 {
-    require('views/customers.php');
+    if (userHasPermission('MedicalSurveys-Read')) {
+        $customers = CallAPI('GET','Customers/CustomersWithPhoneInfo')['response'];
+        require('views/customers_list.php');
+    } else error(403);
 }
 
 function ReserveAppointment(){
@@ -578,4 +581,16 @@ function ReserveTimeSlotForAppointment($timeslot, $therapist){
     $_SESSION['appointmenttaken'] = true;
 }
 
+function ShowCustomerInfo()
+{
+    if(userHasPermission('customers-read') && userHasPermission('customers-write'))
+    {
+        $customerId = htmlentities($_GET['customerId']);
+        require('views/customer_info.php');
+    }
+    else
+    {
+        error(403);
+    }
+}
 ?>

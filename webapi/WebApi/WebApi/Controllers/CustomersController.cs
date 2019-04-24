@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebApi.Data;
+using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Services;
 
@@ -59,6 +60,12 @@ namespace WebApi.Controllers
         public ActionResult GetCustomersByName(string name)
         {
             return Ok(Service.GetCustomersByName(name));
+        }
+
+        [HttpGet, Route("CustomersWithPhoneInfo")]
+        public ActionResult<IEnumerable<CustomerAndPhoneNumberInformation>> GetCustomersWithPhoneInformation()
+        {
+            return Ok(Service.GetCustomersWithPhone());
         }
     }
 }
