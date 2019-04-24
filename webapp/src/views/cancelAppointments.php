@@ -61,39 +61,44 @@ $title = localize('CancelAppointment-Title');
         </thead>
         <tbody>
         <?php
-        foreach ($appointments['response'] as $appointment) {
-            ?>
-            <tr>
-                <td scope="row" align="center">
-                    <?php
-                    $appointmentDate = new DateTime($appointment->date);
-                    echo $appointmentDate->format('Y-m-d');
-                    ?>
-                </td>
-                <td align="center">
-                    <?php
-                    $startTime= new DateTime($appointment->startTime);
-                    $endTime = new DateTime($appointment->endTime);
-                    echo $startTime->format('H:i') .' - ' . $endTime->format('H:i');
-                    ?>
-                </td>
-                <td>
-                    <?php
-                    echo $appointment->appointment->therapist;
-                    ?>
-                </td>
-                <td class="align-middle text-center">
-                   <input id="<?php echo $appointment->appointment->id ?>"
-                          onclick="CheckAllManagement();" name="checkboxAppointments[]" type="checkbox" 
-                          value="<?php echo $appointment->appointment->id ?>" style="width:32px;height: 32px;">
-                </td>
-            </tr>
-            <?php
+        if($appointments['response'] != null){
+            foreach ($appointments['response'] as $appointment) {
+                ?>
+                <tr>
+                    <td scope="row" align="center">
+                        <?php
+                        $appointmentDate = new DateTime($appointment->date);
+                        echo $appointmentDate->format('Y-m-d');
+                        ?>
+                    </td>
+                    <td align="center">
+                        <?php
+                        $startTime= new DateTime($appointment->startTime);
+                        $endTime = new DateTime($appointment->endTime);
+                        echo $startTime->format('H:i') .' - ' . $endTime->format('H:i');
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $appointment->appointment->therapist;
+                        ?>
+                    </td>
+                    <td class="align-middle text-center">
+                    <input id="<?php echo $appointment->appointment->id ?>"
+                            onclick="CheckAllManagement();" name="checkboxAppointments[]" type="checkbox" 
+                            value="<?php echo $appointment->appointment->id ?>" style="width:32px;height: 32px;">
+                    </td>
+                </tr>
+                <?php
+            }
         }
         ?>
         </tbody>
     </table>
+    <?php 
+    if($appointments['response'] != null){ ?>
     <button type="submit" class="btn sent-butnn"><?php echo Localize('CancelAppointment-Title');?></button>
+    <?php } ?>
         </form>
       </div>
     </div>

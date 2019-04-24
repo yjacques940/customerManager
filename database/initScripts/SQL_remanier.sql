@@ -488,7 +488,8 @@ INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public, is_availab
 ( '2019-04-30 10:30:00', '2019-04-30 11:30:00', 1, 1, null),
 ( '2019-04-30 11:30:00', '2019-04-30 13:00:00', 0, 1, null),
 ( '2019-04-30 13:00:00', '2019-04-30 14:30:00', 0, 0, "Passer chercher les enfants"),
-( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 0, 0, "Film avec la famille");
+( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 0, 0, "Film avec la famille"),
+( '2019-04-23 15:00:00', '2019-04-23 16:00:00', 1, 1, null);
 
 INSERT INTO tbl_appointment(created_on, is_active, is_new, id_customer, id_time_slot, therapist)
 VALUES (NOW(), 1,1,1,1,''),
