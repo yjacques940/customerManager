@@ -1,4 +1,6 @@
 <?php
+if(isset($_SESSION['userid']))
+{
 $title = localize('Header-MedicalSurvey');
 ob_start();
 ?>
@@ -91,6 +93,8 @@ ob_start();
         })
     })
 </script>
-<?php $contenu = ob_get_clean();
+<?php
+$contenu = ob_get_clean();
 $onHomePage = false;
-require 'views/gabarit.php';?>
+require 'views/gabarit.php';
+}else error(403)?>
