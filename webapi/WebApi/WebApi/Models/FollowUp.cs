@@ -10,5 +10,6 @@ namespace WebApi.Models
         public string Treatment { get; set; }
         public string Summary { get; set; }
         public DateTime CreatedOn { get; set; }
+        public int IdCustomer { get; set; }
     }
 }

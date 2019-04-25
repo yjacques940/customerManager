@@ -31,5 +31,6 @@ namespace WebApi.Data
         public DbSet<ActionToken> ActionTokens { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Response> Responses { get; set; }
+        public DbSet<FollowUp> FollowUps { get; set; }
     }
 }

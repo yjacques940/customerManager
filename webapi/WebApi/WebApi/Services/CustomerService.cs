@@ -88,6 +88,25 @@ namespace WebApi.Services
             return customers;
         }
 
+        internal object GetCustomerFollowUps(int customerId)
+        {
+            var customer = Context.Customers.Where(c => c.Id == customerId).First();
+            List<FollowUp> followUps = Context.FollowUps.Where(c => c.IdCustomer == customerId).OrderBy(c => c.CreatedOn).ToList();
+            List<FollowUpHeader> followUpsToReturn = new List<FollowUpHeader>();
+            foreach (var followUp in followUps)
+            {
+                FollowUpHeader followUpHeader = new FollowUpHeader();
+                followUpHeader.Date = followUp.CreatedOn.Date.ToString();
+                followUpHeader.Id = followUp.Id;
+                followUpHeader.Summary = followUp.Summary;
+                followUpsToReturn.Add(followUpHeader);
+            }
+            CustomerAndFollowUps customerAndFollowUps = new CustomerAndFollowUps();
+            customerAndFollowUps.Customer = customer;
+            customerAndFollowUps.FollowUps = followUpsToReturn;
+            return customerAndFollowUps;
+        }
+
         private List<PhoneNumberAndTypesInformation> GetPhoneNumberAndTypes(int customerId)
         {
             var query = (from phoneNumber in Context.PhoneNumbers

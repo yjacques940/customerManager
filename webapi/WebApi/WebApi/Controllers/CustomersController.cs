@@ -73,5 +73,14 @@ namespace WebApi.Controllers
         {
             return Ok(Service.GetCustomersWithPhone());
         }
+
+        [HttpPost, Route("GetCustomerFollowUps")]
+        public ActionResult GetCustomerAppointmentsAndFollowUps([FromBody] int customerId)
+        {
+            if (customerId != 0)
+                return Ok(Service.GetCustomerFollowUps(customerId));
+
+            return BadRequest();
+        }
     }
 }
