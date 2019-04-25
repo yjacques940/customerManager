@@ -665,7 +665,6 @@ function NewFollowUp(){
                     'treatment'=>$_POST['detail']
                 );
                 $result = CallAPI('POST','FollowUps/AddNewFollowUp', json_encode($followUpInfo));
-                var_dump($result);
                 FollowUpList($_POST['customerid']);
             }
         }
