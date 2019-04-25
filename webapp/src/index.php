@@ -24,10 +24,7 @@ try
             UpdatePassword();
             break;
         case 'logout':
-            unset($_SESSION['userid']);
-            unset($_SESSION['username']);
-            unset($_SESSION['isfirstlogin']);
-            unset($_SESSION['lastAuthentication']);
+            session_destroy();
             Home();
             break;
         case 'ask_for_appointment' :

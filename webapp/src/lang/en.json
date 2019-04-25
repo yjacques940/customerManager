@@ -144,5 +144,6 @@
   "MedicalSurvey-CreatedOn" : "Survey creation date",
   "Answer-Yes" : "Yes",
   "Answer-No" : "No",
-  "Cancel" : "Cancel"
+  "Cancel" : "Cancel",
+  "TooManyRequests" : "Too many attempts have failed. Please reconnect to try again."
 }

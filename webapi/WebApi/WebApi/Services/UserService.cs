@@ -61,7 +61,7 @@ namespace WebApi.Services
 
         internal bool IsPasswordValid(UserLoginInformation userInfo)
         {
-            var user = Context.Users.First(c => c.Id == userInfo.UserId && c.Password == userInfo.Password);
+            var user = Context.Users.FirstOrDefault(c => c.Id == userInfo.UserId && c.Password == userInfo.Password);
             return user != null;
         }
 

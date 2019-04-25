@@ -1,5 +1,9 @@
 <?php ob_start();
 session_start();
+if(!isset($_SESSION['requests']))
+{
+    $_SESSION['requests'] = 0;
+}
 ?>
 
 <script type="text/javascript">
@@ -31,16 +35,22 @@ session_start();
                                 passwordToConfirm : value
                             }
                         }).success(function(content){
-                            if(content != 'PasswordNotMatch')
+                            if(content == 'PasswordNotMatch')
+                            {
+                                resolve('<?php echo localize('Validate-Error-PasswordDontMatch') ?>');
+                                setTimeout(function(){
+                                    Swal.hideLoading();
+                                }, 500);
+                            }
+                            else if(content == 'MaxRequestsAchieved')
+                            {
+                                resolve('<?php echo localize('TooManyRequests') ?>');
+                            }
+                            else
                             {
                                 $('#surveyHtmlContent').html(content);
                                 resolve();
                             }
-                            else
-                            {
-                                resolve('<?php echo localize('Validate-Error-PasswordDontMatch') ?>');
-                            }
-                            Swal.hideLoading();
                         });
                     } else {
                         resolve('<?php echo localize('Validate-Error-RequiredField') ?>');

@@ -2,7 +2,7 @@
 session_start();
 require('models/ManagerUsers.php');
 require('services/callApiExtension.php');
-
+$_SESSION['max_requests'] = 5;
 $default_locale = 'fr';
 
 if (!isset($_SESSION['locale'])) {
@@ -646,29 +646,37 @@ function HasDoneTheSurvey(){
 }
 function OpenMedicalSurvey()
 {
-    $userId = $_SESSION['userid'];
-    if(isset($_POST['passwordToConfirm']) && $_SESSION['lastAuthentication'] + 1 * 60 < time())
+    if($_SESSION['requests'] <= $_SESSION['max_requests'])
     {
-        $user = array('userId' => $userId,
-            'password' => htmlentities($_POST['passwordToConfirm']));
-        if(CallAPI('POST','Users/IsPasswordValid',json_encode($user))['statusCode'] == 200){
+        $userId = $_SESSION['userid'];
+        if(isset($_POST['passwordToConfirm']) && $_SESSION['lastAuthentication'] + 1 * 60 < time())
+        {
+            $user = array('userId' => $userId,
+                'password' => htmlentities($_POST['passwordToConfirm']));
+            if(CallAPI('POST','Users/IsPasswordValid',json_encode($user))['statusCode'] == 200){
 
+                $questions = CallAPI('GET','Questions')['response'];
+                $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
+                $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
+                $customerName = CallAPI('GET','Customers/FullName/'.$userId);
+                require('views/Questions/medical_survey_view.php');
+                $_SESSION['lastAuthentication'] = time();
+            }
+            else{
+                $_SESSION['requests']++;
+                echo 'PasswordNotMatch';
+            }
+        }
+        else{
             $questions = CallAPI('GET','Questions')['response'];
             $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
             $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
             $customerName = CallAPI('GET','Customers/FullName/'.$userId);
             require('views/Questions/medical_survey_view.php');
-            $_SESSION['lastAuthentication'] = time();
-        }
-        else{
-            echo 'PasswordNotMatch';
         }
     }
-    else{
-        $questions = CallAPI('GET','Questions')['response'];
-        $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
-        $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
-        $customerName = CallAPI('GET','Customers/FullName/'.$userId);
-        require('views/Questions/medical_survey_view.php');
+    else
+    {
+        echo 'MaxRequestsAchieved';
     }
 }

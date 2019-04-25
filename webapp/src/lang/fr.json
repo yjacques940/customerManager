@@ -150,5 +150,6 @@
   "MedicalSurvey-Update" : "Mettre à jour le questionnaire",
   "Answer-Yes" : "Oui",
   "Answer-No" : "Non",
-  "Cancel" : "Annuler"
+  "Cancel" : "Annuler",
+  "TooManyRequests" : "Trop de tentatives ont échouées. Veuillez vous reconnecter pour rééssayer."
 }

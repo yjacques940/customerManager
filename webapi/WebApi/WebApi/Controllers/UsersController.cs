@@ -52,9 +52,12 @@ namespace WebApi.Controllers
         }
 
         [HttpPost, Route("IsPasswordValid")]
-        public ActionResult<bool> IsPasswordValid([FromBody] UserLoginInformation userInfo)
+        public ActionResult IsPasswordValid([FromBody] UserLoginInformation userInfo)
         {
-            return Ok(Service.IsPasswordValid(userInfo));
+            if(Service.IsPasswordValid(userInfo))
+                return Ok();
+
+            return Unauthorized();
         }
     }
 }
