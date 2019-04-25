@@ -21,9 +21,7 @@ namespace WebApi
             services.AddTransient<JobService>();
             services.AddTransient<ResponseService>();
             services.AddTransient<QuestionService>();
-=======
             services.AddTransient<FollowUpService>();
->>>>>>> ajout et consultation fonctionnel
             return services;
         }
     }

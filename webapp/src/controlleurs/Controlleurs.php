@@ -688,7 +688,7 @@ function ConsultFollowUp(){
         error(403);
     }
 }
-?>
+
 
 function SaveMedicalSurvey(){
     if(isset($_POST))
