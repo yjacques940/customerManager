@@ -598,7 +598,7 @@ function MedicalSurveyUpdate()
 {
     if(!isset($hasDoneTheSurvey))
     {
-        $userId = $_SESSION['userid'];
+        $userId = isset($_SESSION['TempCustomerId']) ? $_SESSION['TempCustomerId'] : $_SESSION['userid'];
         $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
     }
     $questions = CallAPI('GET','Questions')['response'];
@@ -622,7 +622,8 @@ function SaveMedicalSurvey(){
                 ));
             }
             $data = array(
-                "userId" => $_SESSION['userid'],
+                "userId" => isset($_SESSION['TempCustomerId'])
+                    ?$_SESSION['TempCustomerId']: $_SESSION['userid'],
                 "responses" => $questionsToSave
             );
         }
@@ -641,20 +642,20 @@ function MainMedicalSurvey()
     }
 }
 function HasDoneTheSurvey(){
-    $userId = $_SESSION['userid'];
+    $userId = isset($_GET['idCustomer']) ? $_GET['idCustomer'] : $_SESSION['userid'];
+    $_SESSION['TempCustomerId'] = $userId;
     return CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
 }
 function OpenMedicalSurvey()
 {
     if($_SESSION['requests'] <= $_SESSION['max_requests'])
     {
-        $userId = $_SESSION['userid'];
+        $userId = isset($_SESSION['TempCustomerId']) ?  $_SESSION['TempCustomerId'] : $_SESSION['userid'];
         if(isset($_POST['passwordToConfirm']) && $_SESSION['lastAuthentication'] + 1 * 60 < time())
         {
-            $user = array('userId' => $userId,
+            $user = array('userId' => $_SESSION['userid'],
                 'password' => htmlentities($_POST['passwordToConfirm']));
             if(CallAPI('POST','Users/IsPasswordValid',json_encode($user))['statusCode'] == 200){
-
                 $questions = CallAPI('GET','Questions')['response'];
                 $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
                 $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');

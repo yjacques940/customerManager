@@ -3,8 +3,12 @@
         <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
         <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize($titre) ?></h3>
         <h4 class="text-center"><?php echo $customerName['response'] ?></h4>
-            <form action="?action=medicalSurveyUpdate" method="post"><button style="float: right" class="btn btn-success">
-                    <?php echo localize('MedicalSurvey-Update'); ?></button></form>
+         <?php if($userId != $_SESSION['userid'])
+         {
+             $_SESSION['TempCustomerId'] = $userId;
+         }?>
+         <form action="?action=medicalSurveyUpdate" method="post"><button style="float: right" class="btn btn-success">
+         <?php echo localize('MedicalSurvey-Update'); ?></button></form>
         </div>
         <div class="container">
             <?php

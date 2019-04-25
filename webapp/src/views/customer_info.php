@@ -1,8 +1,10 @@
 <?php
 $titre = localize('Email-Send-Admins');
-ob_start(); ?>
+ob_start();
+unset($_SESSION['TempCustomerId']);
+?>
 
-<a href="#">Consulter le questionnaire : id client = <?php echo $customerId?></a>
+<a href="?action=mainMedicalSurvey&idCustomer=<?php echo $_GET['customerId']?>">Consulter le questionnaire : id client = <?php echo $_GET['customerId']?></a>
 <?php $contenu = ob_get_clean();
 $onHomePage = false;
 require 'gabarit.php'; ?>
