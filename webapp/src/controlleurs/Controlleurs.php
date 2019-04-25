@@ -501,12 +501,17 @@ function ajaxDeleteTimeslot() {
     if (isset($_POST)){
         if (isset($_POST["idTimeslot"])) {
             $result = CallAPI('DELETE', 'TimeSlots/Delete/'.htmlentities($_POST['idTimeslot']));
-            if ($result['statusCode'] == 200)
+            if ($result['statusCode'] == 200) {
                 echo 'success';
-            else if ($result['statusCode'] == 409)
-                echo 'Une plage horaire est en conflit :O'.var_dump($result['response']);
-            else
-                echo "Une erreur c'est produite lors de la suppression: ".$result['statusCode'];
+            } else if ($result['statusCode'] == 409) {
+                if (!userHasPermission('customers-read') && !userHasPermission('appointments-read')) error(403);
+                echo json_encode(array(
+                    "errorMessage" => "La plage horaire est occupée par un rendez-vous.",
+                    "data" => $result['response']
+                ));
+            } else {
+                echo "Une erreur c'est produite lors de la suppression. Code d'erreur: ".$result['statusCode'];
+            }
         } else echo 'Invalid data received';
     } else echo 'No data received';
 }
