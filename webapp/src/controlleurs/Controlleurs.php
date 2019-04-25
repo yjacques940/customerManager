@@ -651,28 +651,42 @@ function FollowUpList($customerId){
 }
 
 function NewFollowUp(){
-    if(!isset($_POST['summary'])){
-        require('views/newFollowUp.php');
-    }else{
-        if($_POST['date'] != '' and $_POST['summary'] != '' 
-        and $_POST['detail'] != '' and $_POST['customerid'] != ''){
-            $followUpInfo = array(
-                'idCustomer'=> $_POST['customerid'],
-                'createdOn'=> $_POST['date'],
-                'summary'=>$_POST['summary'],
-                'treatment'=>$_POST['detail']
-            );
-            $result = CallAPI('POST','FollowUps/AddNewFollowUp', json_encode($followUpInfo));
-            var_dump($result);
-            FollowUpList($_POST['customerid']);
+    if(userHasPermission('customers-read') && userHasPermission('customers-write'))
+    {
+        if(!isset($_POST['summary'])){
+            require('views/newFollowUp.php');
+        }else{
+            if($_POST['date'] != '' and $_POST['summary'] != '' 
+            and $_POST['detail'] != '' and $_POST['customerid'] != ''){
+                $followUpInfo = array(
+                    'idCustomer'=> $_POST['customerid'],
+                    'createdOn'=> $_POST['date'],
+                    'summary'=>$_POST['summary'],
+                    'treatment'=>$_POST['detail']
+                );
+                $result = CallAPI('POST','FollowUps/AddNewFollowUp', json_encode($followUpInfo));
+                var_dump($result);
+                FollowUpList($_POST['customerid']);
+            }
         }
+    }
+    else
+    {
+        error(403);
     }
 }
 
 function ConsultFollowUp(){
-    $id = $_GET['id'];
-    $result = CallAPI('POST','FollowUps/GetFollowUpWithId', json_encode($id))['response'];
-    require('views/openFollowUp.php');
+    if(userHasPermission('customers-read') && userHasPermission('customers-write'))
+    {
+        $id = $_GET['id'];
+        $result = CallAPI('POST','FollowUps/GetFollowUpWithId', json_encode($id))['response'];
+        require('views/openFollowUp.php');
+    }
+    else
+    {
+        error(403);
+    }
 }
 ?>
 
