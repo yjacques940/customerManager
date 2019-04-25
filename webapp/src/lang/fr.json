@@ -139,5 +139,17 @@
   "TakeAppointment-Therapist": "Thérapeute",
   "TakeAppointment-Either": "Peu importe",
   "TakeAppointment-TimeSlotTaken": "La plage horaire n'est plus disponible",
-  "TakeAppointment-AppointementTaken": "Rendez-vous enregistré avec succès"
+  "TakeAppointment-AppointementTaken": "Rendez-vous enregistré avec succès",
+  "Header-MedicalSurvey" : "Questionnaire médical",
+  "MedicalSurvey-Instructions" : "Veuillez répondre au questionnaire suivant. Toutes les questions sont obligatoires.",
+  "MedicalSurvey-DeletionWarning" : "Votre ancien questionnaire sera remplacé par le nouveau",
+  "MedicalSurvey-CreatedOn" : "Date de création du questionnaire",
+  "MedicalSurvey-Very" : "Très",
+  "MedicalSurvey-Moderatly" : "Moyennement",
+  "MedicalSurvey-NotAtAll" : "Pas du tout",
+  "MedicalSurvey-Update" : "Mettre à jour le questionnaire",
+  "Answer-Yes" : "Oui",
+  "Answer-No" : "Non",
+  "Cancel" : "Annuler",
+  "TooManyRequests" : "Trop de tentatives ont échouées. Veuillez vous reconnecter pour réessayer."
 }

@@ -17,6 +17,8 @@ namespace WebApi
             services.AddTransient<PersonalInformationService>();
             services.AddTransient<StateService>();
             services.AddTransient<TimeSlotService>();
+            services.AddTransient<ResponseService>();
+            services.AddTransient<QuestionService>();
             return services;
         }
     }

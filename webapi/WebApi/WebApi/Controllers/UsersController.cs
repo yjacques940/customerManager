@@ -50,5 +50,14 @@ namespace WebApi.Controllers
         {
             return Ok(Service.CheckEmailInUse(emailAddress.Email));
         }
+
+        [HttpPost, Route("IsPasswordValid")]
+        public ActionResult IsPasswordValid([FromBody] UserLoginInformation userInfo)
+        {
+            if(Service.IsPasswordValid(userInfo))
+                return Ok();
+
+            return Unauthorized();
+        }
     }
 }

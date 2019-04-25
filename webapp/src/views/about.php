@@ -115,6 +115,31 @@ $title = 'Connection';
         </div>
       </div>
     </section>
+<script>
+    <?php
+    if(isset($_POST['isfirstlogin'])&& htmlentities($_POST['isfirstlogin']))
+    {
+        echo 'AskAboutMedicalForm();';
+    }
+    ?>
+    function AskAboutMedicalForm()
+    {
+        Swal.fire({
+            title: 'Voulez-vous remplir votre questionnaire santé maintenant?',
+                text: "Il est possible de remplir ce questionnaire en ligne" +
+                    " dès maintenant ou lors de votre prochaine visite.",
+            showCancelButton: true,
+            cancelButtonText: "Non",
+            confirmButtonText: "Oui",
+            confirmButtonColor: '#3d3',
+            type: 'info'
+        }).then((result) => {
+            if (result.value) {
+               window.location = "?action=mainMedicalSurvey"
+            }
+        });
+    }
+</script>
 <?php $contenu = ob_get_clean();
 $onHomePage = false;
 require 'gabarit.php'; ?>

@@ -24,8 +24,7 @@ try
             UpdatePassword();
             break;
         case 'logout':
-            unset($_SESSION['userid']);
-            unset($_SESSION['username']);
+            session_destroy();
             Home();
             break;
         case 'ask_for_appointment' :
@@ -78,6 +77,18 @@ try
             break;
         case "showCustomerInfo":
             ShowCustomerInfo();
+            break;
+        case 'medicalSurvey':
+            OpenMedicalSurvey();
+            break;
+        case 'saveMedicalSurvey':
+            SaveMedicalSurvey();
+            break;
+        case 'mainMedicalSurvey':
+            MainMedicalSurvey();
+            break;
+        case 'medicalSurveyUpdate':
+            MedicalSurveyUpdate();
             break;
         default :
             error(404);

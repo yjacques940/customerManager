@@ -2,7 +2,7 @@
 session_start();
 require('models/ManagerUsers.php');
 require('services/callApiExtension.php');
-
+$_SESSION['max_requests'] = 5;
 $default_locale = 'fr';
 
 if (!isset($_SESSION['locale'])) {
@@ -76,6 +76,7 @@ function Login(){
         {
             $_SESSION['username'] = $userAPI['response']->fullName;
             $_SESSION['userid'] = $userAPI['response']->id;
+            $_POST['isfirstlogin'] = $userAPI['response']->isFirstLogin;
             About();
         }
         else
@@ -593,4 +594,89 @@ function ShowCustomerInfo()
         error(403);
     }
 }
-?>
+function MedicalSurveyUpdate()
+{
+    if(!isset($hasDoneTheSurvey))
+    {
+        $userId = $_SESSION['userid'];
+        $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
+    }
+    $questions = CallAPI('GET','Questions')['response'];
+    require('views/Questions/medical_survey_update.php');
+}
+
+function SaveMedicalSurvey(){
+    if(isset($_POST))
+    {
+        $questionsToSave = [];
+        foreach ($_POST as $key => $value) {
+            $questionIdAndType = explode('-', $key);
+            if($questionIdAndType[0] == 'bool' || $questionIdAndType[0] == 'string'
+                ||$questionIdAndType[0] == 'string_multiple')
+            {
+                array_push($questionsToSave, array(
+                    "idQuestion" => $questionIdAndType[1],
+                    "responseBool" => $questionIdAndType[0] == "bool" ? $value : null,
+                    "responseString" => $questionIdAndType[0] != "bool" ? $value : '',
+                    "answerType" => $questionIdAndType[0]
+                ));
+            }
+            $data = array(
+                "userId" => $_SESSION['userid'],
+                "responses" => $questionsToSave
+            );
+        }
+        CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
+        require('views/Questions/medical_survey_shell.php');
+    }
+}
+function MainMedicalSurvey()
+{
+    if(!HasDoneTheSurvey())
+    {
+        MedicalSurveyUpdate();
+    }
+    else{
+        require('views/Questions/medical_survey_shell.php');
+    }
+}
+function HasDoneTheSurvey(){
+    $userId = $_SESSION['userid'];
+    return CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
+}
+function OpenMedicalSurvey()
+{
+    if($_SESSION['requests'] <= $_SESSION['max_requests'])
+    {
+        $userId = $_SESSION['userid'];
+        if(isset($_POST['passwordToConfirm']) && $_SESSION['lastAuthentication'] + 1 * 60 < time())
+        {
+            $user = array('userId' => $userId,
+                'password' => htmlentities($_POST['passwordToConfirm']));
+            if(CallAPI('POST','Users/IsPasswordValid',json_encode($user))['statusCode'] == 200){
+
+                $questions = CallAPI('GET','Questions')['response'];
+                $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
+                $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
+                $customerName = CallAPI('GET','Customers/FullName/'.$userId);
+                require('views/Questions/medical_survey_view.php');
+                $_SESSION['lastAuthentication'] = time();
+            }
+            else{
+                $_SESSION['requests']++;
+                echo 'PasswordNotMatch';
+            }
+        }
+        else{
+            $questions = CallAPI('GET','Questions')['response'];
+            $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
+            $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
+            $customerName = CallAPI('GET','Customers/FullName/'.$userId);
+            require('views/Questions/medical_survey_view.php');
+        }
+    }
+    else
+    {
+        echo 'MaxRequestsAchieved';
+    }
+}

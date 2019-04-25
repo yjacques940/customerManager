@@ -28,5 +28,7 @@ namespace WebApi.Data
         public DbSet<Address> Addresses { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<TimeSlot> TimeSlots { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Response> Responses { get; set; }
     }
 }
