@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using WebApi.DTO;
 
 namespace WebApi.Validators
@@ -30,14 +25,30 @@ namespace WebApi.Validators
             }
         }
 
-        public static bool SendConfirmationEmail(string userEmail,DateTime appointment, IConfiguration configuration)
+        public static bool SendConfirmationEmail(string userEmail, DateTime AppointmentDateTime, IConfiguration configuration)
         {
             SmtpClient client = GetSmtpClient(configuration);
-            MailMessage MailMessageForConfirmAppointment = GetMailMessageToConfirmAppointment(userEmail, appointment);
+            MailMessage MailMessageForConfirmAppointment = GetMailMessageToConfirmAppointment(userEmail, AppointmentDateTime);
 
             try
             {
                 client.Send(MailMessageForConfirmAppointment);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool SendAskConfirmationToUserEmail(string userEmail, Guid token, IConfiguration configuration)
+        {
+            SmtpClient client = GetSmtpClient(configuration);
+            MailMessage MailMessageAskConfirmationToUser = GetMailMessageToConfirmAppointment(userEmail, token);
+
+            try
+            {
+                client.Send(MailMessageAskConfirmationToUser);
                 return true;
             }
             catch
@@ -69,13 +80,13 @@ namespace WebApi.Validators
 
         private static MailMessage GetMailMessage(string message)
         {
-                MailMessage mailmessage = new MailMessage();
-                mailmessage.IsBodyHtml = true;
-                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
-                mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
-                mailmessage.Subject = "A user reported a bug";
-                mailmessage.Body = message;
-                return mailmessage;
+            MailMessage mailmessage = new MailMessage();
+            mailmessage.IsBodyHtml = true;
+            mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+            mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
+            mailmessage.Subject = "A user reported a bug";
+            mailmessage.Body = message;
+            return mailmessage;
         }
 
         private static SmtpClient GetSmtpClient(IConfiguration configuration)
@@ -88,7 +99,7 @@ namespace WebApi.Validators
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Credentials =
-                new NetworkCredential(configuration.GetSection("EmailAddress").Value,configuration.GetSection("EmailPassword").Value);
+                new NetworkCredential(configuration.GetSection("EmailAddress").Value, configuration.GetSection("EmailPassword").Value);
             return client;
         }
 
@@ -109,14 +120,14 @@ namespace WebApi.Validators
                 mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
                 mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
                 mailmessage.Subject = "Un client vous a envoyé une demande de rendez-vous";
-                var htmlFile     = reader.ReadToEnd();
-                newHtml          = htmlFile.Replace("[AppointmentTimeOfDayx]", requestInfo.TimeOfDay);
-                newHtml          = newHtml.Replace("[AppointmentDatex]", requestInfo.Date);
-                newHtml          = newHtml.Replace("[SenderEmailx]", requestInfo.Email);
-                newHtml          = newHtml.Replace("[OtherInformationx]",  requestInfo.MoreInformation != "" ? "<div>Informations supplémentaires  :</div><div class=\"moreInfoBorder\">" + requestInfo.MoreInformation + "</div>": "");
-                newHtml          = newHtml.Replace("[SenderPhoneNumberx]", requestInfo.PhoneNumber);
-                newHtml          = newHtml.Replace("[SenderNamex]", requestInfo.UserName);
-                newHtml          = newHtml.Replace("[AppointmentTypex]", requestInfo.TypeOfTreatment);
+                var htmlFile = reader.ReadToEnd();
+                newHtml = htmlFile.Replace("[AppointmentTimeOfDayx]", requestInfo.TimeOfDay);
+                newHtml = newHtml.Replace("[AppointmentDatex]", requestInfo.Date);
+                newHtml = newHtml.Replace("[SenderEmailx]", requestInfo.Email);
+                newHtml = newHtml.Replace("[OtherInformationx]", requestInfo.MoreInformation != "" ? "<div>Informations supplémentaires  :</div><div class=\"moreInfoBorder\">" + requestInfo.MoreInformation + "</div>" : "");
+                newHtml = newHtml.Replace("[SenderPhoneNumberx]", requestInfo.PhoneNumber);
+                newHtml = newHtml.Replace("[SenderNamex]", requestInfo.UserName);
+                newHtml = newHtml.Replace("[AppointmentTypex]", requestInfo.TypeOfTreatment);
                 mailmessage.Body = newHtml;
                 return mailmessage;
             }

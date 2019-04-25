@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using Microsoft.AspNetCore.Mvc.Formatters.Internal;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Validators;
-using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Services
 {
@@ -19,12 +17,12 @@ namespace WebApi.Services
         {
         }
 
-        public ActionResult<IEnumerable<AppointmentTimeSlotInformation>> GetAppointmentsByDate(string date)
+        public List<AppointmentTimeSlotInformation> GetAppointmentsByDate(DateTime dateTime)
         {
             return (
                 from appointment in Context.Appointments
                 join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
-                where appointment.IsActive && timeslot.IsActive
+                where appointment.IsActive && timeslot.IsActive && timeslot.StartDateTime.Date == dateTime.Date
                 select new AppointmentTimeSlotInformation()
                 {
                     AppointmentInfo = appointment,
@@ -122,7 +120,7 @@ namespace WebApi.Services
             return false;
         }
 
-        internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
+        internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo, IConfiguration configuration)
         {
             if (requestInfo.UserId != "")
             {
@@ -132,13 +130,13 @@ namespace WebApi.Services
                 requestInfo.UserName = customer.FirstName + " " + customer.LastName;
                 requestInfo.PhoneNumber = Context.PhoneNumbers.First(c => c.IdCustomer == customer.Id).Phone.ToString();
             }
-            EmailSender.SendAppointmentRequest(requestInfo,configuration);
+            EmailSender.SendAppointmentRequest(requestInfo, configuration);
             return requestInfo.UserId;
         }
 
         public Appointment CheckAppointmentIsAvailable(AppointmentInformation appointment)
         {
-            return  Context.TimeSlots.Any(c => c.Id == appointment.IdTimeSlot) ?
+            return Context.TimeSlots.Any(c => c.Id == appointment.IdTimeSlot) ?
                     Context.Appointments.Any(c => c.IdTimeSlot == appointment.IdTimeSlot) ? null
                     : ConvertDtoToModel(appointment) : null;
         }
