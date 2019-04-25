@@ -301,7 +301,7 @@ ob_start(); ?>
 
         function showErrorSelectionWithinDay() {
             Swal.fire({
-                text: 'La plage horaire doit être contenu dans la même journée.',
+                text: 'La plage horaire doit être contenue dans la même journée.',
                 type: 'warning',
                 toast: true,
                 position: 'top',
