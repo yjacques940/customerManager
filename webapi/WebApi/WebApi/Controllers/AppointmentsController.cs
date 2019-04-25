@@ -96,7 +96,7 @@ namespace WebApi.Controllers
         {
             if(appointmentService.IdUser != 0)
             {
-                if (Service.ReserveAnAppointment(appointmentService))
+                if (Service.ReserveAnAppointment(appointmentService,configuration))
                 {
                     return Ok();
                 }

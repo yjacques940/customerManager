@@ -95,7 +95,7 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
 
-        public bool ReserveAnAppointment(AppointmentUserInformation appointmentService)
+        public bool ReserveAnAppointment(AppointmentUserInformation appointmentService, IConfiguration configuration)
         {
             Appointment appointment = new Appointment();
             if (appointmentService != null)
@@ -108,6 +108,10 @@ namespace WebApi.Services
                 appointment.IsActive = true;
                 Context.Add(appointment);
                 Context.SaveChanges();
+                var user = GetUser(appointment.IdCustomer);
+                var appointmentDate = GetAppointmentTimeSlot(appointment).StartDateTime;
+                if (user != null)
+                    EmailSender.SendConfirmationEmail(user.Email, appointmentDate, configuration);
                 return true;
             }
             return false;
@@ -148,9 +152,8 @@ namespace WebApi.Services
             };
         }
 
-        public User GetUser(int appointmentId)
+        public User GetUser(int customerId)
         {
-            var customerId = Context.Appointments.First(c => c.Id == appointmentId).IdCustomer;
             return Context.Users.FirstOrDefault(c => c.IdCustomer == customerId);
         }
     }
