@@ -510,7 +510,7 @@ function ajaxDeleteTimeslot() {
                     "data" => $result['response']
                 ));
             } else {
-                echo "Une erreur c'est produite lors de la suppression. Code d'erreur: ".$result['statusCode'];
+                echo "Une erreur s'est produite lors de la suppression. Code d'erreur: ".$result['statusCode'];
             }
         } else echo 'Invalid data received';
     } else echo 'No data received';

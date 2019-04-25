@@ -13,7 +13,7 @@ namespace WebApi.Services
         {
         }
 
-        public List<PhoneNumberAndTypesInformation> GetPhoneNumbersFromCustomer(int customerId)
+        public List<PhoneNumberAndTypesInformation> GetPhoneNumbersForCustomer(int customerId)
         {
             var query = (from phoneNumber in Context.PhoneNumbers
                 join phoneType in Context.PhoneTypes on phoneNumber.IdPhoneType equals phoneType.Id

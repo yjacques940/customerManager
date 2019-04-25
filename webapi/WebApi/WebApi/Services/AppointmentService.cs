@@ -55,7 +55,7 @@ namespace WebApi.Services
             foreach (var appointment in appointments)
             {
                 appointment.PhoneNumbers = phoneNumberService
-                    .GetPhoneNumbersFromCustomer(appointment.Customer.Id);
+                    .GetPhoneNumbersForCustomer(appointment.Customer.Id);
             }
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
@@ -95,7 +95,7 @@ namespace WebApi.Services
             foreach (var appointment in appointments)
             {
                 appointment.PhoneNumbers = phoneNumberService
-                    .GetPhoneNumbersFromCustomer(appointment.Customer.Id);
+                    .GetPhoneNumbersForCustomer(appointment.Customer.Id);
             }
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
@@ -176,7 +176,7 @@ namespace WebApi.Services
             appointmentCustomer.Customer.Id = customer.Id;
             appointmentCustomer.Customer.Email = (customerEmail != null) ? customerEmail : "";
             appointmentCustomer.Customer.FullName = $"{customer.FirstName} {customer.LastName}";
-            appointmentCustomer.Customer.phoneNumbers = phoneNumberService.GetPhoneNumbersFromCustomer(customer.Id);
+            appointmentCustomer.Customer.phoneNumbers = phoneNumberService.GetPhoneNumbersForCustomer(customer.Id);
             return appointmentCustomer;
         }
     }
