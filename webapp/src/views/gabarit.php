@@ -28,14 +28,16 @@
         <nav style="display: -moz-inline-block;">
           <label for="drop" class="toggle"><?php echo localize('Header-Menu'); ?></label>
           <input type="checkbox" id="drop">
-          <ul class="menu mt-2" style="z-index:1;">
+          <ul class="menu mt-2" style="z-index:999;">
             <li class="active">
               <a href="index.php?action=home"><?php echo localize('PageTitle-Home'); ?></a>
             </li>
             <li class="mx-lg-3 mx-md-2 my-md-0 my-1">
               <a href="index.php?action=about"><?php echo localize('PageTitle-About'); ?></a>
             </li>
-
+            <?php 
+            if(userHasPermission('Menu-IsEmployee')){ 
+              ?>
             <li>
               <label for="drop-3" class="toggle toogle-2">
                 <?php echo localize('Header-Administration'); ?>
@@ -63,11 +65,40 @@
                           <?php echo localize('PageTitle-CustomersManagement'); ?>
                       </a>
                   </li>
+                <li>
+                  <a href="index.php?action=searchCustomer" class="drop-down">
+                  <?php echo localize('searchClient'); ?>
+                  </a>
+                </li>
               </ul>
             </li>
-
             <?php
-              if (!isset($_SESSION['username'])) {
+            } else if(isset($_SESSION['userid'])){ ?>
+              <li>
+              <label for="drop-4" class="toggle toogle-2">
+                <?php echo localize('Header-Services'); ?>
+                <span class="fa fa-angle-down" aria-hidden="true"></span>
+              </label>
+              <a href="#">
+                <?php echo localize('Header-Services'); ?>
+                <span class="fa fa-angle-down" aria-hidden="true"></span>
+              </a>
+              <input type="checkbox" id="drop-4" />
+              <ul>
+              <li>
+                <a href="index.php?action=mainMedicalSurvey" class="drop-text">
+                    <?php echo localize('Header-MedicalSurvey'); ?>
+                </a>
+              </li>
+                <li>
+                  <a href="index.php?action=reserveappointment" class="drop-text">
+                    <?php echo localize('Header-TakeAppointment'); ?>
+                  </a>
+                </li>
+            </ul>
+                <?php
+            }
+              if (!isset($_SESSION['userid'])) {
             ?>
             <li>
               <a href="index.php?action=login"><?php echo localize('PageTitle-Login'); ?></a>
@@ -86,21 +117,14 @@
               </a>
               <input type="checkbox" id="drop-3" />
               <ul>
-                <li>
+              <?php
+                  if(!userHasPermission('Menu-IsEmployee')){ ?>
+                  <li>
                   <a href="index.php?action=personalinformation" class="drop-text">
                     <?php echo localize('Header-Account-Manage'); ?>
                   </a>
                 </li>
-                  <li>
-                      <a href="index.php?action=mainMedicalSurvey" class="drop-text">
-                          <?php echo localize('Header-MedicalSurvey'); ?>
-                      </a>
-                  </li>
-                <li>
-                  <a href="index.php?action=searchCustomer" class="drop-down">
-                  <?php echo localize('searchClient'); ?>
-                  </a>
-                </li>
+                  <?php } ?>
                 <li>
                   <a href="index.php?action=updatepassword" class="drop-text">
                     <?php echo localize('Header-Manage-Password'); ?>

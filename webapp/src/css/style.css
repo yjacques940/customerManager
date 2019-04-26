@@ -430,7 +430,7 @@ a.reqe-button {
   /* Display Dropdown when clicked on Parent Lable */
   [id^=drop]:checked+ul {
     display: block;
-    background: #656565;
+    background: #000;
     padding: 15px 0;
     text-align: center;
     width: 100%;
