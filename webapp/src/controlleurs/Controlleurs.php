@@ -599,6 +599,7 @@ function MedicalSurveyUpdate()
     if(!isset($hasDoneTheSurvey))
     {
         $userId = isset($_SESSION['TempCustomerId']) ? $_SESSION['TempCustomerId'] : $_SESSION['userid'];
+        $customerName = CallAPI('GET','Customers/FullName/'.$userId);
         $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
     }
     $questions = CallAPI('GET','Questions')['response'];
