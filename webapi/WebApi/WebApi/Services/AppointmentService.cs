@@ -173,30 +173,6 @@ namespace WebApi.Services
             return appointmentsForCustomers;
         }
 
-        internal object GetAppointmentsForCustomer(int userid)
-        {
-            var user = Context.Users.Where(c => c.Id == userId).First();
-            List<AppointmentsForCustomer> appointmentsForCustomers = new List<AppointmentsForCustomer>();
-            Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
-            List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id && c.IsActive == true).ToList();
-            foreach (var appointment in appointments)
-            {
-                DateTime startTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().StartDateTime;
-                DateTime endTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().EndDateTime;
-                if(startTime > DateTime.Now)
-                {
-                    AppointmentsForCustomer oneAppointment = new AppointmentsForCustomer();
-                    oneAppointment.appointment = appointment;
-                    oneAppointment.Date = startTime.Date.ToString();
-                    oneAppointment.StartTime = startTime.TimeOfDay.ToString();
-                    oneAppointment.EndTime = endTime.TimeOfDay.ToString();
-                    appointmentsForCustomers.Add(oneAppointment);
-                }
-            }
-            appointmentsForCustomers = appointmentsForCustomers.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
-            return appointmentsForCustomers;
-        }
-
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
         {
             if (requestInfo.UserId != "")
