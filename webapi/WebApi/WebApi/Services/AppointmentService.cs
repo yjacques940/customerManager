@@ -120,7 +120,60 @@ namespace WebApi.Services
             return false;
         }
 
-        internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo, IConfiguration configuration)
+        internal User GetUserFromAppointment(int appointmentId)
+        {
+            var appointment = Context.Appointments.Where(c => c.Id == appointmentId).First();
+            var customer = Context.Customers.Where(c => c.Id == appointment.IdCustomer).First();
+            return Context.Users.Where(c => c.IdCustomer == customer.Id).First();
+        }
+
+        public int CancelAppointments(List<int> appointmentsToCancel)
+        {
+            int tooLateToCancel = 0;
+            foreach (var appointmentId in appointmentsToCancel)
+            {
+                var appointment = Context.Appointments.Where(c => c.Id == appointmentId).First();
+                var timeSlot = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First();
+                DateTime now = DateTime.Now;
+                if(timeSlot.StartDateTime > now.AddHours(24))
+                {
+                    timeSlot.IsPublic = false;
+                    appointment.IsActive = false;
+                    Context.SaveChanges();
+                }
+                else
+                {
+                    tooLateToCancel++;
+                }
+            }
+            return tooLateToCancel;
+        }
+
+        public List<AppointmentsDateAndTimeInformation> GetAppointmentsForCustomer(int userId)
+        {
+            var user = Context.Users.Where(c => c.Id == userId).First();
+            List<AppointmentsDateAndTimeInformation> appointmentsForCustomers = new List<AppointmentsDateAndTimeInformation>();
+            Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
+            List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id && c.IsActive == true).ToList();
+            foreach (var appointment in appointments)
+            {
+                DateTime startTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().StartDateTime;
+                DateTime endTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().EndDateTime;
+                if(startTime > DateTime.Now)
+                {
+                    AppointmentsDateAndTimeInformation oneAppointment = new AppointmentsDateAndTimeInformation();
+                    oneAppointment.appointment = appointment;
+                    oneAppointment.Date = startTime.Date.ToString();
+                    oneAppointment.StartTime = startTime.TimeOfDay.ToString();
+                    oneAppointment.EndTime = endTime.TimeOfDay.ToString();
+                    appointmentsForCustomers.Add(oneAppointment);
+                }
+            }
+            appointmentsForCustomers = appointmentsForCustomers.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
+            return appointmentsForCustomers;
+        }
+
+        internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
         {
             if (requestInfo.UserId != "")
             {

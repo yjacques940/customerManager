@@ -614,6 +614,22 @@ function MedicalSurveyUpdate()
     $questions = CallAPI('GET','Questions')['response'];
     require('views/Questions/medical_survey_update.php');
 }
+function CancelAppointment()
+{
+    if(isset($_SESSION['userid'])){
+        if(isset($_POST['checkboxAppointments'])){
+            $tooLateToCancel = CallAPI('POST','Appointments/CancelAppointments', json_encode($_POST['checkboxAppointments']))['response'];
+            $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
+            require ('views/cancelAppointments.php');
+        }else{
+            $tooLateToCancel = false;
+            $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
+            require ('views/cancelAppointments.php');
+        }
+    }else{
+        error(403);
+    }
+}
 
 function SaveMedicalSurvey(){
     if(isset($_POST))

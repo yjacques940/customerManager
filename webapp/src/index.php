@@ -94,6 +94,9 @@ try
 		var_dump(CallAPI('Get', 'Jobs/Daily'));
 		Home();
 		break;
+        case 'cancelappointment':
+            CancelAppointment();
+            break;
         default :
             error(404);
             break;

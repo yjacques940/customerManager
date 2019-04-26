@@ -104,5 +104,27 @@ namespace WebApi.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPost, Route("GetAppointmentsForCustomer")]
+        public ActionResult GetAppointmentsForCustomer([FromBody]int userId)
+        {
+            return Ok(Service.GetAppointmentsForCustomer(userId));
+        }
+
+        [HttpPost, Route("CancelAppointments")]
+        public ActionResult CancelAppointments([FromBody]List<int> appointmentsToCancel)
+        {
+            if(appointmentsToCancel != null)
+            {
+                var tooLateToCancel = Service.CancelAppointments(appointmentsToCancel);
+                var user = Service.GetUserFromAppointment(appointmentsToCancel[0]);
+                if (tooLateToCancel != appointmentsToCancel.Count)
+                {
+                    EmailSender.SendCancellationEmail(user.Email, tooLateToCancel, appointmentsToCancel.Count, configuration);
+                }
+                return Ok(tooLateToCancel);
+            }
+            return BadRequest();
+        }
     }
 }
