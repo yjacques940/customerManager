@@ -725,7 +725,8 @@ function ParseActionTokenInfo($data){
     switch ($data->action) {
         case 'ConfirmAppointment':
             $idAppointment = $data->idAppointment;
-            require('view/actions/confirmedPresenceToAppointment.php');
+            $idUser = $data->idUser;
+            require('views/actions/confirmedPresenceToAppointment.php');
             break;
 
         default:

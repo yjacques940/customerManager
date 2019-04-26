@@ -26,6 +26,7 @@ namespace WebApi.Services
                     CreatedOn = DateTime.Now,
                     ExpirationDate = DateTime.Now.AddDays(3),
                     IdAppointment = info.AppointmentInfo.Id,
+                    IdUser = info.AppointmentInfo.IdCustomer,
                     Token = Guid.NewGuid().ToString()
                 };
                 Context.ActionTokens.Add(actionToken);

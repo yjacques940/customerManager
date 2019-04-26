@@ -1,11 +1,16 @@
 <?php
 $title = 'ConfirmedPresenceToAppointment';
-if (!isset($idAppointment)) error(500);
+if (!isset($idAppointment) || !isset($idUser)) error(500);
 ob_start();
-$appointment = CallAPI('GET', 'Appointments/AppointmentsAndCustomers')['response'];
+$customer = CallAPI('GET', 'Customers/ByUserId/'.$idUser)['response'];
+//$timeslot = CallAPI('GET', 'TimeSlots/GetByAppointment/'.$idAppointment)['response'];
 ?>
-
+<div class=" mx-auto" style="margin-top: 30px; width: 90%">
+    <h2 class="text-center mb-md-4 mb-sm-3 mb-3 mb-2">
+        <?php echo $customer->firstName . ' ' . $customer->lastName ?>, votre rendez-vous a été confirmé!
+    </h2>
+</div>
 <?php
-require('OnClick.html');
 $contenu = ob_get_clean();
-require 'gabarit.php'; ?>
+require 'views/gabarit.php';
+?>
