@@ -51,8 +51,12 @@ namespace WebApi.Services
 
         public List<Customer> GetCustomersByPhone(string phone)
         {
-            List<int> listPhoneIds = Context.PhoneNumbers.Where(c => c.Phone.Contains(phone)).Select(c => c.Id).ToList();
-            List<Customer> customers = Context.Customers.Where(c => listPhoneIds.Contains(c.Id)).ToList();
+            List<PhoneNumber> listPhones = Context.PhoneNumbers.Where(c => c.Phone.Contains(phone)).ToList();
+            List<Customer> customers = new List<Customer>();
+            foreach (var listPhone in listPhones)
+            {
+                customers.Add(Context.Customers.Where(c => c.Id == listPhone.IdCustomer).First());
+            }
             return customers;
         }
 

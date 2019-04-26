@@ -43,6 +43,7 @@ function SearchCustomer(){
             data:{customerPhone:$("#phoneNumber").val()},
             success:function(output){
                 $("#customers").html(output);
+                $("#customerInformation").html('');
             },
         });
     }else{
@@ -53,6 +54,7 @@ function SearchCustomer(){
             data:{customerName:$("#customerName").val()},
             success:function(output){
                 $("#customers").html(output);
+                $("#customerInformation").html('');
             },
         });
     }

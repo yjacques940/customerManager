@@ -434,7 +434,7 @@ function SearchCustomer(){
 function GetCustomersByPhone(){
     $customerNames = CallAPI('POST', 'Customers/GetCustomersByPhone/',json_encode(htmlentities($_POST['customerPhone'])));
     if($customerNames['response'] != null){
-        $select = '<select id="customerNames" name="customerNames">
+        $select = '<select id="customerSelect" onchange="GetCustomerById();" name="customerSelect">
             <option value="0"></option>';
         foreach($customerNames['response'] as $customer){
             $select = $select .'<option value="'. $customer->id.'">'.$customer->firstName.' '. $customer->lastName.'</option>';
