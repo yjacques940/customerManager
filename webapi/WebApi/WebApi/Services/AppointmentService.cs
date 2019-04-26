@@ -98,6 +98,29 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
 
+        internal List<CustomerAppointmentInformation> GetUnconfirmedAppointments(PhoneNumberService phoneNumberService)
+        {
+            var appointments = (
+                from appointment in Context.Appointments
+                join customer in Context.Customers on appointment.IdCustomer equals customer.Id
+                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
+                where customer.IsActive && appointment.IsActive
+                    && !appointment.IsConfirmed && timeslot.StartDateTime.Date == DateTime.Now.AddDays(1)
+                select new CustomerAppointmentInformation()
+                {
+                    Customer = customer,
+                    Timeslot = timeslot,
+                    Appointment = appointment
+                }).AsNoTracking().ToList();
+
+            foreach (var appointment in appointments)
+            {
+                appointment.PhoneNumbers = phoneNumberService
+                    .GetPhoneNumbersForCustomer(appointment.Customer.Id);
+            }
+            return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
+        }
+
         public bool ReserveAnAppointment(AppointmentUserInformation appointmentService, IConfiguration configuration)
         {
             Appointment appointment = new Appointment();

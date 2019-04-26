@@ -13,7 +13,7 @@ namespace WebApi.Services
         {
         }
 
-        public void SendAskConfirmationEmailToUsers(IConfiguration configuration, AppointmentService appointmentService)
+        public void SendAskConfirmationEmailToUsers(IConfiguration config, AppointmentService appointmentService)
         {
             DateTime dateDelay = DateTime.Now.AddDays(2); 
             var appointmentsToConfirm = appointmentService.GetAppointmentsByDate(dateDelay);
@@ -39,8 +39,19 @@ namespace WebApi.Services
                     userEmail,
                     actionToken.Token,
                     info.TimeSlotInfo.StartDateTime,
-                    configuration
+                    config
                 );
+            }
+        }
+
+        public void SendUnconfirmedAppointmentsToEmployees
+            (IConfiguration config, AppointmentService appointmentService, PhoneNumberService phoneNumberService)
+        {
+            DateTime dateDelay = DateTime.Now.AddDays(1);
+            var unconfirmedAppointment = appointmentService.GetUnconfirmedAppointments(phoneNumberService);
+            if (unconfirmedAppointment.Count() > 0)
+            {
+                EmailSender.SendUnconfirmedAppointmentsToEmployees(unconfirmedAppointment, config);
             }
         }
     }
