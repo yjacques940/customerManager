@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Net;
@@ -55,6 +57,61 @@ namespace WebApi.Validators
             {
                 return false;
             }
+        }
+
+        public static bool SendNewAppointmentsToEmployees(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments, IConfiguration configuration)
+        {
+            SmtpClient client = GetSmtpClient(configuration);
+            MailMessage mailMessage = GetNewAppointmentMailMessage(appointments);
+
+            try
+            {
+                client.Send(mailMessage);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static MailMessage GetNewAppointmentMailMessage(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments)
+        {
+            string newHtml = "";
+            MailMessage mailmessage = new MailMessage();
+            mailmessage.IsBodyHtml = true;
+            mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+            mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
+            mailmessage.Subject = "Rendez-vous non-confirmés pour le " + DateTime.Now.Date.ToString();
+            string htmlWithNewAppointments = GetHtmlWithNewAppointments(appointments);
+            using (StreamReader reader = File.OpenText("EmailTemplate/unconfirmedAppointments.html"))
+            {
+                var htmlFile = reader.ReadToEnd();
+                newHtml = htmlFile.Replace("[NewAppointmentsy]", htmlWithNewAppointments);
+                mailmessage.Body = newHtml;
+                return mailmessage;
+            }
+        }
+
+        private static string GetHtmlWithNewAppointments(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments)
+        {
+            List<CustomerAppointmentInformation> newAppointments = appointments.Value.ToList();
+            string html = "";
+            foreach (var appointment in newAppointments)
+            {
+                html +=
+                    $"<div class=\"moreInfoBorder\" style=\"padding:10px\">" +
+                    $"<div>Nom du client: {appointment.Customer.FirstName} {appointment.Customer.LastName}</div>" +
+                    $"<div>Rendez-vous : {appointment.Timeslot.StartDateTime.Date.ToShortDateString()} à " +
+                    $"{appointment.Timeslot.StartDateTime.ToString("HH:mm")}</div>" +
+                    $"</div><div>Numéros de Téléphones:";
+                foreach (var phoneNumber in appointment.PhoneNumbers)
+                {
+                    html += $"<div>{phoneNumber.PhoneType}: {phoneNumber.Phone}</div>";
+                }
+                html += $"</div></br>";
+            }
+            return html;
         }
 
         private static MailMessage GetMailMessageToAskConfirmationToUser(string customerName, string emailTo, string token, DateTime AppointmentDateTime)
