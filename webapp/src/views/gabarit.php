@@ -55,6 +55,11 @@
                 <li>
                   <a href="?action=newAppointments"><?php echo localize('PageTitle-Appointments'); ?></a>
                 </li>
+                  <li>
+                      <a href="index.php?action=customers" class="drop-text">
+                          <?php echo localize('PageTitle-CustomersManagement'); ?>
+                      </a>
+                  </li>
               </ul>
             </li>
 

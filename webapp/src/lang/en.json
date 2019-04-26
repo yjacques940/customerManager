@@ -145,5 +145,6 @@
   "Answer-Yes" : "Yes",
   "Answer-No" : "No",
   "Cancel" : "Cancel",
-  "TooManyRequests" : "Too many attempts have failed. Please reconnect to try again."
+  "TooManyRequests" : "Too many attempts have failed. Please reconnect to try again.",
+  "PageTitle-CustomersManagement" : "Customer Management"
 }
