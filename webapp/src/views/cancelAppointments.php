@@ -39,7 +39,7 @@ $title = localize('CancelAppointment-Title');
         <form action="index.php?action=cancelappointment" id="cancelappointment" method="post">
         <div class="col-lg-10 col-md-10">
         <?php
-        if($tooLateToCancel){
+        if($tooLateToCancel != 0){
             echo '<h4>'. localize('CancelAppointment-TooLate') . ' ' .
             localize('Company-Phone') . ' ' . localize('CancelAppointment-TooLateToCancel') . '</h4>';
         } 

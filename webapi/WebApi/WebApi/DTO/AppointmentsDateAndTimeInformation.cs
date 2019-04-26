@@ -6,7 +6,7 @@ using WebApi.Models;
 
 namespace WebApi.DTO
 {
-    public class AppointmentsForCustomer
+    public class AppointmentsDateAndTimeInformation
     {
         public Appointment appointment { get; set; }
         public string Date { get; set; }

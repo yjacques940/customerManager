@@ -127,25 +127,9 @@ namespace WebApi.Services
             return Context.Users.Where(c => c.IdCustomer == customer.Id).First();
         }
 
-        public int NumberOfCancellableAppointments(List<int> appointmentsToCancel)
+        public int CancelAppointments(List<int> appointmentsToCancel)
         {
-            int count = 0;
-            foreach (var appointmentId in appointmentsToCancel)
-            {
-                var appointment = Context.Appointments.Where(c => c.Id == appointmentId).First();
-                var timeSlot = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First();
-                DateTime now = DateTime.Now;
-                if (timeSlot.StartDateTime >= now.AddHours(24))
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-
-        public bool CancelAppointments(List<int> appointmentsToCancel)
-        {
-            bool tooLateToCancel = false;
+            int tooLateToCancel = 0;
             foreach (var appointmentId in appointmentsToCancel)
             {
                 var appointment = Context.Appointments.Where(c => c.Id == appointmentId).First();
@@ -159,16 +143,16 @@ namespace WebApi.Services
                 }
                 else
                 {
-                    tooLateToCancel = true;
+                    tooLateToCancel++;
                 }
             }
             return tooLateToCancel;
         }
 
-        public List<AppointmentsForCustomer> GetAppointmentsForCustomer(int userId)
+        public List<AppointmentsDateAndTimeInformation> GetAppointmentsForCustomer(int userId)
         {
             var user = Context.Users.Where(c => c.Id == userId).First();
-            List<AppointmentsForCustomer> appointmentsForCustomers = new List<AppointmentsForCustomer>();
+            List<AppointmentsDateAndTimeInformation> appointmentsForCustomers = new List<AppointmentsDateAndTimeInformation>();
             Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
             List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id && c.IsActive == true).ToList();
             foreach (var appointment in appointments)
@@ -177,7 +161,7 @@ namespace WebApi.Services
                 DateTime endTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().EndDateTime;
                 if(startTime > DateTime.Now)
                 {
-                    AppointmentsForCustomer oneAppointment = new AppointmentsForCustomer();
+                    AppointmentsDateAndTimeInformation oneAppointment = new AppointmentsDateAndTimeInformation();
                     oneAppointment.appointment = appointment;
                     oneAppointment.Date = startTime.Date.ToString();
                     oneAppointment.StartTime = startTime.TimeOfDay.ToString();

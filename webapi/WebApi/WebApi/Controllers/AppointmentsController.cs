@@ -118,8 +118,7 @@ namespace WebApi.Controllers
             {
                 var tooLateToCancel = Service.CancelAppointments(appointmentsToCancel);
                 var user = Service.GetUserFromAppointment(appointmentsToCancel[0]);
-                int numberOfAppointmentsCancelled = Service.NumberOfCancellableAppointments(appointmentsToCancel);
-                if (numberOfAppointmentsCancelled > 0)
+                if (tooLateToCancel != appointmentsToCancel.Count)
                 {
                     EmailSender.SendCancellationEmail(user.Email, tooLateToCancel, appointmentsToCancel.Count, configuration);
                 }
