@@ -133,15 +133,16 @@ ob_start(); ?>
             $.ajax({
                 url: '?action=ajaxDeleteTimeslot',
                 type: 'POST',
-                data: { "idTimeslot": event.id }
+                data: { idTimeslot: event.id }
             }).done(function(content) {
                 if (content) {
                     if (content == 'success') {
                         calendar.getEventById(event.id).remove();
                         showToastSavingSuccess();
+                    } else if (isJsonString(content)) {
+                        showErrorAppointmentExists(content);
                     } else Swal.fire('Erreur', content, 'error');
-                }
-                else Swal.fire('Erreur', content, 'error');
+                } else Swal.fire('Erreur', content, 'error');
             }).fail(function() { showErrorAjax() });
         }
 
@@ -266,6 +267,28 @@ ob_start(); ?>
             Swal.fire("Error", "Aucune réponse reçue. Veuillez réessayer plus tard...", "warning");
         }
 
+        function showErrorAppointmentExists(content) {
+            var response = JSON.parse(content);
+            var data = response.data;
+            if (data.customer.email != '')
+                var emailMessage = "<br/>Courriel: <a href='mailto:"
+                    + data.customer.email + "'>" + data.customer.email + "</a>";
+            else
+                var emailMessage = '';
+
+            var message = "Vous devez annuler le rendez-vous avant de supprimer cette plage horaire.<br/>"
+                + "<br/>Informations sur le rendez-vous:"
+                + "<br/>Rendez-vous réservé le "
+                + new Date(data.appointment.createdOn).toLocaleDateString(locale + '-ca', dateOptions)
+                + "<br/>Client: " + data.customer.fullName + emailMessage;
+
+            Swal.fire({
+                title: response.errorMessage,
+                html: message,
+                type: "warning"
+            });
+        }
+
         function showErrorNoSelection() {
             Swal.fire({
                 text: 'Veuillez sélectionner une plage horaire.',
@@ -278,7 +301,7 @@ ob_start(); ?>
 
         function showErrorSelectionWithinDay() {
             Swal.fire({
-                text: 'La plage horaire doit être contenu dans la même journée.',
+                text: 'La plage horaire doit être contenue dans la même journée.',
                 type: 'warning',
                 toast: true,
                 position: 'top',
