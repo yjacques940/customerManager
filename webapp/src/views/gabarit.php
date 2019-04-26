@@ -95,6 +95,11 @@
                     <?php echo localize('Header-TakeAppointment'); ?>
                   </a>
                 </li>
+                <li>
+                  <a href="index.php?action=cancelappointment" class="drop-text">
+                    <?php echo localize('CancelAppointment-Title'); ?>
+                  </a>
+                </li>
             </ul>
                 <?php
             }
@@ -108,7 +113,7 @@
             ?>
             <li>
               <label for="drop-3" class="toggle toogle-2">
-                <?php echo $_SESSION['username']; ?>
+              <?php echo localize('Header-Account'); ?>
                 <span class="fa fa-angle-down" aria-hidden="true"></span>
               </label>
               <a href="#">
@@ -133,16 +138,6 @@
                 <li>
                   <a href="index.php?action=updateemail" class="drop-text">
                     <?php echo localize('Header-Manage-Email'); ?>
-                  </a>
-                </li>
-                <li>
-                  <a href="index.php?action=reserveappointment" class="drop-text">
-                    <?php echo localize('Header-TakeAppointment'); ?>
-                  </a>
-                </li>
-                <li>
-                  <a href="index.php?action=cancelappointment" class="drop-text">
-                    <?php echo localize('CancelAppointment-Title'); ?>
                   </a>
                 </li>
                 <li>
