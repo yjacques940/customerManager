@@ -494,5 +494,5 @@ INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public, is_availab
 INSERT INTO tbl_appointment(created_on, is_active, is_new, id_customer, id_time_slot, therapist)
 VALUES (NOW(), 1,1,1,1,''),
 		(NOW(), 1,1,1,2,'Carl'),
-		(NOW(), 1,1,1,3,'Mel'),
+		(NOW(), 1,1,1,3,'Melanie'),
         (NOW(), 1,1,1,6,'Peut Importe');

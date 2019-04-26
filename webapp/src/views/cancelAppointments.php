@@ -97,7 +97,7 @@ $title = localize('CancelAppointment-Title');
     </table>
     <?php 
     if($appointments['response'] != null){ ?>
-    <button type="submit" class="btn sent-butnn"><?php echo Localize('CancelAppointment-Title');?></button>
+    <button type="submit" class="btn sent-butnn"><?php echo Localize('CancelAppointment-CancelSelected');?></button>
     <?php } ?>
         </form>
       </div>

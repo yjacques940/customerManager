@@ -117,7 +117,7 @@ namespace WebApi.Validators
                 if(tooLateToCancel)
                 {
                     newHtml = newHtml.Replace("[TooLateToCancel]", "Cependant, au moins un rendez-vous est dans moins de 24 heures et n'a pu être annulé." +
-                        " S'il-vous-plâit veuillez nous appeler au (418) 774-0246 pour l'annulation de ce dernier.");
+                        " Veuillez nous appeler au (418) 774-0246 pour l'annulation de ce dernier.");
                 }
                 else
                 {
