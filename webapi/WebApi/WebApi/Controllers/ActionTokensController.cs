@@ -30,7 +30,7 @@ namespace WebApi.Controllers
                 }
                 return NotFound("Guid not found");
             }
-            return BadRequest("Invalid Guid");
+            return UnprocessableEntity("Invalid Guid");
         }
     }
 }
