@@ -21,6 +21,12 @@ namespace WebApi.Controllers
             return Service.GetList();
         }
 
+        [HttpGet, Route("ByUserId/{idUser}")]
+        public ActionResult<Customer> GetCustomerByUserId(int idUser)
+        {
+            return Ok(Service.GetCustomerByUserId(idUser));
+        }
+
         [HttpGet, Route("FullName/{id}")]
         public ActionResult GetCustomerFullName(int id)
         {

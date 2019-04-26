@@ -29,6 +29,12 @@ namespace WebApi.Services
             return false;
         }
 
+        public TimeSlot GetByAppointment(int idAppointment)
+        {
+            return Context.TimeSlots.FirstOrDefault(t => t.Id ==
+                Context.Appointments.FirstOrDefault(a => a.Id == idAppointment).IdTimeSlot);
+        }
+
         public bool IsAvailable(TimeSlot newTimeSlot)
         {
             List<TimeSlot> timeslots = Context.TimeSlots

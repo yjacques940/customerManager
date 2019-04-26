@@ -20,12 +20,12 @@ namespace WebApi.Controllers
         public AppointmentsController(WebApiContext context, AppointmentService service,
             PhoneNumberService phoneNumberService, IConfiguration configuration) : base(service)
         {
-                this.phoneNumberService = phoneNumberService;
-                this.configuration = configuration;
+            this.phoneNumberService = phoneNumberService;
+            this.configuration = configuration;
         }
 
         [HttpGet, Route("GetByDate/{date}")]
-        public ActionResult<IEnumerable<AppointmentTimeSlotInformation>> GetAppointmentsByDate(string date)
+        public ActionResult<IEnumerable<AppointmentTimeSlotInformation>> GetAppointmentsByDate(DateTime date)
         {
             return Service.GetAppointmentsByDate(date);
         }
@@ -75,7 +75,7 @@ namespace WebApi.Controllers
         [ProducesResponseType(200)]
         public ActionResult AskForAppointment([FromBody]AskForAppointmentInformation requestInfo)
         {
-            return Ok(Service.SendAppointmentRequest(requestInfo,configuration));
+            return Ok(Service.SendAppointmentRequest(requestInfo, configuration));
         }
 
         [HttpDelete]
@@ -94,9 +94,9 @@ namespace WebApi.Controllers
         [HttpPost, Route("ReserveAnAppointment")]
         public ActionResult ReserveAnAppointment([FromBody]AppointmentUserInformation appointmentService)
         {
-            if(appointmentService.IdUser != 0)
+            if (appointmentService.IdUser != 0)
             {
-                if (Service.ReserveAnAppointment(appointmentService,configuration))
+                if (Service.ReserveAnAppointment(appointmentService, configuration))
                 {
                     return Ok();
                 }

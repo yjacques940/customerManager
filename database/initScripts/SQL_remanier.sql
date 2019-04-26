@@ -167,12 +167,34 @@ CREATE TABLE tbl_appointment(
         id_appointment Int  Auto_increment  NOT NULL ,
         created_on     Datetime NOT NULL ,
         is_active      Bool NOT NULL ,
-        is_new         Bool NOT NULL ,
+        is_new         Bool NOT NULL Default true ,
+        is_confirmed   Bool NOT NULL Default false ,
         id_customer    Int NOT NULL ,
         id_time_slot   Int NOT NULL,
         therapist      VARCHAR(50) NOT NULL DEFAULT ''
 	,CONSTRAINT tbl_appointment_PK PRIMARY KEY (id_appointment)
-)ENGINE=InnoDB;
+    ,CONSTRAINT tbl_appointment_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
+    ,CONSTRAINT tbl_appointment_tbl_time_slot_FK FOREIGN KEY (id_time_slot) REFERENCES tbl_time_slot(id_time_slot)
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+#------------------------------------------------------------
+# Table: tbl_action_token
+#------------------------------------------------------------
+
+CREATE TABLE tbl_action_token(
+        id_action_token Int  Auto_increment  NOT NULL ,
+        created_on      Datetime NOT NULL DEFAULT now(),
+        expiration_date Datetime NOT NULL,
+        is_active       Bool NOT NULL ,
+        token           Varchar(36) NOT NULL ,
+        action          Varchar(50) NOT NULL ,
+        id_appointment  Int,
+        id_user         Int
+	,CONSTRAINT tbl_action_token_PK PRIMARY KEY (id_action_token)
+    ,CONSTRAINT tbl_action_token_tbl_user_FK FOREIGN KEY (id_user) REFERENCES tbl_user(id_user)
+    ,CONSTRAINT tbl_action_token_tbl_appointment_FK FOREIGN KEY (id_appointment) REFERENCES tbl_appointment(id_appointment)
+)ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 #------------------------------------------------------------

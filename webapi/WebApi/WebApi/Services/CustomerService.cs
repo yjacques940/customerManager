@@ -15,6 +15,11 @@ namespace WebApi.Services
         {
         }
 
+        public Customer GetCustomerByUserId(int idUser)
+        {
+            return Context.Customers.First(c => c.Id == Context.Users.First(u => u.Id == idUser).IdCustomer);
+        }
+
         public string GetCustomerFullName(int customerId)
         {
             var customer = Context.Customers.Where(c => c.Id == customerId);

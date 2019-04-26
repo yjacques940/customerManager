@@ -55,6 +55,12 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet, Route("GetByAppointment/{idAppointment}")]
+        public ActionResult<TimeSlot> GetByAppointment(int idAppointment)
+        {
+            return Ok(Service.GetByAppointment(idAppointment));
+        }
+
         [HttpGet, Route("GetFreeTimeSlots")]
         public ActionResult GetFreeTimeSlots()
         {

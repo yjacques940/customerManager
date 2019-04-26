@@ -602,6 +602,7 @@ function ShowCustomerInfo()
         error(403);
     }
 }
+
 function MedicalSurveyUpdate()
 {
     if(!isset($hasDoneTheSurvey))
@@ -690,3 +691,48 @@ function OpenMedicalSurvey()
         echo 'MaxRequestsAchieved';
     }
 }
+
+function ActionToken(){
+	if(isset($_GET['token'])){
+		$guid = htmlentities($_GET['token']);
+		if (preg_match("/^(\{)?[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}(?(1)\})$/i", $guid)) {
+		    $result = CallAPI('Get', 'ActionTokens/Get/'.$guid);
+			switch ($result['statusCode']) {
+                case '200':
+                    ParseActionTokenInfo($result['response']);
+                    break;
+                case '404':
+                    error(404);
+                    break;
+                case '409':
+                    //Erreur inconnue
+                    break;
+                case '422':
+                    error(422);
+                    break;
+
+                default:
+                    error(500); //Réponse Inconnue
+                    break;
+            }
+		}
+		else error(422); //Invalid GUID
+	}
+	else error(404); //Aucun Token
+}
+
+function ParseActionTokenInfo($data){
+    switch ($data->action) {
+        case 'ConfirmAppointment':
+            $idAppointment = $data->idAppointment;
+            $idUser = $data->idUser;
+            require('views/actions/confirmedPresenceToAppointment.php');
+            break;
+
+        default:
+            error(500);// Action Inconnue
+            break;
+    }
+}
+
+?>
