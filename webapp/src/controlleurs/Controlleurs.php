@@ -602,6 +602,7 @@ function ShowCustomerInfo()
         error(403);
     }
 }
+
 function MedicalSurveyUpdate()
 {
     if(!isset($hasDoneTheSurvey))
@@ -690,3 +691,17 @@ function OpenMedicalSurvey()
         echo 'MaxRequestsAchieved';
     }
 }
+
+function ActionToken(){
+	if(isset($_GET['token'])){
+		$guid = htmlentities($_GET['token']);
+		if (preg_match("/^(\{)?[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}(?(1)\})$/i", $guid)) {
+		    $result = CallAPI('Get', 'ActionTokens/Get/'.$guid);
+			var_dump($result);
+		}
+		else error(422); //Invalid GUID
+	}
+	else error(404);
+}
+
+?>

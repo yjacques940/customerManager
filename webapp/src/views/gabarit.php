@@ -48,6 +48,9 @@
               <input type="checkbox" id="drop-3" />
               <ul>
                 <li>
+                  <a href="index.php?action=runDailyCronJobs" class="drop-text">Cron Daily</a>
+                </li>
+                <li>
                   <a href="index.php?action=timeslotManagement" class="drop-text">
                     <?php echo localize('PageTitle-TimeslotManagement'); ?>
                   </a>

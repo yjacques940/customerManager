@@ -13,14 +13,33 @@ namespace WebApi.Services
         {
         }
 
-        public void SendConfirmationEmailToUsers(IConfiguration configuration, AppointmentService appointmentService)
+        public void SendAskConfirmationEmailToUsers(IConfiguration configuration, AppointmentService appointmentService)
         {
-            DateTime dateDelay = DateTime.Now.AddDays(1); //Change to 2 days
+            DateTime dateDelay = DateTime.Now.AddDays(4); //Change to 2 days
             var appointmentsToConfirm = appointmentService.GetAppointmentsByDate(dateDelay);
-            foreach (var appointment in appointmentsToConfirm)
+            foreach (var info in appointmentsToConfirm)
             {
-                string userEmail = Context.Users.First(c => c.IdCustomer == appointment.AppointmentInfo.IdCustomer).Email;
-                EmailSender.SendConfirmationEmail(userEmail, appointmentDate, configuration);
+                ActionToken actionToken = new ActionToken
+                {
+                    IsActive = true,
+                    Action = "ConfirmAppointment",
+                    CreatedOn = DateTime.Now,
+                    ExpirationDate = DateTime.Now.AddDays(3),
+                    IdAppointment = info.AppointmentInfo.Id,
+                    Token = Guid.NewGuid().ToString()
+                };
+                Context.ActionTokens.Add(actionToken);
+                Context.SaveChanges();
+
+                Customer customer = Context.Customers.First(c => c.Id == info.AppointmentInfo.IdCustomer);
+                string userEmail = Context.Users.First(c => c.IdCustomer == info.AppointmentInfo.IdCustomer).Email;
+                EmailSender.SendAskConfirmationToUserEmail(
+                    $"{customer.FirstName} {customer.LastName}",
+                    userEmail,
+                    actionToken.Token,
+                    info.TimeSlotInfo.StartDateTime,
+                    configuration
+                );
             }
         }
     }

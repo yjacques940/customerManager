@@ -12,15 +12,16 @@ namespace WebApi.Controllers
         private readonly AppointmentService appointmentService;
         private readonly IConfiguration configuration;
 
-        public JobsController(JobService service, AppointmentService appointmentService) : base(service)
+        public JobsController(JobService service, AppointmentService appointmentService, IConfiguration configuration) : base(service)
         {
             this.appointmentService = appointmentService;
+            this.configuration = configuration;
         }
 
         [HttpGet, Route("Daily")]
         public ActionResult RunDailyJobs()
         {
-            Service.SendConfirmationEmailToUsers(configuration, appointmentService);
+            Service.SendAskConfirmationEmailToUsers(configuration, appointmentService);
             return Ok();
         }
     }

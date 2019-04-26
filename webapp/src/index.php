@@ -90,11 +90,18 @@ try
         case 'medicalSurveyUpdate':
             MedicalSurveyUpdate();
             break;
+	case "runDailyCronJobs":
+		var_dump(CallAPI('Get', 'Jobs/Daily'));
+		Home();
+		break;
         default :
             error(404);
             break;
         }
     }
+	else if(isset($_GET['token'])){
+		ActionToken();
+	}
     else if(isset($_POST['email'])){
         CheckEmailInUse();
     }
