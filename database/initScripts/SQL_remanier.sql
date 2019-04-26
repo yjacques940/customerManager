@@ -327,7 +327,9 @@ INSERT INTO tbl_permission (bit,name) VALUES
 (8,   'Customers-Read'),
 (16,  'Customers-Write'),
 (32,  'Timeslots-Read'),
-(64,  'Timeslots-Write');
+(64,  'Timeslots-Write'),
+(256, 'MedicalSurveys-Read'),
+(512, 'MedicalSurveys-Write');
 
 INSERT INTO tbl_phone_type (name) VALUES
 ('Résidentiel'), ('Bureau'), ('Cellulaire');
