@@ -15,7 +15,7 @@ namespace WebApi.Services
 
         public void SendAskConfirmationEmailToUsers(IConfiguration configuration, AppointmentService appointmentService)
         {
-            DateTime dateDelay = DateTime.Now.AddDays(4); //Change to 2 days
+            DateTime dateDelay = DateTime.Now.AddDays(2); 
             var appointmentsToConfirm = appointmentService.GetAppointmentsByDate(dateDelay);
             foreach (var info in appointmentsToConfirm)
             {
@@ -24,7 +24,7 @@ namespace WebApi.Services
                     IsActive = true,
                     Action = "ConfirmAppointment",
                     CreatedOn = DateTime.Now,
-                    ExpirationDate = DateTime.Now.AddDays(3),
+                    ExpirationDate = DateTime.Now.AddDays(2),
                     IdAppointment = info.AppointmentInfo.Id,
                     IdUser = info.AppointmentInfo.IdCustomer,
                     Token = Guid.NewGuid().ToString()
