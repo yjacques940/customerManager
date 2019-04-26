@@ -120,6 +120,13 @@ namespace WebApi.Services
             return false;
         }
 
+        internal User GetUserFromAppointment(int appointmentId)
+        {
+            var appointment = Context.Appointments.Where(c => c.Id == appointmentId).First();
+            var customer = Context.Customers.Where(c => c.Id == appointment.IdCustomer).First();
+            return Context.Users.Where(c => c.IdCustomer == customer.Id).First();
+        }
+
         public int NumberOfCancellableAppointments(List<int> appointmentsToCancel)
         {
             int count = 0;

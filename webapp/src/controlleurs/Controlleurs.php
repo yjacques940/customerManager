@@ -618,7 +618,7 @@ function CancelAppointment()
 {
     if(isset($_SESSION['userid'])){
         if(isset($_POST['checkboxAppointments'])){
-            $tooLateToCancel = CallAPI('POST','Appointments/CancelAppointments', json_encode($_POST['checkboxAppointments']));
+            $tooLateToCancel = CallAPI('POST','Appointments/CancelAppointments', json_encode($_POST['checkboxAppointments']))['response'];
             $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
             require ('views/cancelAppointments.php');
         }else{

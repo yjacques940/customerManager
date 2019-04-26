@@ -105,7 +105,6 @@ namespace WebApi.Validators
                 mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
                 mailmessage.To.Add(new MailAddress(userEmail));
                 mailmessage.Subject = "Confirmation d'annulation";
-                tooLateToCancel = true;
                 var htmlFile = reader.ReadToEnd();
                 if (appointmentCount > 1)
                 {
