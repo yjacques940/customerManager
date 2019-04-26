@@ -25,10 +25,10 @@
               <a href="?action=home"><img
                           style=" width:70%;" class="img-fluid" src="images/completeLogo.svg" alt="Carl et Mélanie Massothérapie" /></a>
           </div>
-        <nav style="display: -moz-inline-block">
+        <nav style="display: -moz-inline-block;">
           <label for="drop" class="toggle"><?php echo localize('Header-Menu'); ?></label>
           <input type="checkbox" id="drop">
-          <ul class="menu mt-2">
+          <ul class="menu mt-2" style="z-index:1;">
             <li class="active">
               <a href="index.php?action=home"><?php echo localize('PageTitle-Home'); ?></a>
             </li>
@@ -139,9 +139,11 @@
         </nav>
       </div>
     </header>
+    <main>
 
     <content><?php echo $contenu ?></content>
 
+          </main>
     <footer class="py-lg-4 py-md-3 py-sm-3 py-3" >
       <div class="container py-lg-5 py-md-5 py-sm-4 py-3">
         <div class="row">
