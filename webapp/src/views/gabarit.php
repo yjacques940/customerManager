@@ -39,7 +39,7 @@
             if(userHasPermission('Menu-IsEmployee')){ 
               ?>
             <li>
-              <label for="drop-3" class="toggle toogle-2">
+              <label for="drop-5" class="toggle toogle-2">
                 <?php echo localize('Header-Administration'); ?>
                 <span class="fa fa-angle-down" aria-hidden="true"></span>
               </label>
@@ -47,7 +47,7 @@
                 <?php echo localize('Header-Administration'); ?>
                 <span class="fa fa-angle-down" aria-hidden="true"></span>
               </a>
-              <input type="checkbox" id="drop-3" />
+              <input type="checkbox" id="drop-5" />
               <ul>
                 <li>
                   <a href="index.php?action=runDailyCronJobs" class="drop-text">Cron Daily</a>

@@ -18,7 +18,7 @@
               <a href="?action=home"><img
                           style=" width:70%;" class="img-fluid" src="images/completeLogo.svg" alt="Carl et Mélanie Massothérapie" /></a>
           </div>
-        <nav style="display: -moz-inline-block;">
+          <nav style="display: -moz-inline-block;">
           <label for="drop" class="toggle"><?php echo localize('Header-Menu'); ?></label>
           <input type="checkbox" id="drop">
           <ul class="menu mt-2" style="z-index:999;">
@@ -32,7 +32,7 @@
             if(userHasPermission('Menu-IsEmployee')){ 
               ?>
             <li>
-              <label for="drop-3" class="toggle toogle-2">
+              <label for="drop-5" class="toggle toogle-2">
                 <?php echo localize('Header-Administration'); ?>
                 <span class="fa fa-angle-down" aria-hidden="true"></span>
               </label>
@@ -40,8 +40,11 @@
                 <?php echo localize('Header-Administration'); ?>
                 <span class="fa fa-angle-down" aria-hidden="true"></span>
               </a>
-              <input type="checkbox" id="drop-3" />
+              <input type="checkbox" id="drop-5" />
               <ul>
+                <li>
+                  <a href="index.php?action=runDailyCronJobs" class="drop-text">Cron Daily</a>
+                </li>
                 <li>
                   <a href="index.php?action=timeslotManagement" class="drop-text">
                     <?php echo localize('PageTitle-TimeslotManagement'); ?>
@@ -50,6 +53,11 @@
                 <li>
                   <a href="?action=newAppointments"><?php echo localize('PageTitle-Appointments'); ?></a>
                 </li>
+                  <li>
+                      <a href="index.php?action=customers" class="drop-text">
+                          <?php echo localize('PageTitle-CustomersManagement'); ?>
+                      </a>
+                  </li>
                 <li>
                   <a href="index.php?action=searchCustomer" class="drop-down">
                   <?php echo localize('searchClient'); ?>
@@ -80,6 +88,11 @@
                     <?php echo localize('Header-TakeAppointment'); ?>
                   </a>
                 </li>
+                <li>
+                  <a href="index.php?action=cancelappointment" class="drop-text">
+                    <?php echo localize('CancelAppointment-Title'); ?>
+                  </a>
+                </li>
             </ul>
                 <?php
             }
@@ -93,7 +106,7 @@
             ?>
             <li>
               <label for="drop-3" class="toggle toogle-2">
-                <?php echo $_SESSION['username']; ?>
+              <?php echo localize('Header-Account'); ?>
                 <span class="fa fa-angle-down" aria-hidden="true"></span>
               </label>
               <a href="#">
