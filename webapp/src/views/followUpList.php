@@ -17,7 +17,7 @@ ob_start();
         <?php
             foreach($listOfFollowUps as $followUp){
                 echo '<tr>
-                        <td><a href="index.php?action=consultFollowUp&id='.$followUp->id.'">'. substr($followUp->date,0,10) . '</a></td>
+                        <td><a href="index.php?action=consultFollowUp&id='.$followUp->id.'&customerId='.$customerId.'">'. substr($followUp->date,0,10) . '</a></td>
                         <td>'. $followUp->summary .'</td>
                     </tr>';
             }
