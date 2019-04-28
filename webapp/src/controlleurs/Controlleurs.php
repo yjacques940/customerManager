@@ -725,8 +725,11 @@ function ReserveTimeSlotForAppointment($customerId){
     $timeSlot = htmlentities($_POST['timeSlot']);
     $therapist = htmlentities($_POST['therapist']);
     $appointment = array(
-        'idTimeSlot' => $timeSlot,
-        'therapist' => $therapist,
+        'idTimeslot' => htmlentities($_POST['timeslot']),
+        'visitReason' => htmlentities($_POST['visitReason']),
+        'therapist' => htmlentities($_POST['therapist']),
+        'hasSeenDoctor' => htmlentities($_POST['hasSeenDoctor']),
+        'doctorDiagnostic' => htmlentities($_POST['doctorDiagnostic']),
         'idUser' => ($customerId == null) ? htmlentities($_SESSION['userid']) : null,
         'idCustomer' => ($customerId != null) ? $customerId : null
     );

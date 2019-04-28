@@ -164,14 +164,17 @@ CREATE TABLE tbl_time_slot(
 #------------------------------------------------------------
 
 CREATE TABLE tbl_appointment(
-        id_appointment Int  Auto_increment  NOT NULL ,
-        created_on     Datetime NOT NULL ,
-        is_active      Bool NOT NULL ,
-        is_new         Bool NOT NULL Default true ,
-        is_confirmed   Bool NOT NULL Default false ,
-        id_customer    Int NOT NULL ,
-        id_time_slot   Int NOT NULL,
-        therapist      VARCHAR(50) NOT NULL DEFAULT ''
+        id_appointment    Int  Auto_increment  NOT NULL ,
+        created_on        Datetime NOT NULL ,
+        is_active         Bool NOT NULL ,
+        is_new            Bool NOT NULL Default true ,
+        is_confirmed      Bool NOT NULL Default false ,
+        id_customer       Int NOT NULL ,
+        id_time_slot      Int NOT NULL,
+        therapist         VARCHAR(50),
+        visit_reason      VARCHAR(250),
+        has_seen_doctor   Bool,
+        doctor_diagnostic VARCHAR(250)
 	,CONSTRAINT tbl_appointment_PK PRIMARY KEY (id_appointment)
     ,CONSTRAINT tbl_appointment_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
     ,CONSTRAINT tbl_appointment_tbl_time_slot_FK FOREIGN KEY (id_time_slot) REFERENCES tbl_time_slot(id_time_slot)

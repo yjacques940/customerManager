@@ -16,7 +16,7 @@ $title = localize('Header-TakeAppointment');
  <script src='addons/jquery.ui.touch-punch.min.js'></script>
 
 <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
-  <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
+    <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center"><?php echo localize('Header-TakeAppointment') ?></h3>
     <?php
         if(isset($customerId)){
@@ -24,26 +24,53 @@ $title = localize('Header-TakeAppointment');
             echo '<h4 class="text-center">'. localize('For') .' '. $customerFullName .'</h4>';
         }
     ?>
-    <div id="empty" style="color:#F00"></div>
-    <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
-      <div class="col-lg-6 col-md-6">
+        <div id="empty" style="color:#F00"></div>
         <form action="" id="reserveappointment" name="reserveappointment" method="post">
-        <div id="calendarEl" class="form-group contact-forms"></div>
-        <div id="timeSlottaken" style="color:#F00"></div>
-        <div class="form-group contact-forms">
-          <label for="therapist"><h4><?php echo localize('TakeAppointment-Therapist');?></h4></label>
-            <select id="therapist" name="therapist">
-              <option></option>
-              <option value="either"><?php echo localize('TakeAppointment-Either');?>
-              <option value="Carl">Carl</option>
-              <option value="Mélanie">Mélanie</option>
-            </select>
+            <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
+                <div class="col-lg-7 col-md-7">
+                    <h4>Choisissez une plage horaire</h4>
+                    <div id="calendarEl" class="form-group contact-forms"></div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                    <div class="form-group contact-forms">
+                        <label for="therapist"><h4><?php echo localize('TakeAppointment-Therapist');?></h4></label>
+                        <select id="therapist" name="therapist">
+                          <option></option>
+                          <option value="either"><?php echo localize('TakeAppointment-Either');?>
+                          <option value="Carl">Carl</option>
+                          <option value="Mélanie">Mélanie</option>
+                        </select>
+                    </div>
+                    <div class="form-group contact-forms">
+                        <label class="col-form-label" for="visit-reason">
+                            <h4>Quel est la raison de votre visite?</h4>
+                        </label>
+                        <input class="form-control mx-sm-3 w-200" name="visit-reason" id="therapist-reason" required>
+                    </div>
+                    <div class="form-group contact-forms">
+                        <label for="therapist-bool">
+                            <h4>Avez-vous consulté un médecin à ce sujet?</h4>
+                        </label>
+                        <div class="form-group form-inline">
+                            <input style="width:24px;height: 24px;" class="mx-sm-2"
+                                type="radio" value="true" name="doctor-bool" required>Oui</input>
+                            <input style="width:24px;height: 24px;" class="mx-sm-2"
+                                type="radio" value="false" name="doctor-bool">Non</input>
+                            <div class="mx-sm-4"></div>
+                        </div>
+                        <label class="col-form-label" for="therapist-reason">
+                            <h4>Si oui, quel a été le diagnostic?</h4>
+                        </label>
+                        <input class="form-control mx-sm-3 w-200" name="doctor-diagnostic" id="therapist-reason">
+                    </div>
+                    <button type="submit" class="btn sent-butnn">
+                        <?php echo Localize('CreateAppointment-MakeAppointment');?>
+                    </button>
+                    <div id="timeslottaken" style="color:#F00"></div>
+                </div>
             </div>
-            <button type="submit" class="btn sent-butnn"><?php echo Localize('Header-TakeAppointment');?></button>
         </form>
-      </div>
     </div>
-  </div>
 </section>
 <script>
 const urlParams = new URLSearchParams(window.location.search);
@@ -60,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         themeSystem: 'bootstrap',
         defaultView: 'timeGridWeek',
         nowIndicator: true,
+        allDaySlot: false,
         weekends: false,
         selectable: false,
         minTime: '8:00',
@@ -126,9 +154,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(document).ready(function(){
+
     $("#reserveappointment").validate({
         errorClass : "error_class",
         errorelement : "em",
+        errorPlacement : function(error,element) {
+           error.appendTo(element.parent());
+       },
         rules:{
           timeSlots: {
                 required:true
@@ -152,10 +184,13 @@ $(document).ready(function(){
             var output = $.ajax({
                 url:"index.php",
                 type:'POST',
-                data: {
+                data:{
                     <?php if(isset($customerId)) echo 'customerId: urlParams.get("customerId"),' ?>
-                    timeSlot:currentSelection.id,
-                    therapist:$("#therapist").val()
+                    timeSlot: currentSelection.id,
+                    visitReasion: $("#visit-reason").val(),
+                    therapist: $("#therapist").val(),
+                    hasSeenDoctor: $("#doctor-bool").val(),
+                    doctorDiagnostic: $("#doctor-diagnostic").val()
                 },
                 success:function(output){
                     if(output == 'taken')
