@@ -11,7 +11,7 @@ $title = localize('FollowUp-Inspect');
                 <div class="form-group contact-forms">
                     <label for="date"><h4><?php echo localize('Appointment-Date');?></h4></label>
                     <?php 
-                    echo '<p>'. $result->createdOn . '</p>';
+                    echo '<p>'. substr($result->createdOn,0,10) . '</p>';
                     ?>
                 </div> 
             </div>
@@ -28,6 +28,7 @@ $title = localize('FollowUp-Inspect');
                     echo '<p>' . $result->treatment . '</p>';
                     ?>
                 </div>
+                <input type="button" value="<?php echo localize("FollowUp-Title"); ?>" class="form-check-inline btn btn-success" onclick="history.back();">
             </div>
           </div>
       </div>
