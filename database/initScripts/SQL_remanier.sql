@@ -351,6 +351,7 @@ INSERT INTO tbl_permission (bit,name) VALUES
 (16,  'Customers-Write'),
 (32,  'Timeslots-Read'),
 (64,  'Timeslots-Write'),
+(128, 'Menu-IsEmployee'),
 (256, 'MedicalSurveys-Read'),
 (512, 'MedicalSurveys-Write');
 
