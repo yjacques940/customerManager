@@ -105,7 +105,7 @@ namespace WebApi.Services
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
                 join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
                 where customer.IsActive && appointment.IsActive
-                    && !appointment.IsConfirmed && timeslot.StartDateTime.Date == DateTime.Now.AddDays(1)
+                    && !appointment.IsConfirmed && timeslot.StartDateTime.Date == DateTime.Now.Date.AddDays(1)
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
