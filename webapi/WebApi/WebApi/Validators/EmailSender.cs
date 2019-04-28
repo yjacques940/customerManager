@@ -1,8 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using WebApi.DTO;
 
 namespace WebApi.Validators
@@ -57,6 +62,61 @@ namespace WebApi.Validators
             }
         }
 
+        public static bool SendUnconfirmedAppointmentsToEmployees(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments, IConfiguration configuration)
+        {
+            SmtpClient client = GetSmtpClient(configuration);
+            MailMessage mailMessage = GetUnconfirmedAppointmentMailMessage(appointments);
+
+            try
+            {
+                client.Send(mailMessage);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static MailMessage GetUnconfirmedAppointmentMailMessage(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments)
+        {
+            string newHtml = "";
+            MailMessage mailmessage = new MailMessage();
+            mailmessage.IsBodyHtml = true;
+            mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+            mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
+            mailmessage.Subject = "Rendez-vous non-confirmés pour le " + DateTime.Now.AddDays(1).ToString("dd/MM/yyyy");
+            string htmlWithNewAppointments = GetHtmlWithUnconfirmedAppointments(appointments);
+            using (StreamReader reader = File.OpenText("EmailTemplate/unconfirmedAppointments.html"))
+            {
+                var htmlFile = reader.ReadToEnd();
+                newHtml = htmlFile.Replace("[NewAppointmentsy]", htmlWithNewAppointments);
+                mailmessage.Body = newHtml;
+                return mailmessage;
+            }
+        }
+
+        private static string GetHtmlWithUnconfirmedAppointments(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments)
+        {
+            List<CustomerAppointmentInformation> unconfirmedAppointments = appointments.Value.ToList();
+            string html = "";
+            foreach (var appointment in unconfirmedAppointments)
+            {
+                html +=
+                    $"<div class=\"moreInfoBorder\" style=\"padding:10px\">" +
+                    $"<div>Nom du client: {appointment.Customer.FirstName} {appointment.Customer.LastName}</div>" +
+                    $"<div>Rendez-vous : {appointment.Timeslot.StartDateTime.Date.ToShortDateString()} à " +
+                    $"{appointment.Timeslot.StartDateTime.ToString("HH:mm")}</div>" +
+                    $"</div><div>Numéros de Téléphones:";
+                foreach (var phoneNumber in appointment.PhoneNumbers)
+                {
+                    html += $"<div>{phoneNumber.PhoneType}: {phoneNumber.Phone}</div>";
+                }
+                html += $"</div></br>";
+            }
+            return html;
+        }
+
         private static MailMessage GetMailMessageToAskConfirmationToUser(string customerName, string emailTo, string token, DateTime AppointmentDateTime)
         {
             using (StreamReader reader = File.OpenText("EmailTemplate/askConfirmationToUser.html"))
@@ -66,12 +126,12 @@ namespace WebApi.Validators
                 mailmessage.IsBodyHtml = true;
                 mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
                 mailmessage.To.Add(new MailAddress(emailTo));
-                mailmessage.Subject = "Rendez-vous à confirmer pour le " + AppointmentDateTime.Date.ToString("dd/MM/yyyy");
+                mailmessage.Subject = "Rendez-vous à confirmer pour le " + AppointmentDateTime.ToString("dd/MM/yyyy");
 
                 var htmlFile = reader.ReadToEnd();
                 newHtml = htmlFile.Replace("[ActionTokenx]", token);
                 newHtml = newHtml.Replace("[AppointmentHourx]", AppointmentDateTime.ToShortTimeString());
-                newHtml = newHtml.Replace("[AppointmentDatex]", AppointmentDateTime.Date.ToString("dd/MM/yyyy"));
+                newHtml = newHtml.Replace("[AppointmentDatex]", AppointmentDateTime.ToString("dd/MM/yyyy"));
                 newHtml = newHtml.Replace("[CustomerNamex]", customerName);
                 newHtml = newHtml.Replace("[ServerURLx]", "http://localhost");
                 mailmessage.Body = newHtml;

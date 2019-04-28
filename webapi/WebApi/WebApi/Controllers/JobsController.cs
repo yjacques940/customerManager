@@ -10,11 +10,16 @@ namespace WebApi.Controllers
     public class JobsController : BaseController<JobService, ActionToken>
     {
         private readonly AppointmentService appointmentService;
+        private readonly PhoneNumberService phoneNumberService;
         private readonly IConfiguration configuration;
 
-        public JobsController(JobService service, AppointmentService appointmentService, IConfiguration configuration) : base(service)
+        public JobsController(JobService service,
+            AppointmentService appointmentService,
+            PhoneNumberService phoneNumberService,
+            IConfiguration configuration) : base(service)
         {
             this.appointmentService = appointmentService;
+            this.phoneNumberService = phoneNumberService;
             this.configuration = configuration;
         }
 
@@ -22,6 +27,7 @@ namespace WebApi.Controllers
         public ActionResult RunDailyJobs()
         {
             Service.SendAskConfirmationEmailToUsers(configuration, appointmentService);
+            Service.SendUnconfirmedAppointmentsToEmployees(configuration, appointmentService, phoneNumberService);
             return Ok();
         }
     }
