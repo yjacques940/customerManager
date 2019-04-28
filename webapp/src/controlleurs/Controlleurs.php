@@ -541,7 +541,17 @@ function ajaxUpdateTimeslot() {
 }
 
 function ajaxGetTimeSlots() {
-    $result = CallAPI('Get', 'TimeSlots');
+    if (userHasPermission('Timeslots-Read')) {
+        $result = CallAPI('Get', 'TimeSlots');
+        if ($result['statusCode'] == 200)
+            echo json_encode($result['response']);
+        else
+            echo 'error';
+    }
+}
+
+function ajaxGetFreeTimeSlots() {
+    $result = CallAPI('GET','TimeSlots/GetFreeTimeSlots');
     if ($result['statusCode'] == 200)
         echo json_encode($result['response']);
     else

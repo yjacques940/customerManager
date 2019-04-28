@@ -66,6 +66,9 @@ try
         case 'ajaxGetTimeslots':
             ajaxGetTimeSlots();
             break;
+        case 'ajaxGetFreeTimeslots':
+            ajaxGetFreeTimeSlots();
+            break;
         case 'ajaxDeleteTimeslot':
             ajaxDeleteTimeSlot();
             break;
