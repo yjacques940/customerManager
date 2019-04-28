@@ -99,6 +99,15 @@ try
         case 'cancelappointment':
             CancelAppointment();
             break;
+        case "followuplist":
+            FollowUpList(0);
+            break;
+        case "newFollowUp":
+            NewFollowUp();
+            break;
+        case "consultFollowUp":
+            ConsultFollowUp();
+            break;
         default :
             error(404);
             break;

@@ -464,7 +464,8 @@ function GetCustomersByName(){
 function GetCustomerInformation(){
     $customerId = htmlentities($_POST['customerId']);
     if($customerId != '0'){
-        $customer = CallAPI('GET','Customers/'.$customerId);
+        $result = CallAPI('GET','Customers/'. $customerId);
+        $customer = $result['response'];
         $output = '<table class="table table-sm table-hover" id="tbl_customers">
                                 <thead class="thead-dark">
                                     <tr>
@@ -477,21 +478,22 @@ function GetCustomerInformation(){
                                 <tbody>';
         $output = $output . '<tr class="clickable-row" id="'.$customerId.'">
                                         <td scope="row">'.
-                                        $customer['response']->firstName.' '.
-                                        $customer['response']->lastName.'</td><td>'.
-                                        $customer['response']->occupation.'</td><td>';
+                                        $customer->firstName.' '.
+                                        $customer->lastName.'</td><td>'.
+                                        $customer->occupation.'</td><td>';
         $phoneResult = CallAPI('GET', 'PhoneNumbers/ForCustomer/'.$customerId);
         $phoneNumbers = $phoneResult['response'];
         foreach ($phoneNumbers as $phoneNumber) {
             $output = $output . '
             <table style="width:100%; background-color: rgba(255,255,255,0)">
                 <tr>
-                    <th>'.$phoneNumber->idPhoneType.'</th>
+                    <td>'.$phoneNumber->idPhoneType.'</td>
                     <td>'.$phoneNumber->phone.$phoneNumber->extension.'</td>
                 </tr>
             </table>';
         }
         $output = $output . '</td> </tr></tbody></table>';
+       
         echo $output;
     }else{
         echo '';
@@ -630,6 +632,62 @@ function CancelAppointment()
         error(403);
     }
 }
+
+function FollowUpList($customerId){
+    if(userHasPermission('customers-read') && userHasPermission('customers-write'))
+    {
+        if($customerId == 0){
+            $customerId = htmlentities($_GET['customerId']);
+        }
+        $result = CallAPI('POST','Customers/GetCustomerFollowUps', json_encode($customerId))['response'];
+        $customer = $result->customer;
+        $listOfFollowUps = $result->followUps;
+        require('views/followUpList.php');
+    }
+    else
+    {
+        error(403);
+    }
+}
+
+function NewFollowUp(){
+    if(userHasPermission('customers-read') && userHasPermission('customers-write'))
+    {
+        if(!isset($_POST['summary'])){
+            require('views/newFollowUp.php');
+        }else{
+            if($_POST['date'] != '' and $_POST['summary'] != '' 
+            and $_POST['detail'] != '' and $_POST['customerid'] != ''){
+                $followUpInfo = array(
+                    'idCustomer'=> $_POST['customerid'],
+                    'createdOn'=> $_POST['date'],
+                    'summary'=>$_POST['summary'],
+                    'treatment'=>$_POST['detail']
+                );
+                $result = CallAPI('POST','FollowUps/AddNewFollowUp', json_encode($followUpInfo));
+                FollowUpList($_POST['customerid']);
+            }
+        }
+    }
+    else
+    {
+        error(403);
+    }
+}
+
+function ConsultFollowUp(){
+    if(userHasPermission('customers-read') && userHasPermission('customers-write'))
+    {
+        $id = $_GET['id'];
+        $result = CallAPI('POST','FollowUps/GetFollowUpWithId', json_encode($id))['response'];
+        require('views/openFollowUp.php');
+    }
+    else
+    {
+        error(403);
+    }
+}
+
 
 function SaveMedicalSurvey(){
     if(isset($_POST))

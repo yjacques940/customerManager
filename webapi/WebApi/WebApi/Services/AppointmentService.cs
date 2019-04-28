@@ -162,7 +162,7 @@ namespace WebApi.Services
                 if(startTime > DateTime.Now)
                 {
                     AppointmentsDateAndTimeInformation oneAppointment = new AppointmentsDateAndTimeInformation();
-                    oneAppointment.appointment = appointment;
+                    oneAppointment.Appointment = appointment;
                     oneAppointment.Date = startTime.Date.ToString();
                     oneAppointment.StartTime = startTime.TimeOfDay.ToString();
                     oneAppointment.EndTime = endTime.TimeOfDay.ToString();

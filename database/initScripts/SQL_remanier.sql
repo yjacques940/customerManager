@@ -122,7 +122,6 @@ CREATE TABLE tbl_permission(
         bit            Int (8) NOT NULL UNIQUE ,
         name           Varchar (64) NOT NULL UNIQUE
 	,CONSTRAINT tbl_permissions_PK PRIMARY KEY (id_permissions)
-    ,CONSTRAINT tbl_permissions_CHK_bit CHECK (mod(bit, 2) = 0)
 )ENGINE=InnoDB;
 
 

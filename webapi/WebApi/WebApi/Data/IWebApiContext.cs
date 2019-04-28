@@ -18,6 +18,7 @@ namespace WebApi.Data
         DbSet<ActionToken> ActionTokens { get; set; }
         DbSet<Question> Questions { get; set; }
         DbSet<Response> Responses { get; set; }
+        DbSet<FollowUp> FollowUps { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;

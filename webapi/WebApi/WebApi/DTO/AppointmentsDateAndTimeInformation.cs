@@ -8,7 +8,7 @@ namespace WebApi.DTO
 {
     public class AppointmentsDateAndTimeInformation
     {
-        public Appointment appointment { get; set; }
+        public Appointment Appointment { get; set; }
         public string Date { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
