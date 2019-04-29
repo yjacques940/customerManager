@@ -156,7 +156,10 @@ namespace WebApi.Services
                     ? appointmentService.IdCustomer.Value
                     : Context.Users.First(c => c.Id == appointmentService.IdUser).IdCustomer;
                 appointment.IdTimeSlot = appointmentService.IdTimeSlot;
+		appointment.VisitReason = appointmentService.VisitReason;
                 appointment.Therapist = appointmentService.Therapist;
+		appointment.HasSeenDoctor = appointmentService.HasSeenDoctor;
+		appointment.DoctorDiagnostic = appointmentService.DoctorDiagnostic;
                 appointment.IsNew = true;
                 appointment.IsActive = true;
                 Context.Add(appointment);

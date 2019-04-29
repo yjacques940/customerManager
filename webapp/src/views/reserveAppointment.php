@@ -182,7 +182,7 @@ $(document).ready(function(){
         e.preventDefault();
         if (currentSelection != null) {
             var output = $.ajax({
-                url:"index.php",
+                url:"?action=makeAnAppointment",
                 type:'POST',
                 data:{
                     <?php if(isset($customerId)) echo 'customerId: urlParams.get("customerId"),' ?>

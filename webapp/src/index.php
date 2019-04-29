@@ -50,6 +50,9 @@ try
         case 'makeAppointment':
             MakeAppointment();
             break;
+        case 'makeAnAppointment':
+            CheckTimeSlotAvailable();
+            break;
         case 'changeAppointmentIsNewStatus':
             ChangeAppointmentIsNewStatus();
             break;
