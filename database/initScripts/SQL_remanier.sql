@@ -121,7 +121,7 @@ CREATE TABLE tbl_permission(
         is_active      Bool NOT NULL DEFAULT 1 ,
         bit            Int (8) NOT NULL UNIQUE ,
         name           Varchar (64) NOT NULL UNIQUE
-	,CONSTRAINT tbl_permissions_PK PRIMARY KEY (id_permissions)
+        ,CONSTRAINT tbl_permissions_PK PRIMARY KEY (id_permissions)
 )ENGINE=InnoDB;
 
 
