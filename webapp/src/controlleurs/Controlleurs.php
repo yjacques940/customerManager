@@ -297,7 +297,6 @@ function CheckNewEmailAvaillable(){
         echo 'taken';
     }else{
         UpdateEmail();
-        echo 'available';
     }
 }
 

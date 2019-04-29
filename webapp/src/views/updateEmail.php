@@ -74,12 +74,12 @@ $(document).ready(function(){
                     if(output.trim() == 'available'){
                       window.location = 'index.php?action=about';
                     }else if(output.trim() == 'taken'){
-                        $("#emailinuse").html("<p><?php echo localize('Validate-Error-EmailInUse'); ?>.</p>");
+                        $("#emailinuse").html('<p style="color:red;"><?php echo localize('Validate-Error-EmailInUse'); ?>.</p>');
                     }else if(output.trim() == 'emailerror'){
-                      $("#error").html('<p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
+                      $("#error").html('<p style="color:red;" class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
                       echo localize("EmailUpdate-Error-password");?></p>');
                     }else if(output.trim()== 'emaildontmatch'){
-                      $("#error").html('<p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
+                      $("#error").html('<p style="color:red;" class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
                       echo localize("Validate-Error-EmailDontMatch");?></p>');
                     }
                 },
