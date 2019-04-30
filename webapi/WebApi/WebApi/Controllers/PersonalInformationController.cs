@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         [HttpPost, Route("UpdatePersonnalInformation")]
         public ActionResult UpdatePersonnalInformation([FromBody] UserUpdatePersonnalInformationInformation personalInformation)
         {
-            if (peronalInformation != null)
+            if (personalInformation != null)
                 return Ok(Service.UpdatePersonnalInformation(personalInformation));
 
             return BadRequest();

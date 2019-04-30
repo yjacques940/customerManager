@@ -124,7 +124,7 @@ function PersonalInformation(){
             UpdateUser();
             About();
         }else{
-            $result = CallAPI('GET','States')['response'];
+            $states = CallAPI('GET','States')['response'];
             $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
             $phoneType = $phoneTypes;
             $phoneType2 = $phoneTypes;
@@ -143,8 +143,7 @@ function UpdateUser(){
             $phone1 = array(
                 'phone'=>htmlentities($_POST['phone1']),
                 'extension'=>'',
-                'idPhoneType'=>htmlentities($_POST['type1']),
-                'id'=>htmlentities($_POST['idPhone1'])
+                'idPhoneType'=>htmlentities($_POST['type1'])
             );
             if(!empty($_POST['extension1'])){
                 $phone1['extension'] = htmlentities($_POST['extension1']);
@@ -153,8 +152,7 @@ function UpdateUser(){
                 $phone2 = array(
                     'phone'=>htmlentities($_POST['phone2']),
                     'extension'=>'',
-                    'idPhoneType'=>htmlentities($_POST['type2']),
-                    'id'=>htmlentities($_POST['idPhone2'])
+                    'idPhoneType'=>htmlentities($_POST['type2'])
                 );
                 if(!empty($_POST['extension2'])){
                     $phone2['extension'] = htmlentities($_POST['extension2']);
@@ -164,8 +162,7 @@ function UpdateUser(){
                 $phone3 = array(
                     'phone'=>htmlentities($_POST['phone3']),
                     'extension'=>'',
-                    'idPhoneType'=>htmlentities($_POST['type3']),
-                    'id'=>htmlentities($_POST['idPhone3'])
+                    'idPhoneType'=>htmlentities($_POST['type3'])
                 );
                 if(!empty($_POST['extension3'])){
                     $phone3['extension'] = htmlentities($_POST['extension3']);
@@ -177,7 +174,7 @@ function UpdateUser(){
                 'zipCode'=>htmlentities($_POST['zipcode']),
                 'idState'=>htmlentities($_POST['province'])
             );
-            $occupation = array($_POST['occupation']);
+            $occupation = htmlentities($_POST['occupation']);
             $phones = array($phone1);
             if (isset($phone2))
                 array_push($phones, $phone2);
@@ -187,10 +184,10 @@ function UpdateUser(){
             $updatingInformation = array(
                 'physicalAddress'=>$physicalAddress,
                 'occupation'=>$occupation,
-                'user'=>htmlentities($_SESSION['userid']),
+                'userId'=>htmlentities($_SESSION['userid']),
                 'phoneNumbers'=>$phones
             );
-            $result = CallAPI('POST','Registration/UpdatePersonnalInfo', json_encode($updatingInformation));
+            $result = CallAPI('POST','PersonalInformation/UpdatePersonnalInformation', json_encode($updatingInformation));
         }
     }
 }

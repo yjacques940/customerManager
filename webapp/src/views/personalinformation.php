@@ -11,7 +11,7 @@ $title = localize('Personal-Title');
     $phone2 = array('','','0','0');
     $phone3 = array('','','0','0');
     
-if(isset($_SESSION['userid'])){ var_dump($personalInformation);
+if(isset($_SESSION['userid'])){
     $address = $personalInformation->physicalAddress->physicalAddress;
     $city = $personalInformation->physicalAddress->cityName;
     $zipcode = $personalInformation->physicalAddress->zipCode;
@@ -23,19 +23,16 @@ if(isset($_SESSION['userid'])){ var_dump($personalInformation);
                 $phone1[0] = $personalInformation->phoneNumbers[0]->phone;
                 $phone1[1] = $personalInformation->phoneNumbers[0]->extension;
                 $phone1[2] = $personalInformation->phoneNumbers[0]->idPhoneType;
-                $phone1[3] = $personalInformation->phoneNumbers[0]->id;
             break;
             case 1:
                 $phone2[0] = $personalInformation->phoneNumbers[1]->phone;
                 $phone2[1] = $personalInformation->phoneNumbers[1]->extension;
                 $phone2[2] = $personalInformation->phoneNumbers[1]->idPhoneType;
-                $phone2[3] = $personalInformation->phoneNumbers[1]->id;
             break;
             case 2:
                 $phone3[0] = $personalInformation->phoneNumbers[2]->phone;
                 $phone3[1] = $personalInformation->phoneNumbers[2]->extension;
                 $phone3[2] = $personalInformation->phoneNumbers[2]->idPhoneType;
-                $phone3[3] = $personalInformation->phoneNumbers[2]->id;
             break;
         }
         $cpt++;
@@ -63,7 +60,8 @@ if(isset($_SESSION['userid'])){ var_dump($personalInformation);
                     <label for="province"><h4><?php echo localize('Personal-Province');?></h4></label>
                     <select name="province" id="province">
                     <option value=""></option>
-                    <?php foreach($states as $state)
+                    
+                    <?php var_dump($states); foreach($states as $state)
                     {
                         if($state->id == $idProvince){
                             echo '<option selected value="' . $state->id.'">'.$state->name.'</option>';
@@ -92,7 +90,6 @@ if(isset($_SESSION['userid'])){ var_dump($personalInformation);
                 </div>
             </div>
             <div class="form-row">
-            <input type="hidden" id="idPhone1" name="idPhone1" value="<?php echo $phone1[3]; ?>">
                 <div class="form-group contact-forms col-md-4">
                     <input type="text" value="<?php echo $phone1[0];?>" name="phone1" id="phone1" class="form-control" placeholder="<?php echo localize('Personal-Phone');?>">
                 </div>
@@ -118,7 +115,6 @@ if(isset($_SESSION['userid'])){ var_dump($personalInformation);
                 </div>
             </div>
             <div class="form-row" id="phonerow2" <?php if($cpt<2){echo 'style="visibility:hidden;"';}?>>
-            <input type="hidden" id="idPhone2" name="idPhone2" value="<?php echo $phone2[3]; ?>">
                 <div class="form-group contact-forms col-md-4">
                     <input type="text" id="phone2" name="phone2" value="<?php echo $phone2[0];?>" class="form-control" placeholder="Téléphone">
                 </div>
@@ -149,7 +145,6 @@ if(isset($_SESSION['userid'])){ var_dump($personalInformation);
                 </div>
             </div>
             <div class="form-row" id="phonerow3" <?php if($cpt<3){echo 'style="visibility:hidden;"';}?>>
-            <input type="hidden" id="idPhone3" name="idPhone3" value="<?php echo $phone3[3]; ?>">
                 <div class="form-group contact-forms col-md-4">
                     <input type="text" value="<?php echo $phone3[0] ?>" id="phone3" name="phone3" class="form-control" placeholder="Téléphone">
                 </div>
