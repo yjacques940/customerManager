@@ -187,7 +187,7 @@ function UpdateUser(){
                 'userId'=>htmlentities($_SESSION['userid']),
                 'phoneNumbers'=>$phones
             );
-            $result = CallAPI('POST','PersonalInformation/UpdatePersonnalInformation', json_encode($updatingInformation));
+            $result = CallAPI('POST','PersonalInformation/UpdatePersonalInformation', json_encode($updatingInformation));
         }
     }
 }

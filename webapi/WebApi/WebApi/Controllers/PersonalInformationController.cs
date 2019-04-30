@@ -27,11 +27,11 @@ namespace WebApi.Controllers
             return user;
         }
 
-        [HttpPost, Route("UpdatePersonnalInformation")]
-        public ActionResult UpdatePersonnalInformation([FromBody] UserUpdatePersonnalInformationInformation personalInformation)
+        [HttpPost, Route("UpdatePersonalInformation")]
+        public ActionResult UpdatePersonalInformation([FromBody] UserUpdatePersonalInformation personalInformation)
         {
             if (personalInformation != null)
-                return Ok(Service.UpdatePersonnalInformation(personalInformation));
+                return Ok(Service.UpdatePersonalInformation(personalInformation));
 
             return BadRequest();
         }

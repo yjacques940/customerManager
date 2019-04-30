@@ -61,7 +61,7 @@ if(isset($_SESSION['userid'])){
                     <select name="province" id="province">
                     <option value=""></option>
                     
-                    <?php var_dump($states); foreach($states as $state)
+                    <?php foreach($states as $state)
                     {
                         if($state->id == $idProvince){
                             echo '<option selected value="' . $state->id.'">'.$state->name.'</option>';
