@@ -9,7 +9,7 @@ namespace WebApi.DTO
     public class AllCustomerInformation
     {
         public string FullName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
         public string FullAddress { get; set; }
         public string Sex { get; set; }
         public string Email { get; set; }

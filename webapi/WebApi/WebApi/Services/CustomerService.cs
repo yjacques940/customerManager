@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -96,7 +97,7 @@ namespace WebApi.Services
 
             customerInfo.Email = user.Email;
             customerInfo.IdUser = user.Id;
-            customerInfo.BirthDate = customer.BirthDate.ToString("Y-m-d");
+            customerInfo.BirthDate = customer.BirthDate.ToString("yyyy-MM-dd");
             customerInfo.FullName = GetCustomerFullName(customerId);
             customerInfo.Occupation = customer.Occupation;
             customerInfo.Sex = customer.Sex;
@@ -104,12 +105,21 @@ namespace WebApi.Services
             customerInfo.PhoneNumbers = GetPhoneNumberAndTypes(customerId);
 
             return customerInfo;
-
-
         }
 
         private string GetCustomerFullAddress(int idAddress)
         {
+            var address = Context.Addresses.First(c => c.Id == idAddress && c.IsActive);
+            var state = Context.States.First(c => c.Id == address.IdState && c.IsActive);
+            if(address != null && state != null)
+            {
+                return $"{address.PhysicalAddress}, {address.CityName}, {state.Code}";
+            }
+            else
+            {
+                return "Aucune adresse trouvée";
+            }
+            
         }
 
         internal object GetCustomerFollowUps(int customerId)
