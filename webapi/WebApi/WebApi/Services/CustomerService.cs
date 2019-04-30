@@ -94,15 +94,15 @@ namespace WebApi.Services
             var customerInfo = new AllCustomerInformation();
             var user = Context.Users.FirstOrDefault(c => c.IdCustomer == customerId && c.IsActive);
             var customer = Context.Customers.FirstOrDefault(c => c.Id == customerId && c.IsActive);
-
-            customerInfo.Email = user.Email;
-            customerInfo.IdUser = user.Id;
+            
             customerInfo.BirthDate = customer.BirthDate.ToString("yyyy-MM-dd");
             customerInfo.FullName = GetCustomerFullName(customerId);
             customerInfo.Occupation = customer.Occupation;
             customerInfo.Sex = customer.Sex;
             customerInfo.FullAddress = GetCustomerFullAddress(customer.IdAddress);
             customerInfo.PhoneNumbers = GetPhoneNumberAndTypes(customerId);
+            customerInfo.Email = user != null ? user.Email : "";
+            customerInfo.IdUser = user != null ? user.Id : 0;
 
             return customerInfo;
         }
