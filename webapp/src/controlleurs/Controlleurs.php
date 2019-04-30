@@ -275,8 +275,9 @@ function UpdateEmail(){
                     ];
                     $emailUpdate = CallAPI('POST', 'Users/UpdateUserEmail',json_encode($newEmail));
                     $_SESSION['emailchanged'] = true;
+                    echo 'changed';
                 }else{
-                    echo 'emailerror';
+                    echo 'passworderror';
                 }
             }else{
                 echo 'emaildontmatch';
@@ -297,7 +298,6 @@ function CheckNewEmailAvaillable(){
         echo 'taken';
     }else{
         UpdateEmail();
-        echo 'available';
     }
 }
 

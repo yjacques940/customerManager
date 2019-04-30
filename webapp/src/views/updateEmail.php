@@ -71,15 +71,15 @@ $(document).ready(function(){
                 dataType: 'html',
                 data:{newemail:$("#newemail").val(),newemailconfirmed:$("#newemailconfirmed").val(),password:$("#password").val()},
                 success:function(output){
-                    if(output.trim() == 'available'){
+                    if(output.trim() == 'changed'){
                       window.location = 'index.php?action=about';
                     }else if(output.trim() == 'taken'){
                         $("#emailinuse").html("<p><?php echo localize('Validate-Error-EmailInUse'); ?>.</p>");
-                    }else if(output.trim() == 'emailerror'){
-                      $("#error").html('<p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
+                    }else if(output.trim() == 'passworderror'){
+                      $("#error").html('<p style="color:red;" class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
                       echo localize("EmailUpdate-Error-password");?></p>');
                     }else if(output.trim()== 'emaildontmatch'){
-                      $("#error").html('<p class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
+                      $("#error").html('<p style="color:red;" class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php 
                       echo localize("Validate-Error-EmailDontMatch");?></p>');
                     }
                 },
