@@ -111,6 +111,9 @@ try
         case "consultFollowUp":
             ConsultFollowUp();
             break;
+        case "showAppointmentDetails":
+            showAppointmentDetails();
+            break;
         default :
             error(404);
             break;

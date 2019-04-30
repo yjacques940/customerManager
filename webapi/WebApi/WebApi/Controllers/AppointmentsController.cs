@@ -111,6 +111,17 @@ namespace WebApi.Controllers
             return Ok(Service.GetAppointmentsForCustomer(userId));
         }
 
+        [HttpGet, Route("GetAppointmentDetails")]
+        public ActionResult GetAppointmentDetails([FromQuery]int appointmentId, int? userId)
+        {
+            var customerAppointmentInformation = Service.GetAppointmentDetails(userId, appointmentId);
+            if (customerAppointmentInformation != null)
+            {
+                return Ok(Service.GetAppointmentDetails(userId, appointmentId));
+            }
+            return Unauthorized();
+        }
+
         [HttpPost, Route("CancelAppointments")]
         public ActionResult CancelAppointments([FromBody]List<int> appointmentsToCancel)
         {

@@ -105,7 +105,9 @@ ob_start();
                 <th scope="col"><?php echo localize('Appointment-Customer'); ?></th>
                 <th scope="col"><?php echo localize('Personal-Phone'); ?></th>
                 <th scope="col"><?php echo localize('Appointment-ChangeNewStatus'); ?>
-                    <input onClick="checkAll(this)" type="checkbox" id="chk_allCheckboxes"></th>
+                    <input onClick="checkAll(this)" type="checkbox" id="chk_allCheckboxes">
+                </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -159,6 +161,11 @@ ob_start();
                 <td class="align-middle text-center">
                    <input onClick="changeButtonText()" id="<?php echo $appointment->appointment->id ?>"
                           name="checkbox_new" type="checkbox" style="width:32px;height: 32px;">
+                </td>
+                <td class="align-middle text-center">
+                    <a style="color:inherit" title="Voir des informations supplémentaires"
+                        href="?action=showAppointmentDetails&appointmentId=<?php echo $appointment->appointment->id ?>">
+                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
                 </td>
             </tr>
             <?php

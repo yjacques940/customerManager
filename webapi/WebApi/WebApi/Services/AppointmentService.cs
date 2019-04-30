@@ -175,7 +175,7 @@ namespace WebApi.Services
         public List<AppointmentsDateAndTimeInformation> GetAppointmentsForCustomer(int userId)
         {
             var user = Context.Users.Where(c => c.Id == userId).First();
-            List<AppointmentsDateAndTimeInformation> appointmentsForCustomers = new List<AppointmentsDateAndTimeInformation>();
+            List<AppointmentsDateAndTimeInformation> appointmentsForCustomer = new List<AppointmentsDateAndTimeInformation>();
             Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
             List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id && c.IsActive == true).ToList();
             foreach (var appointment in appointments)
@@ -189,11 +189,31 @@ namespace WebApi.Services
                     oneAppointment.Date = startTime.Date.ToString();
                     oneAppointment.StartTime = startTime.TimeOfDay.ToString();
                     oneAppointment.EndTime = endTime.TimeOfDay.ToString();
-                    appointmentsForCustomers.Add(oneAppointment);
+                    appointmentsForCustomer.Add(oneAppointment);
                 }
             }
-            appointmentsForCustomers = appointmentsForCustomers.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
-            return appointmentsForCustomers;
+            appointmentsForCustomer = appointmentsForCustomer.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
+            return appointmentsForCustomer;
+        }
+
+        public CustomerAppointmentInformation GetAppointmentDetails(int? userId, int appointmentId)
+        {
+            var customerAppointmentInformation = (
+                from appointment in Context.Appointments
+                join customer in Context.Customers on appointment.IdCustomer equals customer.Id
+                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
+                where customer.IsActive && appointment.IsActive
+                    && appointment.Id == appointmentId
+                select new CustomerAppointmentInformation()
+                {
+                    Customer = customer,
+                    Timeslot = timeslot,
+                    Appointment = appointment
+                }).AsNoTracking().FirstOrDefault();
+
+            return (userId == null)
+                ? customerAppointmentInformation
+                : (customerAppointmentInformation.Customer.Id == userId) ? customerAppointmentInformation : null;
         }
 
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
