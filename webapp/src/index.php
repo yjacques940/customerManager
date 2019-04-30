@@ -132,6 +132,9 @@ try
         case 'openUpdatePassword':
             OpenUpdatePassword();
             break;
+        case "managediaporama":
+            ManageDiaporama();
+            break;
         case 'ShowAddEmailForACustomer':
             ShowAddEmailForACustomer();
             break;

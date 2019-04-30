@@ -952,6 +952,10 @@ function ParseActionTokenInfo($data){
     }
 }
 
+function ManageDiaporama(){
+    require('views/manageDiaporama.php');
+}
+
 function showAppointmentDetails(){
     if(!isset($_SESSION['userid'])) error(403);
     if(!isset($_GET['appointmentId'])) error(400); //No appointments given
