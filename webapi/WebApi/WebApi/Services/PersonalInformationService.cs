@@ -28,5 +28,23 @@ namespace WebApi.Services
             }
             return personalInformation;
         }
+
+        internal object UpdatePersonnalInformation(UserUpdatePersonnalInformationInformation personalInformation)
+        {
+            var user = Context.Users.Where(c => c.Id == personalInformation.UserId).First();
+            var customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
+            var address = Context.Addresses.Where(c => c.Id == customer.IdAddress).First();
+            var phones = Context.PhoneNumbers.Where(c => c.IdCustomer == customer.Id).ToList();
+            customer.Occupation = personalInformation.Occupation;
+            address.IdState = personalInformation.PhysicalAddress.IdState;
+            address.PhysicalAddress = personalInformation.PhysicalAddress.PhysicalAddress;
+            address.ZipCode = personalInformation.PhysicalAddress.ZipCode;
+            address.CityName = personalInformation.PhysicalAddress.CityName;
+            foreach (var newPphoneNumber in personalInformation.PhoneNumbers)
+            {
+                var phoneNumber = Context.PhoneNumbers.Where(c => c.Id == newPphoneNumber.Id).First();
+
+            }
+        }
     }
 }

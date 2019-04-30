@@ -26,5 +26,14 @@ namespace WebApi.Controllers
 
             return user;
         }
+
+        [HttpPost, Route("UpdatePersonnalInformation")]
+        public ActionResult UpdatePersonnalInformation([FromBody] UserUpdatePersonnalInformationInformation personalInformation)
+        {
+            if (peronalInformation != null)
+                return Ok(Service.UpdatePersonnalInformation(personalInformation));
+
+            return BadRequest();
+        }
     }
 }
