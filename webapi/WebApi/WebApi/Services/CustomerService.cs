@@ -88,6 +88,30 @@ namespace WebApi.Services
             return customers;
         }
 
+        public AllCustomerInformation GetAllCustomerInformationByCustomerId(int customerId)
+        {
+            var customerInfo = new AllCustomerInformation();
+            var user = Context.Users.FirstOrDefault(c => c.IdCustomer == customerId && c.IsActive);
+            var customer = Context.Customers.FirstOrDefault(c => c.Id == customerId && c.IsActive);
+
+            customerInfo.Email = user.Email;
+            customerInfo.IdUser = user.Id;
+            customerInfo.BirthDate = customer.BirthDate.ToString("Y-m-d");
+            customerInfo.FullName = GetCustomerFullName(customerId);
+            customerInfo.Occupation = customer.Occupation;
+            customerInfo.Sex = customer.Sex;
+            customerInfo.FullAddress = GetCustomerFullAddress(customer.IdAddress);
+            customerInfo.PhoneNumbers = GetPhoneNumberAndTypes(customerId);
+
+            return customerInfo;
+
+
+        }
+
+        private string GetCustomerFullAddress(int idAddress)
+        {
+        }
+
         internal object GetCustomerFollowUps(int customerId)
         {
             var customer = Context.Customers.Where(c => c.Id == customerId).First();
