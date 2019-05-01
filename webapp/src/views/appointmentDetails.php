@@ -18,9 +18,13 @@ ob_start();
 ?>
 
 <section class="container py-lg-4 py-md-3 py-sm-3 py-3">
-    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2">Informations sur le rendez-vous</h3>
-    <h4 class="text-center mb-sm-2">Date: <?php echo strftime("%x", $appointmentTime) ?></h4>
-    <h4 class="text-center mb-md-2">Heure: <?php echo strftime("%H:%M", $appointmentTime) ?></h4>
+    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('PageTitle-AppointmentDetails') ?></h3>
+    <h4 class="text-center mb-sm-2">
+        <?php echo localize('Appointment-Date') .': '. strftime("%x", $appointmentTime) ?>
+    </h4>
+    <h4 class="text-center mb-md-2">
+        <?php echo localize('Appointment-Time') .': '. strftime("%H:%M", $appointmentTime) ?>
+    </h4>
     <div class="row m-5">
         <div class="col-md-6">
             <p class="m-2">
@@ -28,16 +32,23 @@ ob_start();
                 <?php echo $namePrefix . $data->customer->firstName.' '.$data->customer->lastName ?>
             </p>
             <p class="m-2">
-                <b>Date de la réservation:</b> <?php echo strftime("%x %X", $appointmentReservedTime) ?>
+                <?php
+                    echo '<b>'. localize('Appointment-ReservationDate') .':</b> '.
+                        strftime("%x %X", $appointmentReservedTime);
+                ?>
             </p>
         </div>
         <div class="col-md-6">
             <div class="m-2">
-                <p><b>Thérapeute demandé:</b> <?php echo $data->appointment->therapist ?></p>
+                <p>
+                    <?php
+                        echo '<b>'. localize('Appointment-RequestedTherapist') .':</b> '. $data->appointment->therapist
+                    ?>
+                </p>
             </div>
             <div class="text-justify m-2">
-                <p><b>Notes de la plage horaire:</b></p>
-                <p><?php echo ($data->timeslot->notes != null) ? $data->timeslot->notes : 'Aucune note' ?></p>
+                <p><b><?php echo localize('Timeslot-Notes-Text')?>:</b></p>
+                <p><?php echo ($data->timeslot->notes != null) ? $data->timeslot->notes : localize('NoNotes') ?></p>
             </div>
         </div>
     </div>

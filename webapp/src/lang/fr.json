@@ -174,5 +174,10 @@
   "Customers-Information" : "Informations du client",
   "Appointment-Delete" : "Suppprimer ce rendez-vous",
   "Customer-MedicalSurvey" : "Questionnaire médical du client",
-  "SeeMoreInfo" : "Voir des informations supplémentaires"
+  "SeeMoreInfo" : "Voir des informations supplémentaires",
+  "PageTitle-AppointmentDetails" : "Informations sur le rendez-vous",
+  "Appointment-ReservationDate" : "Date de la réservation",
+  "Appointment-RequestedTherapist" : "Thérapeute demandé",
+  "NoNotes" : "Aucune note",
+  "Timeslot-Notes-Text" : "Notes de la plage horaire"
 }
