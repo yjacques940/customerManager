@@ -202,8 +202,7 @@ namespace WebApi.Services
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
                 join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
-                where customer.IsActive && appointment.IsActive
-                    && appointment.Id == appointmentId
+                where appointment.Id == appointmentId
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,

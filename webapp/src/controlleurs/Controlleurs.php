@@ -889,7 +889,7 @@ function showAppointmentDetails(){
     if($data['statusCode'] == "200") {
         //if($data['response'])
         $appointmentDetails = $data['response'];
-        var_dump($data);
+        var_dump($appointmentDetails);
         require('views/appointmentDetails.php');
     } else if ($data['statusCode'] == "401")
         error(401);

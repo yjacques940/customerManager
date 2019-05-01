@@ -95,10 +95,10 @@ try
         case 'medicalSurveyUpdate':
             MedicalSurveyUpdate();
             break;
-	case "runDailyCronJobs":
-		var_dump(CallAPI('Get', 'Jobs/Daily'));
-		Home();
-		break;
+        case "runDailyCronJobs":
+            var_dump(CallAPI('Get', 'Jobs/Daily'));
+            Home();
+            break;
         case 'cancelappointment':
             CancelAppointment();
             break;
