@@ -43,6 +43,31 @@ namespace WebApi.Services
                 );
             }
         }
+        
+        public bool SendChangePasswordEmail(IConfiguration config, string userEmail)
+        {
+            var user = Context.Users.FirstOrDefault(c => c.Email == userEmail);
+            if (user != null)
+            {
+                DateTime dateDelay = DateTime.Now.AddDays(2);
+                ActionToken actionToken = new ActionToken
+                {
+                    IsActive = true,
+                    Action = "ForgotPassword",
+                    CreatedOn = DateTime.Now,
+                    ExpirationDate = DateTime.Now.AddDays(1),
+                    IdUser = user.Id,
+                    Token = Guid.NewGuid().ToString()
+                };
+                Context.ActionTokens.Add(actionToken);
+                Context.SaveChanges();
+
+                EmailSender.SendEmailToChangePassword(userEmail, actionToken.Token, config);
+                return true;
+            }
+
+            return false;
+        }
 
         public void SendUnconfirmedAppointmentsToEmployees
             (IConfiguration config, AppointmentService appointmentService, PhoneNumberService phoneNumberService)

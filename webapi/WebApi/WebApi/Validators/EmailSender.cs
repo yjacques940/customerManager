@@ -61,6 +61,22 @@ namespace WebApi.Validators
                 return false;
             }
         }
+        public static bool SendEmailToChangePassword(string userEmail, string token,  IConfiguration configuration)
+        {
+            SmtpClient client = GetSmtpClient(configuration);
+            MailMessage MailMessageAskConfirmationToUser = GetMailMessageToChangePassword(userEmail, token);
+
+            try
+            {
+                client.Send(MailMessageAskConfirmationToUser);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         public static bool SendUnconfirmedAppointmentsToEmployees(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments, IConfiguration configuration)
         {
@@ -133,6 +149,25 @@ namespace WebApi.Validators
                 newHtml = newHtml.Replace("[AppointmentHourx]", AppointmentDateTime.ToShortTimeString());
                 newHtml = newHtml.Replace("[AppointmentDatex]", AppointmentDateTime.ToString("dd/MM/yyyy"));
                 newHtml = newHtml.Replace("[CustomerNamex]", customerName);
+                newHtml = newHtml.Replace("[ServerURLx]", "http://localhost");
+                mailmessage.Body = newHtml;
+                return mailmessage;
+            }
+        }
+
+        private static MailMessage GetMailMessageToChangePassword(string emailTo, string token)
+        {
+            using (StreamReader reader = File.OpenText("EmailTemplate/changePasswordWithToken.html"))
+            {
+                string newHtml = "";
+                MailMessage mailmessage = new MailMessage();
+                mailmessage.IsBodyHtml = true;
+                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                mailmessage.To.Add(new MailAddress(emailTo));
+                mailmessage.Subject = "Demande de changement de mot de passe";
+
+                var htmlFile = reader.ReadToEnd();
+                newHtml = htmlFile.Replace("[ActionTokenx]", token);
                 newHtml = newHtml.Replace("[ServerURLx]", "http://localhost");
                 mailmessage.Body = newHtml;
                 return mailmessage;
