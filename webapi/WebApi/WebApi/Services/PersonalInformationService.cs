@@ -58,6 +58,34 @@ namespace WebApi.Services
             return false;
         }
 
+        internal bool UpdatePersonalInformationWithCustomerId(UpdateCustomerPersonalInformation personalInformation)
+        {
+            var customer = Context.Customers.FirstOrDefault(c => c.Id == personalInformation.CustomerId);
+            var address = Context.Addresses.FirstOrDefault(c => c.Id == customer.IdAddress);
+            var oldPhones = Context.PhoneNumbers.Where(c => c.IdCustomer == customer.Id);
+            if (customer != null && address != null && oldPhones != null)
+            {
+                foreach (var phone in oldPhones)
+                {
+                    Context.Remove(phone);
+                }
+                customer.Occupation = personalInformation.Occupation;
+                address.IdState = personalInformation.PhysicalAddress.IdState;
+                address.PhysicalAddress = personalInformation.PhysicalAddress.PhysicalAddress;
+                address.ZipCode = personalInformation.PhysicalAddress.ZipCode;
+                address.CityName = personalInformation.PhysicalAddress.CityName;
+                foreach (var newPhoneNumber in personalInformation.PhoneNumbers)
+                {
+                    newPhoneNumber.IsActive = true;
+                    newPhoneNumber.IdCustomer = customer.Id;
+                    Context.Add(newPhoneNumber);
+                }
+                Context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         internal RegistrationInformation GetPersonalInformationWithCustomerId(int idCustomer)
         {
             var personalInformation = new RegistrationInformation();

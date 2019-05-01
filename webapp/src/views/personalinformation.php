@@ -10,6 +10,8 @@ $title = localize('Personal-Title');
     $phone1 = array('','','0','0');
     $phone2 = array('','','0','0');
     $phone3 = array('','','0','0');
+
+$customerIdAction = isset($_GET['customerId']) ? '&customerId=' . $_GET['customerId'] : '' ;
     
 if(isset($_SESSION['userid'])){
     $address = $personalInformation->physicalAddress->physicalAddress;
@@ -45,7 +47,7 @@ if(isset($_SESSION['userid'])){
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('Personal-Title');?></h3>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-10 col-md-10">
-        <form action="index.php?action=personalinformation" id="personalinformation" method="post">
+        <form action="index.php?action=personalinformation<?php echo $customerIdAction ?>" id="personalinformation" method="post">
           <div class="w3pvt-wls-contact-mid">
           <div class="form-group contact-forms">
               <label for="address"><h4><?php echo localize('Personal-Address');?></h4></label>
