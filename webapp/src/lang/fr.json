@@ -182,5 +182,7 @@
   "Timeslot-Notes-Text" : "Notes de la plage horaire",
   "Login-ForgotPassword" : "Mot de passe oublié",
   "Password-Change" : "Changez votre mot de passe",
-  "For" : "Pour"
+  "For" : "Pour",
+  "ForgotPassword-EnterEmail" : "Entrez l'adresse courriel de votre compte",
+  "ForgotPassword-Instructions" : "Saisissez votre adresse courriel pour recevoir le courriel afin de modifier votre mot de passe."
 }

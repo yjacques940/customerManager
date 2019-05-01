@@ -904,4 +904,8 @@ function showAppointmentDetails(){
     else error($data['statusCode']);
 }
 
+function SendEmailForgotPassword()
+{
+    require('views/forgot_password_enter_email.php');
+}
 ?>

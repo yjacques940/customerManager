@@ -95,6 +95,9 @@ try
         case 'medicalSurveyUpdate':
             MedicalSurveyUpdate();
             break;
+        case 'forgotPassword':
+            SendEmailForgotPassword();
+            break;
         case "runDailyCronJobs":
             var_dump(CallAPI('Get', 'Jobs/Daily'));
             Home();

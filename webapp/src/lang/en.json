@@ -165,5 +165,7 @@
   "Timeslot-Notes-Text" : "Timeslot notes",
   "Login-ForgotPassword" : "Forgot your password",
   "Password-Change" : "Change your password",
-  "For" : "For"
+  "For" : "For",
+  "ForgotPassword-EnterEmail" : "Enter your account email address",
+  "ForgotPassword-Instructions" : "Enter your email address to receive the email to change your password."
 }

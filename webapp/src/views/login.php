@@ -44,7 +44,7 @@ $title = Localize('Login-Title');
         </div>
           <div style="padding-top: 2%">
               <h4><?php echo Localize('Login-ForgotPassword');?>?</h4>
-              <a href="index.php?action=inscription"><h5><?php echo Localize('Password-Change');?></h5></a>
+              <a href="index.php?action=forgotPassword"><h5><?php echo Localize('Password-Change');?></h5></a>
           </div>
           <div class=" mt-3">
 
