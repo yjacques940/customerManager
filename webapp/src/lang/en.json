@@ -1,4 +1,5 @@
 {
+{
   "About-EmailChanged": "Email successfully updated",
   "About-InformationChanged": "Personal information updated",
   "About-Introduction": "Preface about the company.",
@@ -162,5 +163,7 @@
   "Appointment-RequestedTherapist" : "Requested Therapist",
   "NoNotes" : "No notes",
   "Timeslot-Notes-Text" : "Timeslot notes",
+  "Login-ForgotPassword" : "Forgot your password",
+  "Password-Change" : "Change your password",
   "For" : "For"
 }

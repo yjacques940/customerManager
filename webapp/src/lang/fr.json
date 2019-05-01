@@ -180,5 +180,7 @@
   "Appointment-RequestedTherapist" : "Thérapeute demandé",
   "NoNotes" : "Aucune note",
   "Timeslot-Notes-Text" : "Notes de la plage horaire",
+  "Login-ForgotPassword" : "Mot de passe oublié",
+  "Password-Change" : "Changez votre mot de passe",
   "For" : "Pour"
 }
