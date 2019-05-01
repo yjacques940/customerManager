@@ -116,26 +116,83 @@ function About(){
 
 function PersonalInformation(){
     if(!isset($_SESSION['userid'])){
-        AddOrUpdateUser();
+        AddUser();
         unset($_SESSION['email']);
         Login();
     }else{
         if(!empty($_POST)){
-            AddOrUpdateUser();
+            UpdateUser();
             About();
         }else{
-            $result = CallAPI('GET','States')['response'];
+            $states = CallAPI('GET','States')['response'];
             $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
             $phoneType = $phoneTypes;
             $phoneType2 = $phoneTypes;
             $phoneType3 = $phoneTypes;
-            $personalInformation = CallAPI('GET','PersonalInformation/PersonalInformation/'.json_encode($_SESSION['userid']));
+            $personalInformation = CallAPI('GET','PersonalInformation/PersonalInformation/'.json_encode($_SESSION['userid']))['response'];
             require('views/personalinformation.php');
         }
     }
 }
 
-function AddOrUpdateUser(){
+function UpdateUser(){
+    if(isset($_POST)){
+        if($_POST['address'] != '' and $_POST['city'] != ''
+        and $_POST['province'] != '' and $_POST['zipcode'] != '' and $_POST['occupation'] != ''
+        and $_POST['phone1'] != '' and $_POST['type1'] != ''){
+            $phone1 = array(
+                'phone'=>htmlentities($_POST['phone1']),
+                'extension'=>'',
+                'idPhoneType'=>htmlentities($_POST['type1'])
+            );
+            if(!empty($_POST['extension1'])){
+                $phone1['extension'] = htmlentities($_POST['extension1']);
+            }
+            if(!empty($_POST['phone2'])){
+                $phone2 = array(
+                    'phone'=>htmlentities($_POST['phone2']),
+                    'extension'=>'',
+                    'idPhoneType'=>htmlentities($_POST['type2'])
+                );
+                if(!empty($_POST['extension2'])){
+                    $phone2['extension'] = htmlentities($_POST['extension2']);
+                }
+            }
+            if(!empty($_POST['phone3'])){
+                $phone3 = array(
+                    'phone'=>htmlentities($_POST['phone3']),
+                    'extension'=>'',
+                    'idPhoneType'=>htmlentities($_POST['type3'])
+                );
+                if(!empty($_POST['extension3'])){
+                    $phone3['extension'] = htmlentities($_POST['extension3']);
+                }
+            }
+            $physicalAddress = array(
+                'physicalAddress'=>htmlentities($_POST['address']),
+                'cityName'=>htmlentities($_POST['city']),
+                'zipCode'=>htmlentities($_POST['zipcode']),
+                'idState'=>htmlentities($_POST['province'])
+            );
+            $occupation = htmlentities($_POST['occupation']);
+            $phones = array($phone1);
+            if (isset($phone2))
+                array_push($phones, $phone2);
+            if (isset($phone3))
+                array_push($phones, $phone3);
+
+            $updatingInformation = array(
+                'physicalAddress'=>$physicalAddress,
+                'occupation'=>$occupation,
+                'userId'=>htmlentities($_SESSION['userid']),
+                'phoneNumbers'=>$phones
+            );
+            $result = CallAPI('POST','PersonalInformation/UpdatePersonalInformation', json_encode($updatingInformation));
+        }
+    }
+}
+
+function AddUser(){
     if(isset($_POST)){
         if($_POST['address'] != '' and $_POST['city'] != ''
         and $_POST['province'] != '' and $_POST['zipcode'] != '' and $_POST['occupation'] != ''

@@ -7,9 +7,9 @@ $title = localize('Personal-Title');
     $zipcode='';
     $idProvince='';
     $occupation='';
-    $phone1 = array('','','0');
-    $phone2 = array('','','0');
-    $phone3 = array('','','0');
+    $phone1 = array('','','0','0');
+    $phone2 = array('','','0','0');
+    $phone3 = array('','','0','0');
     
 if(isset($_SESSION['userid'])){
     $address = $personalInformation->physicalAddress->physicalAddress;
@@ -60,6 +60,7 @@ if(isset($_SESSION['userid'])){
                     <label for="province"><h4><?php echo localize('Personal-Province');?></h4></label>
                     <select name="province" id="province">
                     <option value=""></option>
+                    
                     <?php foreach($states as $state)
                     {
                         if($state->id == $idProvince){
