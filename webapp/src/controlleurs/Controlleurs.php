@@ -880,6 +880,10 @@ function ParseActionTokenInfo($data){
             $idUser = $data->idUser;
             require('views/actions/confirmedPresenceToAppointment.php');
             break;
+        case 'ForgotPassword':
+            $idUser = $data->idUser;
+            var_dump($data);
+            require('views/forgot_password_update.php');
 
         default:
             error(500);// Action Inconnue
