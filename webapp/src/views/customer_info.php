@@ -42,6 +42,7 @@ unset($_SESSION['TempCustomerId']);
                 <a href="?action=mainMedicalSurvey&idCustomer=<?php echo $_GET['customerId']?>"><button  class="btn btn-lg btn-primary mr-2"><?php echo localize('Header-MedicalSurvey'); ?></button></a>
                 <a href=""><button  class="btn btn-lg btn-primary mr-2"><?php echo localize('Customers-Appointments'); ?></button></a>
                 <a href="?action=followuplist&customerId=<?php echo $customerId?>"><button  class="btn btn-lg btn-primary"><?php echo localize('Customers-FollowUps'); ?></button></a>
+                <a href="?action=personalinformation&idCustomer=<?php echo $_GET['customerId']?>"><button class="btn btn-lg btn-primary mr-2"><?php echo localize('Personal-ModificationEmployee'); ?></button></a>
             </div>
             <div class="text-center" style="padding-top: 3%">
                 <a href=""><button type="submit" class="btn btn-danger" disabled><?php echo localize('Customers-Disable'); ?></button></a>

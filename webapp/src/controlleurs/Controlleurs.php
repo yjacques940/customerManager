@@ -130,8 +130,17 @@ function PersonalInformation(){
             $phoneType = $phoneTypes;
             $phoneType2 = $phoneTypes;
             $phoneType3 = $phoneTypes;
-            $personalInformation = CallAPI('GET','PersonalInformation/PersonalInformation/'.json_encode($_SESSION['userid']))['response'];
-            require('views/personalinformation.php');
+            if(isset($_GET['idCustomer'])){
+                if(userHasPermission('customers-read') && userHasPermission('customers-write')){
+                    $personalInformation = CallAPI('GET','PersonalInformation/GetPersonalInformationWithCustomerId/'.$_GET['idCustomer'])['response'];
+                    require('views/personalinformation.php');
+                }else{
+                    error(403);
+                }
+            }else{
+                $personalInformation = CallAPI('GET','PersonalInformation/PersonalInformation/'.json_encode($_SESSION['userid']))['response'];
+                require('views/personalinformation.php');
+            }
         }
     }
 }
@@ -766,7 +775,6 @@ function ConsultFollowUp(){
     }
 }
 
-
 function SaveMedicalSurvey(){
     if(isset($_POST))
     {
@@ -793,6 +801,7 @@ function SaveMedicalSurvey(){
         require('views/Questions/medical_survey_shell.php');
     }
 }
+
 function MainMedicalSurvey()
 {
     if(!HasDoneTheSurvey())
@@ -803,11 +812,13 @@ function MainMedicalSurvey()
         require('views/Questions/medical_survey_shell.php');
     }
 }
+
 function HasDoneTheSurvey(){
     $userId = isset($_GET['idCustomer']) ? $_GET['idCustomer'] : $_SESSION['userid'];
     $_SESSION['TempCustomerId'] = $userId;
     return CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
 }
+
 function OpenMedicalSurvey()
 {
     if($_SESSION['requests'] <= $_SESSION['max_requests'])
