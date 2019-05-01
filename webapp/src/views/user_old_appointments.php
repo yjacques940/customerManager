@@ -7,9 +7,9 @@ ob_start();
         <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('OldAppointments');?></h3>
         <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
             <?php if($oldAppointments['response']){?>
-                <div class="col-lg-10 col-md-10">
+                <div class="col-lg-12 col-md-12">
                     <form>
-                        <div class="col-lg-10 col-md-10">
+                        <div class="col-lg-12 col-md-12">
                         </div>
                         <table class="table table-sm table-striped table-hover table-bordered" id="tbl_appointments">
                             <thead class="thead-dark">
@@ -60,7 +60,7 @@ ob_start();
                 echo '<h4>' . localize('UserAppointmentsList-NoAppointmentsFound').'</h4>';
             }?>
         </div>
-        <div class="text-center">
+        <div class="text-center" style="padding-top: 2%">
             <a href="?action=cancelappointments"><button  class="btn btn-secondary">
                     <?php echo localize('UserAppointmentsList-Title'); ?></button></a>
         </div>

@@ -35,9 +35,9 @@ $title = localize('UserAppointmentsList-Title');
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('UserAppointmentsList-Title');?></h3>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
         <?php if($appointments['response']){ ?>
-      <div class="col-lg-10 col-md-10">
+      <div class="col-lg-12 col-md-12">
         <form action="index.php?action=cancelappointment" id="cancelappointment" method="post">
-        <div class="col-lg-10 col-md-10">
+        <div class="col-lg-12 col-md-12">
         <?php
         if($tooLateToCancel != 0){
             echo '<h4>'. localize('CancelAppointment-TooLate') . ' ' .
@@ -99,20 +99,23 @@ $title = localize('UserAppointmentsList-Title');
         ?>
         </tbody>
     </table>
-    <?php 
-    if($appointments['response'] != null){ ?>
-    <button type="submit" class="btn sent-butnn"><?php echo Localize('CancelAppointment-CancelSelected');?></button>
-    <?php } ?>
+
+            <?php
+            if($appointments['response'] != null){ ?>
+                <div class="text-center" style="padding-top: 2%">
+                    <button type="submit" class="btn btn-danger"><?php echo Localize('CancelAppointment-CancelSelected');?></button>
+                </div>
+            <?php } ?>
+
         </form>
       </div>
+            <div class="text-center col-lg-12 col-md-12" style="padding-top: 2%">
+                <a href="?action=userOldAppointments"><button  class="btn btn-secondary"><?php echo localize('UserAppointments-OldList'); ?></button></a>
+            </div>
         <?php } else {
     echo '<h4>' . localize('UserAppointmentsList-NoAppointmentsFound').'</h4>';
         }?>
     </div>
-      <div class="text-center">
-          <a href="?action=userOldAppointments"><button  class="btn btn-secondary"><?php echo localize('UserAppointments-OldList'); ?></button></a>
-      </div>
-
   </div>
 </section>
 
