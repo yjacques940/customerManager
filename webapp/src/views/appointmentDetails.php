@@ -53,7 +53,7 @@ ob_start();
         </div>
     </div>
     <div class="text-center m-5">
-        <a href="?action=showCustomerInfo&customerId='<?php echo $data->customer->id ?>">
+        <a href="?action=showCustomerInfo&customerId=<?php echo $data->customer->id ?>">
             <button  class="btn btn-lg btn-primary m-1"><?php echo localize('Customers-Information'); ?></button>
         </a>
         <a href="?action=mainMedicalSurvey&idCustomer=<?php echo $data->customer->id ?>">
