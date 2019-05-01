@@ -76,7 +76,7 @@ ob_start();
                 ?>
                 </td>
                 <td class="align-middle text-center">
-                    <a style="color:inherit" title="Voir des informations supplémentaires"
+                    <a style="color:inherit" title="<?php echo localize('SeeMoreInfo') ?>"
                         href="?action=showAppointmentDetails&appointmentId=<?php echo $appointment->appointment->id ?>">
                     <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
                 </td>

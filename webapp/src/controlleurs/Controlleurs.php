@@ -8,10 +8,11 @@ $default_locale = 'fr';
 if (!isset($_SESSION['locale'])) {
     $_SESSION['locale'] = $default_locale;
 }
-
 if (isset($_GET['setLocale'])) {
     $_SESSION['locale'] = $_GET['setLocale'];
 }
+
+setlocale(LC_ALL, $_SESSION['locale'].'_CA.UTF-8');
 
 function error($errorCode) {
     require('views/error.php');
@@ -887,13 +888,11 @@ function showAppointmentDetails(){
             "userId" => (!userHasPermission('Appointments-Read')) ? $_SESSION['userid'] : null
         ));
     if($data['statusCode'] == "200") {
-        //if($data['response'])
         $appointmentDetails = $data['response'];
-        var_dump($appointmentDetails);
         require('views/appointmentDetails.php');
     } else if ($data['statusCode'] == "401")
         error(401);
-    else var_dump($data);
+    else error($data['statusCode']);
 }
 
 ?>
