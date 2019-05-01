@@ -184,5 +184,6 @@
   "Password-Change" : "Changez votre mot de passe",
   "For" : "Pour",
   "ForgotPassword-EnterEmail" : "Entrez l'adresse courriel de votre compte",
-  "ForgotPassword-Instructions" : "Saisissez votre adresse courriel pour recevoir le courriel afin de modifier votre mot de passe."
+  "ForgotPassword-Instructions" : "Saisissez votre adresse courriel pour recevoir le courriel afin de modifier votre mot de passe.",
+  "ForgotPassword-SendRequest" : "Envoyer la demande de changement de mot de passe"
 }

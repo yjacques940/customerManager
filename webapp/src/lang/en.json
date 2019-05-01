@@ -167,5 +167,6 @@
   "Password-Change" : "Change your password",
   "For" : "For",
   "ForgotPassword-EnterEmail" : "Enter your account email address",
-  "ForgotPassword-Instructions" : "Enter your email address to receive the email to change your password."
+  "ForgotPassword-Instructions" : "Enter your email address to receive the email to change your password.",
+  "ForgotPassword-SendRequest" : "Send the password change request"
 }

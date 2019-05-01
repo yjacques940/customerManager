@@ -6,16 +6,37 @@ ob_start(); ?>
         <h3 class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize($titre) ?></h3>
         <h5 class="text-center"><?php echo localize('ForgotPassword-Instructions') ?></h5><br/>
 <div class="container">
-            <form action="?action=saveMedicalSurvey" method="post" id="emailAddress" name="emailAddress">
+            <form action="?action=" method="post" id="emailAddressForm" name="emailAddressForm">
                 <div class="form-group col-lg-6 col-md-6">
                 <label for="emailAddress">
                 <?php echo localize('ForgotPassword-EnterEmail')?> : </label>
                 <input class="form-control" id="emailAddress" name="emailAddress">
+                <button type="submit" class="btn btn-primary mt-3"><?php echo localize('ForgotPassword-SendRequest'); ?></button>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2 "><?php ecjp ?></button>
+
             </form>
 </div>
     </div></section>
+<script>
+    $(document).ready(function() {
+        $("#emailAddressForm").validate({
+            errorClass: "error_class",
+            errorElement: "em",
+            rules: {
+                emailAddress: {
+                    required: true,
+                    email: true
+                },
+            },
+            messages: {
+                emailAddress: {
+                    required: '<?php echo localize('Validate-Error-RequiredField'); ?>.',
+                    email: '<?php echo localize('Validate-Error-InvalidEmail'); ?>.'
+                },
+            }
+        });
+    });
+</script>
 <?php $contenu = ob_get_clean();
 $onHomePage = false;
 require 'gabarit.php'; ?>
