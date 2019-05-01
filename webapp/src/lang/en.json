@@ -146,5 +146,11 @@
   "Answer-No" : "No",
   "Cancel" : "Cancel",
   "TooManyRequests" : "Too many attempts have failed. Please reconnect to try again.",
-  "PageTitle-CustomersManagement" : "Customer Management"
+  "PageTitle-CustomersManagement" : "Customer Management",
+  "PhoneNumbers" : "Phone number(s)",
+  "Name" : "Name",
+  "CustomersManagement-CustomerInfo" : "Customer information",
+  "Customers-Appointments" : "Customer appointments",
+  "Customers-FollowUps" : "Show follow ups",
+  "Customers-Disable" : "Disable this customer"
 }

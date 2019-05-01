@@ -98,7 +98,7 @@
   "Personal-Title": "Informations personnelles",
   "Personal-Update": "Mettre à jour",
   "Personal-Zip": "Code postal",
-  "Validate-Error-EmailDontMatch": "Les deux addresse courriel ne correspondent pas",
+  "Validate-Error-EmailDontMatch": "Les deux adresses courriel ne correspondent pas",
   "Validate-Error-EmailInUse":"L'adresse courriel n'est pas disponible",
   "Validate-Error-EmptyFields": "Un ou plusieurs champs sont vides",
   "Validate-Error-InvalidEmail":"Veuillez fournir une adresse électronique valide",
@@ -164,5 +164,11 @@
   "Answer-No" : "Non",
   "Cancel" : "Annuler",
   "TooManyRequests" : "Trop de tentatives ont échouées. Veuillez vous reconnecter pour réessayer.",
-  "PageTitle-CustomersManagement" : "Gestion client"
+  "PageTitle-CustomersManagement" : "Gestion client",
+  "PhoneNumbers" : "Numéro(s) de téléphone",
+  "Name" : "Nom",
+  "CustomersManagement-CustomerInfo" : "Informations du client",
+  "Customers-Appointments" : "Rendez-vous du client",
+  "Customers-FollowUps" : "Consulter les suivis",
+  "Customers-Disable" : "Désactiver ce client"
 }

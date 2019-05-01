@@ -664,6 +664,7 @@ function ShowCustomerInfo()
     if(userHasPermission('customers-read') && userHasPermission('customers-write'))
     {
         $customerId = htmlentities($_GET['customerId']);
+        $customerInfo = CallAPI('GET','Customers/AllCustomerInfo/'.$customerId)['response'];
         require('views/customer_info.php');
     }
     else

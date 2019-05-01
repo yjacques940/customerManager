@@ -473,8 +473,8 @@ INSERT INTO tbl_response(id_customer,id_question,response_string)VALUES
 (1,21, 'Celui là');
 
 INSERT INTO tbl_user (id_customer, email, password, role) VALUES
-(1, "jessy@rodrigue.com", "ValidPassword", 1),
-(2, "yannick@jacques.com", "ValidPassword", DEFAULT);
+(1, "jessy@rodrigue.com", "123456", 1),
+(2, "yannick@jacques.com", "123456", DEFAULT);
 
 INSERT INTO tbl_phone_number (phone, id_phone_type,id_customer) VALUES
 ('(418) 774-3835', 1,1),

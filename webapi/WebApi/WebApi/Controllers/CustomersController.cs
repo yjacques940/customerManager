@@ -82,5 +82,15 @@ namespace WebApi.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet, Route("AllCustomerInfo/{customerId}")]
+        public ActionResult<AllCustomerInformation> GetAllCustomerInformation(int customerId)
+        {
+            var customerInfo = Service.GetAllCustomerInformationByCustomerId(customerId);
+            if (customerInfo == null)
+                return NoContent();
+
+            return Ok(customerInfo);
+        }
     }
 }

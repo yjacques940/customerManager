@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -86,6 +87,39 @@ namespace WebApi.Services
                 }
             }
             return customers;
+        }
+
+        public AllCustomerInformation GetAllCustomerInformationByCustomerId(int customerId)
+        {
+            var customerInfo = new AllCustomerInformation();
+            var user = Context.Users.FirstOrDefault(c => c.IdCustomer == customerId && c.IsActive);
+            var customer = Context.Customers.FirstOrDefault(c => c.Id == customerId && c.IsActive);
+            
+            customerInfo.BirthDate = customer.BirthDate.ToString("yyyy-MM-dd");
+            customerInfo.FullName = GetCustomerFullName(customerId);
+            customerInfo.Occupation = customer.Occupation;
+            customerInfo.Sex = customer.Sex;
+            customerInfo.FullAddress = GetCustomerFullAddress(customer.IdAddress);
+            customerInfo.PhoneNumbers = GetPhoneNumberAndTypes(customerId);
+            customerInfo.Email = user != null ? user.Email : "";
+            customerInfo.IdUser = user != null ? user.Id : 0;
+
+            return customerInfo;
+        }
+
+        private string GetCustomerFullAddress(int idAddress)
+        {
+            var address = Context.Addresses.First(c => c.Id == idAddress && c.IsActive);
+            var state = Context.States.First(c => c.Id == address.IdState && c.IsActive);
+            if(address != null && state != null)
+            {
+                return $"{address.PhysicalAddress}, {address.CityName}, {state.Code}";
+            }
+            else
+            {
+                return "Aucune adresse trouvée";
+            }
+            
         }
 
         internal object GetCustomerFollowUps(int customerId)
