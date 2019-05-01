@@ -11,7 +11,7 @@ $title = localize('Personal-Title');
     $phone2 = array('','','0','0');
     $phone3 = array('','','0','0');
 
-$customerIdAction = isset($_GET['customerId']) ? '&customerId=' . $_GET['customerId'] : '' ;
+$customerIdAction = isset($_GET['customerId']) ? '&customerId=' . htmlentities($_GET['customerId']) : '' ;
     
 if(isset($_SESSION['userid'])){
     $address = $personalInformation->physicalAddress->physicalAddress;
@@ -19,6 +19,7 @@ if(isset($_SESSION['userid'])){
     $zipcode = $personalInformation->physicalAddress->zipCode;
     $idProvince = $personalInformation->physicalAddress->idState;
     $occupation = $personalInformation->customer->occupation;
+    $name = $personalInformation->customer->firstName . ' ' . $personalInformation->customer->lastName;
     foreach($personalInformation->phoneNumbers as $phoneNumber){
         switch($cpt){
             case 0:
@@ -45,6 +46,10 @@ if(isset($_SESSION['userid'])){
 <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('Personal-Title');?></h3>
+    <?php if(isset($_GET['customerId'])){
+        echo '<h4 class=" text-center mb-md-4 mb-sm-3 mb-3 mb-2">' . localize('Appointment-Customer') . ': '. 
+            $name .'</h4>';
+    } ?>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-10 col-md-10">
         <form action="index.php?action=personalinformation<?php echo $customerIdAction ?>" id="personalinformation" method="post">

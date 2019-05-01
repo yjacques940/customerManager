@@ -123,7 +123,7 @@ function PersonalInformation(){
     }else{
         if(!empty($_POST)){
             if(isset($_GET['customerId'])){
-                $updatingInformation = FormatPersonalInformation($_GET['customerId']);
+                $updatingInformation = FormatPersonalInformation(htmlentities($_GET['customerId']));
                 $result = CallAPI('POST','PersonalInformation/UpdatePersonalInformationWithCustomerId', json_encode($updatingInformation));
                 ShowCustomerInfo();
             }else{
@@ -139,7 +139,7 @@ function PersonalInformation(){
             $phoneType3 = $phoneTypes;
             if(isset($_GET['customerId'])){
                 if(userHasPermission('customers-read') && userHasPermission('customers-write')){
-                    $personalInformation = CallAPI('GET','PersonalInformation/GetPersonalInformationWithCustomerId/'.$_GET['customerId'])['response'];
+                    $personalInformation = CallAPI('GET','PersonalInformation/GetPersonalInformationWithCustomerId/'.htmlentities($_GET['customerId']))['response'];
                     require('views/personalinformation.php');
                 }else{
                     error(403);
