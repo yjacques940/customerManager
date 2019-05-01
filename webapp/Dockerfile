@@ -1,7 +1,14 @@
 FROM php:7.2-apache
 
 RUN apt update -qq \
- && apt install unzip wget -qy
+ && apt install locales unzip wget -qy\
+ && apt clean
+
+RUN sed -i -e 's/# fr_CA.UTF-8 UTF-8/fr_CA.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
+ENV LANG fr_CA.UTF-8
+ENV LANGUAGE fr_CA:fr
+ENV LC_ALL fr_CA.UTF-8
 
 WORKDIR /var/www/html/
 

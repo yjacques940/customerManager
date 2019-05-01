@@ -151,6 +151,15 @@
   "Name" : "Name",
   "CustomersManagement-CustomerInfo" : "Customer information",
   "Customers-Appointments" : "Customer appointments",
-  "Customers-FollowUps" : "Show follow ups",
-  "Customers-Disable" : "Disable this customer"
+  "Customers-FollowUps" : "Show customer follow ups",
+  "Customers-Disable" : "Disable this customer",
+  "Customers-Information" : "Customer Details",
+  "Appointment-Delete" : "Delete this appointment",
+  "Customer-MedicalSurvey" : "Customer medical survey",
+  "SeeMoreInfo" : "See more information",
+  "PageTitle-AppointmentDetails" : "Apopintment Details",
+  "Appointment-ReservationDate" : "Reserved on",
+  "Appointment-RequestedTherapist" : "Requested Therapist",
+  "NoNotes" : "No notes",
+  "Timeslot-Notes-Text" : "Timeslot notes"
 }

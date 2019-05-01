@@ -95,10 +95,10 @@ try
         case 'medicalSurveyUpdate':
             MedicalSurveyUpdate();
             break;
-	case "runDailyCronJobs":
-		var_dump(CallAPI('Get', 'Jobs/Daily'));
-		Home();
-		break;
+        case "runDailyCronJobs":
+            var_dump(CallAPI('Get', 'Jobs/Daily'));
+            Home();
+            break;
         case 'cancelappointment':
             CancelAppointment();
             break;
@@ -110,6 +110,9 @@ try
             break;
         case "consultFollowUp":
             ConsultFollowUp();
+            break;
+        case "showAppointmentDetails":
+            showAppointmentDetails();
             break;
         default :
             error(404);

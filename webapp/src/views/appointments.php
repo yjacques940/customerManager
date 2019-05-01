@@ -1,5 +1,5 @@
 <?php
-if (!userHasPermission('customers-read') && !userHasPermission('appointments-write')) error(403);
+if (!userHasPermission('customers-read') || !userHasPermission('appointments-write')) error(403);
 $title = localize('PageTitle-Appointments');
 ob_start();
 ?>
@@ -20,6 +20,7 @@ ob_start();
             <th scope="col"><?php echo localize('Appointment-Time'); ?></th>
             <th scope="col"><?php echo localize('Appointment-Customer'); ?></th>
             <th scope="col"><?php echo localize('Personal-Phone'); ?></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -73,6 +74,11 @@ ob_start();
                 <?php
                 }
                 ?>
+                </td>
+                <td class="align-middle text-center">
+                    <a style="color:inherit" title="<?php echo localize('SeeMoreInfo') ?>"
+                        href="?action=showAppointmentDetails&appointmentId=<?php echo $appointment->appointment->id ?>">
+                    <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
                 </td>
             </tr>
             <?php

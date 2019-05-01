@@ -169,6 +169,15 @@
   "Name" : "Nom",
   "CustomersManagement-CustomerInfo" : "Informations du client",
   "Customers-Appointments" : "Rendez-vous du client",
-  "Customers-FollowUps" : "Consulter les suivis",
-  "Customers-Disable" : "Désactiver ce client"
+  "Customers-FollowUps" : "Consulter les suivis du client",
+  "Customers-Disable" : "Désactiver ce client",
+  "Customers-Information" : "Informations du client",
+  "Appointment-Delete" : "Suppprimer ce rendez-vous",
+  "Customer-MedicalSurvey" : "Questionnaire médical du client",
+  "SeeMoreInfo" : "Voir des informations supplémentaires",
+  "PageTitle-AppointmentDetails" : "Informations sur le rendez-vous",
+  "Appointment-ReservationDate" : "Réservé le",
+  "Appointment-RequestedTherapist" : "Thérapeute demandé",
+  "NoNotes" : "Aucune note",
+  "Timeslot-Notes-Text" : "Notes de la plage horaire"
 }

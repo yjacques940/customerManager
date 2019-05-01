@@ -8,10 +8,11 @@ $default_locale = 'fr';
 if (!isset($_SESSION['locale'])) {
     $_SESSION['locale'] = $default_locale;
 }
-
 if (isset($_GET['setLocale'])) {
     $_SESSION['locale'] = $_GET['setLocale'];
 }
+
+setlocale(LC_ALL, $_SESSION['locale'].'_CA.UTF-8');
 
 function error($errorCode) {
     require('views/error.php');
@@ -550,7 +551,7 @@ function GetCustomerInformation(){
             </table>';
         }
         $output = $output . '</td> </tr></tbody></table>';
-       
+
         echo $output;
     }else{
         echo '';
@@ -724,7 +725,7 @@ function NewFollowUp(){
         if(!isset($_POST['summary'])){
             require('views/newFollowUp.php');
         }else{
-            if($_POST['date'] != '' and $_POST['summary'] != '' 
+            if($_POST['date'] != '' and $_POST['summary'] != ''
             and $_POST['detail'] != '' and $_POST['customerid'] != ''){
                 $followUpInfo = array(
                     'idCustomer'=> $_POST['customerid'],
@@ -837,9 +838,9 @@ function OpenMedicalSurvey()
 function ActionToken(){
 	if(isset($_GET['token'])){
 		$guid = htmlentities($_GET['token']);
-		if (preg_match("/^(\{)?[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}(?(1)\})$/i", $guid)) {
+		if(preg_match("/^(\{)?[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}(?(1)\})$/i", $guid)) {
 		    $result = CallAPI('Get', 'ActionTokens/Get/'.$guid);
-			switch ($result['statusCode']) {
+			switch($result['statusCode']) {
                 case '200':
                     ParseActionTokenInfo($result['response']);
                     break;
@@ -875,6 +876,23 @@ function ParseActionTokenInfo($data){
             error(500);// Action Inconnue
             break;
     }
+}
+
+function showAppointmentDetails(){
+    if(!isset($_SESSION['userid'])) error(403);
+    if(!isset($_GET['appointmentId'])) error(400); //No appointments given
+
+    $appointmentId = htmlentities($_GET['appointmentId']);
+    $data = CallAPI('GET', 'Appointments/GetAppointmentDetails', array(
+            "appointmentId" => $appointmentId,
+            "userId" => (!userHasPermission('Appointments-Read')) ? $_SESSION['userid'] : null
+        ));
+    if($data['statusCode'] == "200") {
+        $appointmentDetails = $data['response'];
+        require('views/appointmentDetails.php');
+    } else if ($data['statusCode'] == "401")
+        error(401);
+    else error($data['statusCode']);
 }
 
 ?>
