@@ -117,7 +117,7 @@ function About(){
 
 function PersonalInformation(){
     if(!isset($_SESSION['userid'])){
-        AddUser();
+        AddOrUpdateUser();
         unset($_SESSION['email']);
         Login();
     }else{
@@ -132,7 +132,7 @@ function PersonalInformation(){
                 About();
             }
         }else{
-            $states = CallAPI('GET','States')['response'];
+            $result = CallAPI('GET','States')['response'];
             $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
             $phoneType = $phoneTypes;
             $phoneType2 = $phoneTypes;
@@ -738,17 +738,17 @@ function MedicalSurveyUpdate()
     $questions = CallAPI('GET','Questions')['response'];
     require('views/Questions/medical_survey_update.php');
 }
-function CancelAppointment()
+function CancelAppointments()
 {
     if(isset($_SESSION['userid'])){
         if(isset($_POST['checkboxAppointments'])){
             $tooLateToCancel = CallAPI('POST','Appointments/CancelAppointments', json_encode($_POST['checkboxAppointments']))['response'];
             $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
-            require ('views/cancelAppointments.php');
+            require ('views/user_apointments.php');
         }else{
             $tooLateToCancel = false;
             $appointments = CallAPI('POST', 'Appointments/GetAppointmentsForCustomer',json_encode(htmlentities($_SESSION['userid'])));
-            require ('views/cancelAppointments.php');
+            require ('views/user_apointments.php');
         }
     }else{
         error(403);
@@ -962,5 +962,10 @@ function OpenUpdatePassword()
 {
     if(!isset($_SESSION['userid'])) error(403);
     require('views/UpdatePassword.php');
+}
+function OldAppointments() {
+    $user = array('userId' => $_SESSION['userid']);
+    $oldAppointments = CallAPI('GET', 'Appointments/OldAppointmentsForCustomer',$user);
+    require('views/user_old_appointments.php');
 }
 ?>

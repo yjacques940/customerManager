@@ -95,6 +95,9 @@ try
         case 'medicalSurveyUpdate':
             MedicalSurveyUpdate();
             break;
+        case 'userOldAppointments':
+            OldAppointments();
+            break;
         case 'forgotPassword':
             OpenForgotPasswordEmailSelector();
             break;

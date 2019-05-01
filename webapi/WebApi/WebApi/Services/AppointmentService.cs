@@ -121,6 +121,32 @@ namespace WebApi.Services
             return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
         }
 
+        public List<AppointmentsDateAndTimeInformation> GetOldAppointmentsForACustomer(int userId)
+        {
+            var user = Context.Users.Where(c => c.Id == userId).First();
+            var appointmentsForCustomers = new List<AppointmentsDateAndTimeInformation>();
+            Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
+            List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id).ToList();
+            foreach (var appointment in appointments)
+            {
+                var timeSlot = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First();
+                if (timeSlot.StartDateTime.Date <= DateTime.Now.Date)
+                {
+                    AppointmentsDateAndTimeInformation newAppointment = new AppointmentsDateAndTimeInformation
+                    {
+                        Appointment = appointment,
+                        Date = timeSlot.StartDateTime.Date.ToString(),
+                        StartTime = timeSlot.StartDateTime.TimeOfDay.ToString(),
+                        EndTime = timeSlot.EndDateTime.TimeOfDay.ToString()
+                    };
+                    appointmentsForCustomers.Add(newAppointment);
+                }
+            }
+            appointmentsForCustomers = appointmentsForCustomers.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
+            return appointmentsForCustomers;
+
+        }
+
         public bool ReserveAnAppointment(AppointmentUserInformation appointmentService, IConfiguration configuration)
         {
             Appointment appointment = new Appointment();
@@ -184,7 +210,7 @@ namespace WebApi.Services
             {
                 DateTime startTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().StartDateTime;
                 DateTime endTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().EndDateTime;
-                if(startTime > DateTime.Now)
+                if(startTime.Date >= DateTime.Now.Date)
                 {
                     AppointmentsDateAndTimeInformation oneAppointment = new AppointmentsDateAndTimeInformation();
                     oneAppointment.Appointment = appointment;

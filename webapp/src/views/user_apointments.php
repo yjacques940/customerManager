@@ -1,5 +1,5 @@
 <?php
-$title = localize('CancelAppointment-Title');
+$title = localize('UserAppointmentsList-Title');
  ob_start(); 
  ?>
 <script language="JavaScript">
@@ -30,11 +30,11 @@ $title = localize('CancelAppointment-Title');
     }
 
 </script>
-
 <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('CancelAppointment-Title');?></h3>
+    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('UserAppointmentsList-Title');?></h3>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
+        <?php if($appointments['response']){ ?>
       <div class="col-lg-10 col-md-10">
         <form action="index.php?action=cancelappointment" id="cancelappointment" method="post">
         <div class="col-lg-10 col-md-10">
@@ -57,11 +57,11 @@ $title = localize('CancelAppointment-Title');
                 <th scope="col"><?php echo localize('TakeAppointment-Therapist'); ?></th>
                 <th scope="col"><?php echo localize('CancelAppointment-CheckAll'); ?>
                     <input onClick="checkAll(this)" type="checkbox" id="chk_allCheckboxes"></th>
+                <th scope="col"><?php echo localize('TakeAppointment-Therapist'); ?></th>
             </tr>
         </thead>
         <tbody>
         <?php
-        if($appointments['response'] != null){
             foreach ($appointments['response'] as $appointment) {
                 ?>
                 <tr>
@@ -88,10 +88,14 @@ $title = localize('CancelAppointment-Title');
                             onclick="CheckAllManagement();" name="checkboxAppointments[]" type="checkbox" 
                             value="<?php echo $appointment->appointment->id ?>" style="width:32px;height: 32px;">
                     </td>
+                    <td align="center">
+                        <a style="color:inherit" title="Voir des informations supplémentaires"
+                           href="?action=showAppointmentDetails&appointmentId=<?php echo $appointment->appointment->id ?>">
+                            <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
+                    </td>
                 </tr>
                 <?php
             }
-        }
         ?>
         </tbody>
     </table>
@@ -101,7 +105,14 @@ $title = localize('CancelAppointment-Title');
     <?php } ?>
         </form>
       </div>
+        <?php } else {
+    echo '<h4>' . localize('UserAppointmentsList-NoAppointmentsFound').'</h4>';
+        }?>
     </div>
+      <div class="text-center">
+          <a href="?action=userOldAppointments"><button  class="btn btn-secondary"><?php echo localize('UserAppointments-OldList'); ?></button></a>
+      </div>
+
   </div>
 </section>
 
