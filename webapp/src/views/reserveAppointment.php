@@ -17,7 +17,13 @@ $title = localize('Header-TakeAppointment');
 
 <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('Header-TakeAppointment'); ?></h3>
+    <h3 class="title text-center"><?php echo localize('Header-TakeAppointment') ?></h3>
+    <?php
+        if(isset($customerId)){
+            $customerFullName = CallAPI('GET', 'Customers/FullName/'.$customerId)['response'];
+            echo '<h4 class="text-center">'. localize('For') .' '. $customerFullName .'</h4>';
+        }
+    ?>
     <div id="empty" style="color:#F00"></div>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-6 col-md-6">
@@ -40,6 +46,7 @@ $title = localize('Header-TakeAppointment');
   </div>
 </section>
 <script>
+const urlParams = new URLSearchParams(window.location.search);
 var dateTimeOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
 var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 var timeOptions = { hour: '2-digit', minute: '2-digit' };
@@ -145,14 +152,17 @@ $(document).ready(function(){
             var output = $.ajax({
                 url:"index.php",
                 type:'POST',
-                data:{ timeslot:currentSelection.id, therapist:$("#therapist").val() },
+                data: {
+                    <?php if(isset($customerId)) echo 'customerId: urlParams.get("customerId"),' ?>
+                    timeslot:currentSelection.id,
+                    therapist:$("#therapist").val()
+                },
                 success:function(output){
-                    if(output == 'taken'){
+                    if(output == 'taken')
                       $("#timeslottaken").html("<p><?php echo localize('TakeAppointment-TimeSlotTaken');?></p>");
-                    }
-                    else if(output == 'available'){
+                    else if(output == 'available')
                       window.location = 'index.php?action=about';
-                    }
+                    else alert(output + "Une erreur c'est produite");
                 }
             });
         } else {

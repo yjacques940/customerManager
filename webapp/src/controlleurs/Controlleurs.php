@@ -625,7 +625,7 @@ function AppointmentCreator()
 function Customers()
 {
     if (userHasPermission('MedicalSurveys-Read')) {
-        $customers = CallAPI('GET','Customers/CustomersWithPhoneInfo')['response'];
+        $data = CallAPI('GET','Customers/CustomersWithPhoneInfo')['response'];
         require('views/customers_list.php');
     } else error(403);
 }
@@ -633,28 +633,37 @@ function Customers()
 function ReserveAppointment(){
     if(isset($_SESSION['userid'])){
         $availableTimeSlots = CallAPI('GET','TimeSlots/GetFreeTimeSlots')['response'];
+        if(userHasPermission('Appointments-Write') && isset($_GET['customerId'])){
+            $customerId = htmlentities($_GET['customerId']);
+        }
         require('views/reserveAppointment.php');
-    }else{
-        error(403);
     }
+    else error(403);
 }
 
 function CheckTimeSlotAvailable(){
-    $result = CallAPI('Get','TimeSlots/CheckTimeSlotAvailable/'.$_POST['timeslot']);
+    if (!isset($_SESSION['userid'])) error(403);
+    if(isset($_POST['customerId']) && userHasPermission('Appointment-Write')){
+        $customerId = htmlentities($_POST['customerId']);
+    }
+    $result = CallAPI('Get','TimeSlots/CheckTimeSlotAvailable/'.htmlentities($_POST['timeslot']));
     if($result['statusCode']== 200){
-        echo 'available';
-        ReserveTimeSlotForAppointment(htmlentities($_POST['timeslot']), htmlentities($_POST['therapist']));
+        ReserveTimeSlotForAppointment((isset($customerId)) ? $customerId : null);
         $_SESSION['appointmenttaken'] = true;
+        echo 'available';
     }else{
         echo $result['statusCode'];
     }
 }
 
-function ReserveTimeSlotForAppointment($timeslot, $therapist){
+function ReserveTimeSlotForAppointment($customerId){
+    $timeslot = htmlentities($_POST['timeslot']);
+    $therapist = htmlentities($_POST['therapist']);
     $appointment = array(
         'idTimeslot' => $timeslot,
         'therapist' => $therapist,
-        'idUser' => (isset($_SESSION['userid']))? htmlentities($_SESSION['userid']):0
+        'idUser' => ($customerId == null) ? htmlentities($_SESSION['userid']) : null,
+        'idCustomer' => ($customerId != null) ? $customerId : null
     );
     CallAPI('POST','Appointments/ReserveAnAppointment',json_encode($appointment));
     $_SESSION['appointmenttaken'] = true;

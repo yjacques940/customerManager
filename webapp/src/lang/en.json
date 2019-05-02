@@ -161,5 +161,6 @@
   "Appointment-ReservationDate" : "Reserved on",
   "Appointment-RequestedTherapist" : "Requested Therapist",
   "NoNotes" : "No notes",
-  "Timeslot-Notes-Text" : "Timeslot notes"
+  "Timeslot-Notes-Text" : "Timeslot notes",
+  "For" : "For"
 }

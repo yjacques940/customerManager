@@ -17,17 +17,17 @@ ob_start(); ?>
         </thead>
         <tbody>
         <?php
-        foreach ($customers->value as $customer) {
+        foreach ($data->value as $item) {
             ?>
-            <tr id="<?php echo $customer->customer->id; ?>">
+            <tr id="<?php echo $item->customer->id; ?>">
                 <td scope="row" class="align-middle text-center">
                     <?php
-                    echo $customer->customer->firstName . ' ' . $customer->customer->lastName;
+                    echo $item->customer->firstName . ' ' . $item->customer->lastName;
                     ?>
                 </td>
                 <td>
                     <?php
-                    foreach ($customer->phoneNumberAndTypes as $phoneNumber) {
+                    foreach ($item->phoneNumberAndTypes as $phoneNumber) {
                         ?>
                         <table style="width:100%;">
                             <tr>
@@ -50,10 +50,26 @@ ob_start(); ?>
                     }
                     ?>
                 </td>
-                <td class="align-middle text-center">
-                    <a style="color:inherit" href="?action=showCustomerInfo&customerId=<?php
-                    echo $customer->customer->id ?>">
-                    <i class="fa fa-address-card-o fa-3x" aria-hidden="true"></i></a>
+                <td class="text-center align-middle" width="50px">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" style="border-radius: 5px">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item"
+                                href="?action=showCustomerInfo&customerId=<?php echo $item->customer->id ?>">
+                                <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                <?php echo localize('Customers-Information') ?>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item"
+                                href="?action=reserveappointment&customerId=<?php echo $item->customer->id ?>">
+                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                <?php echo localize('PageTitle-NewAppointment') ?>
+                            </a>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <?php

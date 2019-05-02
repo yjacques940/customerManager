@@ -15,6 +15,7 @@
       <script type="text/javascript" src="JavaScript/jquery-validation-1.17.0/dist/localization/messages_fr.js"></script>
       <script type="text/javascript" src="addons/sweetalert2.all.min.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+      <script type="text/javascript" src="JavaScript/bootstrap.bundle.min.js"></script>
    </head>
   <body>
 
@@ -35,8 +36,8 @@
             <li class="mx-lg-3 mx-md-2 my-md-0 my-1">
               <a href="index.php?action=about"><?php echo localize('PageTitle-About'); ?></a>
             </li>
-            <?php 
-            if(userHasPermission('Menu-IsEmployee')){ 
+            <?php
+            if(userHasPermission('Menu-IsEmployee')){
               ?>
             <li>
               <label for="drop-5" class="toggle toogle-2">
