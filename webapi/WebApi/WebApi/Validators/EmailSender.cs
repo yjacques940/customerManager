@@ -64,11 +64,11 @@ namespace WebApi.Validators
         public static bool SendEmailToChangePassword(string userEmail, string token,  IConfiguration configuration)
         {
             SmtpClient client = GetSmtpClient(configuration);
-            MailMessage MailMessageAskConfirmationToUser = GetMailMessageToChangePassword(userEmail, token);
+            MailMessage MailMessageToChangePassword = GetMailMessageToChangePassword(userEmail, token);
 
             try
             {
-                client.Send(MailMessageAskConfirmationToUser);
+                client.Send(MailMessageToChangePassword);
                 return true;
             }
             catch

@@ -15,12 +15,12 @@ namespace WebApi.Controllers
     public class EmailController : Controller
     {
         private readonly IConfiguration configuration;
-        private readonly JobService jobService;
+        private readonly UserService userService;
 
-        public EmailController(IConfiguration configuration,JobService jobService)
+        public EmailController(IConfiguration configuration,UserService userService)
         {
             this.configuration = configuration;
-            this.jobService = jobService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         [HttpPost, Route("ChangePassword")]
         public ActionResult SendChangePasswordEmail([FromBody] EmailAddress email)
         {
-            if (jobService.SendChangePasswordEmail(configuration,email.Email))
+            if (userService.SendChangePasswordEmail(configuration,email.Email))
                 return Ok();
 
             return BadRequest();

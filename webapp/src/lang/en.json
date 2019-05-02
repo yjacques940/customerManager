@@ -35,7 +35,7 @@
   "Header-Account-Manage": "Manage my account",
   "Header-Logout": "Logout",
   "Header-Manage-Email": "Change my email",
-  "Header-Manage-Password": "Change my password",
+  "Header-Manage-Password": "Reset my password",
   "Header-Manage-PersonalInfo": "Modify my personal information",
   "Header-Menu": "Menu",
   "Home-Button": "Sign in",
@@ -164,9 +164,9 @@
   "NoNotes" : "No notes",
   "Timeslot-Notes-Text" : "Timeslot notes",
   "Login-ForgotPassword" : "Forgot your password",
-  "Password-Change" : "Change your password",
+  "Password-Change" : "Reset your password",
   "For" : "For",
   "ForgotPassword-EnterEmail" : "Enter your account email address",
-  "ForgotPassword-Instructions" : "Enter your email address to receive the email to change your password.",
-  "ForgotPassword-SendRequest" : "Send the password change request"
+  "ForgotPassword-Instructions" : "Enter your email address to receive the email to reset your password.",
+  "ForgotPassword-SendRequest" : "Reset my password"
 }

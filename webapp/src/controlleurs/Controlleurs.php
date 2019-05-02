@@ -304,23 +304,24 @@ function CheckEmailInUse(){
 function UpdatePassword(){
     if(isset($_POST['oldpassword']))
     {
-        if (isset($_POST['oldpassword']) && isset($_POST['newpassword']) && isset($_POST['confirmedpassword']))
+        if (isset($_POST['oldpassword']) && isset($_POST['newpassword']))
         {
             $user = array(
                 'oldPassword' => htmlentities($_POST['oldpassword']),
                 'newPassword' => htmlentities($_POST['newpassword']),
                 'userId' => htmlentities($_SESSION['userid'])
             );
-            $result = CallAPI('POST','Users/UpdatePassword',$user);
+            $result = CallAPI('POST','Users/UpdatePassword',json_encode($user));
             if($result['statusCode'] == 200)
             {
                 About();
             }
+            else error(401);
         }
     }
     elseif (isset($_GET['userId']))
     {
-        if(isset($_POST['newpassword']) && isset($_POST['confirmedpassword']))
+        if(isset($_POST['newpassword']))
         {
             $user = array(
                 'oldPassword' => '',
@@ -341,9 +342,7 @@ function UpdatePassword(){
 
 function SendForgotPasswordEmail()
 {
-    $userEmail = array(
-    'email' => htmlentities($_POST['emailAddress'])
-    );
+    $userEmail = array('email' => htmlentities($_POST['emailAddress']));
     $result = CallAPI('POST','Email/ChangePassword',json_encode($userEmail));
     require('views/confirmation_message.php');
 }
@@ -921,8 +920,13 @@ function showAppointmentDetails(){
     else error($data['statusCode']);
 }
 
-function SendEmailForgotPassword()
+function OpenForgotPasswordEmailSelector()
 {
     require('views/forgot_password_enter_email.php');
+}
+
+function OpenUpdatePassword()
+{
+    require('views/UpdatePassword.php');
 }
 ?>

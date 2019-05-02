@@ -74,7 +74,7 @@ namespace WebApi.Controllers
                 user.Password = passwords.NewPassword;
                 return Ok(Service.SaveNewPassword(user));
             }
-            else if(passwords.OldPassword == "")
+            else if(passwords.UserId != 0)
             {
                 user.Password = passwords.NewPassword;
                 return Ok(Service.SaveNewPassword(user));

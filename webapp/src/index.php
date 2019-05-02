@@ -96,7 +96,7 @@ try
             MedicalSurveyUpdate();
             break;
         case 'forgotPassword':
-            SendEmailForgotPassword();
+            OpenForgotPasswordEmailSelector();
             break;
         case "runDailyCronJobs":
             var_dump(CallAPI('Get', 'Jobs/Daily'));
@@ -119,6 +119,9 @@ try
             break;
         case "showAppointmentDetails":
             showAppointmentDetails();
+            break;
+        case 'openUpdatePassword':
+            OpenUpdatePassword();
             break;
         default :
             error(404);
