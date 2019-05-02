@@ -57,22 +57,46 @@ namespace WebApi.Services
             return customer.IdAddress;
         }
 
-        public List<Customer> GetCustomersByPhone(string phone)
+        public List<CustomerAndPhoneNumberInformation> GetCustomersByPhone(string phone)
         {
+            List<CustomerAndPhoneNumberInformation> customersToReturn = new List<CustomerAndPhoneNumberInformation>();
             List<PhoneNumber> listPhones = Context.PhoneNumbers.Where(c => c.Phone.Contains(phone)).ToList();
             List<Customer> customers = new List<Customer>();
             foreach (var listPhone in listPhones)
             {
-                customers.Add(Context.Customers.Where(c => c.Id == listPhone.IdCustomer).First());
+                var customer = Context.Customers.Where(c => c.Id == listPhone.IdCustomer).First();
+                if(!customers.Contains(customer))
+                    customers.Add(customer);
             }
-            return customers;
+            foreach (var customer in customers)
+            {
+                if (customer.IsActive)
+                {
+                    var newCustomer = new CustomerAndPhoneNumberInformation();
+                    newCustomer.Customer = customer;
+                    newCustomer.PhoneNumberAndTypes = GetPhoneNumberAndTypes(customer.Id);
+                    customersToReturn.Add(newCustomer);
+                }
+            }
+            return customersToReturn.OrderBy(c => c.Customer.LastName + c.Customer.FirstName).ToList();
         }
 
-        public List<Customer> GetCustomersByName(string name)
+        public List<CustomerAndPhoneNumberInformation> GetCustomersByName(string name)
         {
+            List<CustomerAndPhoneNumberInformation> customersToReturn = new List<CustomerAndPhoneNumberInformation>();
             List<Customer> customers = Context.Customers.Where(c => c.LastName.Contains(name) || 
             c.FirstName.Contains(name)|| (c.FirstName + " " + c.LastName).Contains(name)).ToList();
-            return customers;
+            foreach (var customer in customers)
+            {
+                if (customer.IsActive)
+                {
+                    var newCustomer = new CustomerAndPhoneNumberInformation();
+                    newCustomer.Customer = customer;
+                    newCustomer.PhoneNumberAndTypes = GetPhoneNumberAndTypes(customer.Id);
+                    customersToReturn.Add(newCustomer);
+                }
+            }
+            return customersToReturn.OrderBy(c => c.Customer.LastName + c.Customer.FirstName).ToList();
         }
 
         internal ActionResult<List<CustomerAndPhoneNumberInformation>> GetCustomersWithPhone()
@@ -90,7 +114,7 @@ namespace WebApi.Services
                     customers.Add(newCustomer);
                 }
             }
-            return customers;
+            return customers.OrderBy(c => c.Customer.LastName + c.Customer.FirstName).ToList();
         }
 
         public AllCustomerInformation GetAllCustomerInformationByCustomerId(int customerId)

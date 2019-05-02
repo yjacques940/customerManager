@@ -499,11 +499,13 @@ sensations de coincement. ','It\'s important for your therapist to teach you exe
 
 INSERT INTO tbl_address (physical_address, city_name, zip_code, id_state) VALUES
 ('382, rang saint-joseph', 'Beauceville', 'G5X2C8', (select id_state from tbl_state where name = 'Québec')),
-('13140, Boul. Lacroix', 'Saint-Georges', 'G5Y6P8', (select id_state from tbl_state where name = 'Québec'));
+('13140, Boul. Lacroix', 'Saint-Georges', 'G5Y6P8', (select id_state from tbl_state where name = 'Québec')),
+('123456 rue chose','Québec', 'H0H0H0', 15);
 
 INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id_address) VALUES
 ('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),
-('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2');
+('M', 'Yannick', 'Jacques', '1997-08-31', 'Brogrammer', '2'),
+('F', 'Nicole', 'Talbot','1989-06-07', 'Musicienne',3);
 
 INSERT INTO tbl_response(id_customer,id_question,response_bool)VALUES
 (1,1,1),
@@ -531,14 +533,18 @@ INSERT INTO tbl_response(id_customer,id_question,response_string)VALUES
 
 INSERT INTO tbl_user (id_customer, email, password, role) VALUES
 (1, "jessy@rodrigue.com", "123456", 1),
-(2, "yannick@jacques.com", "123456", DEFAULT);
+(2, "yannick@jacques.com", "123456", DEFAULT),
+(3, 'nicolas@talbot.com', '123456', DEFAULT);
 
-INSERT INTO tbl_phone_number (phone, id_phone_type,id_customer) VALUES
-('(418) 774-3835', 1,1),
-('(418) 588-6211', 1,2),
-('(418) 230-5469', 3,1),
-('(418) 420-6969', 2,2),
-('(418) 313-8034', 3,2);
+INSERT INTO tbl_phone_number (phone,extension, id_phone_type,id_customer) VALUES
+('(418) 774-3835','', 1,1),
+('(418) 588-6211','', 1,2),
+('(418) 230-5469','', 3,1),
+('(418) 420-6969','', 2,2),
+('(418) 313-8034','', 3,2),
+('(418) 555-1111','1', 3,3),
+('(418) 555-2222','2', 2,3),
+('(418) 555-3333','3', 3,3);
 
 INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public, is_available, notes) VALUES
 ( '2019-04-30 09:00:00', '2019-04-30 10:00:00', 1, 1, null),

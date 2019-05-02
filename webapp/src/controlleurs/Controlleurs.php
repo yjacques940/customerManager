@@ -549,68 +549,52 @@ function SearchCustomer(){
 }
 
 function GetCustomersByPhone(){
-    $customerNames = CallAPI('POST', 'Customers/GetCustomersByPhone/',json_encode(htmlentities($_POST['customerPhone'])));
-    if($customerNames['response'] != null){
-        $select = '<select id="customerSelect" onchange="GetCustomerById();" name="customerSelect">
-            <option value="0"></option>';
-        foreach($customerNames['response'] as $customer){
-            $select = $select .'<option value="'. $customer->id.'">'.$customer->firstName.' '. $customer->lastName.'</option>';
-        }
-        $select = $select . '</select>';
-        echo $select;
-    }else{
-        echo localize('CustomerSearch-InvalidNumber');
-    }
+    $customersInformation = CallAPI('POST', 'Customers/GetCustomersByPhone/',json_encode(htmlentities($_POST['customerPhone'])))['response'];
+    GetCustomerInformation($customersInformation);
 }
 
 function GetCustomersByName(){
-    $customerNames = CallAPI('POST', 'Customers/GetCustomersByName', json_encode(htmlentities($_POST['customerName'])));
-    if($customerNames['response'] != null){
-        $select = '<select id="customerSelect" onchange="GetCustomerById();" name="customerSelect">
-            <option value="0"></option>';
-        foreach($customerNames['response'] as $customer){
-            $select = $select .'<option value="'. $customer->id.'">'.$customer->firstName.' '. $customer->lastName.'</option>';
-        }
-        $select = $select . '</select>';
-        echo $select;
-    }else{
-        echo '</p>' . localize('CustomerSearch-NoCustomerFound') . '</p>';
-    }
+    $customersInformation = CallAPI('POST', 'Customers/GetCustomersByName', json_encode(htmlentities($_POST['customerName'])))['response'];
+    GetCustomerInformation($customersInformation);
 }
 
-function GetCustomerInformation(){
-    $customerId = htmlentities($_POST['customerId']);
-    if($customerId != '0'){
-        $result = CallAPI('GET','Customers/'. $customerId);
-        $customer = $result['response'];
-        $output = '<table class="table table-sm table-hover" id="tbl_customers">
+function GetCustomerInformation($customersInformation){
+    if(isset($customersInformation)){
+        $output = '<table class="table table-sm table-striped table-hover table-bordered" id="tbl_customers">
                                 <thead class="thead-dark">
-                                    <tr>
+                                    <tr class="text-center">
                                         <th scope="col">';
         $output = $output. localize('Appointment-Customer').'</th>
-                                <th scope="col">'. localize('Personal-Occupation').'</th>
                                 <th scope="col">'. localize('Personal-Phone').'</th>
+                                <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>';
-        $output = $output . '<tr class="clickable-row" id="'.$customerId.'">
-                                        <td scope="row">'.
-                                        $customer->firstName.' '.
-                                        $customer->lastName.'</td><td>'.
-                                        $customer->occupation.'</td><td>';
-        $phoneResult = CallAPI('GET', 'PhoneNumbers/ForCustomer/'.$customerId);
-        $phoneNumbers = $phoneResult['response'];
-        foreach ($phoneNumbers as $phoneNumber) {
-            $output = $output . '
-            <table style="width:100%; background-color: rgba(255,255,255,0)">
-                <tr>
-                    <td>'.$phoneNumber->idPhoneType.'</td>
-                    <td>'.$phoneNumber->phone.$phoneNumber->extension.'</td>
-                </tr>
-            </table>';
+        foreach($customersInformation as $customer){
+            $customerId = $customer->customer->id;
+            $output = $output . '<tr id="'.$customerId.'">
+                                            <td scope="row" class="align-middle text-center">'.
+                                            $customer->customer->lastName.', '.
+                                            $customer->customer->firstName.'</td><td>';
+            $output = $output . '<table style="width:100%; background-color: rgba(255,255,255,0)">';
+            foreach ($customer->phoneNumberAndTypes as $phoneNumber) {
+                $output = $output . '
+                    <tr>
+                        <td style="text-align: right; border: none; width: 45%;">'.$phoneNumber->phoneType.' : </td>
+                        <td style="text-align: left; border: none; float:left;">'.$phoneNumber->phone;
+                if($phoneNumber->extension){
+                    $output = $output . '&nbsp&nbsp Ext.'. $phoneNumber->extension;
+                }
+                $output = $output . '</td></tr>';
+            }
+            $output = $output . ' </table></td>';
+            $output = $output . '<td class="align-middle text-center">
+                                <a style="color:inherit" href="?action=showCustomerInfo&customerId='.
+                                $customerId. '">
+                                <i class="fa fa-address-card-o fa-3x" aria-hidden="true"></i></a>
+                                </td></tr>';
         }
-        $output = $output . '</td> </tr></tbody></table>';
-
+$output = $output . '</tbody></table>';
         echo $output;
     }else{
         echo '';
