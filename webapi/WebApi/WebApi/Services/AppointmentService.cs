@@ -123,13 +123,13 @@ namespace WebApi.Services
 
         public List<AppointmentsDateAndTimeInformation> GetOldAppointmentsForACustomer(int userId)
         {
-            var user = Context.Users.Where(c => c.Id == userId).First();
+            var user = Context.Users.First(c => c.Id == userId);
             var appointmentsForCustomers = new List<AppointmentsDateAndTimeInformation>();
-            Customer customer = Context.Customers.Where(c => c.Id == user.IdCustomer).First();
+            Customer customer = Context.Customers.First(c => c.Id == user.IdCustomer);
             List<Appointment> appointments = Context.Appointments.Where(c => c.IdCustomer == customer.Id).ToList();
             foreach (var appointment in appointments)
             {
-                var timeSlot = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First();
+                var timeSlot = Context.TimeSlots.First(c => c.Id == appointment.IdTimeSlot);
                 if (timeSlot.StartDateTime.Date <= DateTime.Now.Date)
                 {
                     AppointmentsDateAndTimeInformation newAppointment = new AppointmentsDateAndTimeInformation
@@ -144,7 +144,6 @@ namespace WebApi.Services
             }
             appointmentsForCustomers = appointmentsForCustomers.OrderBy(c => c.Date).OrderBy(c => c.StartTime).ToList();
             return appointmentsForCustomers;
-
         }
 
         public bool ReserveAnAppointment(AppointmentUserInformation appointmentService, IConfiguration configuration)

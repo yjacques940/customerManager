@@ -1,10 +1,11 @@
 <?php
-$title = localize('OldAppointments');
+$title = localize('PageTitle-OldAppointments');
 ob_start();
 ?>
 <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
     <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-        <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('OldAppointments');?></h3>
+        <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2">
+            <?php echo localize('PageTitle-OldAppointments');?></h3>
         <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
             <?php if($oldAppointments['response']){?>
                 <div class="col-lg-12 col-md-12">
@@ -45,7 +46,8 @@ ob_start();
                                     </td>
                                     <td align="center">
                                         <a style="color:inherit" title="Voir des informations supplémentaires"
-                                       href="?action=showAppointmentDetails&appointmentId=<?php echo $appointment->appointment->id ?>">
+                                       href="?action=showAppointmentDetails&appointmentId=
+                                       <?php echo $appointment->appointment->id ?>">
                                         <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>

@@ -172,6 +172,7 @@
   "UserAppointmentsList-Title" : "List of upcoming appointments",
   "UserAppointmentsList-NoAppointmentsFound" : "There are no appointments",
   "UserAppointments-OldList" : "Consult old appointments",
-  "OldAppointments" : "Old appointments"
   "PageTitle-CustomersManagement" : "Customer Management",
+  "PageTitle-OldAppointments": "Old appointments"
+  "OldAppointments" : "Old appointments"
 }

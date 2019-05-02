@@ -190,5 +190,5 @@
   "Customers-Disable" : "Désactiver ce client",
   "UserAppointmentsList-NoAppointmentsFound" : "Il n'y a aucun rendez-vous",
   "UserAppointments-OldList" : "Consulter les anciens rendez-vous",
-  "OldAppointments" : "Anciens rendez-vous"
+  "PageTitle-OldAppointments": "Anciens rendez-vous"
 }
