@@ -116,6 +116,7 @@ try
             break;
         case 'sendForgotPasswordEmail':
             SendForgotPasswordEmail();
+            break;
         case "showAppointmentDetails":
             showAppointmentDetails();
             break;
