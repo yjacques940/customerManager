@@ -6,7 +6,7 @@ ob_start(); ?>
         <h3 class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize($titre) ?></h3>
         <h5 class="text-center"><?php echo localize('ForgotPassword-Instructions') ?></h5><br/>
 <div class="container">
-            <form action="?action=" method="post" id="emailAddressForm" name="emailAddressForm">
+            <form action="?action=sendForgotPasswordEmail" method="post" id="emailAddressForm" name="emailAddressForm">
                 <div class="form-group col-lg-6 col-md-6">
                 <label for="emailAddress">
                 <?php echo localize('ForgotPassword-EnterEmail')?> : </label>

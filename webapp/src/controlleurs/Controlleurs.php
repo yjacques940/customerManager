@@ -302,19 +302,50 @@ function CheckEmailInUse(){
 }
 
 function UpdatePassword(){
-    if(!empty($_POST)){
-        if(isset($_POST['oldpassword']) and isset($_POST['newpassword']) and isset($_POST['confirmedpassword'])){
-            if(CheckPasswords()){
-                $updatePassword = new ManagerUsers;
-                $updatePassword->UpdatePassword(htmlentities($_POST['newpassword']),$_SESSION['userid']);
+    if(isset($_POST['oldpassword']))
+    {
+        if (isset($_POST['oldpassword']) && isset($_POST['newpassword']) && isset($_POST['confirmedpassword']))
+        {
+            $user = array(
+                'oldPassword' => htmlentities($_POST['oldpassword']),
+                'newPassword' => htmlentities($_POST['newpassword']),
+                'userId' => htmlentities($_SESSION['userid'])
+            );
+            $result = CallAPI('POST','Users/UpdatePassword',$user);
+            if($result['statusCode'] == 200)
+            {
                 About();
-            }else{
-                require('views/UpdatePassword.php');
             }
         }
-    }else{
-        require('views/UpdatePassword.php');
     }
+    elseif (isset($_GET['userId']))
+    {
+        if(isset($_POST['newpassword']) && isset($_POST['confirmedpassword']))
+        {
+            $user = array(
+                'oldPassword' => '',
+                'newPassword' => htmlentities($_POST['newpassword']),
+                'userId' => htmlentities($_GET['userId'])
+            );
+            $result = CallAPI('POST','Users/UpdatePassword',json_encode($user));
+            if($result['statusCode'] == 200)
+            {
+                $token= array('token' => htmlentities($_GET['token']));
+                $result = CallAPI('GET','ActionTokens/DeleteToken',$token);
+                if($result)
+                require('views/login.php');
+            }
+        }
+    }
+}
+
+function SendForgotPasswordEmail()
+{
+    $userEmail = array(
+    'email' => htmlentities($_POST['emailAddress'])
+    );
+    $result = CallAPI('POST','Email/ChangePassword',json_encode($userEmail));
+    require('views/confirmation_message.php');
 }
 
 function UpdateEmail(){
@@ -356,23 +387,6 @@ function CheckNewEmailAvaillable(){
         echo 'taken';
     }else{
         UpdateEmail();
-    }
-}
-
-function CheckPasswords(){
-    $currentPassword = new ManagerUsers;
-    $oldpassword = $currentPassword->GetPassword($_SESSION['userid']);
-    if($oldpassword != htmlentities($_POST['oldpassword'])){
-        return false;
-    }else if(htmlentities($_POST['confirmedpassword']) != htmlentities($_POST['newpassword'])){
-        return false;
-    }else if(htmlentities($_POST['oldpassword']) == '' or htmlentities($_POST['confirmedpassword']) ==''
-            or htmlentities($_POST['newpassword']) == ''){
-        return false;
-    }else if(htmlentities($_POST['oldpassword']) == htmlentities($_POST['newpassword'])){
-        return false;
-    }else{
-        return true;
     }
 }
 
@@ -882,9 +896,8 @@ function ParseActionTokenInfo($data){
             break;
         case 'ForgotPassword':
             $idUser = $data->idUser;
-            var_dump($data);
             require('views/forgot_password_update.php');
-
+            break;
         default:
             error(500);// Action Inconnue
             break;

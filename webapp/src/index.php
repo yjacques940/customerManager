@@ -114,6 +114,8 @@ try
         case "consultFollowUp":
             ConsultFollowUp();
             break;
+        case 'sendForgotPasswordEmail':
+            SendForgotPasswordEmail();
         case "showAppointmentDetails":
             showAppointmentDetails();
             break;

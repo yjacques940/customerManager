@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using WebApi.Data;
@@ -72,6 +72,18 @@ namespace WebApi.Services
                 return user.Email;
 
             return "available";
+        }
+
+        internal int SaveNewPassword(UserLoginInformation userInfo)
+        {
+            var user = Context.Users.FirstOrDefault(c => c.Id == userInfo.UserId);
+            if (user != null)
+            {
+                user.Password = userInfo.Password;
+                Context.Update(user);
+            }
+            Context.SaveChanges();
+            return user.Id;
         }
     }
 }

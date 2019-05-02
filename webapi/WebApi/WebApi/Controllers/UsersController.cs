@@ -59,5 +59,28 @@ namespace WebApi.Controllers
 
             return Unauthorized();
         }
+
+        [HttpPost, Route("UpdatePassword")]
+        public ActionResult UpdatePassword([FromBody]PasswordsUpdateInformation passwords)
+        {
+            var user = new UserLoginInformation()
+            {
+                UserId = passwords.UserId,
+                Password = passwords.OldPassword
+            };
+
+            if (passwords.OldPassword != "" && Service.IsPasswordValid(user))
+            {
+                user.Password = passwords.NewPassword;
+                return Ok(Service.SaveNewPassword(user));
+            }
+            else if(passwords.OldPassword == "")
+            {
+                user.Password = passwords.NewPassword;
+                return Ok(Service.SaveNewPassword(user));
+            }
+
+            return BadRequest();
+        }
     }
 }

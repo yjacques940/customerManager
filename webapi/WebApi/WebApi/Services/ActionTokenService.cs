@@ -21,7 +21,10 @@ namespace WebApi.Services
             switch (actionToken.Action)
             {
                 case "ConfirmAppointment":
+                    Remove(actionToken.Id);
                     return RunConfirmAppointment(actionToken);
+                case "ForgotPassword":
+                    return true;
                 default:
                     break;
             }
