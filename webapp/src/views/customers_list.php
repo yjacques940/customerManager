@@ -17,22 +17,25 @@ ob_start(); ?>
         </thead>
         <tbody>
         <?php
-        foreach ($data->value as $item) {
+        foreach ($customerAndPhoneNumberInformationList->value as $customerAndPhoneNumberInformation) {
             ?>
-            <tr id="<?php echo $item->customer->id; ?>">
+            <tr id="<?php echo $customerAndPhoneNumberInformation->customer->id; ?>">
                 <td scope="row" class="align-middle text-center">
                     <?php
-                    echo $item->customer->firstName . ' ' . $item->customer->lastName;
+                    echo $customerAndPhoneNumberInformation->customer->firstName .' '.
+                        $customerAndPhoneNumberInformation->customer->lastName;
                     ?>
                 </td>
                 <td>
                     <?php
-                    foreach ($item->phoneNumberAndTypes as $phoneNumber) {
+                    foreach ($customerAndPhoneNumberInformation->phoneNumberAndTypes as $phoneNumber) {
                         ?>
                         <table style="width:100%;">
                             <tr>
                                 <div>
-                                    <td style="text-align: right; border: none; width: 45%;"><?php echo $phoneNumber->phoneType . " :"; ?></td>
+                                    <td style="text-align: right; border: none; width: 45%;">
+                                        <?php echo $phoneNumber->phoneType . " :"; ?>
+                                    </td>
                                     <td style="text-align: left; border: none; float:left;">
                                         <?php echo $phoneNumber->phone; ?>
                                         <?php
@@ -58,13 +61,17 @@ ob_start(); ?>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item"
-                                href="?action=showCustomerInfo&customerId=<?php echo $item->customer->id ?>">
+                                href="?action=showCustomerInfo&customerId=<?php
+                                echo $customerAndPhoneNumberInformation->customer->id ?>">
+
                                 <i class="fa fa-address-card-o" aria-hidden="true"></i>
                                 <?php echo localize('Customers-Information') ?>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item"
-                                href="?action=reserveappointment&customerId=<?php echo $item->customer->id ?>">
+                                href="?action=reserveappointment&customerId=<?php
+                                echo $customerAndPhoneNumberInformation->customer->id ?>">
+
                                 <i class="fa fa-calendar-o" aria-hidden="true"></i>
                                 <?php echo localize('PageTitle-NewAppointment') ?>
                             </a>

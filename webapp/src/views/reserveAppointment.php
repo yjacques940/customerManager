@@ -162,7 +162,7 @@ $(document).ready(function(){
                       $("#timeslottaken").html("<p><?php echo localize('TakeAppointment-TimeSlotTaken');?></p>");
                     else if(output == 'available')
                       window.location = 'index.php?action=about';
-                    else alert(output + "Une erreur c'est produite");
+                    else alert(output + "Une erreur s'est produite");
                 }
             });
         } else {

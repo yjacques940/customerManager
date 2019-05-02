@@ -625,7 +625,7 @@ function AppointmentCreator()
 function Customers()
 {
     if (userHasPermission('MedicalSurveys-Read')) {
-        $data = CallAPI('GET','Customers/CustomersWithPhoneInfo')['response'];
+        $customerAndPhoneNumberInformationList = CallAPI('GET','Customers/CustomersWithPhoneInfo')['response'];
         require('views/customers_list.php');
     } else error(403);
 }
