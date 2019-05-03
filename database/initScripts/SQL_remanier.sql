@@ -231,6 +231,19 @@ CREATE TABLE tbl_response(
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------
+# Table: tbl_diaporama
+#------------------------------------------------------------
+
+CREATE TABLE tbl_response(
+        id_image      INT AUTO_INCREMENT  NOT NULL ,
+        is_active     BOOL NOT NULL DEFAULT 1,
+        is_displayed  BOOL NOT NULL DEFAULT 0,
+        display_order INT NOT NULL DEFAULT 0,
+        path 		  VARCHAR(300) NOT NULL
+	,CONSTRAINT tbl_diaporama_PK PRIMARY KEY (id_image)
+)ENGINE=InnoDB;
+
+#------------------------------------------------------------
 # Inserting basic data
 #------------------------------------------------------------
 
@@ -352,7 +365,8 @@ INSERT INTO tbl_permission (bit,name) VALUES
 (64,  'Timeslots-Write'),
 (128, 'Menu-IsEmployee'),
 (256, 'MedicalSurveys-Read'),
-(512, 'MedicalSurveys-Write');
+(512, 'MedicalSurveys-Write'),
+(1024, 'DiaporamaManager');
 
 INSERT INTO tbl_phone_type (name) VALUES
 ('Résidentiel'), ('Bureau'), ('Cellulaire');

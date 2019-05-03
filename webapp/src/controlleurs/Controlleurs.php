@@ -953,7 +953,11 @@ function ParseActionTokenInfo($data){
 }
 
 function ManageDiaporama(){
-    require('views/manageDiaporama.php');
+    if(userHasPermission('DiaporamaManager')){
+        require('views/manageDiaporama.php');
+    }else{
+        error(403);
+    }
 }
 
 function showAppointmentDetails(){

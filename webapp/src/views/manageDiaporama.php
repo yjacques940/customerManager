@@ -9,10 +9,10 @@ $title = Localize('Login-Title');
         <form action="index.php?action=managediaporama" name="managediaporama" id="managediaporama" method="post">
           <div class="w3pvt-wls-contact-mid">
             <div class="form-group contact-forms">
-                <label for="email"><h4><?php echo Localize('Login-Email');?></h4></label>
-              <input type="file" name="newImage" />
+                <label for="email"><h4><?php echo Localize('Diaporama-AddNewPicture');?></h4></label>
+                <input type="file" name="newImage" />
             </div>
-            <button type="submit" class="btn sent-butnn"><?php echo Localize('Login-Title');?></button>
+            <button type="submit" class="btn sent-butnn"><?php echo Localize('Timeslot-Add');?></button>
           </div>
         </form>
       </div>
