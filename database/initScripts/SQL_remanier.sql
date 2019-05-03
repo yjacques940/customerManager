@@ -235,12 +235,12 @@ CREATE TABLE tbl_response(
 #------------------------------------------------------------
 
 CREATE TABLE tbl_diaporama_image(
-        id_image      INT AUTO_INCREMENT  NOT NULL ,
+        id_diaporama_image      INT AUTO_INCREMENT  NOT NULL ,
         is_active     BOOL NOT NULL DEFAULT 1,
         is_displayed  BOOL NOT NULL DEFAULT 0,
         display_order INT NOT NULL DEFAULT 0,
         path 		  VARCHAR(300) NOT NULL
-	,CONSTRAINT tbl_diaporama_PK PRIMARY KEY (id_image)
+	,CONSTRAINT tbl_diaporama_PK PRIMARY KEY (id_diaporama_image)
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------
@@ -510,3 +510,10 @@ VALUES (NOW(), 1,1,1,1,''),
 	   (NOW(), 1,1,1,2,'Carl'),
 	   (NOW(), 1,1,1,3,'Melanie'),
 	   (NOW(), 1,1,1,6,'Peut Importe');
+       
+INSERT INTO tbl_diaporama_image(is_active, is_displayed, display_order, path)
+VALUES (1,1,1,'images/ab1.jpg'),
+	   (1,1,2,'images/blog1.jpg'),
+       (1,0,3,'images/t3.jpg'),
+       (1,1,1,'images/blog4.jpg');
+
