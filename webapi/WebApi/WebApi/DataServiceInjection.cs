@@ -22,6 +22,7 @@ namespace WebApi
             services.AddTransient<ResponseService>();
             services.AddTransient<QuestionService>();
             services.AddTransient<FollowUpService>();
+            services.AddTransient<DiaporamaImageService>();
             return services;
         }
     }

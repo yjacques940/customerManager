@@ -1,9 +1,9 @@
 <?php
-$title = Localize('Login-Title');
+$title = Localize('Diaporama-ManageDiaporama');
  ob_start(); ?>
  <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Login-Title');?></h3>
+    <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Diaporama-ManageDiaporama');?></h3>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-6 col-md-6">
         <form action="index.php?action=managediaporama" name="managediaporama" id="managediaporama" method="post">

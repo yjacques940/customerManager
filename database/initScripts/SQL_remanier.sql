@@ -234,7 +234,7 @@ CREATE TABLE tbl_response(
 # Table: tbl_diaporama
 #------------------------------------------------------------
 
-CREATE TABLE tbl_response(
+CREATE TABLE tbl_diaporama_image(
         id_image      INT AUTO_INCREMENT  NOT NULL ,
         is_active     BOOL NOT NULL DEFAULT 1,
         is_displayed  BOOL NOT NULL DEFAULT 0,
