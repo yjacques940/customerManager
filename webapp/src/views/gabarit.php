@@ -8,7 +8,9 @@
       <link href="css/style.css" rel='stylesheet' type='text/css' media="all">
       <link href="//fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700" rel="stylesheet">
       <link href="//fonts.googleapis.com/css?family=Oxygen:400,700" rel="stylesheet">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
       <script src="JavaScript/script.js"></script>
       <script type="text/javascript" src="JavaScript/jquery-validation-1.17.0/lib/jquery-1.11.1.js"></script>
       <script type="text/javascript" src="JavaScript/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>

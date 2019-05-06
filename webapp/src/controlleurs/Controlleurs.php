@@ -112,6 +112,7 @@ function Inscription(){
 
 function About(){
     unset($_SESSION['email']);
+    $carouselImages = CallAPI('get','DiaporamaImages/GetAllDisplayedImages')['response'];
     require('views/about.php');
 }
 
@@ -989,8 +990,10 @@ function PrepareArraysFromPost(){
     $cpt = 0;
     $dataArray = array();
     foreach($idArray as $id){
+        $isDisplayed = false;
         if($displayArray[$cpt] == '1')
             $isDisplayed = true;
+        
         $result = array(
             "id"=> $idArray[$cpt],
             "displayOrder"=> $orderArray[$cpt],

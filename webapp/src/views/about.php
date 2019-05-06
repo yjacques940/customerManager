@@ -27,6 +27,47 @@ $title = 'Connection';
         }
         ?>
         <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('About-Title'); ?></h3>
+        <div class="container">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <?php 
+              $cpt = 1;
+              $nbrOfImabge = count($carouselImages);
+              while ($cpt < $nbrOfImabge){
+                echo '<li data-target="#myCarousel" data-slide-to="'.$cpt.'"></li>';
+                $cpt++;
+              }
+            ?>
+            </ol>
+            <div class="carousel-inner">
+            <?php 
+            $firstImage = true;
+            foreach($carouselImages as $image){
+              if($firstImage){?>
+                <div class="item active">
+                <?php
+                $firstImage = false;
+              }else{ ?>
+                <div class="item">
+              <?php 
+              } ?>
+                <img src="<?php echo $image->path;?>" style="width:100%;">
+              </div>
+              <?php
+            } ?>
+            </div>
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only"></span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <span class="sr-only"></span>
+            </a>
+          </div>
+        </div>
         <div class="title-wls-text text-center mb-lg-5 mb-md-4 mb-sm-4 mb-3">
           <p><?php echo localize('About-Introduction'); ?></p>
         </div>

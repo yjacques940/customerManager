@@ -32,8 +32,7 @@ namespace WebApi.Services
 
         internal List<DiaporamaImage> GetAllImages()
         {
-            List<DiaporamaImage> diaporamaImages = Context.DiaporamaImages.Where(c => c.IsActive == true).ToList();
-            return diaporamaImages;
+            return Context.DiaporamaImages.Where(c => c.IsActive == true).ToList(); ;
         }
 
         internal bool UpdateDisplayAndOrder(List<ImageDisplayAndOrderInformation> imageDisplayAndOrderInformation)
