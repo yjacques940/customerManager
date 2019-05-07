@@ -127,7 +127,9 @@ namespace WebApi.Services
             if (appointmentService != null)
             {
                 appointment.CreatedOn = DateTime.Now;
-                appointment.IdCustomer = Context.Users.First(c => c.Id == appointmentService.IdUser).IdCustomer;
+                appointment.IdCustomer = (appointmentService.IdCustomer != null)
+                    ? appointmentService.IdCustomer.Value
+                    : Context.Users.First(c => c.Id == appointmentService.IdUser).IdCustomer;
                 appointment.IdTimeSlot = appointmentService.IdTimeSlot;
                 appointment.Therapist = appointmentService.Therapist;
                 appointment.IsNew = true;

@@ -94,7 +94,7 @@ namespace WebApi.Controllers
         [HttpPost, Route("ReserveAnAppointment")]
         public ActionResult ReserveAnAppointment([FromBody]AppointmentUserInformation appointmentService)
         {
-            if (appointmentService.IdUser != 0)
+            if (appointmentService.IdUser != null ^ appointmentService.IdCustomer != null)
             {
                 if (Service.ReserveAnAppointment(appointmentService, configuration))
                 {
