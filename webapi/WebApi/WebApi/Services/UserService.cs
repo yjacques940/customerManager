@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
+using WebApi.Validators;
 
 namespace WebApi.Services
 {
@@ -72,6 +74,41 @@ namespace WebApi.Services
                 return user.Email;
 
             return "available";
+        }
+
+        internal int SaveNewPassword(UserLoginInformation userInfo)
+        {
+            var user = Context.Users.FirstOrDefault(c => c.Id == userInfo.UserId);
+            if (user != null)
+            {
+                user.Password = userInfo.Password;
+                Context.Update(user);
+            }
+            Context.SaveChanges();
+            return user.Id;
+        }
+
+        public bool SendChangePasswordEmail(IConfiguration config, string userEmail)
+        {
+            var user = Context.Users.FirstOrDefault(c => c.Email == userEmail);
+            if (user != null)
+            {
+                ActionToken actionToken = new ActionToken
+                {
+                    IsActive = true,
+                    Action = "ForgotPassword",
+                    CreatedOn = DateTime.Now,
+                    ExpirationDate = DateTime.Now.AddDays(1),
+                    IdUser = user.Id,
+                    Token = Guid.NewGuid().ToString()
+                };
+                Context.ActionTokens.Add(actionToken);
+                Context.SaveChanges();
+
+                EmailSender.SendEmailToChangePassword(userEmail, actionToken.Token, config);
+                return true;
+            }
+            return false;
         }
     }
 }

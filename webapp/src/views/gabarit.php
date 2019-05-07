@@ -132,7 +132,7 @@
                 </li>
                   <?php } ?>
                 <li>
-                  <a href="index.php?action=updatepassword" class="drop-text">
+                  <a href="index.php?action=openUpdatePassword" class="drop-text">
                     <?php echo localize('Header-Manage-Password'); ?>
                   </a>
                 </li>

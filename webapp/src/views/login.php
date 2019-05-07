@@ -35,12 +35,14 @@ $title = Localize('Login-Title');
         </form>
       </div>
       <div class="col-lg-6 col-md-6 ">
-        <div >
+        <div>
           <h4><?php echo Localize('Login-NotRegistered');?>?</h4>
+            <a href="index.php?action=inscription"><h5><?php echo Localize('Login-Register');?>!</h5></a>
         </div>
-        <div class=" mt-3">
-        <a href="index.php?action=inscription"><h4><?php echo Localize('Login-Register');?>!</h4></a>
-        </div>
+          <div style="padding-top: 2%">
+              <h4><?php echo Localize('Login-ForgotPassword');?>?</h4>
+              <a href="index.php?action=forgotPassword"><h5><?php echo Localize('Password-Change');?></h5></a>
+          </div>
       </div>
     </div>
   </div>

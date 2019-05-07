@@ -48,7 +48,7 @@
   "Header-Admin" : "Administration",
   "Header-Logout": "Se déconnecter",
   "Header-Manage-Email": "Modification de l'adresse courriel",
-  "Header-Manage-Password": "Modification du mot de passe",
+  "Header-Manage-Password": "Réinitialiser mon mot de passe",
   "Header-Manage-PersonalInfo": "Modifier mes informations personnelles",
   "Header-Menu": "Menu",
   "Header-Services": "Services en ligne",
@@ -180,5 +180,10 @@
   "Appointment-RequestedTherapist" : "Thérapeute demandé",
   "NoNotes" : "Aucune note",
   "Timeslot-Notes-Text" : "Notes de la plage horaire",
-  "For" : "Pour"
+  "Login-ForgotPassword" : "Mot de passe oublié",
+  "Password-Change" : "Réinitialiser votre mot de passe",
+  "For" : "Pour",
+  "ForgotPassword-EnterEmail" : "Entrez l'adresse courriel de votre compte",
+  "ForgotPassword-Instructions" : "Saisissez votre adresse courriel pour recevoir le courriel afin de réinitialiser votre mot de passe.",
+  "ForgotPassword-SendRequest" : "Réinitialiser mon mot de passe"
 }

@@ -302,19 +302,58 @@ function CheckEmailInUse(){
 }
 
 function UpdatePassword(){
-    if(!empty($_POST)){
-        if(isset($_POST['oldpassword']) and isset($_POST['newpassword']) and isset($_POST['confirmedpassword'])){
-            if(CheckPasswords()){
-                $updatePassword = new ManagerUsers;
-                $updatePassword->UpdatePassword(htmlentities($_POST['newpassword']),$_SESSION['userid']);
+    if(isset($_POST['oldpassword']))
+    {
+        if(!isset($_SESSION['userid'])) error(403);
+        if (isset($_POST['oldpassword']) && isset($_POST['newpassword']))
+        {
+            $user = array(
+                'oldPassword' => htmlentities($_POST['oldpassword']),
+                'newPassword' => htmlentities($_POST['newpassword']),
+                'userId' => htmlentities($_SESSION['userid'])
+            );
+            $result = CallAPI('POST','Users/UpdatePassword',json_encode($user));
+            if($result['statusCode'] == 200)
+            {
                 About();
-            }else{
-                require('views/UpdatePassword.php');
+            }
+            else error(401);
+        }
+    }
+    elseif (isset($_GET['userId']) && isset($_GET['token']))
+    {
+        $token = array(
+            "token" => htmlentities($_GET['token']),
+            "idUser" => htmlentities($_GET['userId']),
+            "idAppointment" => null
+        );
+        if (CallAPI('POST', 'ActionTokens/IsValid', json_encode($token))["statusCode"] == 200)
+        {
+            if(isset($_POST['newpassword']))
+            {
+                $user = array(
+                    'oldPassword' => '',
+                    'newPassword' => htmlentities($_POST['newpassword']),
+                    'userId' => htmlentities($_GET['userId'])
+                );
+                $result = CallAPI('POST', 'Users/UpdatePassword', json_encode($user));
+                if($result['statusCode'] == 200)
+                {
+                    $token= array('token' => htmlentities($_GET['token']));
+                    $result = CallAPI('GET','ActionTokens/DeleteToken',$token);
+                    if($result)
+                    require('views/login.php');
+                }
             }
         }
-    }else{
-        require('views/UpdatePassword.php');
     }
+}
+
+function SendForgotPasswordEmail()
+{
+    $userEmail = array('email' => htmlentities($_POST['emailAddress']));
+    $result = CallAPI('POST','Email/ChangePassword',json_encode($userEmail));
+    require('views/confirmation_message.php');
 }
 
 function UpdateEmail(){
@@ -356,23 +395,6 @@ function CheckNewEmailAvaillable(){
         echo 'taken';
     }else{
         UpdateEmail();
-    }
-}
-
-function CheckPasswords(){
-    $currentPassword = new ManagerUsers;
-    $oldpassword = $currentPassword->GetPassword($_SESSION['userid']);
-    if($oldpassword != htmlentities($_POST['oldpassword'])){
-        return false;
-    }else if(htmlentities($_POST['confirmedpassword']) != htmlentities($_POST['newpassword'])){
-        return false;
-    }else if(htmlentities($_POST['oldpassword']) == '' or htmlentities($_POST['confirmedpassword']) ==''
-            or htmlentities($_POST['newpassword']) == ''){
-        return false;
-    }else if(htmlentities($_POST['oldpassword']) == htmlentities($_POST['newpassword'])){
-        return false;
-    }else{
-        return true;
     }
 }
 
@@ -880,7 +902,10 @@ function ParseActionTokenInfo($data){
             $idUser = $data->idUser;
             require('views/actions/confirmedPresenceToAppointment.php');
             break;
-
+        case 'ForgotPassword':
+            $idUser = $data->idUser;
+            require('views/forgot_password_update.php');
+            break;
         default:
             error(500);// Action Inconnue
             break;
@@ -904,4 +929,14 @@ function showAppointmentDetails(){
     else error($data['statusCode']);
 }
 
+function OpenForgotPasswordEmailSelector()
+{
+    require('views/forgot_password_enter_email.php');
+}
+
+function OpenUpdatePassword()
+{
+    if(!isset($_SESSION['userid'])) error(403);
+    require('views/UpdatePassword.php');
+}
 ?>

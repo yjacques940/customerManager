@@ -2,6 +2,7 @@
 using System;
 using WebApi.Models;
 using WebApi.Services;
+using WebApi.DTO;
 
 namespace WebApi.Controllers
 {
@@ -14,7 +15,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet, Route("Get/{token}")]
-        public ActionResult getActionToken(string token)
+        public ActionResult GetActionToken(string token)
         {
             if (Guid.TryParse(token, out Guid verifiedGuid))
             {
@@ -23,10 +24,44 @@ namespace WebApi.Controllers
                 {
                     if (Service.RunActionFromToken(actionToken))
                     {
-                        Service.Remove(actionToken.Id);
                         return Ok(actionToken);
                     }
                     return Conflict();
+                }
+                return NotFound("Guid not found");
+            }
+            return UnprocessableEntity("Invalid Guid");
+        }
+
+        [HttpPost, Route("IsValid")]
+        public ActionResult IsValid([FromBody] ActionTokenInformation actionTokenInfo)
+        {
+            if (Guid.TryParse(actionTokenInfo.Token, out Guid verifiedGuid))
+            {
+                ActionToken actionToken = Service.getActionToken(actionTokenInfo.Token);
+                if (actionToken != null)
+                {
+                    if (Service.IsValid(actionTokenInfo, actionToken))
+                    {
+                        return Ok(true);
+                    }
+                    return Conflict();
+                }
+                return NotFound("Guid not found");
+            }
+            return UnprocessableEntity("Invalid Guid");
+        }
+
+        [HttpGet, Route("DeleteToken")]
+        public ActionResult DeleteToken([FromQuery]string token)
+        {
+            if (Guid.TryParse(token, out Guid verifiedGuid))
+            {
+                var actionToken = Service.getActionToken(token);
+                if (actionToken != null)
+                {
+                    Service.Remove(actionToken.Id);
+                    return Ok();
                 }
                 return NotFound("Guid not found");
             }
