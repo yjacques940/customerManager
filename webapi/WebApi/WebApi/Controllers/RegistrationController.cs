@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         {
             if (registrationInformation == null)
                 return BadRequest();
-            return Ok(Service.RegisterNewUser(registrationInformation) == null);
+            return Ok(Service.RegisterNewUser(registrationInformation));
         }
     }
 }

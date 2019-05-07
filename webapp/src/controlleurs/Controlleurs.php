@@ -116,11 +116,22 @@ function About(){
 }
 
 function PersonalInformation(){
+    if(isset($_SESSION['customerName']))
+    {
+        AddUser();
+        unset($_SESSION['customerName']);
+        if(userHasPermission('Customer-Read') && isset($_SESSION['userid']))
+        {
+            Customers();
+        }
+        return;
+    }
     if(!isset($_SESSION['userid'])){
         AddOrUpdateUser();
         unset($_SESSION['email']);
         Login();
-    }else{
+    }
+    else{
         if(!empty($_POST)){
             if(isset($_GET['customerId'])){
                 $updatingInformation = FormatPersonalInformation(htmlentities($_GET['customerId']));
@@ -254,6 +265,7 @@ function AddUser(){
                 'zipCode'=>htmlentities($_POST['zipcode']),
                 'idState'=>htmlentities($_POST['province'])
             );
+
             $user = array(
                 'email'=>(isset($_SESSION['email']))?$_SESSION['email']:'',
                 'password'=>(isset($_SESSION['password']))?$_SESSION['password']:''
@@ -951,6 +963,30 @@ function showAppointmentDetails(){
     } else if ($data['statusCode'] == "401")
         error(401);
     else error($data['statusCode']);
+}
+
+function ShowCreateNewCustomer()
+{
+    if(!userHasPermission('Customers-Write') || !isset($_SESSION['userid'])) error(403);
+    require('views/create_new_customer.php');
+}
+
+function ShowPersonalInformationForCustomer()
+{
+    if(isset($_POST))
+    {
+        $_SESSION['firstname'] = $_POST['firstname'];
+        $_SESSION['lastname'] = $_POST['lastname'];
+        $_SESSION['dateofbirth'] = $_POST['dateofbirth'];
+        $_SESSION['gender'] = $_POST['gender'];
+        $_SESSION['customerName'] = $_POST['firstname'] . ' ' . $_POST['lastname'];
+        $states = CallAPI('GET','States')['response'];
+        $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
+        $phoneType = $phoneTypes;
+        $phoneType2 = $phoneTypes;
+        $phoneType3 = $phoneTypes;
+        require('views/personalinformation.php');
+    }
 }
 
 function OpenForgotPasswordEmailSelector()

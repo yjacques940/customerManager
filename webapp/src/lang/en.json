@@ -172,4 +172,5 @@
   "UserAppointmentsList-NoAppointmentsFound" : "There are no appointments",
   "UserAppointments-OldList" : "Consult old appointments",
   "PageTitle-OldAppointments": "Old appointments"
+  "CreateCustomerAccount-Title" : "Create a customer"
 }
