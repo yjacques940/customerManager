@@ -6,7 +6,8 @@ $title = Localize('Diaporama-ManageDiaporama');
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Diaporama-ManageDiaporama');?></h3>
     <?php if(!empty($_POST)){?>
     <p class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Modification-Success');?></p>
-    <?php } ?>
+    <?php }
+     ?>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-6 col-md-6">
         <form action="index.php?action=managediaporama" name="addImage" id="addImage" method="post" enctype="multipart/form-data">
@@ -14,6 +15,11 @@ $title = Localize('Diaporama-ManageDiaporama');
             <div class="form-group contact-forms">
                 <label for="file"><h4><?php echo Localize('Diaporama-AddNewPicture');?></h4></label>
                 <input type="file" name="newImage" />
+                <?php
+                if($extensionProblem){ ?>
+                  <p style="color:red;" class="text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo Localize('Diaporama-Extension');?></p>
+                <?php
+                } ?>
             </div>
             <button type="submit" class="btn sent-butnn"><?php echo Localize('Timeslot-Add');?></button>
           </div>

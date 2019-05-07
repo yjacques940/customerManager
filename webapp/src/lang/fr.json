@@ -32,6 +32,7 @@
   "CustomerSearch-InvalidNumber": "Numéro de téléphone invalide",
   "CustomerSearch-NoCustomerFound" : "Aucun client trouvé",
   "Diaporama-AddNewPicture": "Ajouter une nouvelle image",
+  "Diaporama-Extension" : "Veuillez utiliser une image de format \"jpg\", \"jpeg\" ou \"png\"",
   "Diaporama-ManageDiaporama": "Gestion du diaporama",
   "EmailUpdate-Error-password": "Mot de passe incorrect",
   "EmailUpdate-NewEmail": "Nouvelle adresse courriel",

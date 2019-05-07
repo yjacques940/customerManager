@@ -954,15 +954,20 @@ function ParseActionTokenInfo($data){
 }
 
 function ManageDiaporama(){
-    if(userHasPermission('DiaporamaManager')){
+    if(userHasPermission('SiteManager')){
+        $extensionProblem = false;
         if(!empty($_FILES['newImage']['tmp_name'])){
             $path = AddImage();
-            $imageInfo = array(
-                'isDislpayed' => '0',
-                'displayOrder' => '0',
-                'path' => $path
-            );
-            CallAPI('POST', 'DiaporamaImages/AddNewImage', json_encode($imageInfo));
+            if($path != false){
+                $imageInfo = array(
+                    'isDislpayed' => '0',
+                    'displayOrder' => '0',
+                    'path' => $path
+                );
+                CallAPI('POST', 'DiaporamaImages/AddNewImage', json_encode($imageInfo));
+            }else{
+                $extensionProblem = true;
+            }
         }elseif(!empty($_POST)){
             $data = PrepareArraysFromPost();
             $result = CallAPI('POST','DiaporamaImages/UpdateDisplayAndOrder',json_encode($data));
@@ -990,7 +995,6 @@ function PrepareArraysFromPost(){
             array_push($deleteArray, substr($data,6));
         }
     }
-    var_dump($deleteArray);
     $cpt = 0;
     $dataArray = array();
     foreach($idArray as $id){
@@ -1020,10 +1024,11 @@ function AddImage(){
     $newName = GiveImageName();
     if(in_array($fileExtension, $allowedExtensions)){
         move_uploaded_file($_FILES['newImage']['tmp_name'], 'images/'.$newName.'.'.$fileExtension);
+        return 'images/'. $newName.'.'.$fileExtension;
     }else{
-        echo '<script>alert("'.$fileExtension.'");</script>';
+        $wrongExtension = true;
+        return false;
     }
-    return 'images/'. $newName.'.'.$fileExtension;
 }
 
 function GiveImageName(){

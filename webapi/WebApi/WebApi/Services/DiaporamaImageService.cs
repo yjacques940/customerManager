@@ -37,16 +37,14 @@ namespace WebApi.Services
 
         internal bool UpdateDisplayAndOrder(DiaporamaImagesInformation diaporamaImagesInformation)
         {
-            var imageDisplayAndOrderInformation = diaporamaImagesInformation.ImageDisplayAndOrderInformation;
-            var idsToDelete = diaporamaImagesInformation.IdsToDelete;
-            foreach (var DisplayAndOrderInformation in imageDisplayAndOrderInformation)
+            foreach (var DisplayAndOrderInformation in diaporamaImagesInformation.ImageDisplayAndOrderInformation)
             {
                 var image = Context.DiaporamaImages.FirstOrDefault(c => c.Id == DisplayAndOrderInformation.Id && c.IsActive);
                 image.IsDisplayed = DisplayAndOrderInformation.IsDisplayed;
                 image.DisplayOrder = DisplayAndOrderInformation.DisplayOrder;
                 Context.SaveChanges();
             }
-            foreach (var idToDelete in idsToDelete)
+            foreach (var idToDelete in diaporamaImagesInformation.IdsToDelete)
             {
                 var image = Context.DiaporamaImages.FirstOrDefault(c => c.Id == idToDelete);
                 image.DisplayOrder = 0;

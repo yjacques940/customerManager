@@ -363,10 +363,10 @@ INSERT INTO tbl_permission (bit,name) VALUES
 (16,  'Customers-Write'),
 (32,  'Timeslots-Read'),
 (64,  'Timeslots-Write'),
-(128, 'Menu-IsEmployee'),
+(128, 'IsEmployee'),
 (256, 'MedicalSurveys-Read'),
 (512, 'MedicalSurveys-Write'),
-(1024, 'DiaporamaManager');
+(1024, 'SiteManager');
 
 INSERT INTO tbl_phone_type (name) VALUES
 ('Résidentiel'), ('Bureau'), ('Cellulaire');
@@ -513,7 +513,7 @@ VALUES (NOW(), 1,1,1,1,''),
        
 INSERT INTO tbl_diaporama_image(is_active, is_displayed, display_order, path)
 VALUES (1,1,1,'images/ab1.jpg'),
-	   (1,1,2,'images/blog1.jpg'),
+       (1,1,2,'images/blog1.jpg'),
        (1,0,3,'images/t3.jpg'),
        (1,1,1,'images/blog4.jpg');
 

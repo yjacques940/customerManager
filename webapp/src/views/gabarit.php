@@ -39,7 +39,7 @@
               <a href="index.php?action=about"><?php echo localize('PageTitle-About'); ?></a>
             </li>
             <?php
-            if(userHasPermission('Menu-IsEmployee')){
+            if(userHasPermission('IsEmployee')){
               ?>
             <li>
               <label for="drop-5" class="toggle toogle-2">
@@ -78,6 +78,13 @@
                           <?php echo localize('CreateCustomerAccount-Title'); ?>
                       </a>
                   </li>
+                <?php if(userHasPermission('SiteManager')){ ?>
+                <li>
+                  <a href="index.php?action=managediaporama" class="drop-text">
+                  <?php echo localize('Diaporama-ManageDiaporama'); ?>
+                  </a>
+                </li>
+                <?php } ?>
               </ul>
             </li>
             <?php
@@ -131,7 +138,7 @@
               <input type="checkbox" id="drop-3" />
               <ul>
               <?php
-                  if(!userHasPermission('Menu-IsEmployee')){ ?>
+                  if(!userHasPermission('IsEmployee')){ ?>
                   <li>
                   <a href="index.php?action=personalinformation" class="drop-text">
                     <?php echo localize('Header-Account-Manage'); ?>
