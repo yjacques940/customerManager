@@ -170,6 +170,7 @@
   "ForgotPassword-Instructions" : "Enter your email address to receive the email to reset your password.",
   "ForgotPassword-SendRequest" : "Reset my password"
   "UserAppointmentsList-Title" : "List of upcoming appointments",
+  "UserAppointmentsList-Title" : "Appointments List",
   "UserAppointmentsList-NoAppointmentsFound" : "There are no appointments",
   "UserAppointments-OldList" : "Consult old appointments",
   "PageTitle-CustomersManagement" : "Customer Management",

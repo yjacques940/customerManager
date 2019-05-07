@@ -41,7 +41,8 @@ ob_start();
                                     </td>
                                     <td>
                                         <?php
-                                        echo $appointment->appointment->therapist;
+                                        echo $appointment->appointment->therapist != 'either'
+                                            ? $appointment->appointment->therapist : '';
                                         ?>
                                     </td>
                                     <td align="center">

@@ -16,7 +16,7 @@
   "About-WhoAreWe": "Qui nous sommes",
   "About-WhoAreWe-Text": "Carl Giguère et Mélanie Plante sont Orthothérapeutes.",
   "Bug-Description" : "Description du problème",
-  "UserAppointmentsList-Title" : "Liste de rendez-vous à venir",
+  "UserAppointmentsList-Title" : "Liste des rendez-vous",
   "CancelAppointment-CheckAll" : "Tout sélectionner",
   "CancelAppointment-CancelSelected" : "Annuler les rendez-vous sélectionnés",
   "CancelAppointment-TooLate" : "Un ou plusieurs rendez-vous n'ont pas été annulés. Veuillez nous appeler au ",
@@ -187,7 +187,7 @@
   "ForgotPassword-Instructions" : "Saisissez votre adresse courriel pour recevoir le courriel afin de réinitialiser votre mot de passe.",
   "ForgotPassword-SendRequest" : "Réinitialiser mon mot de passe"
   "Customers-FollowUps" : "Consulter les suivis",
-  "UserAppointmentsList-NoAppointmentsFound" : "Il n'y a aucun rendez-vous",
+  "UserAppointmentsList-NoAppointmentsFound" : "Il n'y a aucun rendez-vous à venir",
   "UserAppointments-OldList" : "Consulter les anciens rendez-vous",
   "PageTitle-OldAppointments": "Anciens rendez-vous"
 }

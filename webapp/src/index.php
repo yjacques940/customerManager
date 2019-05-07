@@ -105,8 +105,8 @@ try
             var_dump(CallAPI('Get', 'Jobs/Daily'));
             Home();
             break;
-        case 'cancelappointment':
-            CancelAppointment();
+        case 'cancelappointments':
+            CancelAppointments();
             break;
         case "followuplist":
             FollowUpList(0);

@@ -37,7 +37,7 @@ $title = localize('UserAppointmentsList-Title');
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
         <?php if($appointments['response']){ ?>
       <div class="col-lg-12 col-md-12">
-        <form action="index.php?action=cancelappointment" id="cancelappointment" method="post">
+        <form action="index.php?action=cancelappointments" id="cancelappointment" method="post">
         <div class="col-lg-12 col-md-12">
         <?php
         if($tooLateToCancel != 0){
@@ -81,7 +81,7 @@ $title = localize('UserAppointmentsList-Title');
                     </td>
                     <td align="center">
                         <?php
-                        echo $appointment->appointment->therapist;
+                        echo $appointment->appointment->therapist != 'either' ? $appointment->appointment->therapist : '';
                         ?>
                     </td>
                     <td class="align-middle text-center">
@@ -110,13 +110,13 @@ $title = localize('UserAppointmentsList-Title');
 
         </form>
       </div>
-            <div class="text-center col-lg-12 col-md-12" style="padding-top: 2%">
-                <a href="?action=userOldAppointments"><button  class="btn btn-secondary"><?php echo localize('UserAppointments-OldList'); ?></button></a>
-            </div>
         <?php } else {
     echo '<h4>' . localize('UserAppointmentsList-NoAppointmentsFound').'</h4>';
         }?>
     </div>
+      <div class="text-center col-lg-12 col-md-12" style="padding-top: 2%">
+          <a href="?action=userOldAppointments"><button  class="btn btn-secondary"><?php echo localize('UserAppointments-OldList'); ?></button></a>
+      </div>
   </div>
 </section>
 
