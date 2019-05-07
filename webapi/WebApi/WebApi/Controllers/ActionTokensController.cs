@@ -2,6 +2,7 @@
 using System;
 using WebApi.Models;
 using WebApi.Services;
+using WebApi.DTO;
 
 namespace WebApi.Controllers
 {
@@ -24,6 +25,25 @@ namespace WebApi.Controllers
                     if (Service.RunActionFromToken(actionToken))
                     {
                         return Ok(actionToken);
+                    }
+                    return Conflict();
+                }
+                return NotFound("Guid not found");
+            }
+            return UnprocessableEntity("Invalid Guid");
+        }
+
+        [HttpPost, Route("IsValid")]
+        public ActionResult IsValid([FromBody] ActionTokenInformation actionTokenInfo)
+        {
+            if (Guid.TryParse(actionTokenInfo.Token, out Guid verifiedGuid))
+            {
+                ActionToken actionToken = Service.getActionToken(actionTokenInfo.Token);
+                if (actionToken != null)
+                {
+                    if (Service.IsValid(actionTokenInfo, actionToken))
+                    {
+                        return Ok(true);
                     }
                     return Conflict();
                 }

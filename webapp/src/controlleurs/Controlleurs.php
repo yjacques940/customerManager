@@ -304,6 +304,7 @@ function CheckEmailInUse(){
 function UpdatePassword(){
     if(isset($_POST['oldpassword']))
     {
+        if(!isset($_SESSION['userid'])) error(403);
         if (isset($_POST['oldpassword']) && isset($_POST['newpassword']))
         {
             $user = array(
@@ -319,22 +320,30 @@ function UpdatePassword(){
             else error(401);
         }
     }
-    elseif (isset($_GET['userId']))
+    elseif (isset($_GET['userId']) && isset($_GET['token']))
     {
-        if(isset($_POST['newpassword']))
+        $token = array(
+            "token" => htmlentities($_GET['token']),
+            "idUser" => htmlentities($_GET['userId']),
+            "idAppointment" => null
+        );
+        if (CallAPI('POST', 'ActionTokens/IsValid', json_encode($token))["statusCode"] == 200)
         {
-            $user = array(
-                'oldPassword' => '',
-                'newPassword' => htmlentities($_POST['newpassword']),
-                'userId' => htmlentities($_GET['userId'])
-            );
-            $result = CallAPI('POST','Users/UpdatePassword',json_encode($user));
-            if($result['statusCode'] == 200)
+            if(isset($_POST['newpassword']))
             {
-                $token= array('token' => htmlentities($_GET['token']));
-                $result = CallAPI('GET','ActionTokens/DeleteToken',$token);
-                if($result)
-                require('views/login.php');
+                $user = array(
+                    'oldPassword' => '',
+                    'newPassword' => htmlentities($_POST['newpassword']),
+                    'userId' => htmlentities($_GET['userId'])
+                );
+                $result = CallAPI('POST', 'Users/UpdatePassword', json_encode($user));
+                if($result['statusCode'] == 200)
+                {
+                    $token= array('token' => htmlentities($_GET['token']));
+                    $result = CallAPI('GET','ActionTokens/DeleteToken',$token);
+                    if($result)
+                    require('views/login.php');
+                }
             }
         }
     }
@@ -927,6 +936,7 @@ function OpenForgotPasswordEmailSelector()
 
 function OpenUpdatePassword()
 {
+    if(!isset($_SESSION['userid'])) error(403);
     require('views/UpdatePassword.php');
 }
 ?>
