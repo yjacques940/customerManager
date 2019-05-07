@@ -35,5 +35,24 @@ namespace WebApi.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet, Route("GetPersonalInformationWithCustomerId/{idCustomer}")]
+        public ActionResult<RegistrationInformation> GetPersonalInformationWithCustomerId(int idCustomer)
+        {
+            var user = Service.GetPersonalInformationWithCustomerId(idCustomer);
+            if (user == null)
+                return BadRequest();
+
+            return user;
+        }
+
+        [HttpPost, Route("UpdatePersonalInformationWithCustomerId")]
+        public ActionResult UpdatePersonalInformationWithCustomerId([FromBody] UpdateCustomerPersonalInformation personalInformation)
+        {
+            if (personalInformation != null)
+                return Ok(Service.UpdatePersonalInformationWithCustomerId(personalInformation));
+
+            return BadRequest();
+        }
     }
 }

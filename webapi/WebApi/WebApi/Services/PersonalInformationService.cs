@@ -57,5 +57,48 @@ namespace WebApi.Services
             }
             return false;
         }
+
+        internal bool UpdatePersonalInformationWithCustomerId(UpdateCustomerPersonalInformation personalInformation)
+        {
+            var customer = Context.Customers.FirstOrDefault(c => c.Id == personalInformation.CustomerId && c.IsActive);
+            var address = Context.Addresses.FirstOrDefault(c => c.Id == customer.IdAddress && c.IsActive);
+            var oldPhones = Context.PhoneNumbers.Where(c => c.IdCustomer == customer.Id && c.IsActive);
+            if (customer != null && address != null && oldPhones != null)
+            {
+                foreach (var phone in oldPhones)
+                {
+                    Context.Remove(phone);
+                }
+                customer.Occupation = personalInformation.Occupation;
+                address.IdState = personalInformation.PhysicalAddress.IdState;
+                address.PhysicalAddress = personalInformation.PhysicalAddress.PhysicalAddress;
+                address.ZipCode = personalInformation.PhysicalAddress.ZipCode;
+                address.CityName = personalInformation.PhysicalAddress.CityName;
+                foreach (var newPhoneNumber in personalInformation.PhoneNumbers)
+                {
+                    newPhoneNumber.IsActive = true;
+                    newPhoneNumber.IdCustomer = customer.Id;
+                    Context.Add(newPhoneNumber);
+                }
+                Context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        internal RegistrationInformation GetPersonalInformationWithCustomerId(int idCustomer)
+        {
+            var personalInformation = new RegistrationInformation();
+            personalInformation.Customer = Context.Customers.FirstOrDefault(c => c.Id == idCustomer && c.IsActive);
+            personalInformation.User = new User();
+            personalInformation.PhysicalAddress = Context.Addresses.First(c => c.Id == personalInformation.Customer.IdAddress && c.IsActive);
+            var phoneNumbers = Context.PhoneNumbers.Where(c => c.IdCustomer == personalInformation.Customer.Id && c.IsActive);
+            personalInformation.PhoneNumbers = new List<PhoneNumber>();
+            foreach (var phoneNumber in phoneNumbers)
+            {
+                personalInformation.PhoneNumbers.Add(Context.PhoneNumbers.First(c => c.Id == phoneNumber.Id));
+            }
+            return personalInformation;
+        }
     }
 }
