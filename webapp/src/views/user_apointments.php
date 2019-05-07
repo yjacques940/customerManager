@@ -58,7 +58,7 @@ $title = localize('UserAppointmentsList-Title');
                 <th scope="col"><?php echo localize('TakeAppointment-Therapist'); ?></th>
                 <th scope="col"><?php echo localize('CancelAppointment-CheckAll'); ?>
                     <input onClick="checkAll(this)" type="checkbox" id="chk_allCheckboxes"></th>
-                <th scope="col"><?php echo localize(''); ?></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>

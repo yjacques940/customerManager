@@ -46,8 +46,8 @@ ob_start();
                                     </td>
                                     <td align="center">
                                         <a style="color:inherit" title="Voir des informations supplémentaires"
-                                       href="?action=showAppointmentDetails&appointmentId=
-                                       <?php echo $appointment->appointment->id ?>">
+                                       href="?action=showAppointmentDetails&appointmentId=<?php
+                                       echo $appointment->appointment->id ?>">
                                         <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
