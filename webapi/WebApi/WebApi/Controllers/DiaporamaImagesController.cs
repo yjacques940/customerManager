@@ -38,10 +38,10 @@ namespace WebApi.Controllers
         }
 
         [HttpPost, Route("UpdateDisplayAndOrder")]
-        public ActionResult UpdateDisplayAndOrder([FromBody]List<ImageDisplayAndOrderInformation> imageDisplayAndOrderInformation)
+        public ActionResult UpdateDisplayAndOrder([FromBody]DiaporamaImagesInformation diaporamaImagesInformation)
         {
-            if (imageDisplayAndOrderInformation != null)
-                return Ok(Service.UpdateDisplayAndOrder(imageDisplayAndOrderInformation));
+            if (diaporamaImagesInformation != null)
+                return Ok(Service.UpdateDisplayAndOrder(diaporamaImagesInformation));
 
             return NoContent();
         }

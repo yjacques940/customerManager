@@ -978,6 +978,7 @@ function PrepareArraysFromPost(){
     $orderArray =  array();
     $idArray =  array();
     $displayArray =  array();
+    $deleteArray = array();
     foreach($_POST as $data){
         if(substr($data,0,5)=="order"){
             array_push($orderArray, substr($data,5));
@@ -985,8 +986,11 @@ function PrepareArraysFromPost(){
             array_push($idArray, substr($data,2));
         }elseif(substr($data,0,7)=="display"){
             array_push($displayArray, substr($data,7));
+        }elseif(substr($data,0,6)=="delete"){
+            array_push($deleteArray, substr($data,6));
         }
     }
+    var_dump($deleteArray);
     $cpt = 0;
     $dataArray = array();
     foreach($idArray as $id){
@@ -1002,7 +1006,11 @@ function PrepareArraysFromPost(){
         array_push($dataArray, $result);
         $cpt++;
     }
-    return $dataArray;
+    $newDiaporamaInformation = array(
+        "imageDisplayAndOrderInformation"=>$dataArray,
+        "idsToDelete"=>$deleteArray
+    );
+    return $newDiaporamaInformation;
 }
 
 function AddImage(){

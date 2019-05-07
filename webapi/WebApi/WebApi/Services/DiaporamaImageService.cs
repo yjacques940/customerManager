@@ -35,13 +35,23 @@ namespace WebApi.Services
             return Context.DiaporamaImages.Where(c => c.IsActive == true).ToList(); ;
         }
 
-        internal bool UpdateDisplayAndOrder(List<ImageDisplayAndOrderInformation> imageDisplayAndOrderInformation)
-        { 
+        internal bool UpdateDisplayAndOrder(DiaporamaImagesInformation diaporamaImagesInformation)
+        {
+            var imageDisplayAndOrderInformation = diaporamaImagesInformation.ImageDisplayAndOrderInformation;
+            var idsToDelete = diaporamaImagesInformation.IdsToDelete;
             foreach (var DisplayAndOrderInformation in imageDisplayAndOrderInformation)
             {
-                var image = Context.DiaporamaImages.First(c => c.Id == DisplayAndOrderInformation.Id && c.IsActive);
+                var image = Context.DiaporamaImages.FirstOrDefault(c => c.Id == DisplayAndOrderInformation.Id && c.IsActive);
                 image.IsDisplayed = DisplayAndOrderInformation.IsDisplayed;
                 image.DisplayOrder = DisplayAndOrderInformation.DisplayOrder;
+                Context.SaveChanges();
+            }
+            foreach (var idToDelete in idsToDelete)
+            {
+                var image = Context.DiaporamaImages.FirstOrDefault(c => c.Id == idToDelete);
+                image.DisplayOrder = 0;
+                image.IsActive = false;
+                image.IsDisplayed = false;
                 Context.SaveChanges();
             }
             return true;

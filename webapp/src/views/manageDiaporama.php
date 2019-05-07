@@ -51,6 +51,10 @@ $title = Localize('Diaporama-ManageDiaporama');
                     ?>
                   </select>
                 </div>
+                <div>
+                <label for="delete<?php echo $image->id?>"> Supprimer?</label>
+                <input name="delete<?php echo $image->id?>" id="delete<?php echo $image->id?>" value="delete<?php echo $image->id?>" type="checkbox">
+                </div>
               </div>
               <?php
               }
