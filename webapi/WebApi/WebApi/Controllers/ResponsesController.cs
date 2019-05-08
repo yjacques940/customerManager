@@ -17,16 +17,16 @@ namespace WebApi.Controllers
         {
         }
 
-        [HttpGet, Route("hasDoneTheSurvey/{userId}")]
-        public ActionResult<bool> HasDoneTheSurvey(int userId)
+        [HttpGet, Route("hasDoneTheSurvey/{customerId}")]
+        public ActionResult<bool> HasDoneTheSurvey(int customerId)
         {
-            return Service.HasDoneTheSurvey(userId);
+            return Service.HasDoneTheSurvey(customerId);
         }
 
-        [HttpGet, Route("ForUser/{userId}")]
-        public ActionResult<IEnumerable<Response>> ResponsesForAUser(int userId)
+        [HttpGet, Route("ForUser/{customerId}")]
+        public ActionResult<IEnumerable<Response>> ResponsesForAUser(int customerId)
         {
-            var responses = Service.GetResponsesForAUser(userId);
+            var responses = Service.GetResponsesForAUser(customerId);
             if (responses == null || responses.Count == 0)
                 return BadRequest();
             return Ok(responses);

@@ -742,9 +742,10 @@ function MedicalSurveyUpdate()
 {
     if(!isset($hasDoneTheSurvey))
     {
-        $userId = isset($_SESSION['TempCustomerId']) ? $_SESSION['TempCustomerId'] : $_SESSION['userid'];
-        $customerName = CallAPI('GET','Customers/FullName/'.$userId);
-        $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
+        $customerId = isset($_SESSION['TempCustomerId']) ? $_SESSION['TempCustomerId']
+            : GetCustomerIdByUserId($_SESSION['userid']);
+        $customerName = CallAPI('GET','Customers/FullName/'.$customerId);
+        $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $customerId)['response'];
     }
     $questions = CallAPI('GET','Questions')['response'];
     require('views/Questions/medical_survey_update.php');
@@ -837,12 +838,12 @@ function SaveMedicalSurvey(){
                     "answerType" => $questionIdAndType[0]
                 ));
             }
-            $data = array(
-                "userId" => isset($_SESSION['TempCustomerId'])
-                    ?$_SESSION['TempCustomerId']: $_SESSION['userid'],
-                "responses" => $questionsToSave
-            );
         }
+        $data = array(
+            "customerId" => isset($_SESSION['TempCustomerId'])
+                ?$_SESSION['TempCustomerId']: GetCustomerIdByUserId($_SESSION['userid']),
+            "responses" => $questionsToSave
+        );
         CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
         require('views/Questions/medical_survey_shell.php');
     }
@@ -860,25 +861,26 @@ function MainMedicalSurvey()
 }
 
 function HasDoneTheSurvey(){
-    $userId = isset($_GET['idCustomer']) ? $_GET['idCustomer'] : $_SESSION['userid'];
-    $_SESSION['TempCustomerId'] = $userId;
-    return CallAPI('GET','Responses/hasDoneTheSurvey/'. $userId)['response'];
+    $customerId = isset($_GET['idCustomer']) ? $_GET['idCustomer'] : GetCustomerIdByUserId($_SESSION['userid']);
+    $_SESSION['TempCustomerId'] = $customerId;
+    return CallAPI('GET','Responses/hasDoneTheSurvey/'. $customerId)['response'];
 }
 
 function OpenMedicalSurvey()
 {
     if($_SESSION['requests'] <= $_SESSION['max_requests'])
     {
-        $userId = isset($_SESSION['TempCustomerId']) ?  $_SESSION['TempCustomerId'] : $_SESSION['userid'];
+        $customerId = isset($_SESSION['TempCustomerId']) ?  $_SESSION['TempCustomerId']
+            : GetCustomerIdByUserId($_SESSION['userid']);
         if(isset($_POST['passwordToConfirm']) && $_SESSION['lastAuthentication'] + 1 * 60 < time())
         {
             $user = array('userId' => $_SESSION['userid'],
                 'password' => htmlentities($_POST['passwordToConfirm']));
             if(CallAPI('POST','Users/IsPasswordValid',json_encode($user))['statusCode'] == 200){
                 $questions = CallAPI('GET','Questions')['response'];
-                $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
+                $responses = CallAPI('GET','Responses/ForUser/' . $customerId)['response'];
                 $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
-                $customerName = CallAPI('GET','Customers/FullName/'.$userId);
+                $customerName = CallAPI('GET','Customers/FullName/'.$customerId);
                 require('views/Questions/medical_survey_view.php');
                 $_SESSION['lastAuthentication'] = time();
             }
@@ -889,9 +891,9 @@ function OpenMedicalSurvey()
         }
         else{
             $questions = CallAPI('GET','Questions')['response'];
-            $responses = CallAPI('GET','Responses/ForUser/' . $userId)['response'];
+            $responses = CallAPI('GET','Responses/ForUser/' . $customerId)['response'];
             $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
-            $customerName = CallAPI('GET','Customers/FullName/'.$userId);
+            $customerName = CallAPI('GET','Customers/FullName/'.$customerId);
             require('views/Questions/medical_survey_view.php');
         }
     }
@@ -1002,5 +1004,15 @@ function OldAppointments() {
     $user = array('userId' => $_SESSION['userid']);
     $oldAppointments = CallAPI('GET', 'Appointments/OldAppointmentsForCustomer',$user);
     require('views/user_old_appointments.php');
+}
+
+function GetCustomerIdByUserId($userId)
+{
+    $customer = array('userId' => $userId);
+    $result = CallAPI('GET','Customers/CustomerIdByUserId',$customer);
+    if($result['statusCode'] == 200)
+    {
+        return $result['response'];
+    }
 }
 ?>

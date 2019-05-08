@@ -23,21 +23,21 @@ namespace WebApi.Services
 
         public string GetCustomerFullName(int customerId)
         {
-            var customer = Context.Customers.Where(c => c.Id == customerId);
-            return customer.First().FirstName + " " + customer.First().LastName;
+            var customer = Context.Customers.FirstOrDefault(c => c.Id == customerId);
+            return customer.FirstName + " " + customer.LastName;
         }
 
         public int ChangeCustomerLastName(int id, string lastName)
         {
-            var user = Context.Customers.Where(c => c.Id == id).First();
-            if (user != null)
+            var customer = Context.Customers.Where(c => c.Id == id).First();
+            if (customer != null)
             {
-                user.LastName = lastName;
-                Context.Update(user);
+                customer.LastName = lastName;
+                Context.Update(customer);
             }
 
             Context.SaveChanges();
-            return user.Id;
+            return customer.Id;
         }
 
         public int AddNewCustomer(Customer customer)
@@ -105,6 +105,11 @@ namespace WebApi.Services
             customerInfo.IdUser = user != null ? user.Id : 0;
 
             return customerInfo;
+        }
+
+        public User GetCustomerIdByUserId(int userId)
+        {
+            return Context.Users.FirstOrDefault(c => c.Id == userId && c.IsActive);
         }
 
         private string GetCustomerFullAddress(int idAddress)

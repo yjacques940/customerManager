@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -27,10 +28,10 @@ namespace WebApi.Controllers
             return Ok(Service.GetCustomerByUserId(idUser));
         }
 
-        [HttpGet, Route("FullName/{id}")]
-        public ActionResult GetCustomerFullName(int id)
+        [HttpGet, Route("FullName/{customerId}")]
+        public ActionResult GetCustomerFullName(int customerId)
         {
-            return Ok(Service.GetCustomerFullName(id));
+            return Ok(Service.GetCustomerFullName(customerId));
         }
 
         [HttpPut, Route("AddNew/{customer}")]
@@ -91,6 +92,16 @@ namespace WebApi.Controllers
                 return NoContent();
 
             return Ok(customerInfo);
+        }
+
+        [HttpGet, Route("CustomerIdByUserId")]
+        public ActionResult<int> GetCustomerIdByUserId([FromQuery] int userId)
+        {
+            var user = Service.GetCustomerIdByUserId(userId);
+            if (user != null)
+                return Ok(user.IdCustomer);
+
+            return NotFound();
         }
     }
 }
