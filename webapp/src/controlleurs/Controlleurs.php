@@ -112,7 +112,7 @@ function Inscription(){
 
 function About(){
     unset($_SESSION['email']);
-    $carouselImages = CallAPI('get','DiaporamaImages/GetAllDisplayedImages')['response'];
+    $carouselImages = CallAPI('GET','DiaporamaImages/GetAllDisplayedImages')['response'];
     require('views/about.php');
 }
 
@@ -1026,7 +1026,6 @@ function AddImage(){
         move_uploaded_file($_FILES['newImage']['tmp_name'], 'images/'.$newName.'.'.$fileExtension);
         return 'images/'. $newName.'.'.$fileExtension;
     }else{
-        $wrongExtension = true;
         return false;
     }
 }

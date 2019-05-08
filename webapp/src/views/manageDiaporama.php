@@ -10,7 +10,7 @@ $title = Localize('Diaporama-ManageDiaporama');
      ?>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-6 col-md-6">
-        <form action="index.php?action=managediaporama" name="addImage" id="addImage" method="post" enctype="multipart/form-data">
+        <form action="index.php?action=manageDiaporama" name="addImage" id="addImage" method="post" enctype="multipart/form-data">
           <div class="w3pvt-wls-contact-mid">
             <div class="form-group contact-forms">
                 <label for="file"><h4><?php echo Localize('Diaporama-AddNewPicture');?></h4></label>
@@ -27,7 +27,7 @@ $title = Localize('Diaporama-ManageDiaporama');
       </div> 
       <div class="col-lg-12 col-md-12">
       <?php if(isset($images)){ ?>
-      <form action="index.php?action=managediaporama" class="text-center" name="managediaporama" id="managediaporama" method="post">
+      <form action="index.php?action=manageDiaporama" class="text-center" name="managediaporama" id="managediaporama" method="post">
         <div class="row ">
               <?php
               $maxOrder = count($images);
@@ -42,6 +42,7 @@ $title = Localize('Diaporama-ManageDiaporama');
                   <input type="radio" <?php if($display) echo'checked'?> id="yes<?php echo $image->id?>" name="display<?php echo $image->id?>" value="display1">
                   <label for="no<?php echo $image->id?>"> Non </label>
                   <input type="radio" <?php if(!$display) echo'checked'?> id="no<?php echo $image->id?>" name="display<?php echo $image->id?>" value="display0">
+                  <label for="order<?php echo $image->id?>"> Ordre </label>
                   <select name="order<?php echo $image->id?>">
                     <option value="order0">Ordre</option>
                     <?php
@@ -58,7 +59,7 @@ $title = Localize('Diaporama-ManageDiaporama');
                   </select>
                 </div>
                 <div>
-                <label for="delete<?php echo $image->id?>"> Supprimer?</label>
+                <label for="delete<?php echo $image->id?>"> Supprimer</label>
                 <input name="delete<?php echo $image->id?>" id="delete<?php echo $image->id?>" value="delete<?php echo $image->id?>" type="checkbox">
                 </div>
               </div>

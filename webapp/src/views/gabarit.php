@@ -80,7 +80,7 @@
                   </li>
                 <?php if(userHasPermission('SiteManager')){ ?>
                 <li>
-                  <a href="index.php?action=managediaporama" class="drop-text">
+                  <a href="index.php?action=manageDiaporama" class="drop-text">
                   <?php echo localize('Diaporama-ManageDiaporama'); ?>
                   </a>
                 </li>
