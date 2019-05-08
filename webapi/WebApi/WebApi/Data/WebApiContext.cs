@@ -33,5 +33,6 @@ namespace WebApi.Data
         public DbSet<Response> Responses { get; set; }
         public DbSet<FollowUp> FollowUps { get; set; }
         public DbSet<DiaporamaImage> DiaporamaImages { get; set; }
+        public DbSet<AboutText> AboutText { get; set; }
     }
 }

@@ -245,16 +245,17 @@ CREATE TABLE tbl_diaporama_image(
 
 #------------------------------------------------------------
 # Table: tbl_about_information
+# Table: tbl_about_text
 #------------------------------------------------------------
 
-CREATE TABLE tbl_about_information(
-        id_about_information   Int  Auto_increment  NOT NULL ,
+CREATE TABLE tbl_about_text(
+        id_about_text   Int  Auto_increment  NOT NULL ,
         title_fr   Varchar (300) NOT NULL ,
         title_en   Varchar (300),
-        descr_fr   Varchar (10000) NOT NULL ,
-        descr_en   Varchar (10000),
+        descr_fr   Varchar (6000) NOT NULL ,
+        descr_en   Varchar (6000),
         is_active     Bool NOT NULL DEFAULT 1
-	,CONSTRAINT tbl_about_information_PK PRIMARY KEY (id_about_information)
+	,CONSTRAINT tbl_about_text_PK PRIMARY KEY (id_about_text)
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------
@@ -531,7 +532,7 @@ VALUES (1,1,1,'images/ab1.jpg'),
        (1,0,3,'images/t3.jpg'),
        (1,1,1,'images/blog4.jpg');
        
-INSERT INTO tbl_about_information(title_fr, title_en, descr_fr, descr_en, is_active)
+INSERT INTO tbl_about_text(title_fr, title_en, descr_fr, descr_en, is_active)
 VALUES('Vous avez mal au dos?','Suffering from back pains?','On peut vous marcher sur le dos pour faire cracker toutes les vertèbre, on vous guaranti que vous
        vous sentirez mieux après.','We\'ll walk all over your back, you\'ll feel like a new person',1),
       ('Vous avez mal à l\épaule??','Suffering from shoulder pains?','On va vous swinger le bras, vous allez voir que vous ne sentirez plus rien après',
