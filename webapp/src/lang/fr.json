@@ -189,7 +189,7 @@
   "Customers-FollowUps" : "Consulter les suivis",
   "UserAppointmentsList-NoAppointmentsFound" : "Il n'y a aucun rendez-vous",
   "UserAppointments-OldList" : "Consulter les anciens rendez-vous",
-  "PageTitle-OldAppointments": "Anciens rendez-vous"
-  "CreateCustomerAccount-Title" : "Création de client"
+  "PageTitle-OldAppointments": "Anciens rendez-vous",
+  "CreateCustomerAccount-Title" : "Création de client",
   "Save" : "Enregistrer"
 }
