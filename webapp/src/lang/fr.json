@@ -16,7 +16,7 @@
   "About-WhoAreWe": "Qui nous sommes",
   "About-WhoAreWe-Text": "Carl Giguère et Mélanie Plante sont Orthothérapeutes.",
   "Bug-Description" : "Description du problème",
-  "CancelAppointment-Title" : "Annulation de rendez-vous",
+  "UserAppointmentsList-Title" : "Liste des rendez-vous",
   "CancelAppointment-CheckAll" : "Tout sélectionner",
   "CancelAppointment-CancelSelected" : "Annuler les rendez-vous sélectionnés",
   "CancelAppointment-TooLate" : "Un ou plusieurs rendez-vous n'ont pas été annulés. Veuillez nous appeler au ",
@@ -170,7 +170,6 @@
   "Name" : "Nom",
   "CustomersManagement-CustomerInfo" : "Informations du client",
   "Customers-Appointments" : "Rendez-vous du client",
-  "Customers-FollowUps" : "Consulter les suivis du client",
   "Customers-Disable" : "Désactiver ce client",
   "Customers-Information" : "Informations du client",
   "Appointment-Delete" : "Suppprimer ce rendez-vous",
@@ -186,5 +185,9 @@
   "For" : "Pour",
   "ForgotPassword-EnterEmail" : "Entrez l'adresse courriel de votre compte",
   "ForgotPassword-Instructions" : "Saisissez votre adresse courriel pour recevoir le courriel afin de réinitialiser votre mot de passe.",
-  "ForgotPassword-SendRequest" : "Réinitialiser mon mot de passe"
+  "ForgotPassword-SendRequest" : "Réinitialiser mon mot de passe",
+  "Customers-FollowUps" : "Consulter les suivis",
+  "UserAppointmentsList-NoAppointmentsFound" : "Il n'y a aucun rendez-vous",
+  "UserAppointments-OldList" : "Consulter les anciens rendez-vous",
+  "PageTitle-OldAppointments": "Anciens rendez-vous"
 }

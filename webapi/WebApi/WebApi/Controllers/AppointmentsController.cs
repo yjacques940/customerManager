@@ -137,5 +137,15 @@ namespace WebApi.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet, Route("OldAppointmentsForCustomer")]
+        public ActionResult<List<AppointmentsDateAndTimeInformation>> GetOldAppointmentsForCustomer([FromQuery]int userId)
+        {
+            var appointments = Service.GetOldAppointmentsForACustomer(userId);
+            if (appointments != null)
+                return Ok(appointments);
+
+            return NoContent();
+        }
     }
 }
