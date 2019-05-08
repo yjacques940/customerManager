@@ -20,4 +20,6 @@ WORKDIR /var/www/html/
 # && mv sweetalert2.all.min.js addons/ \
 # && rm fullcalendar.zip addons/fullcalendar-4.0.2/packages -r
 
+COPY ./settings/php.ini-production "$PHP_INI_DIR/php.ini"
+
 # COPY ./src /var/www/html
