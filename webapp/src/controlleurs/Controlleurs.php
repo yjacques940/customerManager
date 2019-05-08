@@ -646,9 +646,15 @@ function ajaxUpdateTimeslot() {
 
 function ajaxGetTimeSlots() {
     if (userHasPermission('Timeslots-Read')) {
-        $result = CallAPI('Get', 'TimeSlots');
-        if ($result['statusCode'] == 200)
-            echo json_encode($result['response']);
+        $timeslots = CallAPI('GET', 'TimeSlots');
+        $timeslotsInfo = CallAPI('GET', 'TimeSlots/WithBasicAppointmentCustomerInfo');
+        if ($timeslots['statusCode'] == 200 && $timeslotsInfo['statusCode'] == 200) {
+            $data = array(
+                "timeslots" => $timeslots['response'],
+                "timeslotsInfo" => $timeslotsInfo['response']
+            );
+            echo json_encode($data);
+        }
         else
             echo 'error';
     }

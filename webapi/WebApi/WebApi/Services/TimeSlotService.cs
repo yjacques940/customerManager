@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -82,7 +83,34 @@ namespace WebApi.Services
 
         public bool CheckTimeSlotAvailable(int id)
         {
-            return !Context.Appointments.Where(c => c.IdTimeSlot == id).Any();
+            return !Context.Appointments.Any(c => c.IdTimeSlot == id);
+        }
+
+        public List<BasicTimeSlotAppointmentCustomerInformation> GetBasicTimeSlotAppointmentCustomerInfo(
+                PhoneNumberService phoneNumberService)
+        {
+            var data = new List<BasicTimeSlotAppointmentCustomerInformation>();
+            var timeslots = Context.TimeSlots.Where(c => c.IsActive).ToList();
+            foreach (var timeslot in timeslots)
+            {
+                var appointment = Context.Appointments.FirstOrDefault(c => c.IsActive && c.IdTimeSlot == timeslot.Id);
+                if (appointment != null)
+                {
+                    var dataItem = new BasicTimeSlotAppointmentCustomerInformation();
+                    dataItem.CustomerInfo = new CustomerBasicInformation();
+                    dataItem.CustomerInfo.phoneNumbers = new List<PhoneNumberAndTypesInformation>();
+
+                    dataItem.IdTimeSlot = timeslot.Id;
+                    dataItem.IdAppointment = appointment.Id;
+                    var customer = Context.Customers.First(c => c.Id == appointment.IdCustomer);
+                    dataItem.CustomerInfo.Id = customer.Id;
+                    dataItem.CustomerInfo.Email = Context.Users.FirstOrDefault(c => c.IdCustomer == customer.Id).Email;
+                    dataItem.CustomerInfo.FullName = $"{customer.FirstName} {customer.LastName}";
+                    dataItem.CustomerInfo.phoneNumbers = phoneNumberService.GetPhoneNumbersForCustomer(customer.Id);
+                    data.Add(dataItem);
+                }
+            }
+            return data;
         }
     }
 }

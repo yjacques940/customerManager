@@ -86,7 +86,7 @@
   "Send" : "Send",
   "Personnal-Update": "Update",
   "Validate-Error-EmailDontMatch": "Both emails do not match",
-  "Validate-Error-EmailInUse":"Email address unavaillable",
+  "Validate-Error-EmailInUse":"Email address unavailable",
   "Validate-Error-EmptyFields": "One or more fields are empty",
   "Validate-Error-InvalidEmail":"Please provide a valid email",
   "Validate-Error-Number": "Please provide a valid number",

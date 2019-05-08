@@ -22,6 +22,20 @@ ob_start(); ?>
     var timeOptions = { hour: '2-digit', minute: '2-digit' };
     var locale = '<?php echo $_SESSION['locale']; ?>';
     var currentSelection = null;
+    var timeslotsInfoArray = {};
+    var colors = {
+        'unavailable': 'rgba(170,0,0,.75)',
+        'available': 'rgba(0,85,153,.75)',
+        'public': 'rgba(0,170,0,.75)',
+        'reserved': 'rgba(0,153,221,.75)'
+    };
+
+    function setLegendColors() {
+        $('#legend-color-unavailable').css("background-color", colors.unavailable);
+        $('#legend-color-available').css("background-color", colors.available);
+        $('#legend-color-reserved').css("background-color", colors.reserved);
+        $('#legend-color-public').css("background-color", colors.public);
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
@@ -87,11 +101,29 @@ ob_start(); ?>
             };
         }
 
-        function addTimeSlotToCalendar(timeslot) {
+        function addTimeslotInfoInArray(timeslotInfo) {
+            timeslotsInfoArray[timeslotInfo.idTimeSlot] = {
+                idAppointment: timeslotInfo.idAppointment,
+                customerInfo: timeslotInfo.customerInfo
+            };
+        }
+
+        function addTimeslotToCalendar(timeslot) {
+            if (timeslotsInfoArray[timeslot.id]) {
+                var text = timeslotsInfoArray[timeslot.id].customerInfo.fullName + '\n';
+                var backgroundColor = colors.reserved;
+            } else {
+                var text = "";
+                var backgroundColor = (timeslot.isPublic)
+                    ? colors.public
+                    : (timeslot.isAvailable) ? colors.available : colors.unavailable;
+            }
+            text += (timeslot.notes) ? timeslot.notes : "Aucune note";
             calendar.addEvent({
                 id: timeslot.id,
-                title: (timeslot.notes) ? timeslot.notes : "Aucune note",
-                backgroundColor: (timeslot.isPublic) ? '#0a0' : (timeslot.isAvailable) ? '' : '#a00',
+                title: text,
+                borderColor: "rgba(0,0,0,.2)",
+                backgroundColor: backgroundColor,
                 start: timeslot.startDateTime.toLocaleString('it-IT'),
                 end: timeslot.endDateTime.toLocaleString('it-IT')
             });
@@ -116,7 +148,9 @@ ob_start(); ?>
                         calendar.addEvent({
                             id: response.id,
                             title: (response.notes) ? response.notes : "Aucune note",
-                            backgroundColor: (response.isPublic) ? '#0a0' : (response.isAvailable) ? '' : '#a00',
+                            backgroundColor: (response.isPublic)
+                                ? colors.public
+                                : (response.isAvailable) ? colors.available : colors.unavailable,
                             start: response.startDateTime,
                             end: response.endDateTime
                         });
@@ -146,10 +180,11 @@ ob_start(); ?>
             }).fail(function() { showErrorAjax() });
         }
 
-        function ajaxGetTimeSlots() {
+        function ajaxGetTimeslots() {
             showToastLoading();
-            $.getJSON('?action=ajaxGetTimeslots', { get_param: 'value' }, function(timeSlots) {
-                $.each(timeSlots, function(index, timeSlot) { addTimeSlotToCalendar(timeSlot) });
+            $.getJSON('?action=ajaxGetTimeslots', { get_param: 'value' }, function(data) {
+                $.each(data.timeslotsInfo, function(index, timeslotInfo) { addTimeslotInfoInArray(timeslotInfo) });
+                $.each(data.timeslots, function(index, timeslot) { addTimeslotToCalendar(timeslot) });
             }).done(function() {
                 calendar.render();
                 Swal.close();
@@ -222,8 +257,9 @@ ob_start(); ?>
                 html:
                     'Souhaitez-vous créer une plage horaire</br><em>' + infoString + '</em> ?' +
                     '<input id="newTimeslotNotes" class="swal2-input" placeholder="Notes (optionnel)">' +
-                    '<label for="newTimeslotIsPublic"><p>Créer une plage horaire publique</p></label>' +
-                    '<input id="newTimeslotIsPublic" type="checkbox" name="isPublic" value="true">',
+                    '<label for="newTimeslotIsPublic"><p>Créer une plage horaire publique </p> </label>' +
+                    '<input id="newTimeslotIsPublic" type="checkbox" name="isPublic" value="true" ' +
+                    'style="height: 16px; width: 24px; vertical-align: middle">',
                 confirmButtonText: 'Créer',
                 showCancelButton: true,
                 preConfirm: () => {
@@ -310,10 +346,14 @@ ob_start(); ?>
         }
 
         function showTimeslotDetails(timeslot) {
-            var notes = (timeslot.title != 'Aucune note') ? timeslot.title : 'Notes';
+            var notes = "";
+            if (timeslotsInfoArray[timeslot.id] != null) {
+                notes += timeslotsInfoArray[timeslot.id].customerInfo.fullName;
+            }
+            notes += (timeslot.title != 'Aucune note') ? 'Notes de la plage horaire: ' + timeslot.title : 'Aucune note';
             Swal.fire({
                 title: timeslot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
-                text: (timeslot.title != 'Aucune note') ? 'Notes: ' + timeslot.title : 'Aucune note',
+                text: notes,
                 showCancelButton: true,
                 cancelButtonText: "Fermer",
                 confirmButtonText: "Modifier",
@@ -381,12 +421,40 @@ ob_start(); ?>
             });
         }
 
-        ajaxGetTimeSlots();
+        ajaxGetTimeslots();
+        setLegendColors();
     });
 
 </script>
+<style>
+.legend [id*='legend-color-'] {
+    height: 25px;
+    width: 25px;
+    background-color: grey;
+    border: 1px solid rgba(0,0,0,.2);
+}
+</style>
 
 <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('PageTitle-TimeslotManagement') ?></h3>
+<p class="text-center">Légende:</p>
+<div class="legend d-flex flex-wrap justify-content-around">
+    <div class="d-flex flex-nowrap m-1">
+        <div id="legend-color-unavailable"></div>
+        <div class="ml-1 mr-auto">Indisponible privée</div>
+    </div>
+    <div class="d-flex flex-nowrap m-1">
+        <div id="legend-color-available"></div>
+        <div class="ml-1 mr-auto">Disponible privée</div>
+    </div>
+    <div class="d-flex flex-nowrap m-1">
+        <div id="legend-color-public"></div>
+        <div class="ml-1 mr-auto">Disponible publique</div>
+    </div>
+    <div class="d-flex flex-nowrap m-1">
+        <div id="legend-color-reserved"></div>
+        <div class="ml-1 mr-auto">Réservée</div>
+    </div>
+</div>
 <div id="calendar" class="container py-lg-5 py-md-4 py-sm-4 py-3"></div>
 
 <?php
