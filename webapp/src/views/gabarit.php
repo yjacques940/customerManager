@@ -51,7 +51,7 @@
               <input type="checkbox" id="drop-5" />
               <ul>
                 <li>
-                  <a href="index.php?action=runDailyCronJobs" class="drop-text">Cron Daily</a>
+                  <a href="index.php?action=runDailyCronJobs" class="drop-text"><?php echo localize('CronJobs') ?></a>
                 </li>
                 <li>
                   <a href="index.php?action=timeslotManagement" class="drop-text">

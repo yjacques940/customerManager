@@ -192,4 +192,5 @@
   "PageTitle-OldAppointments": "Anciens rendez-vous",
   "CreateCustomerAccount-Title" : "Création de client",
   "Save" : "Enregistrer"
+  "CronJobs" : "Envois de courriels quotidien"
 }

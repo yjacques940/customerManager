@@ -44,6 +44,12 @@ namespace WebApi.Services
             }
         }
 
+        public bool SendNewAppointments(IConfiguration configuration, AppointmentService appointmentService, PhoneNumberService phoneService)
+        {
+            var appointments = appointmentService.GetNewAppointments(phoneService);
+            return EmailSender.SendNewAppointmentsToEmployees(appointments, configuration);
+        }
+
         public void SendUnconfirmedAppointmentsToEmployees
             (IConfiguration config, AppointmentService appointmentService, PhoneNumberService phoneNumberService)
         {

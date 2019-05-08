@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -77,6 +77,55 @@ namespace WebApi.Validators
             }
         }
 
+        public static bool SendNewAppointmentsToEmployees(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments, IConfiguration configuration)
+        {
+            SmtpClient client = GetSmtpClient(configuration);
+            MailMessage mailMessage = GetNewAppointmentMailMessage(appointments);
+
+            try
+            {
+                client.Send(mailMessage);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static MailMessage GetNewAppointmentMailMessage(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments)
+        {
+
+            string newHtml = "";
+            MailMessage mailmessage = new MailMessage();
+            mailmessage.IsBodyHtml = true;
+            mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+            mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
+            mailmessage.Subject = "Nouveaux rendez-vous de la journée";
+            string htmlWithNewAppointments = GetHtmlWithNewAppointments(appointments);
+            using (StreamReader reader = File.OpenText("EmailTemplate/newAppointments.html"))
+            {
+                var htmlFile = reader.ReadToEnd();
+                newHtml = htmlFile.Replace("[NewAppointmentsy]", htmlWithNewAppointments);
+                mailmessage.Body = newHtml;
+                return mailmessage;
+            }
+        }
+
+        private static string GetHtmlWithNewAppointments(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments)
+        {
+            List<CustomerAppointmentInformation> newAppointments = appointments.Value.ToList();
+            string html = "";
+            foreach (var appointment in newAppointments)
+            {
+                html +=
+                    $"<div class=\"moreInfoBorder\" style=\"padding:10px\">" +
+                    $"<div>Nom du client: {appointment.Customer.FirstName} {appointment.Customer.LastName}</div>" +
+                    $"<div>Rendez-vous : {appointment.Timeslot.StartDateTime.Date.ToShortDateString()} à " +
+                    $"{appointment.Timeslot.StartDateTime.ToString("HH:mm")}</div></div><br/>" ;
+            }
+            return html;
+        }
 
         public static bool SendUnconfirmedAppointmentsToEmployees(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments, IConfiguration configuration)
         {
