@@ -173,4 +173,6 @@
   "UserAppointments-OldList" : "Consult old appointments",
   "PageTitle-OldAppointments": "Old appointments"
   "CreateCustomerAccount-Title" : "Create a customer"
+  "CreateCustomerAccount-Title" : "Create a customer",
+  "Save" : "Save"
 }

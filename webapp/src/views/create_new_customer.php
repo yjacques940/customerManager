@@ -1,9 +1,6 @@
 <?php $title = localize('CreateCustomerAccount-Title');
 ob_start();
-if(userHasPermission('Customers-Write')){?>
-<?php
-$titre = localize('Inscription-Title');
-ob_start();
+if(userHasPermission('Customers-Write')){
 $_SESSION['email'] ?>
 
     <section class="contact py-lg-4 py-md-3 py-sm-3 py-3">

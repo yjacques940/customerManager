@@ -181,7 +181,7 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
             <?php if(!isset($_SESSION['userid'])){ ?>
                 <button type="submit" class="btn sent-butnn"><?php echo localize('Inscription-Finish');?></button> <?php
             }else{ ?>
-                <button type="submit" class="btn sent-butnn"><?php echo localize('Personal-Update');?></button> <?php
+                <button type="submit" class="btn sent-butnn"><?php echo localize('Save');?></button> <?php
             }
                 ?>
             </div>
