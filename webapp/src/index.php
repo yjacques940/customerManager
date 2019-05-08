@@ -123,6 +123,12 @@ try
         case "showAppointmentDetails":
             showAppointmentDetails();
             break;
+        case "createNewCustomer" :
+            ShowCreateNewCustomer();
+            break;
+        case "personalInformationToCreateCustomer":
+            ShowPersonalInformationForCustomer();
+            break;
         case 'openUpdatePassword':
             OpenUpdatePassword();
             break;

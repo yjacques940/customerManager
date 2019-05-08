@@ -13,7 +13,7 @@ $title = localize('Personal-Title');
 
 $customerIdAction = isset($_GET['customerId']) ? '&customerId=' . htmlentities($_GET['customerId']) : '' ;
     
-if(isset($_SESSION['userid'])){
+if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
     $address = $personalInformation->physicalAddress->physicalAddress;
     $city = $personalInformation->physicalAddress->cityName;
     $zipcode = $personalInformation->physicalAddress->zipCode;
@@ -50,6 +50,7 @@ if(isset($_SESSION['userid'])){
         echo '<h4 class=" text-center mb-md-4 mb-sm-3 mb-3 mb-2">' . localize('Appointment-Customer') . ': '. 
             $name .'</h4>';
     } ?>
+      <h4 class="text-center"><?php if(isset($_SESSION['customerName'])) echo $_SESSION['customerName'] ?></h4>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-10 col-md-10">
         <form action="index.php?action=personalinformation<?php echo $customerIdAction ?>" id="personalinformation" method="post">
@@ -180,7 +181,7 @@ if(isset($_SESSION['userid'])){
             <?php if(!isset($_SESSION['userid'])){ ?>
                 <button type="submit" class="btn sent-butnn"><?php echo localize('Inscription-Finish');?></button> <?php
             }else{ ?>
-                <button type="submit" class="btn sent-butnn"><?php echo localize('Personal-Update');?></button> <?php
+                <button type="submit" class="btn sent-butnn"><?php echo localize('Save');?></button> <?php
             }
                 ?>
             </div>

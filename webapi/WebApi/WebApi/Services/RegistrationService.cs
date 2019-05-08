@@ -14,7 +14,7 @@ namespace WebApi.Services
         {
         }
 
-        public object RegisterNewUser(RegistrationInformation registerInformation)
+        public int RegisterNewUser(RegistrationInformation registerInformation)
         {
             Address address = registerInformation.PhysicalAddress;
             Customer customer = registerInformation.Customer;
@@ -30,10 +30,13 @@ namespace WebApi.Services
                 customer.IdAddress = address.Id;
                 Context.Add(customer);
                 Context.SaveChanges();
-                user.IdCustomer = customer.Id;
-                user.LastLogin = DateTime.Now;
-                user.CreatedOn = DateTime.Now;
-                Context.Add(user);
+                if (user.Email != "" && user.Password != "")
+                {
+                    user.IdCustomer = customer.Id;
+                    user.LastLogin = DateTime.Now;
+                    user.CreatedOn = DateTime.Now;
+                    Context.Add(user);
+                }
                 Context.SaveChanges();
                 foreach (var phone in phoneNumbers)
                 {
@@ -43,12 +46,7 @@ namespace WebApi.Services
                 }
             }
             Context.SaveChanges();
-           return user;
-        }
-
-        internal object UpdateUser(RegistrationInformation registrationInformation)
-        {
-            throw new NotImplementedException();
+           return customer.Id;
         }
     }
 }
