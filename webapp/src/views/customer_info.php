@@ -19,7 +19,8 @@ unset($_SESSION['TempCustomerId']);
                         <p><b><?php echo localize('Personal-DateOfBirth'); ?>: </b><?php echo $customerInfo->birthDate ;?></p>
                         <p><b><?php echo localize('Footer-Text-Address') ?>: </b><?php echo $customerInfo->fullAddress ;?></p>
                         <p><b><?php echo localize('Personal-Occupation')?>: </b><?php echo  $customerInfo->occupation ;?></p>
-                        <p><b><?php echo localize('Login-Email'); ?>: </b><?php echo $customerInfo->email ? $customerInfo->email : ' '  ;?></p>
+                        <p><b><?php echo localize('Login-Email'); ?>: </b><?php echo $customerInfo->email ? $customerInfo->email
+                                : '<i class="fa fa-pencil-square-o" aria-hidden="true">Ajouter une adresse courriel</i>'  ;?></p>
 
                     </div>
                     <div class="col-lg-6 col-md-6">
