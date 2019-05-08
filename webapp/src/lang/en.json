@@ -1,5 +1,4 @@
 {
-{
   "About-EmailChanged": "Email successfully updated",
   "About-InformationChanged": "Personal information updated",
   "About-Introduction": "Preface about the company.",
@@ -168,12 +167,9 @@
   "For" : "For",
   "ForgotPassword-EnterEmail" : "Enter your account email address",
   "ForgotPassword-Instructions" : "Enter your email address to receive the email to reset your password.",
-  "ForgotPassword-SendRequest" : "Reset my password"
-  "UserAppointmentsList-Title" : "List of upcoming appointments",
+  "ForgotPassword-SendRequest" : "Reset my password",
   "UserAppointmentsList-Title" : "Appointments List",
   "UserAppointmentsList-NoAppointmentsFound" : "There are no appointments",
   "UserAppointments-OldList" : "Consult old appointments",
-  "PageTitle-CustomersManagement" : "Customer Management",
   "PageTitle-OldAppointments": "Old appointments"
-  "OldAppointments" : "Old appointments"
 }
