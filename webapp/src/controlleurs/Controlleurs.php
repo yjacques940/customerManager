@@ -1123,4 +1123,9 @@ function GetCustomerIdByUserId($userId)
         return $result['response'];
     }
 }
+
+function ManageAboutText(){
+    require('views/manageAboutText.php');
+}
+
 ?>

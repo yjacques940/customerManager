@@ -141,6 +141,9 @@ try
         case 'addEmailForCustomer':
             AddEmailForACustomer();
             break;
+        case 'manageabouttext':
+            ManageAboutText();
+            break;
         default :
             error(404);
             break;
