@@ -187,7 +187,7 @@
   "ForgotPassword-Instructions" : "Saisissez votre adresse courriel pour recevoir le courriel afin de réinitialiser votre mot de passe.",
   "ForgotPassword-SendRequest" : "Réinitialiser mon mot de passe"
   "Customers-FollowUps" : "Consulter les suivis",
-  "UserAppointmentsList-NoAppointmentsFound" : "Il n'y a aucun rendez-vous à venir",
+  "UserAppointmentsList-NoAppointmentsFound" : "Il n'y a aucun rendez-vous",
   "UserAppointments-OldList" : "Consulter les anciens rendez-vous",
   "PageTitle-OldAppointments": "Anciens rendez-vous"
 }
