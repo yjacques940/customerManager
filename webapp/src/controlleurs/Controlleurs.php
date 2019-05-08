@@ -290,15 +290,14 @@ function AddUser(){
                 'phoneNumbers'=>$phones
             );
             $result = CallAPI('POST','Registration/Register', json_encode($registeringInformation));
-            if(!isset($_SESSION['userid'])){
-                $_SESSION['registered'] = 'success';
-                unset($_SESSION['email']);
-                unset($_SESSION['password']);
-                unset($_SESSION['firstname']);
-                unset($_SESSION['lastname']);
-                unset($_SESSION['gender']);
-                unset($_SESSION['dateofbirth']);
-            }
+
+            $_SESSION['registered'] = 'success';
+            unset($_SESSION['email']);
+            unset($_SESSION['password']);
+            unset($_SESSION['firstname']);
+            unset($_SESSION['lastname']);
+            unset($_SESSION['gender']);
+            unset($_SESSION['dateofbirth']);
         }
     }
 }
