@@ -103,5 +103,14 @@ namespace WebApi.Controllers
 
             return NotFound();
         }
+
+        [HttpPost, Route("CreateUser")]
+        public ActionResult CreateUserForACustomer([FromBody] EmailAndCustomerInfo emailInfo)
+        {
+            if(Service.CreateUserForCustomer(emailInfo) != 0)
+                return Ok();
+
+            return NoContent();
+        }
     }
 }

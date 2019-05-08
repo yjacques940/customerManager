@@ -1003,6 +1003,30 @@ function OpenUpdatePassword()
     if(!isset($_SESSION['userid'])) error(403);
     require('views/UpdatePassword.php');
 }
+
+function ShowAddEmailForACustomer()
+{
+    if(!userHasPermission('Customers-Write')) error(403);
+    require('views/add_email_for_costumer.php');
+}
+
+function AddEmailForACustomer()
+{
+    if(!userHasPermission('Customers-Write')) error(403);
+    if(isset($_POST))
+    {
+        $customer = array('email' => htmlentities($_POST['newemail']),'customerId' => htmlentities($_GET['customerId']));
+        $addEmailResult = CallAPI('POST','Customers/CreateUser',json_encode($customer));
+        $email = array('email'=> htmlentities($_POST['newemail']));
+        $changePasswordResult = CallAPI('POST','Email/ChangePassword',json_encode($email));
+        if($addEmailResult['statusCode'] == 200 && $changePasswordResult['statusCode'] == 200)
+        {
+            require('views/confirmation_message.php');
+        }
+    }
+
+
+}
 function OldAppointments() {
     $user = array('userId' => $_SESSION['userid']);
     $oldAppointments = CallAPI('GET', 'Appointments/OldAppointmentsForCustomer',$user);

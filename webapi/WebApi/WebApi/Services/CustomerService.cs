@@ -112,6 +112,22 @@ namespace WebApi.Services
             return Context.Users.FirstOrDefault(c => c.Id == userId && c.IsActive);
         }
 
+        internal int CreateUserForCustomer(EmailAndCustomerInfo emailInfo)
+        {
+            var user = new User()
+            {
+                Password = Guid.NewGuid().ToString(),
+                Email = emailInfo.Email,
+                IdCustomer = emailInfo.CustomerId,
+                IsActive = true,
+                CreatedOn = DateTime.Now,
+                LastLogin = DateTime.Now
+            };
+            Context.Add(user);
+            Context.SaveChanges();
+            return user.IdCustomer;
+        }
+
         private string GetCustomerFullAddress(int idAddress)
         {
             var address = Context.Addresses.First(c => c.Id == idAddress && c.IsActive);

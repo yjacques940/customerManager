@@ -132,6 +132,12 @@ try
         case 'openUpdatePassword':
             OpenUpdatePassword();
             break;
+        case 'ShowAddEmailForACustomer':
+            ShowAddEmailForACustomer();
+            break;
+        case 'addEmailForCustomer':
+            AddEmailForACustomer();
+            break;
         default :
             error(404);
             break;

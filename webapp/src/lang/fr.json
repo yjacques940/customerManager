@@ -193,4 +193,5 @@
   "CreateCustomerAccount-Title" : "Création de client",
   "Save" : "Enregistrer",
   "CronJobs" : "Envois de courriels quotidien"
+  "AddEmailToCustomer" : "Ajout d'une adresse courriel"
 }

@@ -20,7 +20,9 @@ unset($_SESSION['TempCustomerId']);
                         <p><b><?php echo localize('Footer-Text-Address') ?>: </b><?php echo $customerInfo->fullAddress ;?></p>
                         <p><b><?php echo localize('Personal-Occupation')?>: </b><?php echo  $customerInfo->occupation ;?></p>
                         <p><b><?php echo localize('Login-Email'); ?>: </b><?php echo $customerInfo->email ? $customerInfo->email
-                                : '<i class="fa fa-pencil-square-o" aria-hidden="true">Ajouter une adresse courriel</i>'  ;?></p>
+                                : '<a href="?action=ShowAddEmailForACustomer&customerName='.$customerInfo->fullName.
+                                '&customerId='.$_GET['customerId'].'"><i class="fa fa-pencil-square-o" aria-hidden="true">'
+                                . localize('Timeslot-Add').'</i></a>'  ;?></p>
 
                     </div>
                     <div class="col-lg-6 col-md-6">

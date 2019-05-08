@@ -175,4 +175,5 @@
   "CreateCustomerAccount-Title" : "Create a customer",
   "Save" : "Save",
   "CronJobs" : "Daily emails sending"
+  "AddEmailToCustomer" : "Add an email address"
 }
