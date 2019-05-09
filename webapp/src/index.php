@@ -141,7 +141,7 @@ try
         case 'addEmailForCustomer':
             AddEmailForACustomer();
             break;
-        case 'manageabouttext':
+        case 'manageAboutText':
             ManageAboutText();
             break;
         default :

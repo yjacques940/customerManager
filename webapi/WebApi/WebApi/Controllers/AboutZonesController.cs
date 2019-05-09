@@ -10,11 +10,10 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AboutTextController : BaseController<AboutTextService, AboutText>
+    public class AboutZonesController : BaseController<AboutZoneService, AboutZone>
     {
-        public AboutTextController(AboutTextService service) : base(service)
+        public AboutZonesController(AboutZoneService service) : base(service)
         {
         }
-
     }
 }

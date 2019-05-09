@@ -1125,6 +1125,9 @@ function GetCustomerIdByUserId($userId)
 }
 
 function ManageAboutText(){
+    $aboutText = CallAPI('GET','AboutText/GetActiveText')['response'];
+    if(isset($_GET['id']))
+        $textToModify = CallAPI('GET','AboutText/GetAboutTextById/'.$_GET['id'])['response'];
     require('views/manageAboutText.php');
 }
 

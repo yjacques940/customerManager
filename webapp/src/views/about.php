@@ -126,12 +126,6 @@ $title = 'Connection';
             <div class="team-grid">
               <div class="team-image mb-3">
                 <img src="images/t1.jpg" alt="" class="img-fluid">
-                <div class="social-icons">
-                  <a href="#"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
-                </div>
               </div>
               <h4>Carl Giguère</h4>
               <p class="mt-2">Orthothérapeute</p>
@@ -141,12 +135,6 @@ $title = 'Connection';
             <div class="team-grid">
               <div class="team-image mb-3">
                 <img src="images/t2.jpg" alt="" class="img-fluid">
-                <div class="social-icons">
-                  <a href="#"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
-                </div>
               </div>
               <h4>Mélanie Plante</h4>
               <p class="mt-2">Orthothérapeute</p>

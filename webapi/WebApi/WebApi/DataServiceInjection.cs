@@ -24,6 +24,7 @@ namespace WebApi
             services.AddTransient<FollowUpService>();
             services.AddTransient<DiaporamaImageService>();
             services.AddTransient<AboutTextService>();
+            services.AddTransient<AboutZoneService>();
             return services;
         }
     }

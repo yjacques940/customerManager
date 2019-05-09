@@ -11,5 +11,6 @@ namespace WebApi.Models
         public string TitleEn { get; set; }
         public string DescrFr { get; set; }
         public string DescrEn { get; set; }
+        public string IdZone { get; set; }
     }
 }
