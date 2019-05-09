@@ -7,6 +7,7 @@ namespace WebApi.DTO
     {
         public int IdTimeSlot { get; set; }
         public int IdAppointment { get; set; }
+        public string NotesTimeSlot { get; set; }
         public CustomerBasicInformation CustomerInfo { get; set; }
     }
 }

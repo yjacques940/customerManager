@@ -98,15 +98,16 @@ namespace WebApi.Services
                 {
                     var dataItem = new BasicTimeSlotAppointmentCustomerInformation();
                     dataItem.CustomerInfo = new CustomerBasicInformation();
-                    dataItem.CustomerInfo.phoneNumbers = new List<PhoneNumberAndTypesInformation>();
+                    dataItem.CustomerInfo.PhoneNumbers = new List<PhoneNumberAndTypesInformation>();
 
                     dataItem.IdTimeSlot = timeslot.Id;
                     dataItem.IdAppointment = appointment.Id;
+                    dataItem.NotesTimeSlot = timeslot.Notes;
                     var customer = Context.Customers.First(c => c.Id == appointment.IdCustomer);
                     dataItem.CustomerInfo.Id = customer.Id;
                     dataItem.CustomerInfo.Email = Context.Users.FirstOrDefault(c => c.IdCustomer == customer.Id).Email;
                     dataItem.CustomerInfo.FullName = $"{customer.FirstName} {customer.LastName}";
-                    dataItem.CustomerInfo.phoneNumbers = phoneNumberService.GetPhoneNumbersForCustomer(customer.Id);
+                    dataItem.CustomerInfo.PhoneNumbers = phoneNumberService.GetPhoneNumbersForCustomer(customer.Id);
                     data.Add(dataItem);
                 }
             }

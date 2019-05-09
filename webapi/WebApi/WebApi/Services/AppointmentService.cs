@@ -262,7 +262,7 @@ namespace WebApi.Services
             var appointmentCustomer = new AppointmentCustomerInformation();
             appointmentCustomer.Appointment = new Appointment();
             appointmentCustomer.Customer = new CustomerBasicInformation();
-            appointmentCustomer.Customer.phoneNumbers = new List<PhoneNumberAndTypesInformation>();
+            appointmentCustomer.Customer.PhoneNumbers = new List<PhoneNumberAndTypesInformation>();
 
             Customer customer = Context.Customers.First(c => c.Id == appointment.IdCustomer);
             String customerEmail = Context.Users.FirstOrDefault(c => c.IdCustomer == customer.Id).Email;
@@ -271,7 +271,7 @@ namespace WebApi.Services
             appointmentCustomer.Customer.Id = customer.Id;
             appointmentCustomer.Customer.Email = (customerEmail != null) ? customerEmail : "";
             appointmentCustomer.Customer.FullName = $"{customer.FirstName} {customer.LastName}";
-            appointmentCustomer.Customer.phoneNumbers = phoneNumberService.GetPhoneNumbersForCustomer(customer.Id);
+            appointmentCustomer.Customer.PhoneNumbers = phoneNumberService.GetPhoneNumbersForCustomer(customer.Id);
             return appointmentCustomer;
         }
     }

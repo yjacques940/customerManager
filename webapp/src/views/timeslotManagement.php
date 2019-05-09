@@ -104,6 +104,7 @@ ob_start(); ?>
         function addTimeslotInfoInArray(timeslotInfo) {
             timeslotsInfoArray[timeslotInfo.idTimeSlot] = {
                 idAppointment: timeslotInfo.idAppointment,
+                notesTimeslot: timeslotInfo.notesTimeSlot,
                 customerInfo: timeslotInfo.customerInfo
             };
         }
@@ -122,6 +123,7 @@ ob_start(); ?>
             calendar.addEvent({
                 id: timeslot.id,
                 title: text,
+                description: "test",
                 borderColor: "rgba(0,0,0,.2)",
                 backgroundColor: backgroundColor,
                 start: timeslot.startDateTime.toLocaleString('it-IT'),
@@ -191,28 +193,38 @@ ob_start(); ?>
             });
         }
 
-        function ajaxUpdateTimeslot(event, notes) {
+        function ajaxUpdateTimeslot(timeslot, notes) {
             showToastCurrentlySaving();
             $.ajax({
                 url: '?action=ajaxUpdateTimeslot',
                 type: 'POST',
                 data: {
-                    idTimeslot: event.id,
+                    idTimeslot: timeslot.id,
                     notes: notes
                 }
             }).done(function(response) {
                 if (response == 'success') {
                     showToastSavingSuccess();
                     calendar.unselect();
-                    event.remove();
+                    timeslot.remove();
+                    var eventTitle = (timeslotsInfoArray[timeslot.id] !== undefined)
+                        ? timeslotsInfoArray[timeslot.id].customerInfo.fullName + '\n' : '';
+                    if (notes != '') {
+                        timeslotsInfoArray[timeslot.id].notesTimeslot = notes;
+                        eventTitle += notes;
+                    }
+                    else {
+                        timeslotsInfoArray[timeslot.id].notesTimeslot = null;
+                        eventTitle += "Aucune note";
+                    }
                     calendar.addEvent({
-                        id: event.id,
-                        title: (notes != '') ? notes : "Aucune note",
-                        backgroundColor: event.backgroundColor,
-                        start: event.start,
-                        end: event.end
+                        id: timeslot.id,
+                        title: eventTitle,
+                        backgroundColor: timeslot.backgroundColor,
+                        start: timeslot.start,
+                        end: timeslot.end
                     });
-                    showTimeslotDetails(calendar.getEventById(event.id));
+                    showTimeslotDetails(calendar.getEventById(timeslot.id));
                 } else Swal.fire('Erreur', response, 'error');
             }).fail(function() { showErrorAjax() });
         }
@@ -278,20 +290,20 @@ ob_start(); ?>
             });
         }
 
-        function showConfirmDeleteTimeslot(event) {
+        function showConfirmDeleteTimeslot(timeslot) {
             Swal.fire({
                 title: "Suppression plage horaire",
                 html: 'Souhaitez-vous vraiment supprimer cette plage horaire?</br><em>Le '
-                    + event.start.toLocaleDateString(locale + '-ca', dateTimeOptions) + '</em>',
+                    + timeslot.start.toLocaleDateString(locale + '-ca', dateTimeOptions) + '</em>',
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: 'Confirmer la suppression',
                 confirmButtonColor: '#d33'
             }).then((result) => {
                 if (result.value)
-                    ajaxDeleteTimeslot(event);
+                    ajaxDeleteTimeslot(timeslot);
                 else if (result.dismiss != 'backdrop')
-                    showTimeslotEditor(event);
+                    showTimeslotDetails(timeslot);
             });
         }
 
@@ -346,48 +358,90 @@ ob_start(); ?>
         }
 
         function showTimeslotDetails(timeslot) {
-            var notes = "";
-            if (timeslotsInfoArray[timeslot.id] != null) {
-                notes += timeslotsInfoArray[timeslot.id].customerInfo.fullName;
+            if (timeslotsInfoArray[timeslot.id] !== undefined) {
+                var data = timeslotsInfoArray[timeslot.id];
+                var notes = "<h5 class='mt-3 font-weight-underlined'><u>"
+                    + "Notes sur plage horaire"
+                    + ":</u></h5>";
+                notes += (data.notesTimeslot !== null) ? data.notesTimeslot : 'Aucune note';
+                notes += "<h5 class='mt-3 font-weight-bold'><u>"
+                    + "Réservation au nom de"
+                    + ":</u></h5><a target='_blank' href='?action=showCustomerInfo&customerId="
+                    + data.customerInfo.id + "'>" + data.customerInfo.fullName
+                    + " <i class='fa fa-external-link' aria-hidden='true'></i></a><h5 class='mt-3 font-weight-bold'><u>"
+                    + "Pour rejoindre"
+                    + ":</u></h5>";
+                if (data.customerInfo.email !== null) {
+                    notes += "<b class='mt-3 font-weight-bold'>"
+                        + "Courriel:"
+                        + "</b> <a href='mailto:" + data.customerInfo.email + "'>"
+                        + data.customerInfo.email + "</a><br/>";
+                }
+                $.each(data.customerInfo.phoneNumbers, function(index, phoneNumber) {
+                    notes += "<b class='font-weight-bold'>" + phoneNumber.phoneType + ":</b> " + phoneNumber.phone;
+                    notes += (phoneNumber.extension !== null) ? " Ext. " + phoneNumber.extension + "<br/>" : "<br/>";
+                });
+                notes += "<br/><a class='btn btn-info pl-4 pr-4' target='_blank' "
+                    + "href='?action=showAppointmentDetails&appointmentId=" + data.idAppointment + "'/>"
+                    + "Consulter le rendez-vous"
+                    + " <i class='fa fa-external-link' aria-hidden='true'></i></a>";
             }
-            notes += (timeslot.title != 'Aucune note') ? 'Notes de la plage horaire: ' + timeslot.title : 'Aucune note';
+            else {
+                var notes = "<h5 class='m-1 font-weight-underlined'><u>"
+                    + "Notes sur plage horaire"
+                    + ":</u></h5>" + timeslot.title;
+            }
+            notes += "<br/><button class='btn m-1 mt-3 pl-4 pr-4' style='background-color: #D90; color: #FFF'"
+                + " id='timeslotEdit'>"
+                + "Modifier"
+                + " <i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>";
             Swal.fire({
                 title: timeslot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
-                text: notes,
+                html: notes,
                 showCancelButton: true,
                 cancelButtonText: "Fermer",
-                confirmButtonText: "Modifier",
-                confirmButtonColor: '#d93',
-            }).then((result) => { if (result.value) showTimeslotEditor(timeslot) });
-        }
-
-        function showTimeslotEditor(timeslot) {
-            var notes = (timeslot.title != 'Aucune note') ? timeslot.title : 'Notes';
-            Swal.fire({
-                title: timeslot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
-                html: 'Mode édition'
-                    + '<br/><input class="swal2-input" type="text" id="notes" placeholder="'
-                    + notes
-                    + '"></input><br/><button id="timeslotUpdate" class="swal2-confirm swal2-styled" '
-                    + 'style="background-color: rgb(51, 153, 51)">Enregistrer</button>',
-                showCancelButton: true,
-                cancelButtonText: "Fermer",
-                confirmButtonText: "Supprimer",
+                confirmButtonText: "Suppprimer <i class='fa fa-trash-o' aria-hidden='true'></i>",
                 confirmButtonColor: '#d33',
                 onBeforeOpen: () => {
                     const content = Swal.getContent();
                     const $ = content.querySelector.bind(content);
-                    const timeslotUpdate = $('#timeslotUpdate');
-                    timeslotUpdate.addEventListener('click', () => {
-                        ajaxUpdateTimeslot(timeslot, $("#notes").value);
-                    });
+                    const timeslotEdit = $('#timeslotEdit');
+                    timeslotEdit.addEventListener('click', () => { showTimeslotEditor(timeslot) });
+                }
+            }).then((result) => { if (result.value) showConfirmDeleteTimeslot(timeslot) });
+        }
+
+        function showTimeslotEditor(timeslot) {
+            if (timeslotsInfoArray[timeslot.id] !== undefined) {
+                var notes = (timeslotsInfoArray[timeslot.id].notesTimeslot !== null)
+                    ? timeslotsInfoArray[timeslot.id].notesTimeslot : '';
+            }
+            else {
+                var notes = (timeslot.title != 'Aucune note') ? timeslot.title : '';
+            }
+            Swal.fire({
+                title: timeslot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
+                html: "Mode édition"
+                    + "<br/><input class='swal2-input' type='text' id='swal-input-notes' placeholder='Notes' value='"
+                    + notes
+                    + "'></input>",
+                showCancelButton: true,
+                cancelButtonText: "Annuler",
+                confirmButtonText: "Enregistrer <i class='fa fa-floppy-o' aria-hidden='true'></i>",
+                confirmButtonColor: "#5cb85c",
+                preConfirm: () => {
+                    return { "notes": document.getElementById('swal-input-notes').value }
                 }
             }).then((result) => {
-                if (result.value)
-                    showConfirmDeleteTimeslot(timeslot)
+                if (!result.dismiss) {
+                    if (result.value.notes != notes)
+                        ajaxUpdateTimeslot(timeslot, result.value.notes);
+                    else
+                        showTimeslotDetails(timeslot);
+                }
                 else if (result.dismiss != 'backdrop')
                     showTimeslotDetails(timeslot);
-                });
+            });
         }
 
         function showToastCurrentlySaving() {
