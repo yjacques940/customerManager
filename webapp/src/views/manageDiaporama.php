@@ -41,7 +41,8 @@ $title = Localize('Diaporama-ManageDiaporama');
                   <label for="yes<?php echo $image->id?>"> oui</label>
                   <input type="radio" <?php if($display) echo'checked'?> id="yes<?php echo $image->id?>" name="display<?php echo $image->id?>" value="display1">
                   <label for="no<?php echo $image->id?>"> Non </label>
-                  <input type="radio" <?php if(!$display) echo'checked'?> id="no<?php echo $image->id?>" name="display<?php echo $image->id?>" value="display0">
+                    <input type="radio" <?php if(!$display) echo'checked'?> id="no<?php echo $image->id?>" name="display<?php echo $image->id?>" value="display0">
+                    <div>
                   <label for="order<?php echo $image->id?>"> Ordre </label>
                   <select name="order<?php echo $image->id?>">
                     <option value="order0">Ordre</option>
@@ -57,6 +58,7 @@ $title = Localize('Diaporama-ManageDiaporama');
                       }
                     ?>
                   </select>
+                    </div>
                 </div>
                 <div>
                 <label for="delete<?php echo $image->id?>"> Supprimer</label>
