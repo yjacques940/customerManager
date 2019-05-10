@@ -207,16 +207,14 @@ ob_start(); ?>
                     showToastSavingSuccess();
                     calendar.unselect();
                     timeSlot.remove();
-                    var eventTitle = (timeSlotsInfoArray[timeSlot.id] !== undefined)
-                        ? timeSlotsInfoArray[timeSlot.id].customerInfo.fullName + '\n' : '';
-                    if (notes != '') {
-                        timeSlotsInfoArray[timeSlot.id].notesTimeSlot = notes;
-                        eventTitle += notes;
+                    if (timeSlotsInfoArray[timeSlot.id] !== undefined) {
+                        timeSlotsInfoArray[timeSlot.id].notesTimeSlot = (notes != '') ? notes : null;
+                        var eventTitle = timeSlotsInfoArray[timeSlot.id].customerInfo.fullName + '\n';
                     }
                     else {
-                        timeSlotsInfoArray[timeSlot.id].notesTimeSlot = null;
-                        eventTitle += "Aucune note";
+                        var eventTitle = '';
                     }
+                    eventTitle += (notes != '') ? notes : "Aucune note";
                     calendar.addEvent({
                         id: timeSlot.id,
                         title: eventTitle,
