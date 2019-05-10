@@ -191,6 +191,6 @@
   "UserAppointments-OldList" : "Consulter les anciens rendez-vous",
   "PageTitle-OldAppointments": "Anciens rendez-vous",
   "CreateCustomerAccount-Title" : "Création de client",
-  "Save" : "Enregistrer"
+  "Save" : "Enregistrer",
   "CronJobs" : "Envois de courriels quotidien"
 }
