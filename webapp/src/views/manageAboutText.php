@@ -4,14 +4,14 @@ $title = localize('AboutText-Title');
  if(isset($textToModify)){
      $titleFr = $textToModify->titleFr;
      $titleEn = $textToModify->titleEn;
-     $descrFr = $textToModify->descrFr;
-     $descrEn = $textToModify->descrEn;
+     $descriptionFr = $textToModify->descriptionFr;
+     $descriptionEn = $textToModify->descriptionEn;
      $zone    = $textToModify->zone;
  }else{
     $titleFr = '';
     $titleEn = '';
-    $descrFr = '';
-    $descrEn = '';
+    $descriptionFr = '';
+    $descriptionEn = '';
     $zone    = '';
  }
  $id = isset($_GET['id']) ? $_GET['id'] : 0;
@@ -37,8 +37,8 @@ $title = localize('AboutText-Title');
                         <input type="text" name="titlefr" id="titlefr" value="<?php echo $titleFr ?>" class="form-control">
                     </div> 
                     <div class="form-group contact-forms">
-                        <label for="descrfr"><h4><?php echo localize('Description-French'); ?></h4></label>
-                        <textarea id="descrfr" name="descrfr" class="md-textarea form-control" rows="3"><?php echo $descrFr ?></textarea>
+                        <label for="descriptionfr"><h4><?php echo localize('Description-French'); ?></h4></label>
+                        <textarea id="descriptionfr" name="descriptionfr" class="md-textarea form-control" rows="3"><?php echo $descriptionFr ?></textarea>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-8">
@@ -47,8 +47,8 @@ $title = localize('AboutText-Title');
                         <input type="text" name="titleen" id="titleen" value="<?php echo $titleEn ?>" class="form-control">
                     </div> 
                     <div class="form-group contact-forms">
-                        <label for="descren"><h4><?php echo localize('Description-English');?></h4></label>
-                        <textarea id="descren" name="descren" class="md-textarea form-control" rows="3"><?php echo $descrEn ?></textarea>
+                        <label for="descriptionen"><h4><?php echo localize('Description-English');?></h4></label>
+                        <textarea id="descriptionen" name="descriptionen" class="md-textarea form-control" rows="3"><?php echo $descriptionEn ?></textarea>
                     </div> 
                 </div>
             </div>
@@ -70,15 +70,15 @@ $title = localize('AboutText-Title');
                 $zone = $aboutText->zoneDescription;
                 if($_SESSION['locale'] == 'fr'){
                     $tableTitle = $text->titleFr;
-                    $tableDescr = $text->descrFr;
+                    $tableDescription = $text->descriptionFr;
                 }else{
                     $tableTitle = $text->titleEn;
-                    $tableDescr = $text->descrEn;
+                    $tableDescription = $text->descriptionEn;
                 }?>
                 <tr>
                     <td><a href="?action=manageAboutText&id=<?php echo $text->id ?>"><?php echo $zone ?> </a> </td>
                     <td><?php echo $tableTitle ?> </td>
-                    <td><?php echo $tableDescr ?> </td>
+                    <td><?php echo $tableDescription ?> </td>
                 </tr>
                 <?php
             }
@@ -97,7 +97,7 @@ $(document).ready(function(){
             titlefr:{
                 required:true
             },
-            descrfr: {
+            descriptionfr: {
                 required : true
             }
         },
@@ -105,7 +105,7 @@ $(document).ready(function(){
             titlefr:{
                 required :'<?php echo localize('Validate-Error-RequiredField'); ?>.'
             },
-            descrfr:{
+            descriptionfr:{
                 required :'<?php echo localize('Validate-Error-RequiredField'); ?>.'
             }
         },

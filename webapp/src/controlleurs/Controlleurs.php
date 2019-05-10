@@ -1130,15 +1130,15 @@ function GetCustomerIdByUserId($userId)
 function ManageAboutText(){
     if(userHasPermission('IsEmployee')){
         if(isset($_POST['titlefr'])){
-            if($_POST['id'] != '0' and $_POST['titlefr'] != '' and $_POST['descrfr'] != ''){
-                $descrEn = (isset($_POST['descren'])) ? $_POST['descren'] : '';
+            if($_POST['id'] != '0' and $_POST['titlefr'] != '' and $_POST['descriptionfr'] != ''){
+                $descriptionEn = (isset($_POST['descriptionen'])) ? $_POST['descriptionen'] : '';
                 $TitleEn = (isset($_POST['titleen'])) ? $_POST['titleen'] : '';
                 $data = array(
                     "id"      => $_POST['id'],
                     "titleFr" => $_POST['titlefr'],
                     "titleEn" => $_POST['titleen'],
-                    "descrFr" => $_POST['descrfr'], 
-                    "descrEn" => $_POST['descren']
+                    "descriptionFr" => $_POST['descriptionfr'], 
+                    "descriptionEn" => $_POST['descriptionen']
                 );
                 $result = CallAPI('POST','AboutTexts/UpdateAboutText',json_encode($data));
             }

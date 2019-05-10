@@ -249,7 +249,7 @@ CREATE TABLE tbl_diaporama_image(
 
 CREATE TABLE tbl_about_zone(
         id_about_zone   Int  Auto_increment  NOT NULL ,
-        descr   Varchar (300) NOT NULL ,
+        description   Varchar (300) NOT NULL ,
         code    Varchar(10) NOT NULL UNIQUE,
         is_active     Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_about_zone_PK PRIMARY KEY (id_about_zone)
@@ -262,8 +262,8 @@ CREATE TABLE tbl_about_text(
         id_about_text   Int  Auto_increment  NOT NULL ,
         title_fr      Varchar (300) NOT NULL ,
         title_en      Varchar (300),
-        descr_fr      Varchar (6000) NOT NULL ,
-        descr_en      Varchar (6000),
+        description_fr      Varchar (6000) NOT NULL ,
+        description_en      Varchar (6000),
         id_zone       Int NOT NULL ,
         is_active     Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_about_text_PK PRIMARY KEY (id_about_text)
@@ -477,12 +477,12 @@ INSERT INTO tbl_state (code,name,id_country) VALUES
 	('WI','Wisconsin', @USA_CountryId),
 	('WY','Wyoming', @USA_CountryId);
     
-INSERT INTO tbl_about_zone(descr, code, is_active)
+INSERT INTO tbl_about_zone(description, code, is_active)
 VALUES('En haut à gauche','topleft',1),
       ('En haut à droite','topright',1),
       ('Zone de traitement','treatment',1);
       
-INSERT INTO tbl_about_text(title_fr, title_en, descr_fr, descr_en, id_zone, is_active)
+INSERT INTO tbl_about_text(title_fr, title_en, description_fr, description_en, id_zone, is_active)
 VALUES('Vous souffrez de mobilité restreinte au niveau de l\'épaule?',' Your shoulder suffers from mouvement restrictions?',
 ' Il est donc important que votre physiothérapeute vous enseigne un programme
 d’exercices adapté comprenant des exercices de stabilisation musculaire, de renforcement et

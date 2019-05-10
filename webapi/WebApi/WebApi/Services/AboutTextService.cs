@@ -22,7 +22,7 @@ namespace WebApi.Services
             foreach (var aboutZone in aboutZones)
             {
                 AboutTextAndZoneInformation aboutTextAndZone = new AboutTextAndZoneInformation();
-                aboutTextAndZone.ZoneDescription = aboutZone.Descr;
+                aboutTextAndZone.ZoneDescription = aboutZone.Description;
                 aboutTextAndZone.AboutText = Context.AboutText.FirstOrDefault(c => c.IdZone == aboutZone.Id);
                 aboutTextAndZones.Add(aboutTextAndZone);
             }
@@ -34,8 +34,8 @@ namespace WebApi.Services
             var aboutTextToUpdate = Context.AboutText.FirstOrDefault(c => c.Id == aboutText.Id);
             aboutTextToUpdate.TitleFr = aboutText.TitleFr;
             aboutTextToUpdate.TitleEn = aboutText.TitleEn;
-            aboutTextToUpdate.DescrFr = aboutText.DescrFr;
-            aboutTextToUpdate.DescrEn = aboutText.DescrEn;
+            aboutTextToUpdate.DescriptionFr = aboutText.DescriptionFr;
+            aboutTextToUpdate.DescriptionEn = aboutText.DescriptionEn;
             Context.SaveChanges();
             return aboutText;
         }

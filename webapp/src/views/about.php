@@ -81,10 +81,10 @@ $title = 'Connection';
               }
                ?></h4>
               <p><?php
-              if($_SESSION['locale'] == 'en' and $topLeft->descrEn != ''){
-                echo $topLeft->descrEn;
+              if($_SESSION['locale'] == 'en' and $topLeft->descriptionEn != ''){
+                echo $topLeft->descriptionEn;
               }else{
-                echo $topLeft->descrFr;
+                echo $topLeft->descriptionFr;
               }
                ?></p>
             </div>
@@ -102,10 +102,10 @@ $title = 'Connection';
               }
                ?></h4>
               <p><?php
-              if($_SESSION['locale'] == 'en' and $topRight->descrEn != ''){
-                echo $topRight->descrEn;
+              if($_SESSION['locale'] == 'en' and $topRight->descriptionEn != ''){
+                echo $topRight->descriptionEn;
               }else{
-                echo $topRight->descrFr;
+                echo $topRight->descriptionFr;
               }
                ?></p>
             </div>
@@ -124,10 +124,10 @@ $title = 'Connection';
           }
             ?></h4>
           <p><?php
-          if($_SESSION['locale'] == 'en' and $treatment->descrEn != ''){
-            echo $treatment->descrEn;
+          if($_SESSION['locale'] == 'en' and $treatment->descriptionEn != ''){
+            echo $treatment->descriptionEn;
           }else{
-            echo $treatment->descrFr;
+            echo $treatment->descriptionFr;
           }
             ?></p>
             </div>

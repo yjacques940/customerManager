@@ -9,8 +9,8 @@ namespace WebApi.Models
     {
         public string TitleFr { get; set; }
         public string TitleEn { get; set; }
-        public string DescrFr { get; set; }
-        public string DescrEn { get; set; }
+        public string DescriptionFr { get; set; }
+        public string DescriptionEn { get; set; }
         public int IdZone { get; set; }
     }
 }
