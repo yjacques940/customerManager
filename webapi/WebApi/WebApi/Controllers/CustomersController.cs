@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -12,8 +13,13 @@ namespace WebApi.Controllers
     [ApiController]
     public class CustomersController : BaseController<CustomerService, Customer>
     {
-        public CustomersController(WebApiContext context, CustomerService service) : base(service)
+        public IConfiguration Configuration { get; }
+        public UserService UserService { get; }
+
+        public CustomersController(WebApiContext context, CustomerService service,IConfiguration configuration,UserService userService) : base(service)
         {
+            Configuration = configuration;
+            UserService = userService;
         }
 
         [HttpGet, Route("GetAll")]
@@ -102,6 +108,15 @@ namespace WebApi.Controllers
                 return Ok(user.IdCustomer);
 
             return NotFound();
+        }
+
+        [HttpPost, Route("CreateUser")]
+        public ActionResult CreateUserForACustomer([FromBody] EmailAndCustomerInfo emailInfo)
+        {
+            if(Service.CreateUserForCustomer(emailInfo,Configuration,UserService) != 0)
+                return Ok();
+
+            return NoContent();
         }
     }
 }

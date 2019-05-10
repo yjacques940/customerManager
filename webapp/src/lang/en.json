@@ -174,5 +174,7 @@
   "PageTitle-OldAppointments": "Old appointments",
   "CreateCustomerAccount-Title" : "Create a customer",
   "Save" : "Save",
-  "CronJobs" : "Daily emails sending"
+  "CronJobs" : "Daily emails sending",
+  "AddEmailToCustomer" : "Add an email address",
+  "Confirmation-UserCreatedSuccessfully" : "Account created!"
 }

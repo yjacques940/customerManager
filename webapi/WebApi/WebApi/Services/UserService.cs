@@ -88,7 +88,7 @@ namespace WebApi.Services
             return user.Id;
         }
 
-        public bool SendChangePasswordEmail(IConfiguration config, string userEmail)
+        public bool SendChangePasswordEmail(IConfiguration config, string userEmail,bool isNewAccount)
         {
             var user = Context.Users.FirstOrDefault(c => c.Email == userEmail);
             if (user != null)
@@ -105,7 +105,7 @@ namespace WebApi.Services
                 Context.ActionTokens.Add(actionToken);
                 Context.SaveChanges();
 
-                EmailSender.SendEmailToChangePassword(userEmail, actionToken.Token, config);
+                EmailSender.SendEmailToChangePassword(userEmail, actionToken.Token, config,isNewAccount);
                 return true;
             }
             return false;

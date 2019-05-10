@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
+using WebApi.Validators;
 
 namespace WebApi.Services
 {
@@ -110,6 +112,23 @@ namespace WebApi.Services
         public User GetCustomerIdByUserId(int userId)
         {
             return Context.Users.FirstOrDefault(c => c.Id == userId && c.IsActive);
+        }
+
+        internal int CreateUserForCustomer(EmailAndCustomerInfo emailInfo, Microsoft.Extensions.Configuration.IConfiguration configuration, UserService userService)
+        {
+            var user = new User()
+            {
+                Password = Guid.NewGuid().ToString(),
+                Email = emailInfo.Email,
+                IdCustomer = emailInfo.CustomerId,
+                IsActive = true,
+                CreatedOn = DateTime.Now,
+                LastLogin = DateTime.Now
+            };
+            Context.Add(user);
+            Context.SaveChanges();
+            userService.SendChangePasswordEmail(configuration,user.Email,true);
+            return user.IdCustomer;
         }
 
         private string GetCustomerFullAddress(int idAddress)
