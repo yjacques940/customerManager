@@ -45,24 +45,24 @@ $title = 'Connection';
             $firstImage = true;
             foreach($carouselImages as $image){
               if($firstImage){?>
-                <div class="item active">
+                <div class="carousel-item active">
                 <?php
                 $firstImage = false;
               }else{ ?>
-                <div class="item">
+                <div class="carousel-item">
               <?php 
               } ?>
-                <img src="<?php echo $image->path;?>" style="width:100%;">
+                <img src="<?php echo $image->path;?>" class="d-block w-100" style="width:100%;">
               </div>
               <?php
             } ?>
             </div>
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
               <span class="glyphicon glyphicon-chevron-left"></span>
               <span class="sr-only"></span>
             </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right"></span>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
               <span class="sr-only"></span>
             </a>
           </div>
