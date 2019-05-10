@@ -73,8 +73,20 @@ $title = 'Connection';
         <div class="row">
           <div class="col-lg-4 w3layouts-right-side-img">
             <div class="abut-inner-wls-head">
-              <h4 class="pb-3"><?php echo localize('About-WhoAreWe'); ?></h4>
-              <p><?php echo localize('About-WhoAreWe-Text'); ?></p>
+              <h4 class="pb-3"><?php
+              if($_SESSION['locale'] == 'en' and $topLeft->titleEn != ''){
+                echo $topLeft->titleEn;
+              }else{
+                echo $topLeft->titleFr;
+              }
+               ?></h4>
+              <p><?php
+              if($_SESSION['locale'] == 'en' and $topLeft->descriptionEn != ''){
+                echo $topLeft->descriptionEn;
+              }else{
+                echo $topLeft->descriptionFr;
+              }
+               ?></p>
             </div>
           </div>
           <div class="col-lg-4 w3layouts-left-side-img">
@@ -82,13 +94,43 @@ $title = 'Connection';
           </div>
           <div class="col-lg-4 w3layouts-right-side-img">
             <div class="abut-inner-wls-head">
-              <h4 class="pb-3"><?php echo localize('About-OurGoals'); ?></h4>
-              <p><?php echo localize('About-OurGoals-Text'); ?></p>
-              <div>
-              </div>
+              <h4 class="pb-3"><?php
+              if($_SESSION['locale'] == 'en' and $topRight->titleEn != ''){
+                echo $topRight->titleEn;
+              }else{
+                echo $topRight->titleFr;
+              }
+               ?></h4>
+              <p><?php
+              if($_SESSION['locale'] == 'en' and $topRight->descriptionEn != ''){
+                echo $topRight->descriptionEn;
+              }else{
+                echo $topRight->descriptionFr;
+              }
+               ?></p>
             </div>
           </div>
         </div>
+      </div>
+      <div class="row" style="background-color:#99CC99;">
+      <div class="col-lg-2">
+      </div>
+      <div  class="col-lg-8 p-5 text-center">
+        <h4 class="pb-3"><?php
+          if($_SESSION['locale'] == 'en' and $treatment->titleEn != ''){
+            echo $treatment->titleEn;
+          }else{
+            echo $treatment->titleFr;
+          }
+            ?></h4>
+          <p><?php
+          if($_SESSION['locale'] == 'en' and $treatment->descriptionEn != ''){
+            echo $treatment->descriptionEn;
+          }else{
+            echo $treatment->descriptionFr;
+          }
+            ?></p>
+            </div>
       </div>
     </section>
     <!--//about-->
@@ -126,12 +168,6 @@ $title = 'Connection';
             <div class="team-grid">
               <div class="team-image mb-3">
                 <img src="images/t1.jpg" alt="" class="img-fluid">
-                <div class="social-icons">
-                  <a href="#"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
-                </div>
               </div>
               <h4>Carl Giguère</h4>
               <p class="mt-2">Orthothérapeute</p>
@@ -141,12 +177,6 @@ $title = 'Connection';
             <div class="team-grid">
               <div class="team-image mb-3">
                 <img src="images/t2.jpg" alt="" class="img-fluid">
-                <div class="social-icons">
-                  <a href="#"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                  <a href="#"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
-                </div>
               </div>
               <h4>Mélanie Plante</h4>
               <p class="mt-2">Orthothérapeute</p>

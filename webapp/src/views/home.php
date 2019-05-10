@@ -69,6 +69,11 @@
                   <?php echo localize('Diaporama-ManageDiaporama'); ?>
                   </a>
                 </li>
+                <li>
+                  <a href="index.php?action=manageAboutText" class="drop-text">
+                      <?php echo localize('PageTitle-ManageAboutText'); ?>
+                  </a>
+                </li>
                 <?php } ?>
               </ul>
             </li>

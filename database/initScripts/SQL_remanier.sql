@@ -244,6 +244,33 @@ CREATE TABLE tbl_diaporama_image(
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------
+# Table: tbl_about_zone
+#------------------------------------------------------------
+
+CREATE TABLE tbl_about_zone(
+        id_about_zone   Int  Auto_increment  NOT NULL ,
+        description   Varchar (300) NOT NULL ,
+        code    Varchar(10) NOT NULL UNIQUE,
+        is_active     Bool NOT NULL DEFAULT 1
+	,CONSTRAINT tbl_about_zone_PK PRIMARY KEY (id_about_zone)
+)ENGINE=InnoDB;
+#------------------------------------------------------------
+# Table: tbl_about_text
+#------------------------------------------------------------
+
+CREATE TABLE tbl_about_text(
+        id_about_text   Int  Auto_increment  NOT NULL ,
+        title_fr      Varchar (300) NOT NULL ,
+        title_en      Varchar (300),
+        description_fr      Varchar (6000) NOT NULL ,
+        description_en      Varchar (6000),
+        id_zone       Int NOT NULL ,
+        is_active     Bool NOT NULL DEFAULT 1
+	,CONSTRAINT tbl_about_text_PK PRIMARY KEY (id_about_text)
+    ,CONSTRAINT tbl_about_text_tbl_about_zone_FK FOREIGN KEY (id_zone) REFERENCES tbl_about_zone(id_about_zone)
+)ENGINE=InnoDB;
+
+#------------------------------------------------------------
 # Inserting basic data
 #------------------------------------------------------------
 
@@ -449,6 +476,22 @@ INSERT INTO tbl_state (code,name,id_country) VALUES
 	('WV','West Virginia', @USA_CountryId),
 	('WI','Wisconsin', @USA_CountryId),
 	('WY','Wyoming', @USA_CountryId);
+    
+INSERT INTO tbl_about_zone(description, code, is_active)
+VALUES('En haut à gauche','topleft',1),
+      ('En haut à droite','topright',1),
+      ('Zone de traitement','treatment',1);
+      
+INSERT INTO tbl_about_text(title_fr, title_en, description_fr, description_en, id_zone, is_active)
+VALUES('Vous souffrez de mobilité restreinte au niveau de l\'épaule?',' Your shoulder suffers from mouvement restrictions?',
+' Il est donc important que votre physiothérapeute vous enseigne un programme
+d’exercices adapté comprenant des exercices de stabilisation musculaire, de renforcement et
+d’assouplissement. Ainsi, vous augmenterez la stabilité dynamique de votre épaule et minimiserez les
+sensations de coincement. ','It\'s important for your therapist to teach you exercices adapted to your situations.',3,1),
+      ('Qui somme nous?','Who are we?','Carl Giguère et Mélanie Plante sont Orthothérapeutes.',
+      'Carl Giguère and Mélanie Plante are orthotherapists.',2,1),
+      ('Notre But', 'Our goal','On souhaite vous aider à améliorer votre situation.',
+      'We wish to help you improve your situation',1,1);
 
 #------------------------------------------------------------
 # Creating data for tests
@@ -516,4 +559,6 @@ VALUES (1,1,1,'images/ab1.jpg'),
        (1,1,2,'images/blog1.jpg'),
        (1,0,3,'images/t3.jpg'),
        (1,1,1,'images/blog4.jpg');
+       
+
 

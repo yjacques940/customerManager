@@ -20,6 +20,8 @@ namespace WebApi.Data
         DbSet<Response> Responses { get; set; }
         DbSet<FollowUp> FollowUps { get; set; }
         DbSet<DiaporamaImage> DiaporamaImages { get; set; }
+        DbSet<AboutText> AboutText { get; set; }
+        DbSet<AboutZone> AboutZone { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;

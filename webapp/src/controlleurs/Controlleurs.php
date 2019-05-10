@@ -113,6 +113,9 @@ function Inscription(){
 function About(){
     unset($_SESSION['email']);
     $carouselImages = CallAPI('GET','DiaporamaImages/GetAllDisplayedImages')['response'];
+    $topLeft = CallAPI('GET','AboutTexts/GetAboutTextByZone/topleft')['response'];
+    $topRight = CallAPI('GET','AboutTexts/GetAboutTextByZone/topright')['response'];
+    $treatment = CallAPI('GET','AboutTexts/GetAboutTextByZone/treatment')['response'];
     require('views/about.php');
 }
 
@@ -1123,4 +1126,31 @@ function GetCustomerIdByUserId($userId)
         return $result['response'];
     }
 }
+
+function ManageAboutText(){
+    if(userHasPermission('IsEmployee')){
+        if(isset($_POST['titlefr'])){
+            if($_POST['id'] != '0' and $_POST['titlefr'] != '' and $_POST['descriptionfr'] != ''){
+                $descriptionEn = (isset($_POST['descriptionen'])) ? $_POST['descriptionen'] : '';
+                $TitleEn = (isset($_POST['titleen'])) ? $_POST['titleen'] : '';
+                $data = array(
+                    "id"      => $_POST['id'],
+                    "titleFr" => $_POST['titlefr'],
+                    "titleEn" => $_POST['titleen'],
+                    "descriptionFr" => $_POST['descriptionfr'], 
+                    "descriptionEn" => $_POST['descriptionen']
+                );
+                $result = CallAPI('POST','AboutTexts/UpdateAboutText',json_encode($data));
+            }
+        }
+        $aboutTexts = CallAPI('GET','AboutTexts/GetActiveText')['response'];
+        if(isset($_GET['id']))
+            $textToModify = CallAPI('GET','AboutTexts/GetAboutTextById/'.$_GET['id'])['response'];
+        require('views/manageAboutText.php');
+    }else{
+        error(403);
+    }
+    
+}
+
 ?>
