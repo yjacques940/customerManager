@@ -112,7 +112,10 @@ $title = 'Connection';
           </div>
         </div>
       </div>
-      <div style="background-color:#339933;" class="col-lg-12 text-center w3layouts-right-side-img">
+      <div class="row" style="background-color:#99CC99;">
+      <div class="col-lg-2">
+      </div>
+      <div  class="col-lg-8 p-5 text-center">
         <h4 class="pb-3"><?php
           if($_SESSION['locale'] == 'en' and $treatment->titleEn != ''){
             echo $treatment->titleEn;
@@ -127,6 +130,7 @@ $title = 'Connection';
             echo $treatment->descrFr;
           }
             ?></p>
+            </div>
       </div>
     </section>
     <!--//about-->

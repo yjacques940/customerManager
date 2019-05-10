@@ -250,6 +250,7 @@ CREATE TABLE tbl_diaporama_image(
 CREATE TABLE tbl_about_zone(
         id_about_zone   Int  Auto_increment  NOT NULL ,
         descr   Varchar (300) NOT NULL ,
+        code    Varchar(10) NOT NULL ,
         is_active     Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_about_zone_PK PRIMARY KEY (id_about_zone)
 )ENGINE=InnoDB;
@@ -476,10 +477,18 @@ INSERT INTO tbl_state (code,name,id_country) VALUES
 	('WI','Wisconsin', @USA_CountryId),
 	('WY','Wyoming', @USA_CountryId);
     
-INSERT INTO tbl_about_zone(descr, is_active)
-VALUES('En haut à gauche',1),
-      ('En haut à droite',1),
-      ('Zone de traitement',1);
+INSERT INTO tbl_about_zone(descr, code, is_active)
+VALUES('En haut à gauche','topleft',1),
+      ('En haut à droite','topright',1),
+      ('Zone de traitement','treatment',1);
+      
+INSERT INTO tbl_about_text(title_fr, title_en, descr_fr, descr_en, id_zone, is_active)
+VALUES('Vous avez mal au dos?','Suffering from back pains?','On peut vous marcher sur le dos pour faire cracker toutes les vertèbre, on vous garanti que vous vous sentirez mieux après.'
+,'We\'ll walk all over your back, you\'ll feel like a new person',3,1),
+      ('Qui somme nous?','Who are we?','Carl Giguère et Mélanie Plante sont Orthothérapeutes.',
+      'Carl Giguère and Mélanie Plante are orthotherapists.',2,1),
+      ('Notre But', 'Our goal','On souhaite vous aider à améliorer votre situation.',
+      'We ish to help you improve your situation',1,1);
 
 #------------------------------------------------------------
 # Creating data for tests
@@ -554,11 +563,4 @@ VALUES('Vous avez mal au dos?','Suffering from back pains?','On peut vous marche
       ('Vous avez mal à l\épaule??','Suffering from shoulder pains?','On va vous swinger le bras, vous allez voir que vous ne sentirez plus rien après',
       'We\'ll swing your arm around so much you won\'t feel a thing after',1);
           
-INSERT INTO tbl_about_text(title_fr, title_en, descr_fr, descr_en, id_zone, is_active)
-VALUES('Vous avez mal au dos?','Suffering from back pains?','On peut vous marcher sur le dos pour faire cracker toutes les vertèbre, on vous guaranti que vous vous sentirez mieux après.'
-,'We\'ll walk all over your back, you\'ll feel like a new person',3,1),
-      ('Qui somme nous?','Who are we?','Carl Giguère et Mélanie Plante sont Orthothérapeutes.',
-      'Carl Giguère and Mélanie Plante are orthotherapists.',2,1),
-      ('Notre But', 'Our goal','On souhaite vous aider à améliorer votre situation.',
-      'We ish to help you improve your situation',1,1);
 
