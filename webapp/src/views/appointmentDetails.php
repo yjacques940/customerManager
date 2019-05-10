@@ -10,7 +10,7 @@ if ($data->customer->sex =='M')
 elseif ($data->customer->sex =='M')
     $namePrefix = 'Mme ';
 
-$appointmentTime = strtotime($data->timeslot->startDateTime);
+$appointmentTime = strtotime($data->timeSlot->startDateTime);
 $appointmentReservedTime = strtotime($data->appointment->createdOn);
 
 $title = localize('PageTitle-Appointments');
@@ -47,8 +47,8 @@ ob_start();
                 </p>
             </div>
             <div class="text-justify m-2">
-                <p><b><?php echo localize('Timeslot-Notes-Text')?>:</b></p>
-                <p><?php echo ($data->timeslot->notes != null) ? $data->timeslot->notes : localize('NoNotes') ?></p>
+                <p><b><?php echo localize('TimeSlot-Notes-Text')?>:</b></p>
+                <p><?php echo ($data->timeSlot->notes != null) ? $data->timeSlot->notes : localize('NoNotes') ?></p>
             </div>
         </div>
     </div>

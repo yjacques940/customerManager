@@ -46,8 +46,8 @@
                   <a href="index.php?action=runDailyCronJobs" class="drop-text">Cron Daily</a>
                 </li>
                 <li>
-                  <a href="index.php?action=timeslotManagement" class="drop-text">
-                    <?php echo localize('PageTitle-TimeslotManagement'); ?>
+                  <a href="index.php?action=timeSlotManagement" class="drop-text">
+                    <?php echo localize('PageTitle-TimeSlotManagement'); ?>
                   </a>
                 </li>
                 <li>

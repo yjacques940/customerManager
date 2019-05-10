@@ -506,12 +506,12 @@ function MakeAppointment(){
     }
 }
 
-function ajaxAddNewTimeslot() {
+function ajaxAddNewTimeSlot() {
     if (isset($_POST)) {
         if (isset($_POST['startDatetime']) && isset($_POST['endDatetime']) && isset($_POST['isPublic'])) {
             $startDatetime = DateTime::createFromFormat('d/m/Y, H:i:s', htmlentities($_POST['startDatetime']));
             $endDatetime = DateTime::createFromFormat('d/m/Y, H:i:s', htmlentities($_POST['endDatetime']));
-            $newTimeslot = array(
+            $newTimeSlot = array(
                 "startDateTime" => $startDatetime->format("Y-m-d H:i"),
                 "endDateTime" => $endDatetime->format("Y-m-d H:i"),
                 "durationTime" => $endDatetime->format("Y-m-d H:i"),
@@ -519,7 +519,7 @@ function ajaxAddNewTimeslot() {
                 "isPublic" => htmlentities($_POST['isPublic']),
                 "isAvailable" => htmlentities($_POST['isAvailable'])
             );
-            $result = CallAPI('POST', 'TimeSlots/Add', json_encode($newTimeslot));
+            $result = CallAPI('POST', 'TimeSlots/Add', json_encode($newTimeSlot));
             if ($result['statusCode'] == 200)
                 echo json_encode($result['response']);
             else if ($result['statusCode'] == 409)
@@ -602,10 +602,10 @@ function GetCustomerInformation(){
     }
 }
 
-function ajaxDeleteTimeslot() {
+function ajaxDeleteTimeSlot() {
     if (isset($_POST)){
-        if (isset($_POST["idTimeslot"])) {
-            $result = CallAPI('DELETE', 'TimeSlots/Delete/'.htmlentities($_POST['idTimeslot']));
+        if (isset($_POST["idTimeSlot"])) {
+            $result = CallAPI('DELETE', 'TimeSlots/Delete/'.htmlentities($_POST['idTimeSlot']));
             if ($result['statusCode'] == 200) {
                 echo 'success';
             } else if ($result['statusCode'] == 409) {
@@ -621,21 +621,21 @@ function ajaxDeleteTimeslot() {
     } else echo 'No data received';
 }
 
-function ajaxUpdateTimeslot() {
+function ajaxUpdateTimeSlot() {
     if (isset($_POST)) {
-        if (isset($_POST['idTimeslot']) && isset($_POST['notes'])) {
-            $originalTimeslot = CallAPI('GET', 'TimeSlots/'.htmlentities($_POST['idTimeslot']))['response'];
-            $updatedTimeslot = array(
-                "startDateTime" => $originalTimeslot->startDateTime,
-                "endDateTime" => $originalTimeslot->endDateTime,
-                "durationTime" => $originalTimeslot->durationTime,
-                "isPublic" => $originalTimeslot->isPublic,
-                "isAvailable" => $originalTimeslot->isAvailable,
+        if (isset($_POST['idTimeSlot']) && isset($_POST['notes'])) {
+            $originalTimeSlot = CallAPI('GET', 'TimeSlots/'.htmlentities($_POST['idTimeSlot']))['response'];
+            $updatedTimeSlot = array(
+                "startDateTime" => $originalTimeSlot->startDateTime,
+                "endDateTime" => $originalTimeSlot->endDateTime,
+                "durationTime" => $originalTimeSlot->durationTime,
+                "isPublic" => $originalTimeSlot->isPublic,
+                "isAvailable" => $originalTimeSlot->isAvailable,
                 "notes" => (htmlentities($_POST['notes']) != '') ? htmlentities($_POST['notes']) : null,
-                "id" => $originalTimeslot->id,
-                "isActive" => $originalTimeslot->isActive
+                "id" => $originalTimeSlot->id,
+                "isActive" => $originalTimeSlot->isActive
             );
-            $result = CallAPI('POST', 'TimeSlots', json_encode($updatedTimeslot));
+            $result = CallAPI('POST', 'TimeSlots', json_encode($updatedTimeSlot));
             if ($result['statusCode'] == 200)
                 echo 'success';
             else
@@ -645,13 +645,13 @@ function ajaxUpdateTimeslot() {
 }
 
 function ajaxGetTimeSlots() {
-    if (userHasPermission('Timeslots-Read')) {
-        $timeslots = CallAPI('GET', 'TimeSlots');
-        $timeslotsInfo = CallAPI('GET', 'TimeSlots/WithBasicAppointmentCustomerInfo');
-        if ($timeslots['statusCode'] == 200 && $timeslotsInfo['statusCode'] == 200) {
+    if (userHasPermission('TimeSlots-Read')) {
+        $timeSlots = CallAPI('GET', 'TimeSlots');
+        $timeSlotsInfo = CallAPI('GET', 'TimeSlots/WithBasicAppointmentCustomerInfo');
+        if ($timeSlots['statusCode'] == 200 && $timeSlotsInfo['statusCode'] == 200) {
             $data = array(
-                "timeslots" => $timeslots['response'],
-                "timeslotsInfo" => $timeslotsInfo['response']
+                "timeSlots" => $timeSlots['response'],
+                "timeSlotsInfo" => $timeSlotsInfo['response']
             );
             echo json_encode($data);
         }
@@ -696,7 +696,7 @@ function CheckTimeSlotAvailable(){
     if(isset($_POST['customerId']) && userHasPermission('Appointment-Write')){
         $customerId = htmlentities($_POST['customerId']);
     }
-    $result = CallAPI('Get','TimeSlots/CheckTimeSlotAvailable/'.htmlentities($_POST['timeslot']));
+    $result = CallAPI('Get','TimeSlots/CheckTimeSlotAvailable/'.htmlentities($_POST['timeSlot']));
     if($result['statusCode']== 200){
         ReserveTimeSlotForAppointment((isset($customerId)) ? $customerId : null);
         $_SESSION['appointmenttaken'] = true;
@@ -707,10 +707,10 @@ function CheckTimeSlotAvailable(){
 }
 
 function ReserveTimeSlotForAppointment($customerId){
-    $timeslot = htmlentities($_POST['timeslot']);
+    $timeSlot = htmlentities($_POST['timeSlot']);
     $therapist = htmlentities($_POST['therapist']);
     $appointment = array(
-        'idTimeslot' => $timeslot,
+        'idTimeSlot' => $timeSlot,
         'therapist' => $therapist,
         'idUser' => ($customerId == null) ? htmlentities($_SESSION['userid']) : null,
         'idCustomer' => ($customerId != null) ? $customerId : null

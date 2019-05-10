@@ -53,25 +53,25 @@ try
         case 'changeAppointmentIsNewStatus':
             ChangeAppointmentIsNewStatus();
             break;
-        case 'timeslotManagement':
-            require('views/timeslotManagement.php');
+        case 'timeSlotManagement':
+            require('views/timeSlotManagement.php');
             break;
         case 'updateemail':
             UpdateEmail();
             break;
-        case 'ajaxAddNewTimeslot':
-            ajaxAddNewTimeslot();
+        case 'ajaxAddNewTimeSlot':
+            ajaxAddNewTimeSlot();
             break;
-        case 'ajaxUpdateTimeslot':
-            ajaxUpdateTimeslot();
+        case 'ajaxUpdateTimeSlot':
+            ajaxUpdateTimeSlot();
             break;
-        case 'ajaxGetTimeslots':
+        case 'ajaxGetTimeSlots':
             ajaxGetTimeSlots();
             break;
-        case 'ajaxGetFreeTimeslots':
+        case 'ajaxGetFreeTimeSlots':
             ajaxGetFreeTimeSlots();
             break;
-        case 'ajaxDeleteTimeslot':
+        case 'ajaxDeleteTimeSlot':
             ajaxDeleteTimeSlot();
             break;
         case 'reserveappointment':
@@ -140,7 +140,7 @@ try
     else if(isset($_POST['newemail'])){
         CheckNewEmailAvaillable();
     }
-    else if(isset($_POST['timeslot'])){
+    else if(isset($_POST['timeSlot'])){
         CheckTimeSlotAvailable();
     }
     else if(isset($_POST['customerPhone'])){
