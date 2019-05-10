@@ -14,7 +14,7 @@ unset($_SESSION['TempCustomerId']);
                         }
                         elseif($customerInfo->sex == 'F')
                         {
-                            echo '<p>Mme. '. $customerInfo->fullName .'</p>';
+                            echo '<p><b>Mme. '. $customerInfo->fullName .'</b></p>';
                         }?>
                         <p><b><?php echo localize('Personal-DateOfBirth'); ?>: </b><?php echo $customerInfo->birthDate ;?></p>
                         <p><b><?php echo localize('Footer-Text-Address') ?>: </b><?php echo $customerInfo->fullAddress ;?></p>
