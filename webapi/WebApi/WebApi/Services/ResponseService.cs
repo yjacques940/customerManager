@@ -16,27 +16,18 @@ namespace WebApi.Services
         {
         }
 
-        internal ActionResult<bool> HasDoneTheSurvey(int userId)
+        internal ActionResult<bool> HasDoneTheSurvey(int customerId)
         {
-            var user = Context.Users.FirstOrDefault(c => c.Id == userId);
-            if (user == null)
-                return false;
-            return Context.Responses.Any(c => c.IdCustomer == user.IdCustomer && c.IsActive);
+            return Context.Responses.Any(c => c.IdCustomer == customerId && c.IsActive);
         }
 
         internal object AddNewSurveyForAUser(ResponseInformation responses)
         {
-            var customer = Context.Users.First(c => c.Id == responses.UserId);
-            if (customer == null)
-            {
-                return null;
-            }
-            
             foreach (var response in responses.Responses)
             {
-                DisableOldQuestionsIfExists(response,customer.IdCustomer);
+                DisableOldQuestionsIfExists(response,responses.CustomerId);
                 Response newResponse = new Response();
-                newResponse.IdCustomer = customer.IdCustomer;
+                newResponse.IdCustomer = responses.CustomerId;
                 newResponse.IdQuestion = response.IdQuestion;
                 if (response.AnswerType == "bool")
                 {
@@ -55,13 +46,9 @@ namespace WebApi.Services
             return 1;
         }
 
-        internal List<Response> GetResponsesForAUser(int userId)
+        internal List<Response> GetResponsesForAUser(int customerId)
         {
-            var customer = Context.Users.First(c => c.Id == userId);
-            if (customer == null)
-                return null;
-
-            return Context.Responses.Where(c => c.IdCustomer == customer.IdCustomer && c.IsActive).ToList();
+            return Context.Responses.Where(c => c.IdCustomer == customerId && c.IsActive).ToList();
         }
 
         private void DisableOldQuestionsIfExists(ResponseFromWebInformation response, int idCustomer)

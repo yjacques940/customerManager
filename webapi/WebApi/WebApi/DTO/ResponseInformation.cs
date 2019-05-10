@@ -8,7 +8,7 @@ namespace WebApi.DTO
 {
     public class ResponseInformation
     {
-        public int UserId { get; set; }
+        public int CustomerId { get; set; }
         public List<ResponseFromWebInformation> Responses { get; set; }
     }
 }
