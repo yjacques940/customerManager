@@ -491,7 +491,7 @@ sensations de coincement. ','It\'s important for your therapist to teach you exe
       ('Qui somme nous?','Who are we?','Carl Giguère et Mélanie Plante sont Orthothérapeutes.',
       'Carl Giguère and Mélanie Plante are orthotherapists.',2,1),
       ('Notre But', 'Our goal','On souhaite vous aider à améliorer votre situation.',
-      'We ish to help you improve your situation',1,1);
+      'We wish to help you improve your situation',1,1);
 
 #------------------------------------------------------------
 # Creating data for tests
