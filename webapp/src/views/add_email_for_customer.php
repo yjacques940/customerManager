@@ -7,17 +7,20 @@ ob_start(); ?>
         <h4 class="text-center"><?php echo $_GET['customerName'];?></h4>
         <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
             <div class="col-lg-6 col-md-6">
-                <form action="?action=addEmailForCustomer&customerId=<?php echo $_GET['customerId']
-                ?>" name="updateemail" id="updateemail" method="post">
+                <form action="?action=addEmailForCustomer&customerId=<?php echo $_GET['customerId'] ?>"
+                      name="updateemail" id="updateemail" method="post">
                     <div class="w3pvt-wls-contact-mid">
                         <div class="form-group contact-forms">
                             <label for="newemail"><h4><?php echo Localize('EmailUpdate-NewEmail');?></h4></label>
-                            <input type="email" name="newemail" id="newemail" class="form-control" placeholder="<?php echo Localize('EmailUpdate-NewEmail');?>">
+                            <input type="email" name="newemail" id="newemail" class="form-control"
+                                   placeholder="<?php echo Localize('EmailUpdate-NewEmail');?>">
                             <div id="emailinuse" style="color:#F00"></div>
                         </div>
                         <div class="form-group contact-forms">
-                            <label for="newemailconfirmed"><h4><?php echo Localize('EmailUpdate-NewEmailConfirmed');?></h4></label>
-                            <input type="email" name="newemailconfirmed" id="newemailconfirmed" class="form-control" placeholder="<?php echo Localize('EmailUpdate-NewEmail');?>">
+                            <label for="newemailconfirmed">
+                                <h4><?php echo Localize('EmailUpdate-NewEmailConfirmed');?></h4></label>
+                            <input type="email" name="newemailconfirmed" id="newemailconfirmed" class="form-control"
+                                   placeholder="<?php echo Localize('EmailUpdate-NewEmail');?>">
                             <div id="emaildontmatch" name="emaildontmatch"></div>
                         </div>
                         <button type="submit" class="btn sent-butnn"><?php echo Localize('Timeslot-Add');?></button>

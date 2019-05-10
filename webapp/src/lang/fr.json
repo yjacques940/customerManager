@@ -194,4 +194,5 @@
   "Save" : "Enregistrer",
   "CronJobs" : "Envois de courriels quotidien"
   "AddEmailToCustomer" : "Ajout d'une adresse courriel"
+  "Confirmation-UserCreatedSuccessfully" : "Le compte a été créé!"
 }
