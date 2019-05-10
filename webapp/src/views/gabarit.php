@@ -85,6 +85,11 @@
                   </a>
                 </li>
                 <?php } ?>
+                <li>
+                  <a href="index.php?action=manageAboutText" class="drop-text">
+                      <?php echo localize('PageTitle-ManageAboutText'); ?>
+                  </a>
+                </li>
               </ul>
             </li>
             <?php

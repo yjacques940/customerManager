@@ -1128,24 +1128,29 @@ function GetCustomerIdByUserId($userId)
 }
 
 function ManageAboutText(){
-    if(isset($_POST['titlefr'])){
-        if($_POST['id'] != '0' and $_POST['titlefr'] != '' and $_POST['descrfr'] != ''){
-            $descrEn = (isset($_POST['descren'])) ? $_POST['descren'] : '';
-            $TitleEn = (isset($_POST['titleen'])) ? $_POST['titleen'] : '';
-            $data = array(
-                "id"      => $_POST['id'],
-                "titleFr" => $_POST['titlefr'],
-                "titleEn" => $_POST['titleen'],
-                "descrFr" => $_POST['descrfr'], 
-                "descrEn" => $_POST['descren']
-            );
-            $result = CallAPI('POST','AboutTexts/UpdateAboutText',json_encode($data));
+    if(userHasPermission('IsEmployee')){
+        if(isset($_POST['titlefr'])){
+            if($_POST['id'] != '0' and $_POST['titlefr'] != '' and $_POST['descrfr'] != ''){
+                $descrEn = (isset($_POST['descren'])) ? $_POST['descren'] : '';
+                $TitleEn = (isset($_POST['titleen'])) ? $_POST['titleen'] : '';
+                $data = array(
+                    "id"      => $_POST['id'],
+                    "titleFr" => $_POST['titlefr'],
+                    "titleEn" => $_POST['titleen'],
+                    "descrFr" => $_POST['descrfr'], 
+                    "descrEn" => $_POST['descren']
+                );
+                $result = CallAPI('POST','AboutTexts/UpdateAboutText',json_encode($data));
+            }
         }
+        $aboutTexts = CallAPI('GET','AboutTexts/GetActiveText')['response'];
+        if(isset($_GET['id']))
+            $textToModify = CallAPI('GET','AboutTexts/GetAboutTextById/'.$_GET['id'])['response'];
+        require('views/manageAboutText.php');
+    }else{
+        error(403);
     }
-    $aboutTexts = CallAPI('GET','AboutTexts/GetActiveText')['response'];
-    if(isset($_GET['id']))
-        $textToModify = CallAPI('GET','AboutTexts/GetAboutTextById/'.$_GET['id'])['response'];
-    require('views/manageAboutText.php');
+    
 }
 
 ?>

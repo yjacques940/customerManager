@@ -250,7 +250,7 @@ CREATE TABLE tbl_diaporama_image(
 CREATE TABLE tbl_about_zone(
         id_about_zone   Int  Auto_increment  NOT NULL ,
         descr   Varchar (300) NOT NULL ,
-        code    Varchar(10) NOT NULL ,
+        code    Varchar(10) NOT NULL UNIQUE,
         is_active     Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_about_zone_PK PRIMARY KEY (id_about_zone)
 )ENGINE=InnoDB;
@@ -260,10 +260,10 @@ CREATE TABLE tbl_about_zone(
 
 CREATE TABLE tbl_about_text(
         id_about_text   Int  Auto_increment  NOT NULL ,
-        title_fr   Varchar (300) NOT NULL ,
-        title_en   Varchar (300),
-        descr_fr   Varchar (6000) NOT NULL ,
-        descr_en   Varchar (6000),
+        title_fr      Varchar (300) NOT NULL ,
+        title_en      Varchar (300),
+        descr_fr      Varchar (6000) NOT NULL ,
+        descr_en      Varchar (6000),
         id_zone       Int NOT NULL ,
         is_active     Bool NOT NULL DEFAULT 1
 	,CONSTRAINT tbl_about_text_PK PRIMARY KEY (id_about_text)
@@ -483,8 +483,11 @@ VALUES('En haut à gauche','topleft',1),
       ('Zone de traitement','treatment',1);
       
 INSERT INTO tbl_about_text(title_fr, title_en, descr_fr, descr_en, id_zone, is_active)
-VALUES('Vous avez mal au dos?','Suffering from back pains?','On peut vous marcher sur le dos pour faire cracker toutes les vertèbre, on vous garanti que vous vous sentirez mieux après.'
-,'We\'ll walk all over your back, you\'ll feel like a new person',3,1),
+VALUES('Vous souffrez de mobilité restreinte au niveau de l\'épaule?',' Your shoulder suffers from mouvement restrictions?',
+' Il est donc important que votre physiothérapeute vous enseigne un programme
+d’exercices adapté comprenant des exercices de stabilisation musculaire, de renforcement et
+d’assouplissement. Ainsi, vous augmenterez la stabilité dynamique de votre épaule et minimiserez les
+sensations de coincement. ','It\'s important for your therapist to teach you exercices adapted to your situations.',3,1),
       ('Qui somme nous?','Who are we?','Carl Giguère et Mélanie Plante sont Orthothérapeutes.',
       'Carl Giguère and Mélanie Plante are orthotherapists.',2,1),
       ('Notre But', 'Our goal','On souhaite vous aider à améliorer votre situation.',
