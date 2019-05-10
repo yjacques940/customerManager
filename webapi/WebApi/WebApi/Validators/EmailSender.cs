@@ -128,7 +128,7 @@ namespace WebApi.Validators
             return html;
         }
 		
-		 private static MailMessage GetMailMessageToSetPasswordForNewAccount(string userEmail, string token)
+        private static MailMessage GetMailMessageToSetPasswordForNewAccount(string userEmail, string token)
         {
             using (StreamReader reader = File.OpenText("EmailTemplate/changePasswordNewAccount.html"))
             {
