@@ -742,7 +742,8 @@ function MedicalSurveyUpdate()
 {
     if(!isset($hasDoneTheSurvey))
     {
-        $customerId = isset($_SESSION['TempCustomerId']) ? $_SESSION['TempCustomerId']
+        $customerId = isset($_SESSION['TempCustomerId'])
+            ? $_SESSION['TempCustomerId']
             : GetCustomerIdByUserId($_SESSION['userid']);
         $customerName = CallAPI('GET','Customers/FullName/'.$customerId);
         $hasDoneTheSurvey = CallAPI('GET','Responses/hasDoneTheSurvey/'. $customerId)['response'];
@@ -840,8 +841,9 @@ function SaveMedicalSurvey(){
             }
         }
         $data = array(
-            "customerId" => isset($_SESSION['TempCustomerId'])
-                ?$_SESSION['TempCustomerId']: GetCustomerIdByUserId($_SESSION['userid']),
+            "customerId" => (isset($_SESSION['TempCustomerId']))
+                ? $_SESSION['TempCustomerId']
+                : GetCustomerIdByUserId($_SESSION['userid']),
             "responses" => $questionsToSave
         );
         CallApi('POST','Responses/InsertNewSurvey',json_encode($data));
@@ -870,7 +872,8 @@ function OpenMedicalSurvey()
 {
     if($_SESSION['requests'] <= $_SESSION['max_requests'])
     {
-        $customerId = isset($_SESSION['TempCustomerId']) ?  $_SESSION['TempCustomerId']
+        $customerId = isset($_SESSION['TempCustomerId'])
+            ?  $_SESSION['TempCustomerId']
             : GetCustomerIdByUserId($_SESSION['userid']);
         if(isset($_POST['passwordToConfirm']) && $_SESSION['lastAuthentication'] + 1 * 60 < time())
         {
@@ -880,7 +883,7 @@ function OpenMedicalSurvey()
                 $questions = CallAPI('GET','Questions')['response'];
                 $responses = CallAPI('GET','Responses/ForUser/' . $customerId)['response'];
                 $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
-                $customerName = CallAPI('GET','Customers/FullName/'.$customerId);
+                $customerName = CallAPI('GET','Customers/FullName/'. $customerId);
                 require('views/Questions/medical_survey_view.php');
                 $_SESSION['lastAuthentication'] = time();
             }
@@ -893,7 +896,7 @@ function OpenMedicalSurvey()
             $questions = CallAPI('GET','Questions')['response'];
             $responses = CallAPI('GET','Responses/ForUser/' . $customerId)['response'];
             $createdOn = (new DateTime($responses[0]->createdOn))->format('Y-m-d');
-            $customerName = CallAPI('GET','Customers/FullName/'.$customerId);
+            $customerName = CallAPI('GET','Customers/FullName/'. $customerId);
             require('views/Questions/medical_survey_view.php');
         }
     }
@@ -1008,8 +1011,7 @@ function OldAppointments() {
 
 function GetCustomerIdByUserId($userId)
 {
-    $customer = array('userId' => $userId);
-    $result = CallAPI('GET','Customers/CustomerIdByUserId',$customer);
+    $result = CallAPI('GET','Customers/CustomerIdByUserId',array('userId'=> $userId));
     if($result['statusCode'] == 200)
     {
         return $result['response'];
