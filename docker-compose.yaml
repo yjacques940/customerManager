@@ -18,6 +18,9 @@ services:
         - type: bind
           source: ./webapp/src
           target: /var/www/html
+        - type: bind
+          source: ./webapp/settings/ssl
+          target: /etc/ssl
     webapi:
         image: alpine:3.9
         build:

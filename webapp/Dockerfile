@@ -4,8 +4,9 @@ RUN apt update -qq \
  && apt install locales unzip wget -qy\
  && apt clean
 
-RUN sed -i -e 's/# fr_CA.UTF-8 UTF-8/fr_CA.UTF-8 UTF-8/' /etc/locale.gen && \
-    locale-gen
+RUN sed -i -e 's/# fr_CA.UTF-8 UTF-8/fr_CA.UTF-8 UTF-8/' /etc/locale.gen\
+ && locale-gen
+
 ENV LANG fr_CA.UTF-8
 ENV LANGUAGE fr_CA:fr
 ENV LC_ALL fr_CA.UTF-8
@@ -20,4 +21,8 @@ WORKDIR /var/www/html/
 # && mv sweetalert2.all.min.js addons/ \
 # && rm fullcalendar.zip addons/fullcalendar-4.0.2/packages -r
 
-# COPY ./src /var/www/html
+RUN a2enmod ssl\
+ && ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/000-default-ssl.conf
+
+COPY settings/000-default.conf /etc/apache2/sites-available/000-default.conf
+# COPY ./SRC /VAR/WWW/HTML
