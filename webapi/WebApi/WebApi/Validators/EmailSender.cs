@@ -190,8 +190,8 @@ namespace WebApi.Validators
                 html +=
                     $"<div class=\"moreInfoBorder\" style=\"padding:10px\">" +
                     $"<div>Nom du client: {appointment.Customer.FirstName} {appointment.Customer.LastName}</div>" +
-                    $"<div>Rendez-vous : {appointment.Timeslot.StartDateTime.Date.ToShortDateString()} à " +
-                    $"{appointment.Timeslot.StartDateTime.ToString("HH:mm")}</div>" +
+                    $"<div>Rendez-vous : {appointment.TimeSlot.StartDateTime.Date.ToShortDateString()} à " +
+                    $"{appointment.TimeSlot.StartDateTime.ToString("HH:mm")}</div>" +
                     $"</div><div>Numéros de Téléphones:";
                 foreach (var phoneNumber in appointment.PhoneNumbers)
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
@@ -37,9 +38,9 @@ namespace WebApi.Services
 
         public bool IsAvailable(TimeSlot newTimeSlot)
         {
-            List<TimeSlot> timeslots = Context.TimeSlots
+            List<TimeSlot> timeSlots = Context.TimeSlots
                 .Where(c => c.IsActive && (c.StartDateTime.Date == newTimeSlot.StartDateTime.Date)).ToList();
-            return TimeSlotValidator.IsAvailable(newTimeSlot, timeslots);
+            return TimeSlotValidator.IsAvailable(newTimeSlot, timeSlots);
         }
    
         public List<TimeSlot> GetTimeSlotForTheDay(DateTime date)
@@ -82,7 +83,51 @@ namespace WebApi.Services
 
         public bool CheckTimeSlotAvailable(int id)
         {
-            return !Context.Appointments.Where(c => c.IdTimeSlot == id).Any();
+            return !Context.Appointments.Any(c => c.IdTimeSlot == id);
+        }
+
+        public List<BasicTimeSlotAppointmentCustomerInformation> GetBasicTimeSlotAppointmentCustomerInfo(
+                PhoneNumberService phoneNumberService)
+        {
+            var basicTimeSlotAppointmentCustomerInformationList =
+                    new List<BasicTimeSlotAppointmentCustomerInformation>();
+
+            var timeSlots = Context.TimeSlots.Where(c => c.IsActive).ToList();
+            foreach (var timeSlot in timeSlots)
+            {
+                var appointment = Context.Appointments.FirstOrDefault(c => c.IsActive && c.IdTimeSlot == timeSlot.Id);
+                if (appointment != null)
+                {
+                    var basicTimeSlotAppointmentCustomerInformation =
+                            new BasicTimeSlotAppointmentCustomerInformation();
+
+                    basicTimeSlotAppointmentCustomerInformation.CustomerInfo =
+                            new CustomerBasicInformation();
+
+                    basicTimeSlotAppointmentCustomerInformation.CustomerInfo.PhoneNumbers =
+                            new List<PhoneNumberAndTypesInformation>();
+
+                    basicTimeSlotAppointmentCustomerInformation.IdTimeSlot = timeSlot.Id;
+                    basicTimeSlotAppointmentCustomerInformation.IdAppointment = appointment.Id;
+                    basicTimeSlotAppointmentCustomerInformation.NotesTimeSlot = timeSlot.Notes;
+
+                    var customer = Context.Customers.First(c => c.Id == appointment.IdCustomer);
+
+                    basicTimeSlotAppointmentCustomerInformation.CustomerInfo.Id = customer.Id;
+
+                    basicTimeSlotAppointmentCustomerInformation.CustomerInfo.Email =
+                            Context.Users.FirstOrDefault(c => c.IdCustomer == customer.Id).Email;
+
+                    basicTimeSlotAppointmentCustomerInformation.CustomerInfo.FullName =
+                            $"{customer.FirstName} {customer.LastName}";
+
+                    basicTimeSlotAppointmentCustomerInformation.CustomerInfo.PhoneNumbers =
+                            phoneNumberService.GetPhoneNumbersForCustomer(customer.Id);
+
+                    basicTimeSlotAppointmentCustomerInformationList.Add(basicTimeSlotAppointmentCustomerInformation);
+                }
+            }
+            return basicTimeSlotAppointmentCustomerInformationList;
         }
     }
 }

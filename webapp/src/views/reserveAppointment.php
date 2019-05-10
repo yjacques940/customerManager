@@ -29,7 +29,7 @@ $title = localize('Header-TakeAppointment');
       <div class="col-lg-6 col-md-6">
         <form action="" id="reserveappointment" name="reserveappointment" method="post">
         <div id="calendarEl" class="form-group contact-forms"></div>
-        <div id="timeslottaken" style="color:#F00"></div>
+        <div id="timeSlottaken" style="color:#F00"></div>
         <div class="form-group contact-forms">
           <label for="therapist"><h4><?php echo localize('TakeAppointment-Therapist');?></h4></label>
             <select id="therapist" name="therapist">
@@ -94,18 +94,18 @@ document.addEventListener('DOMContentLoaded', function() {
         currentSelection = event;
     }
 
-    function addTimeSlotToCalendar(timeslot) {
+    function addTimeSlotToCalendar(timeSlot) {
         calendar.addEvent({
-            id: timeslot.id,
+            id: timeSlot.id,
             title: "Plage Disponible",
-            start: timeslot.startDateTime.toLocaleString('it-IT'),
-            end: timeslot.endDateTime.toLocaleString('it-IT')
+            start: timeSlot.startDateTime.toLocaleString('it-IT'),
+            end: timeSlot.endDateTime.toLocaleString('it-IT')
         });
     }
 
     function ajaxGetTimeSlots() {
         showToastLoading();
-        $.getJSON('?action=ajaxGetFreeTimeslots', { get_param: 'value' }, function(timeSlots) {
+        $.getJSON('?action=ajaxGetFreeTimeSlots', { get_param: 'value' }, function(timeSlots) {
             $.each(timeSlots, function(index, timeSlot) { addTimeSlotToCalendar(timeSlot) });
         }).done(function() {
             calendar.render();
@@ -130,7 +130,7 @@ $(document).ready(function(){
         errorClass : "error_class",
         errorelement : "em",
         rules:{
-          timeslots: {
+          timeSlots: {
                 required:true
             },
           therapist: {
@@ -138,7 +138,7 @@ $(document).ready(function(){
           }
         },
         messages:{
-          timeslots:{
+          timeSlots:{
                 required:'<?php echo localize('Validate-Error-RequiredField'); ?>.'
             },
             therapist:{
@@ -154,12 +154,12 @@ $(document).ready(function(){
                 type:'POST',
                 data: {
                     <?php if(isset($customerId)) echo 'customerId: urlParams.get("customerId"),' ?>
-                    timeslot:currentSelection.id,
+                    timeSlot:currentSelection.id,
                     therapist:$("#therapist").val()
                 },
                 success:function(output){
                     if(output == 'taken')
-                      $("#timeslottaken").html("<p><?php echo localize('TakeAppointment-TimeSlotTaken');?></p>");
+                      $("#timeSlottaken").html("<p><?php echo localize('TakeAppointment-TimeSlotTaken');?></p>");
                     else if(output == 'available')
                       window.location = 'index.php?action=about';
                     else alert(output + "Une erreur s'est produite");

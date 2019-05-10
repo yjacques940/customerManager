@@ -99,5 +99,11 @@ namespace WebApi.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet, Route("WithBasicAppointmentCustomerInfo")]
+        public ActionResult<IEnumerable<BasicTimeSlotAppointmentCustomerInformation>> GetBasicTimeSlotAppointmentCustomer()
+        {
+            return Ok(Service.GetBasicTimeSlotAppointmentCustomerInfo(phoneNumberService));
+        }
     }
 }

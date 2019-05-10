@@ -7,6 +7,6 @@ namespace WebApi.DTO
         public int Id;
         public string Email { get; set; }
         public string FullName { get; set; }
-        public List<PhoneNumberAndTypesInformation> phoneNumbers { get; set; }
+        public List<PhoneNumberAndTypesInformation> PhoneNumbers { get; set; }
     }
 }

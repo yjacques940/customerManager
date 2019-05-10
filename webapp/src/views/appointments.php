@@ -34,7 +34,7 @@ ob_start();
             <tr id="<?php echo $appointment->appointment->idCustomer; ?>">
                 <td scope="row">
                 <?php
-                    $appointmentDate = new DateTime($appointment->timeslot->startDateTime);
+                    $appointmentDate = new DateTime($appointment->timeSlot->startDateTime);
                     echo $appointmentDate->format('Y-m-d');
                 ?>
                 </td>

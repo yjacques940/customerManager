@@ -1,5 +1,5 @@
 <?php
-if (!userHasPermission('Timeslots-Read') || !userHasPermission('Timeslots-Write')) error(403);
+if (!userHasPermission('TimeSlots-Read') || !userHasPermission('TimeSlots-Write')) error(403);
 $titre = 'AppointmentCreation';
 ob_start(); ?>
 
@@ -22,6 +22,20 @@ ob_start(); ?>
     var timeOptions = { hour: '2-digit', minute: '2-digit' };
     var locale = '<?php echo $_SESSION['locale']; ?>';
     var currentSelection = null;
+    var timeSlotsInfoArray = {};
+    var colors = {
+        'unavailable': 'rgba(170,0,0,.75)',
+        'available': 'rgba(0,85,153,.75)',
+        'public': 'rgba(0,170,0,.75)',
+        'reserved': 'rgba(0,153,221,.75)'
+    };
+
+    function setLegendColors() {
+        $('#legend-color-unavailable').css("background-color", colors.unavailable);
+        $('#legend-color-available').css("background-color", colors.available);
+        $('#legend-color-reserved').css("background-color", colors.reserved);
+        $('#legend-color-public').css("background-color", colors.public);
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
@@ -35,7 +49,7 @@ ob_start(); ?>
             unselectAuto: false,
             minTime: '8:00',
             maxTime: '22:00',
-            eventClick: function(info) { showTimeslotDetails(info.event) },
+            eventClick: function(info) { showTimeSlotDetails(info.event) },
             unselect: function(info) { currentSelection = null },
             select: function(info) {
                 Swal.close();
@@ -53,15 +67,15 @@ ob_start(); ?>
                     text: 'Rendre indisponible',
                     click: function() {
                         (currentSelection !== null)
-                            ? ajaxAddNewTimeslot({ "isAvailable": false, "isPublic": false, "notes": '' })
+                            ? ajaxAddNewTimeSlot({ "isAvailable": false, "isPublic": false, "notes": '' })
                             : showErrorNoSelection();
                     }
                 },
                 add_event: {
-                    text: '<?php echo localize("Timeslot-Add") ?>',
+                    text: '<?php echo localize("TimeSlot-Add") ?>',
                     click: function() {
                         (currentSelection !== null)
-                            ? showConfirmNewTimeslot()
+                            ? showConfirmNewTimeSlot()
                             : showErrorNoSelection();
                     }
                 }
@@ -87,20 +101,40 @@ ob_start(); ?>
             };
         }
 
-        function addTimeSlotToCalendar(timeslot) {
+        function addTimeSlotInfoInArray(timeSlotInfo) {
+            timeSlotsInfoArray[timeSlotInfo.idTimeSlot] = {
+                idAppointment: timeSlotInfo.idAppointment,
+                notesTimeSlot: timeSlotInfo.notesTimeSlot,
+                customerInfo: timeSlotInfo.customerInfo
+            };
+        }
+
+        function addTimeSlotToCalendar(timeSlot) {
+            if (timeSlotsInfoArray[timeSlot.id]) {
+                var text = timeSlotsInfoArray[timeSlot.id].customerInfo.fullName + '\n';
+                var backgroundColor = colors.reserved;
+            } else {
+                var text = "";
+                var backgroundColor = (timeSlot.isPublic)
+                    ? colors.public
+                    : (timeSlot.isAvailable) ? colors.available : colors.unavailable;
+            }
+            text += (timeSlot.notes) ? timeSlot.notes : "Aucune note";
             calendar.addEvent({
-                id: timeslot.id,
-                title: (timeslot.notes) ? timeslot.notes : "Aucune note",
-                backgroundColor: (timeslot.isPublic) ? '#0a0' : (timeslot.isAvailable) ? '' : '#a00',
-                start: timeslot.startDateTime.toLocaleString('it-IT'),
-                end: timeslot.endDateTime.toLocaleString('it-IT')
+                id: timeSlot.id,
+                title: text,
+                description: "test",
+                borderColor: "rgba(0,0,0,.2)",
+                backgroundColor: backgroundColor,
+                start: timeSlot.startDateTime.toLocaleString('it-IT'),
+                end: timeSlot.endDateTime.toLocaleString('it-IT')
             });
         }
 
-        function ajaxAddNewTimeslot(form) {
+        function ajaxAddNewTimeSlot(form) {
             showToastCurrentlySaving();
             $.ajax({
-                url: '?action=ajaxAddNewTimeslot',
+                url: '?action=ajaxAddNewTimeSlot',
                 type: 'POST',
                 data: {
                     startDatetime: currentSelection.startDatetime.toLocaleString('it-IT'),
@@ -116,7 +150,9 @@ ob_start(); ?>
                         calendar.addEvent({
                             id: response.id,
                             title: (response.notes) ? response.notes : "Aucune note",
-                            backgroundColor: (response.isPublic) ? '#0a0' : (response.isAvailable) ? '' : '#a00',
+                            backgroundColor: (response.isPublic)
+                                ? colors.public
+                                : (response.isAvailable) ? colors.available : colors.unavailable,
                             start: response.startDateTime,
                             end: response.endDateTime
                         });
@@ -128,12 +164,12 @@ ob_start(); ?>
             }).fail(function() { showErrorAjax() });
         }
 
-        function ajaxDeleteTimeslot(event) {
+        function ajaxDeleteTimeSlot(event) {
             showToastCurrentlySaving();
             $.ajax({
-                url: '?action=ajaxDeleteTimeslot',
+                url: '?action=ajaxDeleteTimeSlot',
                 type: 'POST',
-                data: { idTimeslot: event.id }
+                data: { idTimeSlot: event.id }
             }).done(function(content) {
                 if (content) {
                     if (content == 'success') {
@@ -148,36 +184,45 @@ ob_start(); ?>
 
         function ajaxGetTimeSlots() {
             showToastLoading();
-            $.getJSON('?action=ajaxGetTimeslots', { get_param: 'value' }, function(timeSlots) {
-                $.each(timeSlots, function(index, timeSlot) { addTimeSlotToCalendar(timeSlot) });
+            $.getJSON('?action=ajaxGetTimeSlots', { get_param: 'value' }, function(data) {
+                $.each(data.timeSlotsInfo, function(index, timeSlotInfo) { addTimeSlotInfoInArray(timeSlotInfo) });
+                $.each(data.timeSlots, function(index, timeSlot) { addTimeSlotToCalendar(timeSlot) });
             }).done(function() {
                 calendar.render();
                 Swal.close();
             });
         }
 
-        function ajaxUpdateTimeslot(event, notes) {
+        function ajaxUpdateTimeSlot(timeSlot, notes) {
             showToastCurrentlySaving();
             $.ajax({
-                url: '?action=ajaxUpdateTimeslot',
+                url: '?action=ajaxUpdateTimeSlot',
                 type: 'POST',
                 data: {
-                    idTimeslot: event.id,
+                    idTimeSlot: timeSlot.id,
                     notes: notes
                 }
             }).done(function(response) {
                 if (response == 'success') {
                     showToastSavingSuccess();
                     calendar.unselect();
-                    event.remove();
+                    timeSlot.remove();
+                    if (timeSlotsInfoArray[timeSlot.id] !== undefined) {
+                        timeSlotsInfoArray[timeSlot.id].notesTimeSlot = (notes != '') ? notes : null;
+                        var eventTitle = timeSlotsInfoArray[timeSlot.id].customerInfo.fullName + '\n';
+                    }
+                    else {
+                        var eventTitle = '';
+                    }
+                    eventTitle += (notes != '') ? notes : "Aucune note";
                     calendar.addEvent({
-                        id: event.id,
-                        title: (notes != '') ? notes : "Aucune note",
-                        backgroundColor: event.backgroundColor,
-                        start: event.start,
-                        end: event.end
+                        id: timeSlot.id,
+                        title: eventTitle,
+                        backgroundColor: timeSlot.backgroundColor,
+                        start: timeSlot.start,
+                        end: timeSlot.end
                     });
-                    showTimeslotDetails(calendar.getEventById(event.id));
+                    showTimeSlotDetails(calendar.getEventById(timeSlot.id));
                 } else Swal.fire('Erreur', response, 'error');
             }).fail(function() { showErrorAjax() });
         }
@@ -191,11 +236,11 @@ ob_start(); ?>
             return true;
         }
 
-        function showConfirmNewTimeslot() {
-            var at = " <?php echo localize("Timeslot-At") ?> ";
-            var from = "<?php echo localize("Timeslot-From") ?> ";
-            var le = "<?php echo localize("Timeslot-Le") ?> ";
-            var to = " <?php echo localize("Timeslot-To") ?> ";
+        function showConfirmNewTimeSlot() {
+            var at = " <?php echo localize("TimeSlot-At") ?> ";
+            var from = "<?php echo localize("TimeSlot-From") ?> ";
+            var le = "<?php echo localize("TimeSlot-Le") ?> ";
+            var to = " <?php echo localize("TimeSlot-To") ?> ";
             if (currentSelection.allDay)
             {
                 var endDatetime = new Date(currentSelection.endDatetime.getTime());
@@ -221,20 +266,21 @@ ob_start(); ?>
                 title: "Nouvelle plage horaire",
                 html:
                     'Souhaitez-vous créer une plage horaire</br><em>' + infoString + '</em> ?' +
-                    '<input id="newTimeslotNotes" class="swal2-input" placeholder="Notes (optionnel)">' +
-                    '<label for="newTimeslotIsPublic"><p>Créer une plage horaire publique</p></label>' +
-                    '<input id="newTimeslotIsPublic" type="checkbox" name="isPublic" value="true">',
+                    '<input id="newTimeSlotNotes" class="swal2-input" placeholder="Notes (optionnel)">' +
+                    '<label for="newTimeSlotIsPublic"><p>Créer une plage horaire publique </p> </label>' +
+                    '<input id="newTimeSlotIsPublic" type="checkbox" name="isPublic" value="true" ' +
+                    'style="height: 16px; width: 24px; vertical-align: middle">',
                 confirmButtonText: 'Créer',
                 showCancelButton: true,
                 preConfirm: () => {
                     return [
-                        document.getElementById('newTimeslotIsPublic').checked,
-                        document.getElementById('newTimeslotNotes').value
+                        document.getElementById('newTimeSlotIsPublic').checked,
+                        document.getElementById('newTimeSlotNotes').value
                     ]
                 }
             }).then((result) => {
                 if (!result.dismiss)
-                    ajaxAddNewTimeslot({
+                    ajaxAddNewTimeSlot({
                         "isAvailable": true,
                         "isPublic": result.value[0],
                         "notes": result.value[1]
@@ -242,20 +288,20 @@ ob_start(); ?>
             });
         }
 
-        function showConfirmDeleteTimeslot(event) {
+        function showConfirmDeleteTimeSlot(timeSlot) {
             Swal.fire({
                 title: "Suppression plage horaire",
                 html: 'Souhaitez-vous vraiment supprimer cette plage horaire?</br><em>Le '
-                    + event.start.toLocaleDateString(locale + '-ca', dateTimeOptions) + '</em>',
+                    + timeSlot.start.toLocaleDateString(locale + '-ca', dateTimeOptions) + '</em>',
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: 'Confirmer la suppression',
                 confirmButtonColor: '#d33'
             }).then((result) => {
                 if (result.value)
-                    ajaxDeleteTimeslot(event);
+                    ajaxDeleteTimeSlot(timeSlot);
                 else if (result.dismiss != 'backdrop')
-                    showTimeslotEditor(event);
+                    showTimeSlotDetails(timeSlot);
             });
         }
 
@@ -280,7 +326,12 @@ ob_start(); ?>
                 + "<br/>Informations sur le rendez-vous:"
                 + "<br/>Rendez-vous réservé le "
                 + new Date(data.appointment.createdOn).toLocaleDateString(locale + '-ca', dateOptions)
-                + "<br/>Client: " + data.customer.fullName + emailMessage;
+                + "<br/>Client: <a target='_blank' href='?action=showCustomerInfo&customerId=" + data.customer.id + "'>"
+                + data.customer.fullName + "</a>" + emailMessage
+                + "<br/><a class='btn btn-info m-2 pl-4 pr-4' target='_blank' "
+                + "href='?action=showAppointmentDetails&appointmentId=" + data.appointment.id + "'/>"
+                + "Consulter le rendez-vous"
+                + " <i class='fa fa-external-link' aria-hidden='true'></i></a>";
 
             Swal.fire({
                 title: response.errorMessage,
@@ -309,45 +360,91 @@ ob_start(); ?>
             });
         }
 
-        function showTimeslotDetails(timeslot) {
-            var notes = (timeslot.title != 'Aucune note') ? timeslot.title : 'Notes';
+        function showTimeSlotDetails(timeSlot) {
+            if (timeSlotsInfoArray[timeSlot.id] !== undefined) {
+                var data = timeSlotsInfoArray[timeSlot.id];
+                var notes = "<h5 class='mt-3 font-weight-underlined'><u>"
+                    + "Notes sur plage horaire"
+                    + ":</u></h5>";
+                notes += (data.notesTimeSlot !== null) ? data.notesTimeSlot : 'Aucune note';
+                notes += "<h5 class='mt-3 font-weight-bold'><u>"
+                    + "Réservation au nom de"
+                    + ":</u></h5><a target='_blank' href='?action=showCustomerInfo&customerId="
+                    + data.customerInfo.id + "'>" + data.customerInfo.fullName
+                    + " <i class='fa fa-external-link' aria-hidden='true'></i></a><h5 class='mt-3 font-weight-bold'><u>"
+                    + "Pour rejoindre"
+                    + ":</u></h5>";
+                if (data.customerInfo.email !== null) {
+                    notes += "<b class='mt-3 font-weight-bold'>"
+                        + "Courriel:"
+                        + "</b> <a href='mailto:" + data.customerInfo.email + "'>"
+                        + data.customerInfo.email + "</a><br/>";
+                }
+                $.each(data.customerInfo.phoneNumbers, function(index, phoneNumber) {
+                    notes += "<b class='font-weight-bold'>" + phoneNumber.phoneType + ":</b> " + phoneNumber.phone;
+                    notes += (phoneNumber.extension !== null) ? " Ext. " + phoneNumber.extension + "<br/>" : "<br/>";
+                });
+                notes += "<br/><a class='btn btn-info pl-4 pr-4' target='_blank' "
+                    + "href='?action=showAppointmentDetails&appointmentId=" + data.idAppointment + "'/>"
+                    + "Consulter le rendez-vous"
+                    + " <i class='fa fa-external-link' aria-hidden='true'></i></a>";
+            }
+            else {
+                var notes = "<h5 class='m-1 font-weight-underlined'><u>"
+                    + "Notes sur plage horaire"
+                    + ":</u></h5>" + timeSlot.title;
+            }
+            notes += "<br/><button class='btn m-1 mt-3 pl-4 pr-4' style='background-color: #D90; color: #FFF'"
+                + " id='timeSlotEdit'>"
+                + "Modifier la plage horaire"
+                + " <i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>";
             Swal.fire({
-                title: timeslot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
-                text: (timeslot.title != 'Aucune note') ? 'Notes: ' + timeslot.title : 'Aucune note',
+                title: timeSlot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
+                html: notes,
                 showCancelButton: true,
                 cancelButtonText: "Fermer",
-                confirmButtonText: "Modifier",
-                confirmButtonColor: '#d93',
-            }).then((result) => { if (result.value) showTimeslotEditor(timeslot) });
-        }
-
-        function showTimeslotEditor(timeslot) {
-            var notes = (timeslot.title != 'Aucune note') ? timeslot.title : 'Notes';
-            Swal.fire({
-                title: timeslot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
-                html: 'Mode édition'
-                    + '<br/><input class="swal2-input" type="text" id="notes" placeholder="'
-                    + notes
-                    + '"></input><br/><button id="timeslotUpdate" class="swal2-confirm swal2-styled" '
-                    + 'style="background-color: rgb(51, 153, 51)">Enregistrer</button>',
-                showCancelButton: true,
-                cancelButtonText: "Fermer",
-                confirmButtonText: "Supprimer",
+                confirmButtonText: "Suppprimer la plage <i class='fa fa-trash-o' aria-hidden='true'></i>",
                 confirmButtonColor: '#d33',
                 onBeforeOpen: () => {
                     const content = Swal.getContent();
                     const $ = content.querySelector.bind(content);
-                    const timeslotUpdate = $('#timeslotUpdate');
-                    timeslotUpdate.addEventListener('click', () => {
-                        ajaxUpdateTimeslot(timeslot, $("#notes").value);
-                    });
+                    const timeSlotEdit = $('#timeSlotEdit');
+                    timeSlotEdit.addEventListener('click', () => { showTimeSlotEditor(timeSlot) });
+                }
+            }).then((result) => { if (result.value) showConfirmDeleteTimeSlot(timeSlot) });
+        }
+
+        function showTimeSlotEditor(timeSlot) {
+            if (timeSlotsInfoArray[timeSlot.id] !== undefined) {
+                var notes = (timeSlotsInfoArray[timeSlot.id].notesTimeSlot !== null)
+                    ? timeSlotsInfoArray[timeSlot.id].notesTimeSlot : '';
+            }
+            else {
+                var notes = (timeSlot.title != 'Aucune note') ? timeSlot.title : '';
+            }
+            Swal.fire({
+                title: timeSlot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
+                html: "Mode édition"
+                    + "<br/><input class='swal2-input' type='text' id='swal-input-notes' placeholder='Notes' value='"
+                    + notes
+                    + "'></input>",
+                showCancelButton: true,
+                cancelButtonText: "Annuler",
+                confirmButtonText: "Enregistrer <i class='fa fa-floppy-o' aria-hidden='true'></i>",
+                confirmButtonColor: "#5cb85c",
+                preConfirm: () => {
+                    return { "notes": document.getElementById('swal-input-notes').value }
                 }
             }).then((result) => {
-                if (result.value)
-                    showConfirmDeleteTimeslot(timeslot)
+                if (!result.dismiss) {
+                    if (result.value.notes != notes)
+                        ajaxUpdateTimeSlot(timeSlot, result.value.notes);
+                    else
+                        showTimeSlotDetails(timeSlot);
+                }
                 else if (result.dismiss != 'backdrop')
-                    showTimeslotDetails(timeslot);
-                });
+                    showTimeSlotDetails(timeSlot);
+            });
         }
 
         function showToastCurrentlySaving() {
@@ -382,11 +479,39 @@ ob_start(); ?>
         }
 
         ajaxGetTimeSlots();
+        setLegendColors();
     });
 
 </script>
+<style>
+.legend [id*='legend-color-'] {
+    height: 25px;
+    width: 25px;
+    background-color: grey;
+    border: 1px solid rgba(0,0,0,.2);
+}
+</style>
 
-<h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('PageTitle-TimeslotManagement') ?></h3>
+<h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('PageTitle-TimeSlotManagement') ?></h3>
+<p class="text-center">Légende:</p>
+<div class="legend d-flex flex-wrap justify-content-around">
+    <div class="d-flex flex-nowrap m-1">
+        <div id="legend-color-unavailable"></div>
+        <div class="ml-1 mr-auto">Indisponible privée</div>
+    </div>
+    <div class="d-flex flex-nowrap m-1">
+        <div id="legend-color-available"></div>
+        <div class="ml-1 mr-auto">Disponible privée</div>
+    </div>
+    <div class="d-flex flex-nowrap m-1">
+        <div id="legend-color-public"></div>
+        <div class="ml-1 mr-auto">Disponible publique</div>
+    </div>
+    <div class="d-flex flex-nowrap m-1">
+        <div id="legend-color-reserved"></div>
+        <div class="ml-1 mr-auto">Réservée</div>
+    </div>
+</div>
 <div id="calendar" class="container py-lg-5 py-md-4 py-sm-4 py-3"></div>
 
 <?php
