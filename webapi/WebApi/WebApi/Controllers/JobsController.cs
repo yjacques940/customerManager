@@ -28,6 +28,7 @@ namespace WebApi.Controllers
         {
             Service.SendAskConfirmationEmailToUsers(configuration, appointmentService);
             Service.SendUnconfirmedAppointmentsToEmployees(configuration, appointmentService, phoneNumberService);
+            Service.SendNewAppointments(configuration, appointmentService, phoneNumberService);
             return Ok();
         }
     }
