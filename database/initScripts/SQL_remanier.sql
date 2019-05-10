@@ -231,6 +231,19 @@ CREATE TABLE tbl_response(
 )ENGINE=InnoDB;
 
 #------------------------------------------------------------
+# Table: tbl_diaporama
+#------------------------------------------------------------
+
+CREATE TABLE tbl_diaporama_image(
+        id_diaporama_image      INT AUTO_INCREMENT  NOT NULL ,
+        is_active     BOOL NOT NULL DEFAULT 1,
+        is_displayed  BOOL NOT NULL DEFAULT 0,
+        display_order INT NOT NULL DEFAULT 0,
+        path 		  VARCHAR(300) NOT NULL
+	,CONSTRAINT tbl_diaporama_PK PRIMARY KEY (id_diaporama_image)
+)ENGINE=InnoDB;
+
+#------------------------------------------------------------
 # Inserting basic data
 #------------------------------------------------------------
 
@@ -350,9 +363,10 @@ INSERT INTO tbl_permission (bit,name) VALUES
 (16,  'Customers-Write'),
 (32,  'Timeslots-Read'),
 (64,  'Timeslots-Write'),
-(128, 'Menu-IsEmployee'),
+(128, 'IsEmployee'),
 (256, 'MedicalSurveys-Read'),
-(512, 'MedicalSurveys-Write');
+(512, 'MedicalSurveys-Write'),
+(1024, 'SiteManager');
 
 INSERT INTO tbl_phone_type (name) VALUES
 ('Résidentiel'), ('Bureau'), ('Cellulaire');
@@ -496,3 +510,10 @@ VALUES (NOW(), 1,1,1,1,''),
 	   (NOW(), 1,1,1,2,'Carl'),
 	   (NOW(), 1,1,1,3,'Melanie'),
 	   (NOW(), 1,1,1,6,'Peut Importe');
+       
+INSERT INTO tbl_diaporama_image(is_active, is_displayed, display_order, path)
+VALUES (1,1,1,'images/ab1.jpg'),
+       (1,1,2,'images/blog1.jpg'),
+       (1,0,3,'images/t3.jpg'),
+       (1,1,1,'images/blog4.jpg');
+

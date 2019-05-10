@@ -112,6 +112,7 @@ function Inscription(){
 
 function About(){
     unset($_SESSION['email']);
+    $carouselImages = CallAPI('GET','DiaporamaImages/GetAllDisplayedImages')['response'];
     require('views/about.php');
 }
 
@@ -950,6 +951,88 @@ function ParseActionTokenInfo($data){
             error(500);// Action Inconnue
             break;
     }
+}
+
+function ManageDiaporama(){
+    if(userHasPermission('SiteManager')){
+        $extensionProblem = false;
+        if(!empty($_FILES['newImage']['tmp_name'])){
+            $path = AddImage();
+            if($path != false){
+                $imageInfo = array(
+                    'isDislpayed' => '0',
+                    'displayOrder' => '0',
+                    'path' => $path
+                );
+                CallAPI('POST', 'DiaporamaImages/AddNewImage', json_encode($imageInfo));
+            }else{
+                $extensionProblem = true;
+            }
+        }elseif(!empty($_POST)){
+            $data = PrepareArraysFromPost();
+            $result = CallAPI('POST','DiaporamaImages/UpdateDisplayAndOrder',json_encode($data));
+        }
+        $images = CallApi('Get','DiaporamaImages/GetAllImages')['response'];
+        require('views/manageDiaporama.php');
+    }else{
+        error(403);
+    }
+}
+
+function PrepareArraysFromPost(){
+    $orderArray =  array();
+    $idArray =  array();
+    $displayArray =  array();
+    $deleteArray = array();
+    foreach($_POST as $data){
+        if(substr($data,0,5)=="order"){
+            array_push($orderArray, substr($data,5));
+        }elseif(substr($data,0,2)=="id"){
+            array_push($idArray, substr($data,2));
+        }elseif(substr($data,0,7)=="display"){
+            array_push($displayArray, substr($data,7));
+        }elseif(substr($data,0,6)=="delete"){
+            array_push($deleteArray, substr($data,6));
+        }
+    }
+    $cpt = 0;
+    $dataArray = array();
+    foreach($idArray as $id){
+        $isDisplayed = false;
+        if($displayArray[$cpt] == '1')
+            $isDisplayed = true;
+        
+        $result = array(
+            "id"=> $idArray[$cpt],
+            "displayOrder"=> $orderArray[$cpt],
+            "isDisplayed"=> $isDisplayed
+        );
+        array_push($dataArray, $result);
+        $cpt++;
+    }
+    $newDiaporamaInformation = array(
+        "imageDisplayAndOrderInformation"=>$dataArray,
+        "idsToDelete"=>$deleteArray
+    );
+    return $newDiaporamaInformation;
+}
+
+function AddImage(){
+    $allowedExtensions = array('jpg','jpeg','png');
+    $fileInfo = pathinfo($_FILES['newImage']['name']);
+    $fileExtension = $fileInfo['extension'];
+    $newName = GiveImageName();
+    if(in_array($fileExtension, $allowedExtensions)){
+        move_uploaded_file($_FILES['newImage']['tmp_name'], 'images/'.$newName.'.'.$fileExtension);
+        return 'images/'. $newName.'.'.$fileExtension;
+    }else{
+        return false;
+    }
+}
+
+function GiveImageName(){
+    $date = new DateTime();
+    return $date->format('Ymd_His');
 }
 
 function showAppointmentDetails(){

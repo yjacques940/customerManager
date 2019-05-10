@@ -8,7 +8,9 @@
       <link href="css/style.css" rel='stylesheet' type='text/css' media="all">
       <link href="//fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700" rel="stylesheet">
       <link href="//fonts.googleapis.com/css?family=Oxygen:400,700" rel="stylesheet">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3/js/bootstrap.min.js"></script>
       <script src="JavaScript/script.js"></script>
       <script type="text/javascript" src="JavaScript/jquery-validation-1.17.0/lib/jquery-1.11.1.js"></script>
       <script type="text/javascript" src="JavaScript/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
@@ -37,7 +39,7 @@
               <a href="index.php?action=about"><?php echo localize('PageTitle-About'); ?></a>
             </li>
             <?php
-            if(userHasPermission('Menu-IsEmployee')){
+            if(userHasPermission('IsEmployee')){
               ?>
             <li>
               <label for="drop-5" class="toggle toogle-2">
@@ -76,6 +78,13 @@
                           <?php echo localize('CreateCustomerAccount-Title'); ?>
                       </a>
                   </li>
+                <?php if(userHasPermission('SiteManager')){ ?>
+                <li>
+                  <a href="index.php?action=manageDiaporama" class="drop-text">
+                  <?php echo localize('Diaporama-ManageDiaporama'); ?>
+                  </a>
+                </li>
+                <?php } ?>
               </ul>
             </li>
             <?php
@@ -129,7 +138,7 @@
               <input type="checkbox" id="drop-3" />
               <ul>
               <?php
-                  if(!userHasPermission('Menu-IsEmployee')){ ?>
+                  if(!userHasPermission('IsEmployee')){ ?>
                   <li>
                   <a href="index.php?action=personalinformation" class="drop-text">
                     <?php echo localize('Header-Account-Manage'); ?>
