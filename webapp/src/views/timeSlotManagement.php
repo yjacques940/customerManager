@@ -328,7 +328,12 @@ ob_start(); ?>
                 + "<br/>Informations sur le rendez-vous:"
                 + "<br/>Rendez-vous réservé le "
                 + new Date(data.appointment.createdOn).toLocaleDateString(locale + '-ca', dateOptions)
-                + "<br/>Client: " + data.customer.fullName + emailMessage;
+                + "<br/>Client: <a href='?action=showCustomerInfo&customerId=" + data.customer.id + "'>"
+                + data.customer.fullName + "</a>" + emailMessage
+                + "<br/><a class='btn btn-info pl-4 pr-4' target='_blank' "
+                + "href='?action=showAppointmentDetails&appointmentId=" + data.appointment.id + "'/>"
+                + "Consulter le rendez-vous"
+                + " <i class='fa fa-external-link' aria-hidden='true'></i></a>";
 
             Swal.fire({
                 title: response.errorMessage,
