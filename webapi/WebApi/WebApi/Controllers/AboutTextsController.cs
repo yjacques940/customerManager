@@ -22,11 +22,11 @@ namespace WebApi.Controllers
             return Ok(Service.GetActiveText());
         }
 
-        [HttpPost, Route("AddNewText")]
-        public ActionResult AddNewText([FromBody] AboutText aboutText)
+        [HttpPost, Route("UpdateAboutText")]
+        public ActionResult UpdateAboutText([FromBody] AboutText aboutText)
         {
             if(aboutText != null)
-                return Ok(Service.AddNewText(aboutText));
+                return Ok(Service.UpdateAboutText(aboutText));
 
             return BadRequest();
         }
@@ -35,6 +35,12 @@ namespace WebApi.Controllers
         public ActionResult GetAboutTextById(int id)
         {
             return Ok(Service.GetAboutTextById(id));
+        }
+
+        [HttpGet, Route("GetAboutTextByZone/{zone}")]
+        public ActionResult GetAboutTextByZone(string zone)
+        {
+            return Ok(Service.GetAboutTextByZone(zone));
         }
     }
 }

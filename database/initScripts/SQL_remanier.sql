@@ -556,7 +556,9 @@ VALUES('Vous avez mal au dos?','Suffering from back pains?','On peut vous marche
           
 INSERT INTO tbl_about_text(title_fr, title_en, descr_fr, descr_en, id_zone, is_active)
 VALUES('Vous avez mal au dos?','Suffering from back pains?','On peut vous marcher sur le dos pour faire cracker toutes les vertèbre, on vous guaranti que vous vous sentirez mieux après.'
-,'We\'ll walk all over your back, you\'ll feel like a new person',1,1),
+,'We\'ll walk all over your back, you\'ll feel like a new person',3,1),
       ('Qui somme nous?','Who are we?','Carl Giguère et Mélanie Plante sont Orthothérapeutes.',
-      'Carl Giguère and Mélanie Plante are orthotherapists.',2,1);
+      'Carl Giguère and Mélanie Plante are orthotherapists.',2,1),
+      ('Notre But', 'Our goal','On souhaite vous aider à améliorer votre situation.',
+      'We ish to help you improve your situation',1,1);
 

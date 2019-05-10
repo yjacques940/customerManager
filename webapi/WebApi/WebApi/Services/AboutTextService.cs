@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
+using WebApi.DTO;
 using WebApi.Models;
 
 namespace WebApi.Services
@@ -14,22 +15,35 @@ namespace WebApi.Services
         {
         }
 
-        internal List<AboutText> GetActiveText()
+        internal List<AboutTextAndZoneInformation> GetActiveText()
         {
-            return Context.AboutText.Where(c => c.IsActive).ToList();
+            var aboutZones = Context.AboutZone.Where(c => c.IsActive).ToList();
+            List<AboutTextAndZoneInformation> aboutTextAndZones = new List<AboutTextAndZoneInformation>();
+            foreach (var aboutZone in aboutZones)
+            {
+                AboutTextAndZoneInformation aboutTextAndZone = new AboutTextAndZoneInformation();
+                aboutTextAndZone.ZoneDescription = aboutZone.Descr;
+                aboutTextAndZone.AboutText = Context.AboutText.FirstOrDefault(c => c.IdZone == aboutZone.Id);
+                aboutTextAndZones.Add(aboutTextAndZone);
+            }
+            return aboutTextAndZones;
         }
 
-        internal AboutText AddNewText(AboutText aboutText)
+        internal AboutText UpdateAboutText(AboutText aboutText)
         {
-            List<AboutText> activeAboutTexts = Context.AboutText.Where(c => c.IsActive).ToList();
-            foreach (var activeAboutText in activeAboutTexts)
-            {
-                activeAboutText.IsActive = false;
-            }
-            aboutText.IsActive = true;
-            Context.Add(aboutText);
+            var aboutTextToUpdate = Context.AboutText.FirstOrDefault(c => c.Id == aboutText.Id);
+            aboutTextToUpdate.TitleFr = aboutText.TitleFr;
+            aboutTextToUpdate.TitleEn = aboutText.TitleEn;
+            aboutTextToUpdate.DescrFr = aboutText.DescrFr;
+            aboutTextToUpdate.DescrEn = aboutText.DescrEn;
             Context.SaveChanges();
             return aboutText;
+        }
+
+        internal object GetAboutTextByZone(string zone)
+        {
+            var zoneId = Context.AboutZone.FirstOrDefault(c => c.Code == zone && c.IsActive).Id;
+            return Context.AboutText.FirstOrDefault(c => c.IdZone == zoneId && c.IsActive);
         }
 
         internal object GetAboutTextById(int id)

@@ -73,8 +73,20 @@ $title = 'Connection';
         <div class="row">
           <div class="col-lg-4 w3layouts-right-side-img">
             <div class="abut-inner-wls-head">
-              <h4 class="pb-3"><?php echo localize('About-WhoAreWe'); ?></h4>
-              <p><?php echo localize('About-WhoAreWe-Text'); ?></p>
+              <h4 class="pb-3"><?php
+              if($_SESSION['locale'] == 'en' and $topLeft->titleEn != ''){
+                echo $topLeft->titleEn;
+              }else{
+                echo $topLeft->titleFr;
+              }
+               ?></h4>
+              <p><?php
+              if($_SESSION['locale'] == 'en' and $topLeft->descrEn != ''){
+                echo $topLeft->descrEn;
+              }else{
+                echo $topLeft->descrFr;
+              }
+               ?></p>
             </div>
           </div>
           <div class="col-lg-4 w3layouts-left-side-img">
@@ -82,13 +94,39 @@ $title = 'Connection';
           </div>
           <div class="col-lg-4 w3layouts-right-side-img">
             <div class="abut-inner-wls-head">
-              <h4 class="pb-3"><?php echo localize('About-OurGoals'); ?></h4>
-              <p><?php echo localize('About-OurGoals-Text'); ?></p>
-              <div>
-              </div>
+              <h4 class="pb-3"><?php
+              if($_SESSION['locale'] == 'en' and $topRight->titleEn != ''){
+                echo $topRight->titleEn;
+              }else{
+                echo $topRight->titleFr;
+              }
+               ?></h4>
+              <p><?php
+              if($_SESSION['locale'] == 'en' and $topRight->descrEn != ''){
+                echo $topRight->descrEn;
+              }else{
+                echo $topRight->descrFr;
+              }
+               ?></p>
             </div>
           </div>
         </div>
+      </div>
+      <div style="background-color:#339933;" class="col-lg-12 text-center w3layouts-right-side-img">
+        <h4 class="pb-3"><?php
+          if($_SESSION['locale'] == 'en' and $treatment->titleEn != ''){
+            echo $treatment->titleEn;
+          }else{
+            echo $treatment->titleFr;
+          }
+            ?></h4>
+          <p><?php
+          if($_SESSION['locale'] == 'en' and $treatment->descrEn != ''){
+            echo $treatment->descrEn;
+          }else{
+            echo $treatment->descrFr;
+          }
+            ?></p>
       </div>
     </section>
     <!--//about-->

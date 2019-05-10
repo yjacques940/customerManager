@@ -8,5 +8,6 @@ namespace WebApi.Models
     public class AboutZone : BaseModel
     {
         public string Descr { get; set; }
+        public string Code { get; set; }
     }
 }
