@@ -21,12 +21,12 @@ namespace WebApi.Services
         {
             return (
                 from appointment in Context.Appointments
-                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
-                where appointment.IsActive && timeslot.IsActive && timeslot.StartDateTime.Date == dateTime.Date
+                join timeSlot in Context.TimeSlots on appointment.IdTimeSlot equals timeSlot.Id
+                where appointment.IsActive && timeSlot.IsActive && timeSlot.StartDateTime.Date == dateTime.Date
                 select new AppointmentTimeSlotInformation()
                 {
                     AppointmentInfo = appointment,
-                    TimeSlotInfo = timeslot
+                    TimeSlotInfo = timeSlot
                 }).AsNoTracking().ToList();
         }
 
@@ -41,12 +41,12 @@ namespace WebApi.Services
             var appointments = (
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
-                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
+                join timeSlot in Context.TimeSlots on appointment.IdTimeSlot equals timeSlot.Id
                 where customer.IsActive && appointment.IsActive
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
-                    Timeslot = timeslot,
+                    TimeSlot = timeSlot,
                     Appointment = appointment
                 }).AsNoTracking().ToList();
 
@@ -55,7 +55,7 @@ namespace WebApi.Services
                 appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersForCustomer(appointment.Customer.Id);
             }
-            return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
+            return appointments.OrderBy(c => c.TimeSlot.StartDateTime).ToList();
         }
 
         public bool ChangeIsNewStatus(List<int> ids)
@@ -81,12 +81,12 @@ namespace WebApi.Services
             var appointments = (
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
-                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
+                join timeSlot in Context.TimeSlots on appointment.IdTimeSlot equals timeSlot.Id
                 where customer.IsActive && appointment.IsActive && appointment.IsNew
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
-                    Timeslot = timeslot,
+                    TimeSlot = timeSlot,
                     Appointment = appointment
                 }).AsNoTracking().ToList();
 
@@ -95,7 +95,7 @@ namespace WebApi.Services
                 appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersForCustomer(appointment.Customer.Id);
             }
-            return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
+            return appointments.OrderBy(c => c.TimeSlot.StartDateTime).ToList();
         }
 
         internal List<CustomerAppointmentInformation> GetUnconfirmedAppointments(PhoneNumberService phoneNumberService)
@@ -103,13 +103,13 @@ namespace WebApi.Services
             var appointments = (
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
-                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
+                join timeSlot in Context.TimeSlots on appointment.IdTimeSlot equals timeSlot.Id
                 where customer.IsActive && appointment.IsActive
-                    && !appointment.IsConfirmed && timeslot.StartDateTime.Date == DateTime.Now.Date.AddDays(1)
+                    && !appointment.IsConfirmed && timeSlot.StartDateTime.Date == DateTime.Now.Date.AddDays(1)
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
-                    Timeslot = timeslot,
+                    TimeSlot = timeSlot,
                     Appointment = appointment
                 }).AsNoTracking().ToList();
 
@@ -118,7 +118,7 @@ namespace WebApi.Services
                 appointment.PhoneNumbers = phoneNumberService
                     .GetPhoneNumbersForCustomer(appointment.Customer.Id);
             }
-            return appointments.OrderBy(c => c.Timeslot.StartDateTime).ToList();
+            return appointments.OrderBy(c => c.TimeSlot.StartDateTime).ToList();
         }
 
         public bool ReserveAnAppointment(AppointmentUserInformation appointmentService, IConfiguration configuration)
@@ -203,12 +203,12 @@ namespace WebApi.Services
             var customerAppointmentInformation = (
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
-                join timeslot in Context.TimeSlots on appointment.IdTimeSlot equals timeslot.Id
+                join timeSlot in Context.TimeSlots on appointment.IdTimeSlot equals timeSlot.Id
                 where appointment.Id == appointmentId
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
-                    Timeslot = timeslot,
+                    TimeSlot = timeSlot,
                     Appointment = appointment
                 }).AsNoTracking().FirstOrDefault();
 

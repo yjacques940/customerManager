@@ -38,9 +38,9 @@ namespace WebApi.Services
 
         public bool IsAvailable(TimeSlot newTimeSlot)
         {
-            List<TimeSlot> timeslots = Context.TimeSlots
+            List<TimeSlot> timeSlots = Context.TimeSlots
                 .Where(c => c.IsActive && (c.StartDateTime.Date == newTimeSlot.StartDateTime.Date)).ToList();
-            return TimeSlotValidator.IsAvailable(newTimeSlot, timeslots);
+            return TimeSlotValidator.IsAvailable(newTimeSlot, timeSlots);
         }
    
         public List<TimeSlot> GetTimeSlotForTheDay(DateTime date)
@@ -92,10 +92,10 @@ namespace WebApi.Services
             var basicTimeSlotAppointmentCustomerInformationList =
                     new List<BasicTimeSlotAppointmentCustomerInformation>();
 
-            var timeslots = Context.TimeSlots.Where(c => c.IsActive).ToList();
-            foreach (var timeslot in timeslots)
+            var timeSlots = Context.TimeSlots.Where(c => c.IsActive).ToList();
+            foreach (var timeSlot in timeSlots)
             {
-                var appointment = Context.Appointments.FirstOrDefault(c => c.IsActive && c.IdTimeSlot == timeslot.Id);
+                var appointment = Context.Appointments.FirstOrDefault(c => c.IsActive && c.IdTimeSlot == timeSlot.Id);
                 if (appointment != null)
                 {
                     var basicTimeSlotAppointmentCustomerInformation =
@@ -107,9 +107,9 @@ namespace WebApi.Services
                     basicTimeSlotAppointmentCustomerInformation.CustomerInfo.PhoneNumbers =
                             new List<PhoneNumberAndTypesInformation>();
 
-                    basicTimeSlotAppointmentCustomerInformation.IdTimeSlot = timeslot.Id;
+                    basicTimeSlotAppointmentCustomerInformation.IdTimeSlot = timeSlot.Id;
                     basicTimeSlotAppointmentCustomerInformation.IdAppointment = appointment.Id;
-                    basicTimeSlotAppointmentCustomerInformation.NotesTimeSlot = timeslot.Notes;
+                    basicTimeSlotAppointmentCustomerInformation.NotesTimeSlot = timeSlot.Notes;
 
                     var customer = Context.Customers.First(c => c.Id == appointment.IdCustomer);
 
