@@ -61,14 +61,15 @@ namespace WebApi.Validators
                 return false;
             }
         }
-        public static bool SendEmailToChangePassword(string userEmail, string token,  IConfiguration configuration)
+        public static bool SendEmailToChangePassword(string userEmail, string token,  IConfiguration configuration,bool isNewAccount)
         {
             SmtpClient client = GetSmtpClient(configuration);
-            MailMessage MailMessageToChangePassword = GetMailMessageToChangePassword(userEmail, token);
-
+            MailMessage mailMessage = isNewAccount 
+                ? GetMailMessageToSetPasswordForNewAccount(userEmail, token) 
+                : GetMailMessageToChangePassword(userEmail, token);
             try
             {
-                client.Send(MailMessageToChangePassword);
+                client.Send(mailMessage);
                 return true;
             }
             catch
@@ -125,6 +126,25 @@ namespace WebApi.Validators
                     $"{appointment.Timeslot.StartDateTime.ToString("HH:mm")}</div></div><br/>" ;
             }
             return html;
+        }
+		
+		 private static MailMessage GetMailMessageToSetPasswordForNewAccount(string userEmail, string token)
+        {
+            using (StreamReader reader = File.OpenText("EmailTemplate/changePasswordNewAccount.html"))
+            {
+                string newHtml = "";
+                MailMessage mailmessage = new MailMessage();
+                mailmessage.IsBodyHtml = true;
+                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                mailmessage.To.Add(new MailAddress(userEmail));
+                mailmessage.Subject = "Votre inscription a bien été enregistrée";
+
+                var htmlFile = reader.ReadToEnd();
+                newHtml = htmlFile.Replace("[ActionTokenx]", token);
+                newHtml = newHtml.Replace("[ServerURLx]", "http://localhost");
+                mailmessage.Body = newHtml;
+                return mailmessage;
+            }
         }
 
         public static bool SendUnconfirmedAppointmentsToEmployees(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments, IConfiguration configuration)

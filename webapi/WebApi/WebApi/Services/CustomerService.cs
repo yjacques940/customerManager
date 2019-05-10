@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
+using WebApi.Validators;
 
 namespace WebApi.Services
 {
@@ -112,7 +114,7 @@ namespace WebApi.Services
             return Context.Users.FirstOrDefault(c => c.Id == userId && c.IsActive);
         }
 
-        internal int CreateUserForCustomer(EmailAndCustomerInfo emailInfo)
+        internal int CreateUserForCustomer(EmailAndCustomerInfo emailInfo, Microsoft.Extensions.Configuration.IConfiguration configuration, UserService userService)
         {
             var user = new User()
             {
@@ -125,6 +127,7 @@ namespace WebApi.Services
             };
             Context.Add(user);
             Context.SaveChanges();
+            userService.SendChangePasswordEmail(configuration,user.Email,true);
             return user.IdCustomer;
         }
 

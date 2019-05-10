@@ -1018,8 +1018,7 @@ function AddEmailForACustomer()
         $customer = array('email' => htmlentities($_POST['newemail']),'customerId' => htmlentities($_GET['customerId']));
         $addEmailResult = CallAPI('POST','Customers/CreateUser',json_encode($customer));
         $email = array('email'=> htmlentities($_POST['newemail']));
-        $changePasswordResult = CallAPI('POST','Email/ChangePassword',json_encode($email));
-        if($addEmailResult['statusCode'] == 200 && $changePasswordResult['statusCode'] == 200)
+        if($addEmailResult['statusCode'] == 200)
         {
             $userSaved = true;
             require('views/confirmation_message.php');

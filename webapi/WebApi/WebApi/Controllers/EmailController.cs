@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         [HttpPost, Route("ChangePassword")]
         public ActionResult SendChangePasswordEmail([FromBody] EmailAddress email)
         {
-            if (userService.SendChangePasswordEmail(configuration,email.Email))
+            if (userService.SendChangePasswordEmail(configuration,email.Email,false))
                 return Ok();
 
             return BadRequest();
