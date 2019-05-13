@@ -115,8 +115,10 @@ namespace WebApi.Services
 
                     basicTimeSlotAppointmentCustomerInformation.CustomerInfo.Id = customer.Id;
 
-                    basicTimeSlotAppointmentCustomerInformation.CustomerInfo.Email =
-                            Context.Users.FirstOrDefault(c => c.IdCustomer == customer.Id).Email;
+                    var user = Context.Users.FirstOrDefault(c => c.IdCustomer == customer.Id);
+
+                    if (user != null)
+                        basicTimeSlotAppointmentCustomerInformation.CustomerInfo.Email = user.Email;
 
                     basicTimeSlotAppointmentCustomerInformation.CustomerInfo.FullName =
                             $"{customer.FirstName} {customer.LastName}";
