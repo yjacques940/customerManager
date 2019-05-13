@@ -147,7 +147,7 @@ function PersonalInformation(){
                 About();
             }
         }else{
-            $result = CallAPI('GET','States')['response'];
+            $states = CallAPI('GET','States')['response'];
             $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
             $phoneType = $phoneTypes;
             $phoneType2 = $phoneTypes;
