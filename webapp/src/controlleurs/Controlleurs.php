@@ -597,7 +597,7 @@ function GetCustomerInformation($customersInformation){
                     <a class="dropdown-item"
                         href="?action=showCustomerInfo&customerId='.$customerId.'">
                         <i class="fa fa-address-card-o" aria-hidden="true"></i>'.
-                        localize('Customer-Information');
+                        localize('Customers-Information');
             $output = $output . '</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item"
