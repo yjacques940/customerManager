@@ -549,7 +549,7 @@ function SearchCustomer(){
 }
 
 function GetCustomersByPhone(){
-    $customersInformation = CallAPI('POST', 'Customers/GetCustomersByPhone/',json_encode(htmlentities($_POST['customerPhone'])))['response'];
+    $customersInformation = CallAPI('POST', 'Customers/GetCustomersByPhone',json_encode(htmlentities($_POST['customerPhone'])))['response'];
     GetCustomerInformation($customersInformation);
 }
 
@@ -588,11 +588,27 @@ function GetCustomerInformation($customersInformation){
                 $output = $output . '</td></tr>';
             }
             $output = $output . ' </table></td>';
-            $output = $output . '<td class="align-middle text-center">
-                                <a style="color:inherit" href="?action=showCustomerInfo&customerId='.
-                                $customerId. '">
-                                <i class="fa fa-address-card-o fa-3x" aria-hidden="true"></i></a>
-                                </td></tr>';
+            $output = $output . '<td class="text-center align-middle" width="50px">
+                    <button type="button" class="btn btn-secondary" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="border-radius: 5px">
+                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item"
+                        href="?action=showCustomerInfo&customerId='.$customerId.'">
+                        <i class="fa fa-address-card-o" aria-hidden="true"></i>'.
+                        localize('Customer-Information');
+            $output = $output . '</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item"
+                    href="?action=reserveappointment&customerId='.$customerId . '">
+                    <i class="fa fa-calendar-o" aria-hidden="true"></i>'.
+                    localize('PageTitle-NewAppointment'). '
+                    </a>
+                    </div>
+                </div>
+            </td>
+        </tr>';
         }
 $output = $output . '</tbody></table>';
         echo $output;
