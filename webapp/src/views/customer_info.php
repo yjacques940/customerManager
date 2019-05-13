@@ -22,7 +22,7 @@ unset($_SESSION['TempCustomerId']);
                         <p><b><?php echo localize('Login-Email'); ?>: </b><?php echo $customerInfo->email ? $customerInfo->email
                                 : '<a href="?action=ShowAddEmailForACustomer&customerName='.$customerInfo->fullName.
                                 '&customerId='.$_GET['customerId'].'"><i class="fa fa-pencil-square-o" aria-hidden="true">'
-                                . localize('Timeslot-Add').'</i></a>'  ;?></p>
+                                . localize('TimeSlot-Add').'</i></a>'  ;?></p>
 
                     </div>
                     <div class="col-lg-6 col-md-6">
