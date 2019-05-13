@@ -21,7 +21,7 @@ $title = Localize('Diaporama-ManageDiaporama');
                 <?php
                 } ?>
             </div>
-            <button type="submit" class="btn sent-butnn"><?php echo Localize('Timeslot-Add');?></button>
+            <button type="submit" class="btn sent-butnn"><?php echo Localize('TimeSlot-Add');?></button>
           </div>
         </form>
       </div> 

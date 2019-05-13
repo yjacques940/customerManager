@@ -204,7 +204,6 @@
   "UserAppointments-OldList" : "Consulter les anciens rendez-vous",
   "PageTitle-OldAppointments": "Anciens rendez-vous",
   "CreateCustomerAccount-Title" : "Création de client",
-  "Save" : "Enregistrer",
   "CronJobs" : "Envois de courriels quotidien",
   "AddEmailToCustomer" : "Ajout d'une adresse courriel",
   "Confirmation-UserCreatedSuccessfully" : "Le compte a été créé!"
