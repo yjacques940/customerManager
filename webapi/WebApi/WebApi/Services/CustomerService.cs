@@ -64,7 +64,7 @@ namespace WebApi.Services
             List<Customer> customers = new List<Customer>();
             foreach (var listPhone in listPhones)
             {
-                var customer = Context.Customers.Where(c => c.Id == listPhone.IdCustomer).First();
+                var customer = Context.Customers.Where(c => c.Id == listPhone.IdCustomer).FirstOrDefault();
                 if(!customers.Contains(customer))
                     customers.Add(customer);
             }

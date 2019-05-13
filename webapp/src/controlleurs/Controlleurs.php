@@ -564,7 +564,7 @@ function GetCustomerInformation($customersInformation){
                                 <thead class="thead-dark">
                                     <tr class="text-center">
                                         <th scope="col">';
-        $output = $output. localize('Appointment-Customer').'</th>
+        $output .= localize('Appointment-Customer').'</th>
                                 <th scope="col">'. localize('Personal-Phone').'</th>
                                 <th scope="col"></th>
                                     </tr>
@@ -572,23 +572,23 @@ function GetCustomerInformation($customersInformation){
                                 <tbody>';
         foreach($customersInformation as $customer){
             $customerId = $customer->customer->id;
-            $output = $output . '<tr id="'.$customerId.'">
+            $output .= '<tr id="'.$customerId.'">
                                             <td scope="row" class="align-middle text-center">'.
                                             $customer->customer->lastName.', '.
                                             $customer->customer->firstName.'</td><td>';
-            $output = $output . '<table style="width:100%; background-color: rgba(255,255,255,0)">';
+            $output .= '<table style="width:100%; background-color: rgba(255,255,255,0)">';
             foreach ($customer->phoneNumberAndTypes as $phoneNumber) {
-                $output = $output . '
+                $output .= '
                     <tr>
                         <td style="text-align: right; border: none; width: 45%;">'.$phoneNumber->phoneType.' : </td>
                         <td style="text-align: left; border: none; float:left;">'.$phoneNumber->phone;
                 if($phoneNumber->extension){
                     $output = $output . '&nbsp&nbsp Ext.'. $phoneNumber->extension;
                 }
-                $output = $output . '</td></tr>';
+                $output .= '</td></tr>';
             }
-            $output = $output . ' </table></td>';
-            $output = $output . '<td class="text-center align-middle" width="50px">
+            $output .= ' </table></td>';
+            $output .= '<td class="text-center align-middle" width="50px">
                     <button type="button" class="btn btn-secondary" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" style="border-radius: 5px">
                     <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -598,7 +598,7 @@ function GetCustomerInformation($customersInformation){
                         href="?action=showCustomerInfo&customerId='.$customerId.'">
                         <i class="fa fa-address-card-o" aria-hidden="true"></i>'.
                         localize('Customers-Information');
-            $output = $output . '</a>
+            $output .= '</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item"
                     href="?action=reserveappointment&customerId='.$customerId . '">
@@ -610,7 +610,7 @@ function GetCustomerInformation($customersInformation){
             </td>
         </tr>';
         }
-$output = $output . '</tbody></table>';
+$output .= '</tbody></table>';
         echo $output;
     }else{
         echo '';
