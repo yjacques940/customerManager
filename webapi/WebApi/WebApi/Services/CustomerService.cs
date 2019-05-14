@@ -82,9 +82,11 @@ namespace WebApi.Services
             {
                 if (customer.IsActive)
                 {
-                    var newCustomer = new CustomerAndPhoneNumberInformation();
-                    newCustomer.Customer = customer;
-                    newCustomer.PhoneNumberAndTypes = GetPhoneNumberAndTypes(customer.Id);
+                    var newCustomer = new CustomerAndPhoneNumberInformation
+                    {
+                        Customer = customer,
+                        PhoneNumberAndTypes = GetPhoneNumberAndTypes(customer.Id)
+                    };
                     customers.Add(newCustomer);
                 }
             }
@@ -122,8 +124,8 @@ namespace WebApi.Services
                 Email = emailInfo.Email,
                 IdCustomer = emailInfo.CustomerId,
                 IsActive = true,
-                CreatedOn = DateTime.Now,
-                LastLogin = DateTime.Now
+                CreatedOn = DateConverter.CurrentEasternDateTime(),
+                LastLogin = DateConverter.CurrentEasternDateTime()
             };
             Context.Add(user);
             Context.SaveChanges();
@@ -153,15 +155,19 @@ namespace WebApi.Services
             List<FollowUpHeader> followUpsToReturn = new List<FollowUpHeader>();
             foreach (var followUp in followUps)
             {
-                FollowUpHeader followUpHeader = new FollowUpHeader();
-                followUpHeader.Date = followUp.CreatedOn.Date.ToString();
-                followUpHeader.Id = followUp.Id;
-                followUpHeader.Summary = followUp.Summary;
+                FollowUpHeader followUpHeader = new FollowUpHeader
+                {
+                    Date = followUp.CreatedOn.Date.ToString(),
+                    Id = followUp.Id,
+                    Summary = followUp.Summary
+                };
                 followUpsToReturn.Add(followUpHeader);
             }
-            CustomerAndFollowUps customerAndFollowUps = new CustomerAndFollowUps();
-            customerAndFollowUps.Customer = customer;
-            customerAndFollowUps.FollowUps = followUpsToReturn;
+            CustomerAndFollowUps customerAndFollowUps = new CustomerAndFollowUps
+            {
+                Customer = customer,
+                FollowUps = followUpsToReturn
+            };
             return customerAndFollowUps;
         }
 

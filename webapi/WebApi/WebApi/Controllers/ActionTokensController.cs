@@ -19,7 +19,7 @@ namespace WebApi.Controllers
         {
             if (Guid.TryParse(token, out Guid verifiedGuid))
             {
-                ActionToken actionToken = Service.getActionToken(token);
+                ActionToken actionToken = Service.GetActionToken(token);
                 if (actionToken != null)
                 {
                     if (Service.RunActionFromToken(actionToken))
@@ -38,7 +38,7 @@ namespace WebApi.Controllers
         {
             if (Guid.TryParse(actionTokenInfo.Token, out Guid verifiedGuid))
             {
-                ActionToken actionToken = Service.getActionToken(actionTokenInfo.Token);
+                ActionToken actionToken = Service.GetActionToken(actionTokenInfo.Token);
                 if (actionToken != null)
                 {
                     if (Service.IsValid(actionTokenInfo, actionToken))
@@ -57,7 +57,7 @@ namespace WebApi.Controllers
         {
             if (Guid.TryParse(token, out Guid verifiedGuid))
             {
-                var actionToken = Service.getActionToken(token);
+                var actionToken = Service.GetActionToken(token);
                 if (actionToken != null)
                 {
                     Service.Remove(actionToken.Id);

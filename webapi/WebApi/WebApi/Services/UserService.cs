@@ -23,9 +23,11 @@ namespace WebApi.Services
             {
                 return null;
             }
-            UserInformation userInfo = new UserInformation();
-            userInfo.IsFirstLogin = user.LastLogin == user.CreatedOn;
-            user.LastLogin = DateTime.Now;
+            UserInformation userInfo = new UserInformation
+            {
+                IsFirstLogin = user.LastLogin == user.CreatedOn
+            };
+            user.LastLogin = DateConverter.CurrentEasternDateTime();
             Context.SaveChanges();
             userInfo.Id = user.Id;
             var customer = Context.Customers.First(c => c.Id == user.IdCustomer);
@@ -97,8 +99,8 @@ namespace WebApi.Services
                 {
                     IsActive = true,
                     Action = "ForgotPassword",
-                    CreatedOn = DateTime.Now,
-                    ExpirationDate = DateTime.Now.AddDays(1),
+                    CreatedOn = DateConverter.CurrentEasternDateTime(),
+                    ExpirationDate = DateConverter.CurrentEasternDateTime().AddDays(1),
                     IdUser = user.Id,
                     Token = Guid.NewGuid().ToString()
                 };

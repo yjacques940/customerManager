@@ -104,8 +104,8 @@ namespace WebApi.Services
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
                 join timeSlot in Context.TimeSlots on appointment.IdTimeSlot equals timeSlot.Id
-                where customer.IsActive && appointment.IsActive
-                    && !appointment.IsConfirmed && timeSlot.StartDateTime.Date == DateTime.Now.Date.AddDays(1)
+                where customer.IsActive && appointment.IsActive && !appointment.IsConfirmed 
+                    && timeSlot.StartDateTime.Date == DateConverter.CurrentEasternDateTime().Date.AddDays(1)
                 select new CustomerAppointmentInformation()
                 {
                     Customer = customer,
@@ -130,7 +130,7 @@ namespace WebApi.Services
             foreach (var appointment in appointments)
             {
                 var timeSlot = Context.TimeSlots.First(c => c.Id == appointment.IdTimeSlot);
-                if (timeSlot.StartDateTime.Date <= DateTime.Now.Date)
+                if (timeSlot.StartDateTime.Date <= DateConverter.CurrentEasternDateTime().Date)
                 {
                     AppointmentsDateAndTimeInformation newAppointment = new AppointmentsDateAndTimeInformation
                     {
@@ -151,7 +151,7 @@ namespace WebApi.Services
             Appointment appointment = new Appointment();
             if (appointmentService != null)
             {
-                appointment.CreatedOn = DateTime.Now;
+                appointment.CreatedOn = DateConverter.CurrentEasternDateTime();
                 appointment.IdCustomer = (appointmentService.IdCustomer != null)
                     ? appointmentService.IdCustomer.Value
                     : Context.Users.First(c => c.Id == appointmentService.IdUser).IdCustomer;
@@ -184,7 +184,7 @@ namespace WebApi.Services
             {
                 var appointment = Context.Appointments.Where(c => c.Id == appointmentId).First();
                 var timeSlot = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First();
-                DateTime now = DateTime.Now;
+                DateTime now = DateConverter.CurrentEasternDateTime();
                 if(timeSlot.StartDateTime > now.AddHours(24))
                 {
                     timeSlot.IsPublic = false;
@@ -209,13 +209,15 @@ namespace WebApi.Services
             {
                 DateTime startTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().StartDateTime;
                 DateTime endTime = Context.TimeSlots.Where(c => c.Id == appointment.IdTimeSlot).First().EndDateTime;
-                if(startTime.Date >= DateTime.Now.Date)
+                if(startTime.Date >= DateConverter.CurrentEasternDateTime().Date)
                 {
-                    AppointmentsDateAndTimeInformation oneAppointment = new AppointmentsDateAndTimeInformation();
-                    oneAppointment.Appointment = appointment;
-                    oneAppointment.Date = startTime.Date.ToString();
-                    oneAppointment.StartTime = startTime.TimeOfDay.ToString();
-                    oneAppointment.EndTime = endTime.TimeOfDay.ToString();
+                    AppointmentsDateAndTimeInformation oneAppointment = new AppointmentsDateAndTimeInformation
+                    {
+                        Appointment = appointment,
+                        Date = startTime.Date.ToString(),
+                        StartTime = startTime.TimeOfDay.ToString(),
+                        EndTime = endTime.TimeOfDay.ToString()
+                    };
                     appointmentsForCustomer.Add(oneAppointment);
                 }
             }
@@ -284,17 +286,21 @@ namespace WebApi.Services
 
         public AppointmentCustomerInformation GetAppointmentCustomerInformation(PhoneNumberService phoneNumberService, Appointment appointment)
         {
-            var appointmentCustomer = new AppointmentCustomerInformation();
-            appointmentCustomer.Appointment = new Appointment();
-            appointmentCustomer.Customer = new CustomerBasicInformation();
-            appointmentCustomer.Customer.PhoneNumbers = new List<PhoneNumberAndTypesInformation>();
+            var appointmentCustomer = new AppointmentCustomerInformation
+            {
+                Appointment = new Appointment(),
+                Customer = new CustomerBasicInformation
+                {
+                    PhoneNumbers = new List<PhoneNumberAndTypesInformation>()
+                }
+            };
 
             Customer customer = Context.Customers.First(c => c.Id == appointment.IdCustomer);
             String customerEmail = Context.Users.FirstOrDefault(c => c.IdCustomer == customer.Id).Email;
 
             appointmentCustomer.Appointment = appointment;
             appointmentCustomer.Customer.Id = customer.Id;
-            appointmentCustomer.Customer.Email = (customerEmail != null) ? customerEmail : "";
+            appointmentCustomer.Customer.Email = customerEmail ?? "";
             appointmentCustomer.Customer.FullName = $"{customer.FirstName} {customer.LastName}";
             appointmentCustomer.Customer.PhoneNumbers = phoneNumberService.GetPhoneNumbersForCustomer(customer.Id);
             return appointmentCustomer;
