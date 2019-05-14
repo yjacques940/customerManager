@@ -153,13 +153,13 @@ namespace WebApi.Services
             {
                 appointment.CreatedOn = DateConverter.CurrentEasternDateTime();
                 appointment.IdCustomer = (appointmentService.IdCustomer != null)
-                    ? appointmentService.IdCustomer.Value
-                    : Context.Users.First(c => c.Id == appointmentService.IdUser).IdCustomer;
+                        ? appointmentService.IdCustomer.Value
+                        : Context.Users.First(c => c.Id == appointmentService.IdUser).IdCustomer;
                 appointment.IdTimeSlot = appointmentService.IdTimeSlot;
-		appointment.VisitReason = appointmentService.VisitReason;
+		        appointment.VisitReason = appointmentService.VisitReason;
                 appointment.Therapist = appointmentService.Therapist;
-		appointment.HasSeenDoctor = appointmentService.HasSeenDoctor;
-		appointment.DoctorDiagnostic = appointmentService.DoctorDiagnostic;
+                appointment.HasSeenDoctor = appointmentService.HasSeenDoctor;
+                appointment.DoctorDiagnostic = appointmentService.DoctorDiagnostic;
                 appointment.IsNew = true;
                 appointment.IsActive = true;
                 Context.Add(appointment);

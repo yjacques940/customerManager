@@ -173,7 +173,7 @@ CREATE TABLE tbl_appointment(
         id_time_slot      Int NOT NULL,
         therapist         VARCHAR(50),
         visit_reason      VARCHAR(250),
-        has_seen_doctor   Bool,
+        has_seen_doctor   Bool NOT NULL,
         doctor_diagnostic VARCHAR(250)
 	,CONSTRAINT tbl_appointment_PK PRIMARY KEY (id_appointment)
     ,CONSTRAINT tbl_appointment_tbl_customer_FK FOREIGN KEY (id_customer) REFERENCES tbl_customer(id_customer)
@@ -551,11 +551,11 @@ INSERT INTO tbl_time_slot (start_date_time, end_date_time, is_public, is_availab
 ( '2019-04-30 19:00:00', '2019-04-30 20:30:00', 0, 0, "Film avec la famille"),
 ( '2019-04-23 15:00:00', '2019-04-23 16:00:00', 1, 1, null);
 
-INSERT INTO tbl_appointment(created_on, is_active, is_new, id_customer, id_time_slot, therapist)
-VALUES (NOW(), 1,1,1,1,''),
-	   (NOW(), 1,1,1,2,'Carl'),
-	   (NOW(), 1,1,1,3,'Melanie'),
-	   (NOW(), 1,1,1,6,'Peut Importe');
+INSERT INTO tbl_appointment(created_on, is_active, is_new, id_customer, id_time_slot, has_seen_doctor, therapist)
+VALUES (NOW(), 1,1,1,1,false,''),
+	   (NOW(), 1,1,1,2,false,'Carl'),
+	   (NOW(), 1,1,1,3,false,'Melanie'),
+	   (NOW(), 1,1,1,6,false,'Peut Importe');
        
 INSERT INTO tbl_diaporama_image(is_active, is_displayed, display_order, path)
 VALUES (1,1,1,'images/ab1.jpg'),

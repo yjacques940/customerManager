@@ -721,19 +721,17 @@ function CheckTimeSlotAvailable(){
     }
 }
 
-function ReserveTimeSlotForAppointment($customerId){
-    $timeSlot = htmlentities($_POST['timeSlot']);
-    $therapist = htmlentities($_POST['therapist']);
+function ReserveTimeSlotForAppointment($customerId) {
     $appointment = array(
-        'idTimeslot' => htmlentities($_POST['timeslot']),
-        'visitReason' => htmlentities($_POST['visitReason']),
-        'therapist' => htmlentities($_POST['therapist']),
-        'hasSeenDoctor' => htmlentities($_POST['hasSeenDoctor']),
-        'doctorDiagnostic' => htmlentities($_POST['doctorDiagnostic']),
+        'idTimeSlot' => htmlentities($_POST['timeSlot']),
         'idUser' => ($customerId == null) ? htmlentities($_SESSION['userid']) : null,
-        'idCustomer' => ($customerId != null) ? $customerId : null
+        'idCustomer' => ($customerId != null) ? $customerId : null,
+        'therapist' => htmlentities($_POST['therapist']),
+        'visitReason' => htmlentities($_POST['visitReason']),
+        'hasSeenDoctor' => htmlentities($_POST['hasSeenDoctor']),
+        'doctorDiagnostic' => htmlentities($_POST['doctorDiagnostic'])
     );
-    CallAPI('POST','Appointments/ReserveAnAppointment',json_encode($appointment));
+    $output = CallAPI('POST','Appointments/ReserveAnAppointment',json_encode($appointment));
     $_SESSION['appointmenttaken'] = true;
 }
 

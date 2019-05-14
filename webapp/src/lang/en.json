@@ -189,5 +189,8 @@
   "Save" : "Save",
   "CronJobs" : "Daily emails sending",
   "AddEmailToCustomer" : "Add an email address",
-  "Confirmation-UserCreatedSuccessfully" : "Account created!"
+  "Confirmation-UserCreatedSuccessfully" : "Account created!",
+  "ConsultationReason" : "Consultation Reason",
+  "hasSeenDoctor" : "Consulted the doctor",
+  "DoctorDiagnostic" : "Doctor's diagnostic"
 }
