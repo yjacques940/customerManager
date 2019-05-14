@@ -77,9 +77,6 @@ try
         case 'reserveappointment':
             ReserveAppointment();
             break;
-        case "searchCustomer":
-            SearchCustomer();
-            break;
         case "showCustomerInfo":
             ShowCustomerInfo();
             break;
