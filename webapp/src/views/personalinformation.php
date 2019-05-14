@@ -57,12 +57,14 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
           <div class="w3pvt-wls-contact-mid">
           <div class="form-group contact-forms">
               <label for="address"><h4><?php echo localize('Personal-Address');?></h4></label>
-              <input type="text" name="address" id="address" class="form-control" value="<?php echo $address; ?>" placeholder="<?php echo localize('Personal-Address');?>">
+              <input type="text" name="address" id="address" class="form-control" value="<?php echo $address; ?>"
+                     placeholder="<?php echo localize('Personal-Address');?>">
             </div>
             <div class="form-row">
                 <div class="form-group contact-forms col-md-4">
                     <label for="city"><h4><?php echo localize('Personal-City');?></h4></label>
-                    <input type="text" name="city" id="city" value="<?php echo $city ?>" class="form-control" placeholder="<?php echo localize('Personal-City');?>">
+                    <input type="text" name="city" id="city" value="<?php echo $city ?>" class="form-control"
+                           placeholder="<?php echo localize('Personal-City');?>">
                 </div>
                 <div class="form-group contact-forms col-md-4">
                     <label for="province"><h4><?php echo localize('Personal-Province');?></h4></label>
