@@ -15,8 +15,7 @@ $title = localize('FollowUp-Add');
             <div class="col-lg-4 col-md-4">
                 <div class="form-group contact-forms">
                     <label for="date"><h4><?php echo localize('Appointment-Date');?></h4></label>
-                    <input type="date" name="date" id="date" class="datepicker"
-                    value="<?php echo date('Y-m-d')?>">
+                    <input type="date" name="date" id="date" class="datepicker" value="<?php echo date('Y-m-d')?>">
                 </div> 
             </div>
             <div class="col-lg-12 col-md-12">
@@ -36,9 +35,7 @@ $title = localize('FollowUp-Add');
     </div>
   </div>
   <script>
-
 $(document).ready(function(){
-    
     $("#newFollowUp").validate({
         errorClass : "error_class",
         errorelement : "em",
