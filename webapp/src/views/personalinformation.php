@@ -208,7 +208,8 @@ $(document).ready(function(){
                 required:true
             },
             zipcode:{
-                required:true
+                required:true,
+                max: 10
             },
             occupation:{
                 required:true

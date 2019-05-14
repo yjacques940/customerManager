@@ -58,6 +58,11 @@
                           <?php echo localize('PageTitle-CustomersManagement'); ?>
                       </a>
                   </li>
+                  <li>
+                      <a href="index.php?action=createNewCustomer" class="drop-down">
+                          <?php echo localize('CreateCustomerAccount-Title'); ?>
+                      </a>
+                  </li>
                 <li>
                   <a href="index.php?action=searchCustomer" class="drop-down">
                   <?php echo localize('searchClient'); ?>
