@@ -17,8 +17,7 @@ namespace WebApi.Services
 
         public ActionResult<UserInformation> GetUserInformation(string email, string password)
         {
-            var user = Context.Users.Where(c => c.Email == email &&
-                    c.Password == password).First();
+            var user = Context.Users.FirstOrDefault(c => c.Email == email && c.Password == password);
             if(user == null)
             {
                 return null;
