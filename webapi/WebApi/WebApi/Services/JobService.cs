@@ -15,7 +15,7 @@ namespace WebApi.Services
 
         public void SendAskConfirmationEmailToUsers(IConfiguration config, AppointmentService appointmentService)
         {
-            DateTime dateDelay = DateTime.Now.AddDays(2); 
+            DateTime dateDelay = DateConverter.CurrentEasternDateTime().AddDays(2); 
             var appointmentsToConfirm = appointmentService.GetAppointmentsByDate(dateDelay);
             foreach (var info in appointmentsToConfirm)
             {
@@ -23,8 +23,8 @@ namespace WebApi.Services
                 {
                     IsActive = true,
                     Action = "ConfirmAppointment",
-                    CreatedOn = DateTime.Now,
-                    ExpirationDate = DateTime.Now.AddDays(2),
+                    CreatedOn = DateConverter.CurrentEasternDateTime(),
+                    ExpirationDate = DateConverter.CurrentEasternDateTime().AddDays(2),
                     IdAppointment = info.AppointmentInfo.Id,
                     IdUser = info.AppointmentInfo.IdCustomer,
                     Token = Guid.NewGuid().ToString()
@@ -53,7 +53,7 @@ namespace WebApi.Services
         public void SendUnconfirmedAppointmentsToEmployees
             (IConfiguration config, AppointmentService appointmentService, PhoneNumberService phoneNumberService)
         {
-            DateTime dateDelay = DateTime.Now.AddDays(1);
+            DateTime dateDelay = DateConverter.CurrentEasternDateTime().AddDays(1);
             var unconfirmedAppointment = appointmentService.GetUnconfirmedAppointments(phoneNumberService);
             if (unconfirmedAppointment.Count() > 0)
             {

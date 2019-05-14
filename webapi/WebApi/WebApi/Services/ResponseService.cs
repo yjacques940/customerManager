@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Rewrite.Internal.PatternSegments;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
+using WebApi.Validators;
 
 namespace WebApi.Services
 {
@@ -26,9 +27,11 @@ namespace WebApi.Services
             foreach (var response in responses.Responses)
             {
                 DisableOldQuestionsIfExists(response,responses.CustomerId);
-                Response newResponse = new Response();
-                newResponse.IdCustomer = responses.CustomerId;
-                newResponse.IdQuestion = response.IdQuestion;
+                Response newResponse = new Response
+                {
+                    IdCustomer = responses.CustomerId,
+                    IdQuestion = response.IdQuestion
+                };
                 if (response.AnswerType == "bool")
                 {
                     newResponse.ResponseBool = response.ResponseBool;
@@ -37,7 +40,7 @@ namespace WebApi.Services
                 {
                     newResponse.ResponseString = response.ResponseString;
                 }
-                newResponse.CreatedOn = DateTime.Now;
+                newResponse.CreatedOn = DateConverter.CurrentEasternDateTime();
                 newResponse.IsActive = true;
                 Context.Add(newResponse);
             }

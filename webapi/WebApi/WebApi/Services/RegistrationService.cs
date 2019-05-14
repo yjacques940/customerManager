@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebApi.Data;
 using WebApi.DTO;
 using WebApi.Models;
+using WebApi.Validators;
 
 namespace WebApi.Services
 {
@@ -33,8 +34,8 @@ namespace WebApi.Services
                 if (user.Email != "" && user.Password != "")
                 {
                     user.IdCustomer = customer.Id;
-                    user.LastLogin = DateTime.Now;
-                    user.CreatedOn = DateTime.Now;
+                    user.LastLogin = DateConverter.CurrentEasternDateTime();
+                    user.CreatedOn = DateConverter.CurrentEasternDateTime();
                     Context.Add(user);
                 }
                 Context.SaveChanges();

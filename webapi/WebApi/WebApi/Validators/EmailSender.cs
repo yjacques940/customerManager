@@ -98,9 +98,11 @@ namespace WebApi.Validators
         {
 
             string newHtml = "";
-            MailMessage mailmessage = new MailMessage();
-            mailmessage.IsBodyHtml = true;
-            mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+            MailMessage mailmessage = new MailMessage
+            {
+                IsBodyHtml = true,
+                From = new MailAddress("carlmelaniemasso@gmail.com")
+            };
             mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
             mailmessage.Subject = "Nouveaux rendez-vous de la journée";
             string htmlWithNewAppointments = GetHtmlWithNewAppointments(appointments);
@@ -133,9 +135,11 @@ namespace WebApi.Validators
             using (StreamReader reader = File.OpenText("EmailTemplate/changePasswordNewAccount.html"))
             {
                 string newHtml = "";
-                MailMessage mailmessage = new MailMessage();
-                mailmessage.IsBodyHtml = true;
-                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                MailMessage mailmessage = new MailMessage
+                {
+                    IsBodyHtml = true,
+                    From = new MailAddress("carlmelaniemasso@gmail.com")
+                };
                 mailmessage.To.Add(new MailAddress(userEmail));
                 mailmessage.Subject = "Votre inscription a bien été enregistrée";
 
@@ -166,11 +170,13 @@ namespace WebApi.Validators
         private static MailMessage GetUnconfirmedAppointmentMailMessage(ActionResult<IEnumerable<CustomerAppointmentInformation>> appointments)
         {
             string newHtml = "";
-            MailMessage mailmessage = new MailMessage();
-            mailmessage.IsBodyHtml = true;
-            mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+            MailMessage mailmessage = new MailMessage
+            {
+                IsBodyHtml = true,
+                From = new MailAddress("carlmelaniemasso@gmail.com")
+            };
             mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
-            mailmessage.Subject = "Rendez-vous non-confirmés pour le " + DateTime.Now.AddDays(1).ToString("dd/MM/yyyy");
+            mailmessage.Subject = "Rendez-vous non-confirmés pour le " + DateConverter.CurrentEasternDateTime().AddDays(1).ToString("dd/MM/yyyy");
             string htmlWithNewAppointments = GetHtmlWithUnconfirmedAppointments(appointments);
             using (StreamReader reader = File.OpenText("EmailTemplate/unconfirmedAppointments.html"))
             {
@@ -207,9 +213,11 @@ namespace WebApi.Validators
             using (StreamReader reader = File.OpenText("EmailTemplate/askConfirmationToUser.html"))
             {
                 string newHtml = "";
-                MailMessage mailmessage = new MailMessage();
-                mailmessage.IsBodyHtml = true;
-                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                MailMessage mailmessage = new MailMessage
+                {
+                    IsBodyHtml = true,
+                    From = new MailAddress("carlmelaniemasso@gmail.com")
+                };
                 mailmessage.To.Add(new MailAddress(emailTo));
                 mailmessage.Subject = "Rendez-vous à confirmer pour le " + AppointmentDateTime.ToString("dd/MM/yyyy");
 
@@ -229,9 +237,11 @@ namespace WebApi.Validators
             using (StreamReader reader = File.OpenText("EmailTemplate/changePasswordWithToken.html"))
             {
                 string newHtml = "";
-                MailMessage mailmessage = new MailMessage();
-                mailmessage.IsBodyHtml = true;
-                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                MailMessage mailmessage = new MailMessage
+                {
+                    IsBodyHtml = true,
+                    From = new MailAddress("carlmelaniemasso@gmail.com")
+                };
                 mailmessage.To.Add(new MailAddress(emailTo));
                 mailmessage.Subject = "Demande de changement de mot de passe";
 
@@ -264,9 +274,11 @@ namespace WebApi.Validators
             using (StreamReader reader = File.OpenText("EmailTemplate/cancelAppointment.html"))
             {
                 string newHtml = "";
-                MailMessage mailmessage = new MailMessage();
-                mailmessage.IsBodyHtml = true;
-                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                MailMessage mailmessage = new MailMessage
+                {
+                    IsBodyHtml = true,
+                    From = new MailAddress("carlmelaniemasso@gmail.com")
+                };
                 mailmessage.To.Add(new MailAddress(userEmail));
                 mailmessage.Subject = "Confirmation d'annulation";
                 var htmlFile = reader.ReadToEnd();
@@ -313,9 +325,11 @@ namespace WebApi.Validators
             using (StreamReader reader = File.OpenText("EmailTemplate/cancelAppointment.html"))
             {
                 string newHtml = "";
-                MailMessage mailmessage = new MailMessage();
-                mailmessage.IsBodyHtml = true;
-                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                MailMessage mailmessage = new MailMessage
+                {
+                    IsBodyHtml = true,
+                    From = new MailAddress("carlmelaniemasso@gmail.com")
+                };
                 mailmessage.To.Add(new MailAddress(userEmail));
                 mailmessage.Subject = "Confirmation d'annulation";
                 tooLateToCancel = true;
@@ -347,15 +361,17 @@ namespace WebApi.Validators
             using (StreamReader reader = File.OpenText("EmailTemplate/index.html"))
             {
                 string newHtml = "";
-                MailMessage mailmessage = new MailMessage();
-                mailmessage.IsBodyHtml = true;
-                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                MailMessage mailmessage = new MailMessage
+                {
+                    IsBodyHtml = true,
+                    From = new MailAddress("carlmelaniemasso@gmail.com")
+                };
                 mailmessage.To.Add(new MailAddress(emailTo));
                 mailmessage.Subject = "Confirmation de rendez-vous";
 
                 var htmlFile = reader.ReadToEnd();
-                newHtml = htmlFile.Replace("[DateOfTheDayx]", DateTime.Now.Date.ToString("yyyy/MM/dd"));
-                newHtml = newHtml.Replace("[TimeOfTheDayx]", DateTime.Now.ToShortTimeString().ToString());
+                newHtml = htmlFile.Replace("[DateOfTheDayx]", DateConverter.CurrentEasternDateTime().Date.ToString("yyyy/MM/dd"));
+                newHtml = newHtml.Replace("[TimeOfTheDayx]", DateConverter.CurrentEasternDateTime().ToShortTimeString().ToString());
                 newHtml = newHtml.Replace("[AppointmentHourx]", AppointmentDateTime.ToShortTimeString());
                 newHtml = newHtml.Replace("[AppointmentDatex]", AppointmentDateTime.Date.ToString("yyyy/MM/dd"));
                 mailmessage.Body = newHtml;
@@ -365,9 +381,11 @@ namespace WebApi.Validators
 
         private static MailMessage GetMailMessage(string message)
         {
-            MailMessage mailmessage = new MailMessage();
-            mailmessage.IsBodyHtml = true;
-            mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+            MailMessage mailmessage = new MailMessage
+            {
+                IsBodyHtml = true,
+                From = new MailAddress("carlmelaniemasso@gmail.com")
+            };
             mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
             mailmessage.Subject = "A user reported a bug";
             mailmessage.Body = message;
@@ -376,15 +394,17 @@ namespace WebApi.Validators
 
         private static SmtpClient GetSmtpClient(IConfiguration configuration)
         {
-            SmtpClient client = new SmtpClient();
-            client.Port = 25;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials =
-                new NetworkCredential(configuration.GetSection("EmailAddress").Value, configuration.GetSection("EmailPassword").Value);
+            SmtpClient client = new SmtpClient
+            {
+                Port = 25,
+                Host = "smtp.gmail.com",
+                EnableSsl = true,
+                Timeout = 10000,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials =
+                new NetworkCredential(configuration.GetSection("EmailAddress").Value, configuration.GetSection("EmailPassword").Value)
+            };
             return client;
         }
 
@@ -400,9 +420,11 @@ namespace WebApi.Validators
             using (StreamReader reader = File.OpenText("EmailTemplate/askForAppointment.html"))
             {
                 string newHtml = "";
-                MailMessage mailmessage = new MailMessage();
-                mailmessage.IsBodyHtml = true;
-                mailmessage.From = new MailAddress("carlmelaniemasso@gmail.com");
+                MailMessage mailmessage = new MailMessage
+                {
+                    IsBodyHtml = true,
+                    From = new MailAddress("carlmelaniemasso@gmail.com")
+                };
                 mailmessage.To.Add(new MailAddress("exeinformatiquedev@gmail.com"));
                 mailmessage.Subject = "Un client vous a envoyé une demande de rendez-vous";
                 var htmlFile = reader.ReadToEnd();

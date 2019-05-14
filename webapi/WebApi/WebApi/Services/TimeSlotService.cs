@@ -64,7 +64,7 @@ namespace WebApi.Services
 
         public List<TimeSlot> GetFreeTimeSlots()
         {
-            List<TimeSlot> timeSlots = Context.TimeSlots.Where(c => c.StartDateTime > DateTime.Now && c.IsAvailable && c.IsPublic).ToList();
+            List<TimeSlot> timeSlots = Context.TimeSlots.Where(c => c.StartDateTime > DateConverter.CurrentEasternDateTime() && c.IsAvailable && c.IsPublic).ToList();
             List<Appointment> appointments = Context.Appointments.ToList();
             List<TimeSlot> timeSlotsToReturn = new List<TimeSlot>();
             timeSlotsToReturn.AddRange(timeSlots);
@@ -99,10 +99,10 @@ namespace WebApi.Services
                 if (appointment != null)
                 {
                     var basicTimeSlotAppointmentCustomerInformation =
-                            new BasicTimeSlotAppointmentCustomerInformation();
-
-                    basicTimeSlotAppointmentCustomerInformation.CustomerInfo =
-                            new CustomerBasicInformation();
+                            new BasicTimeSlotAppointmentCustomerInformation
+                            {
+                                CustomerInfo = new CustomerBasicInformation()
+                            };
 
                     basicTimeSlotAppointmentCustomerInformation.CustomerInfo.PhoneNumbers =
                             new List<PhoneNumberAndTypesInformation>();

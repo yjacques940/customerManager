@@ -11,10 +11,10 @@ namespace WebApi.Services
         {
         }
 
-        public ActionToken getActionToken(string token)
+        public ActionToken GetActionToken(string token)
         {
             return Context.ActionTokens
-                    .FirstOrDefault(c => c.IsActive && c.Token == token/* && c.ExpirationDate.Date <= DateTime.Now.Date*/);
+                    .FirstOrDefault(c => c.IsActive && c.Token == token);
         }
 
         public bool IsValid(ActionTokenInformation actionTokenInfo, ActionToken actionToken)
