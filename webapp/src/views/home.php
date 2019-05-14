@@ -107,7 +107,7 @@
                 </li>
                 <li>
                   <a href="index.php?action=cancelappointment" class="drop-text">
-                    <?php echo localize('CancelAppointment-Title'); ?>
+                    <?php echo localize('UserAppointmentsList-Title'); ?>
                   </a>
                 </li>
             </ul>
