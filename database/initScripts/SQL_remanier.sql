@@ -500,7 +500,7 @@ sensations de coincement. ','It\'s important for your therapist to teach you exe
 INSERT INTO tbl_address (physical_address, city_name, zip_code, id_state) VALUES
 ('382, rang saint-joseph', 'Beauceville', 'G5X2C8', (select id_state from tbl_state where name = 'Québec')),
 ('13140, Boul. Lacroix', 'Saint-Georges', 'G5Y6P8', (select id_state from tbl_state where name = 'Québec')),
-('123456 rue chose','Québec', 'H0H0H0', 15);
+('123456 rue Champlain','Québec', 'H0H0H0', 15);
 
 INSERT INTO tbl_customer (sex, first_name, last_name, birth_date, occupation, id_address) VALUES
 ('M', 'Jessy', 'Rodrigue', '1997-02-08', 'SysAdmin', '1'),

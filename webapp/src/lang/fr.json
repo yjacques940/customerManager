@@ -31,6 +31,7 @@
   "Company-Phone": "(418) 774-0246",
   "Company-Rights": "Tous droits réservés",
   "CustomersList": "Liste des clients",
+  "CustomersList-NoResult": "Aucun résultat",
   "CustomerSearch-InvalidNumber": "Numéro de téléphone invalide",
   "CustomerSearch-NoCustomerFound" : "Aucun client trouvé",
   "Diaporama-AddNewPicture": "Ajouter une nouvelle image",

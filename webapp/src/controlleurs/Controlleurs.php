@@ -544,9 +544,6 @@ function ajaxAddNewTimeSlot() {
         } else echo 'Incomplete or invalid data received';
     } else echo 'No data received';
 }
-function SearchCustomer(){
-    require('views/customerSearch.php');
-}
 
 function GetCustomersByPhone(){
     $customersInformation = CallAPI('POST', 'Customers/GetCustomersByPhone',json_encode(htmlentities($_POST['customerPhone'])))['response'];
@@ -559,7 +556,7 @@ function GetCustomersByName(){
 }
 
 function GetCustomerInformation($customersInformation){
-    if(isset($customersInformation)){
+    if(count($customersInformation) > 0){
         $output = '<table class="table table-sm table-striped table-hover table-bordered" id="tbl_customers">
                                 <thead class="thead-dark">
                                     <tr class="text-center">
@@ -613,7 +610,7 @@ function GetCustomerInformation($customersInformation){
 $output .= '</tbody></table>';
         echo $output;
     }else{
-        echo '';
+        echo localize('CustomersList-NoResult');
     }
 }
 
