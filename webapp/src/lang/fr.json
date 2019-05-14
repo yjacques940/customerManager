@@ -91,7 +91,7 @@
   "PageTitle-Login": "Espace Client",
   "PageTitle-AppointmentCreator" : "Création de rendez-vous",
   "PageTitle-ManageAboutText" : "Gestion contenu à propos",
-  "searchClient" : "Rechercher un client",
+  "SearchClient" : "Rechercher un client",
   "PageTitle-Inscription": "S'inscrire",
   "PasswordUpdate-ConfirmPassword": "Confirmation du nouveau mot de passe",
   "PasswordUpdate-Fail": "Les informations entrées sont invalides",

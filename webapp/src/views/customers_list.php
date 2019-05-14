@@ -21,7 +21,7 @@ ob_start(); ?>
                 <input id="customerName" type="text" class="form-control search-bar" 
                 name="customerName" placeholder='<?php echo localize('Inscription-Lastname'); ?>' />
             </div>
-            <input type="button" value="<?php echo localize("searchClient"); ?>" class="form-check-inline btn btn-success" onclick="SearchCustomer();">
+            <input type="button" value="<?php echo localize("SearchClient"); ?>" class="form-check-inline btn btn-success" onclick="SearchCustomer();">
         </div>
     </div>
     <div id="customerInformation">
