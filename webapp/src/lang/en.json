@@ -83,6 +83,7 @@
   "PasswordUpdate-OldPassword": "Current password",
   "PasswordUpdate-UpdateConfirmation": "Confirm changes",
   "Appointment-AskForAppointment":"Ask for an appointment",
+  "Personal-OnePhone" : "You must enter at least one phone number",
   "Personal-Address": "Address",
   "Personal-City": "City",
   "Personal-DateOfBirth": "Date of birth",
@@ -187,7 +188,6 @@
   "UserAppointments-OldList" : "Consult old appointments",
   "PageTitle-OldAppointments": "Old appointments",
   "CreateCustomerAccount-Title" : "Create a customer",
-  "Save" : "Save",
   "CronJobs" : "Daily emails sending",
   "AddEmailToCustomer" : "Add an email address",
   "Confirmation-UserCreatedSuccessfully" : "Account created!"

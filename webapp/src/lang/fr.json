@@ -98,6 +98,7 @@
   "PasswordUpdate-NewPassword": "Nouveau mot de passe",
   "PasswordUpdate-OldPassword": "Mot de passe actuel",
   "PasswordUpdate-UpdateConfirmation": "Confirmez la modification",
+  "Personal-OnePhone" : "Vous devez entrer au moins un numéro de téléphone",
   "Personal-Address": "Addresse",
   "Personal-City": "Ville",
   "Personal-DateOfBirth": "Date de naissance",

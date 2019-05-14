@@ -6,6 +6,9 @@ $title = localize('FollowUp-Inspect');
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('FollowUp-Inspect'); ?></h3>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-12 col-md-12">
+      <p>
+      <?php echo localize('Appointment-Customer') . ': ' . $customerName; ?>
+      </p>
       <form action="index.php?action=followuplist&customerId=<?php echo $_GET['customerId'] ?>" method="post">
           <div class="w3pvt-wls-contact-mid">
             <div class="col-lg-4 col-md-4">

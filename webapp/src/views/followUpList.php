@@ -5,6 +5,9 @@ ob_start();
 
 <div class="mx-auto" style="margin-top: 30px; width: 90%">
 <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('FollowUp-Title'); ?></h3>
+<p>
+<?php echo localize('Appointment-Customer') . ': ' . $customer->firstName . ' ' . $customer->lastName; ?>
+</p>
     <div class="search-header">
       <table class="table table-sm table-hover" id="tbl_followups">
         <thead class="thead-dark">

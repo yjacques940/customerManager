@@ -131,20 +131,38 @@ function PersonalInformation(){
         return;
     }
     if(!isset($_SESSION['userid'])){
-        AddOrUpdateUser();
-        unset($_SESSION['email']);
-        Login();
+        AddUser();
     }
     else{
         if(!empty($_POST)){
             if(isset($_GET['customerId'])){
-                $updatingInformation = FormatPersonalInformation(htmlentities($_GET['customerId']));
-                $result = CallAPI('POST','PersonalInformation/UpdatePersonalInformationWithCustomerId', json_encode($updatingInformation));
-                ShowCustomerInfo();
+                if($_POST['phone1'] == "" and $_POST['phone2'] == "" and $_POST['phone3'] == ""){
+                    $states = CallAPI('GET','States')['response'];
+                    $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
+                    $phoneType = $phoneTypes;
+                    $phoneType2 = $phoneTypes;
+                    $phoneType3 = $phoneTypes;
+                    $personalInformation = CallAPI('GET','PersonalInformation/GetPersonalInformationWithCustomerId/'.htmlentities($_GET['customerId']))['response'];
+                    require('views/personalinformation.php');
+                }else{
+                    $updatingInformation = FormatPersonalInformation(htmlentities($_GET['customerId']));
+                    $result = CallAPI('POST','PersonalInformation/UpdatePersonalInformationWithCustomerId', json_encode($updatingInformation));
+                    ShowCustomerInfo();
+                }
             }else{
-                $updatingInformation = FormatPersonalInformation('0');
-                $result = CallAPI('POST','PersonalInformation/UpdatePersonalInformation', json_encode($updatingInformation));
-                About();
+                if($_POST['phone1'] == "" and $_POST['phone2'] == "" and $_POST['phone3'] == ""){
+                    $states = CallAPI('GET','States')['response'];
+                    $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
+                    $phoneType = $phoneTypes;
+                    $phoneType2 = $phoneTypes;
+                    $phoneType3 = $phoneTypes;
+                    $personalInformation = CallAPI('GET','PersonalInformation/PersonalInformation/'.json_encode($_SESSION['userid']))['response'];
+                    require('views/personalinformation.php');
+                }else{
+                    $updatingInformation = FormatPersonalInformation('0');
+                    $result = CallAPI('POST','PersonalInformation/UpdatePersonalInformation', json_encode($updatingInformation));
+                    About();
+                }
             }
         }else{
             $states = CallAPI('GET','States')['response'];
@@ -233,75 +251,85 @@ function FormatPersonalInformation($customerId){
 function AddUser(){
     if(isset($_POST)){
         if($_POST['address'] != '' and $_POST['city'] != ''
-        and $_POST['province'] != '' and $_POST['zipcode'] != '' and $_POST['occupation'] != ''
-        and $_POST['phone1'] != '' and $_POST['type1'] != ''){
-            $phone1 = array(
-                'phone'=>htmlentities($_POST['phone1']),
-                'extension'=>'',
-                'idPhoneType'=>htmlentities($_POST['type1'])
-            );
-            if(!empty($_POST['extension1'])){
-                $phone1['extension'] = htmlentities($_POST['extension1']);
-            }
-            if(!empty($_POST['phone2'])){
-                $phone2 = array(
-                    'phone'=>htmlentities($_POST['phone2']),
+        and $_POST['province'] != '' and $_POST['zipcode'] != '' and $_POST['occupation'] != ''){
+            if($_POST['phone1'] != '' or $_POST['phone2'] != '' or $_POST['phone3'] != ''){
+                $phone1 = array(
+                    'phone'=>htmlentities($_POST['phone1']),
                     'extension'=>'',
-                    'idPhoneType'=>htmlentities($_POST['type2'])
+                    'idPhoneType'=>htmlentities($_POST['type1'])
                 );
-                if(!empty($_POST['extension2'])){
-                    $phone2['extension'] = htmlentities($_POST['extension2']);
+                if(!empty($_POST['extension1'])){
+                    $phone1['extension'] = htmlentities($_POST['extension1']);
                 }
-            }
-            if(!empty($_POST['phone3'])){
-                $phone3 = array(
-                    'phone'=>htmlentities($_POST['phone3']),
-                    'extension'=>'',
-                    'idPhoneType'=>htmlentities($_POST['type3'])
+                if(!empty($_POST['phone2'])){
+                    $phone2 = array(
+                        'phone'=>htmlentities($_POST['phone2']),
+                        'extension'=>'',
+                        'idPhoneType'=>htmlentities($_POST['type2'])
+                    );
+                    if(!empty($_POST['extension2'])){
+                        $phone2['extension'] = htmlentities($_POST['extension2']);
+                    }
+                }
+                if(!empty($_POST['phone3'])){
+                    $phone3 = array(
+                        'phone'=>htmlentities($_POST['phone3']),
+                        'extension'=>'',
+                        'idPhoneType'=>htmlentities($_POST['type3'])
+                    );
+                    if(!empty($_POST['extension3'])){
+                        $phone3['extension'] = htmlentities($_POST['extension3']);
+                    }
+                }
+                $physicalAddress = array(
+                    'physicalAddress'=>htmlentities($_POST['address']),
+                    'cityName'=>htmlentities($_POST['city']),
+                    'zipCode'=>htmlentities($_POST['zipcode']),
+                    'idState'=>htmlentities($_POST['province'])
                 );
-                if(!empty($_POST['extension3'])){
-                    $phone3['extension'] = htmlentities($_POST['extension3']);
-                }
+
+                $user = array(
+                    'email'=>(isset($_SESSION['email']))?$_SESSION['email']:'',
+                    'password'=>(isset($_SESSION['password']))?$_SESSION['password']:''
+                );
+                $customer = array(
+                    'sex'=>(isset($_SESSION['gender']))? $_SESSION['gender']:'',
+                    'firstName'=>(isset($_SESSION['firstname']))? $_SESSION['firstname']:'',
+                    'lastName'=>(isset($_SESSION['lastname']))? $_SESSION['lastname']:'',
+                    'birthDate'=>(isset($_SESSION['dateofbirth']))? $_SESSION['dateofbirth']:'',
+                    'occupation'=>htmlentities($_POST['occupation'])
+                );
+                $phones = array($phone1);
+                if (isset($phone2))
+                    array_push($phones, $phone2);
+                if (isset($phone3))
+                    array_push($phones, $phone3);
+
+                $registeringInformation = array(
+                    'physicalAddress'=>$physicalAddress,
+                    'customer'=>$customer,
+                    'user'=>$user,
+                    'phoneNumbers'=>$phones
+                );
+                $result = CallAPI('POST','Registration/Register', json_encode($registeringInformation));
+
+                $_SESSION['registered'] = 'success';
+                unset($_SESSION['email']);
+                unset($_SESSION['password']);
+                unset($_SESSION['firstname']);
+                unset($_SESSION['lastname']);
+                unset($_SESSION['gender']);
+                unset($_SESSION['dateofbirth']);
+                Login();
+            }else{
+                $states = CallAPI('GET','States')['response'];
+                $phoneTypes = CallAPI('GET', 'PhoneTypes')['response'];
+                $phoneType = $phoneTypes;
+                $phoneType2 = $phoneTypes;
+                $phoneType3 = $phoneTypes;
+                $personalInformation = CallAPI('GET','PersonalInformation/GetPersonalInformationWithCustomerId/'.htmlentities($_GET['customerId']))['response'];
+                require('views/personalinformation.php');
             }
-            $physicalAddress = array(
-                'physicalAddress'=>htmlentities($_POST['address']),
-                'cityName'=>htmlentities($_POST['city']),
-                'zipCode'=>htmlentities($_POST['zipcode']),
-                'idState'=>htmlentities($_POST['province'])
-            );
-
-            $user = array(
-                'email'=>(isset($_SESSION['email']))?$_SESSION['email']:'',
-                'password'=>(isset($_SESSION['password']))?$_SESSION['password']:''
-            );
-            $customer = array(
-                'sex'=>(isset($_SESSION['gender']))? $_SESSION['gender']:'',
-                'firstName'=>(isset($_SESSION['firstname']))? $_SESSION['firstname']:'',
-                'lastName'=>(isset($_SESSION['lastname']))? $_SESSION['lastname']:'',
-                'birthDate'=>(isset($_SESSION['dateofbirth']))? $_SESSION['dateofbirth']:'',
-                'occupation'=>htmlentities($_POST['occupation'])
-            );
-            $phones = array($phone1);
-            if (isset($phone2))
-                array_push($phones, $phone2);
-            if (isset($phone3))
-                array_push($phones, $phone3);
-
-            $registeringInformation = array(
-                'physicalAddress'=>$physicalAddress,
-                'customer'=>$customer,
-                'user'=>$user,
-                'phoneNumbers'=>$phones
-            );
-            $result = CallAPI('POST','Registration/Register', json_encode($registeringInformation));
-
-            $_SESSION['registered'] = 'success';
-            unset($_SESSION['email']);
-            unset($_SESSION['password']);
-            unset($_SESSION['firstname']);
-            unset($_SESSION['lastname']);
-            unset($_SESSION['gender']);
-            unset($_SESSION['dateofbirth']);
         }
     }
 }
@@ -796,6 +824,8 @@ function NewFollowUp(){
     if(userHasPermission('customers-read') && userHasPermission('customers-write'))
     {
         if(!isset($_POST['summary'])){
+            $customerId = htmlentities($_GET['customerid']);
+            $customerName = CallAPI('GET','Customers/FullName/'.$customerId)['response'];
             require('views/newFollowUp.php');
         }else{
             if($_POST['date'] != '' and $_POST['summary'] != ''
@@ -820,7 +850,9 @@ function NewFollowUp(){
 function ConsultFollowUp(){
     if(userHasPermission('customers-read') && userHasPermission('customers-write'))
     {
-        $id = $_GET['id'];
+        $id = htmlentities($_GET['id']);
+        $customerId = htmlentities($_GET['customerId']);
+        $customerName = CallAPI('GET','Customers/FullName/'.$customerId)['response']; 
         $result = CallAPI('POST','FollowUps/GetFollowUpWithId', json_encode($id))['response'];
         require('views/openFollowUp.php');
     }

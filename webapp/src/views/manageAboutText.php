@@ -53,7 +53,7 @@ $title = localize('AboutText-Title');
                 </div>
             </div>
           </div>
-          <button type="submit" class="btn sent-butnn"><?php echo localize('Save');?></button>
+          <button type="submit" <?php if(!isset($_GET['id'])) echo 'disabled' ?> class="btn sent-butnn"><?php echo localize('Save');?></button>
         </form>
         <table class="table table-sm table-striped table-hover table-bordered" id="tbl_appointments">
         <thead class="thead-dark">

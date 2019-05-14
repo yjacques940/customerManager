@@ -49,7 +49,13 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
     <?php if(isset($_GET['customerId'])){
         echo '<h4 class=" text-center mb-md-4 mb-sm-3 mb-3 mb-2">' . localize('Appointment-Customer') . ': '. 
             $name .'</h4>';
-    } ?>
+    } 
+    if(isset($_POST['phone1'])){
+        if($_POST['phone1'] == '' and $_POST['phone2'] == '' and $_POST['phone3'] == ''){
+            echo '<p style="color:red;">'. localize('Personal-OnePhone').'</p>';
+        }
+    }
+    ?>
       <h4 class="text-center"><?php if(isset($_SESSION['customerName'])) echo $_SESSION['customerName'] ?></h4>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-10 col-md-10">
@@ -108,7 +114,7 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                 </div>
                 <div class="form-group contact-forms col-md-4">
                     <select name="type1" id="type1">
-                    <option value=""></option>
+                    <option value="0"></option>
                     <?php foreach($phoneTypes as $phoneType){
                         if($phoneType->id == $phone1[2]){
                             echo '<option selected value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
@@ -120,11 +126,10 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                     </select>
                 </div>
                 <div class="form-group contact-forms col-md-1">
-                <img src="images/plus.gif" id="addphone2" <?php
-                if($cpt > 1){echo 'style="visibility:hidden;"';} ?> class="plus-minus" onclick="AddPhone2()">
+                <img src="images/minus.gif" id="addphone2" class="plus-minus" onclick="ClearPhone(1)">
                 </div>
             </div>
-            <div class="form-row" id="phonerow2" <?php if($cpt<2){echo 'style="visibility:hidden;"';}?>>
+            <div class="form-row" id="phonerow2" >
                 <div class="form-group contact-forms col-md-4">
                     <input type="text" id="phone2" name="phone2" value="<?php echo $phone2[0];?>" class="form-control" placeholder="Téléphone">
                 </div>
@@ -133,7 +138,7 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                 </div>
                 <div class="form-group contact-forms col-md-4">
                     <select name="type2" id="type2">
-                    <option value=""></option>
+                    <option value="0"></option>
                     <?php
                     foreach($phoneTypes as $phoneType){
                         if($phoneType->id == $phone2[2]){
@@ -146,15 +151,10 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                     </select>
                 </div>
                 <div class="form-group contact-forms col-md-1">
-                    <img src="images/plus.gif" id="addphone3"<?php
-                if($cpt > 2){echo 'style="visibility:hidden;"';} ?> class="plus-minus" onclick="AddPhone3()">
-                </div>
-                <div class="form-group contact-forms col-md-1"<?php
-                if($cpt > 2){echo 'style="visibility:hidden;"';} ?>>
-                    <img src="images/minus.gif" id="removephone2" class="plus-minus" onclick="RemovePhone2()">
+                    <img src="images/minus.gif" id="removephone2" class="plus-minus" onclick="ClearPhone(2)">
                 </div>
             </div>
-            <div class="form-row" id="phonerow3" <?php if($cpt<3){echo 'style="visibility:hidden;"';}?>>
+            <div class="form-row" id="phonerow3" >
                 <div class="form-group contact-forms col-md-4">
                     <input type="text" value="<?php echo $phone3[0] ?>" id="phone3" name="phone3" class="form-control" placeholder="Téléphone">
                 </div>
@@ -163,7 +163,7 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                 </div>
                 <div class="form-group contact-forms col-md-4">
                     <select name="type3" id="type3">
-                    <option value=""></option>
+                    <option value="0"></option>
                     <?php
                     foreach($phoneTypes as $phoneType){
                         if($phoneType->id == $phone3[2]){
@@ -176,7 +176,7 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                     </select>
                 </div>
                 <div class="form-group contact-forms col-md-1">
-                    <img src="images/minus.gif" id="removephone3" class="plus-minus" onclick="RemovePhone3()">
+                    <img src="images/minus.gif" id="removephone3" class="plus-minus" onclick="ClearPhone(3)">
                 </div>
             </div>
             <div>
@@ -217,7 +217,6 @@ $(document).ready(function(){
                 required:true
             },
             phone1:{
-                required:true,
                 minlength:13
             },
             phone2:{
@@ -225,9 +224,6 @@ $(document).ready(function(){
             },
             phone3:{
                 minlength:13
-            },
-            type1:{
-                required:true
             },
             extension1:{
                 number:true
@@ -256,7 +252,6 @@ $(document).ready(function(){
                 required :'<?php echo localize('Validate-Error-RequiredField'); ?>.'
             },
             phone1:{
-                required :'<?php echo localize('Validate-Error-RequiredField'); ?>.',
                 minlength:'<?php echo localize('Validate-Error-ValidPhone'); ?>'
             },
             phone2:{
@@ -264,9 +259,6 @@ $(document).ready(function(){
             },
             phone3:{
                 minlength:'<?php echo localize('Validate-Error-ValidPhone'); ?>'
-            },
-            type1:{
-                required:'<?php echo localize('Validate-Error-RequiredField'); ?>.'
             },
             extension1:{
                 number:'<?php echo localize('Validate-Error-Number'); ?>.'
@@ -289,6 +281,12 @@ $(document).ready(function(){
         }
     })
 });
+
+function ClearPhone(rowNumber){
+    document.getElementById('phone'+rowNumber).value = '';
+    document.getElementById('extension'+rowNumber).value = '';
+    document.getElementById('type'+rowNumber).value = '0';
+}
 
 </script>
 
