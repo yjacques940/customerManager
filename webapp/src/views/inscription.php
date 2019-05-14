@@ -32,7 +32,8 @@ $titre = localize('Inscription-Title');
             </div>
             <div class="form-group contact-forms">
               <label for="dateofbirth"><h4><?php echo localize('Personal-DateOfBirth');?></h4></label>
-              <input type="date" name="dateofbirth" id="dateofbirth" class="datepicker">
+              <input type="date" name="dateofbirth" id="dateofbirth" class="datepicker"
+                     max="<?php echo date("Y-m-d"); ?>">
             </div>
             <div class="form-group contact-forms">
               <label for="email"><h4><?php echo localize('Login-Email'); ?></h4></label>
