@@ -850,7 +850,7 @@ function NewFollowUp(){
 function ConsultFollowUp(){
     if(userHasPermission('customers-read') && userHasPermission('customers-write'))
     {
-        $id = htmlentities($_GET['id']);
+        $id = htmlentities($_GET['idFollowUp']);
         $customerId = htmlentities($_GET['customerId']);
         $customerName = CallAPI('GET','Customers/FullName/'.$customerId)['response']; 
         $result = CallAPI('POST','FollowUps/GetFollowUpWithId', json_encode($id))['response'];
@@ -1165,11 +1165,11 @@ function GetCustomerIdByUserId($userId)
 function ManageAboutText(){
     if(userHasPermission('IsEmployee')){
         if(isset($_POST['titlefr'])){
-            if($_POST['id'] != '0' and $_POST['titlefr'] != '' and $_POST['descriptionfr'] != ''){
+            if($_POST['idAboutZone'] != '0' and $_POST['titlefr'] != '' and $_POST['descriptionfr'] != ''){
                 $descriptionEn = (isset($_POST['descriptionen'])) ? $_POST['descriptionen'] : '';
                 $TitleEn = (isset($_POST['titleen'])) ? $_POST['titleen'] : '';
                 $data = array(
-                    "id"      => $_POST['id'],
+                    "id"      => $_POST['idAboutZone'],
                     "titleFr" => $_POST['titlefr'],
                     "titleEn" => $_POST['titleen'],
                     "descriptionFr" => $_POST['descriptionfr'], 
@@ -1179,8 +1179,8 @@ function ManageAboutText(){
             }
         }
         $aboutTexts = CallAPI('GET','AboutTexts/GetActiveText')['response'];
-        if(isset($_GET['id']))
-            $textToModify = CallAPI('GET','AboutTexts/GetAboutTextById/'.$_GET['id'])['response'];
+        if(isset($_GET['idAboutZone']))
+            $textToModify = CallAPI('GET','AboutTexts/GetAboutTextById/'.$_GET['idAboutZone'])['response'];
         require('views/manageAboutText.php');
     }else{
         error(403);

@@ -5,9 +5,9 @@ ob_start();
 
 <div class="mx-auto" style="margin-top: 30px; width: 90%">
 <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('FollowUp-Title'); ?></h3>
-<p>
-<?php echo localize('Appointment-Customer') . ': ' . $customer->firstName . ' ' . $customer->lastName; ?>
-</p>
+<h4 class=" text-center">
+<?php echo $customer->firstName . ' ' . $customer->lastName; ?>
+</h4>
     <div class="search-header">
       <table class="table table-sm table-hover" id="tbl_followups">
         <thead class="thead-dark">
@@ -20,7 +20,7 @@ ob_start();
         <?php
             foreach($listOfFollowUps as $followUp){
                 echo '<tr>
-                        <td><a href="index.php?action=consultFollowUp&id='.$followUp->id.'&customerId='.$customerId.'">'. substr($followUp->date,0,10) . '</a></td>
+                        <td><a href="index.php?action=consultFollowUp&idFollowUp='.$followUp->id.'&customerId='.$customerId.'">'. substr($followUp->date,0,10) . '</a></td>
                         <td>'. $followUp->summary .'</td>
                     </tr>';
             }

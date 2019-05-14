@@ -5,9 +5,11 @@ $title = localize('FollowUp-Add');
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('FollowUp-Add'); ?></h3>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
-    <p>
-    <?php echo localize('Appointment-Customer') . ': ' . $customerName; ?>
-    </p>
+    <div class="col-lg-12 col-md-12">
+        <h4 class=" text-center">
+        <?php echo $customerName; ?>
+        </h4>
+      </div>
       <div class="col-lg-12 col-md-12">
         <form action="index.php?action=newFollowUp" id="newFollowUp" method="post">
             <input type="hidden" name="customerid" value="<?php echo $_GET['customerid']?>"/>
