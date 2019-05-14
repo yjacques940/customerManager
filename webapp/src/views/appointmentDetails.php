@@ -1,5 +1,4 @@
 <?php
-if (!userHasPermission('appointments-read')) error(403);
 if (isset($appointmentDetails))
     $data = $appointmentDetails;
 else

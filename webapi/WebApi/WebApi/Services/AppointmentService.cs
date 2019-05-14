@@ -225,7 +225,7 @@ namespace WebApi.Services
 
         public CustomerAppointmentInformation GetAppointmentDetails(int? userId, int appointmentId)
         {
-            var customerAppointmentInformation = (
+            var customerAppointmentInfo = (
                 from appointment in Context.Appointments
                 join customer in Context.Customers on appointment.IdCustomer equals customer.Id
                 join timeSlot in Context.TimeSlots on appointment.IdTimeSlot equals timeSlot.Id
@@ -237,9 +237,13 @@ namespace WebApi.Services
                     Appointment = appointment
                 }).AsNoTracking().FirstOrDefault();
 
-            return (userId == null)
-                ? customerAppointmentInformation
-                : (customerAppointmentInformation.Customer.Id == userId) ? customerAppointmentInformation : null;
+            if (userId == null) {
+                return customerAppointmentInfo;
+            }
+            else if (customerAppointmentInfo.Customer.Id == Context.Users.First(c => c.Id == userId).IdCustomer) {
+                return customerAppointmentInfo;
+            }
+            return null;
         }
 
         internal string SendAppointmentRequest(AskForAppointmentInformation requestInfo,IConfiguration configuration)
