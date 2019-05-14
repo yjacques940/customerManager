@@ -209,7 +209,7 @@ $(document).ready(function(){
             },
             zipcode:{
                 required:true,
-                max: 10
+                maxlength: 10
             },
             occupation:{
                 required:true
