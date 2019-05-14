@@ -23,7 +23,7 @@ ob_start(); ?>
                                    placeholder="<?php echo Localize('EmailUpdate-NewEmail');?>">
                             <div id="emaildontmatch" name="emaildontmatch"></div>
                         </div>
-                        <button type="submit" class="btn sent-butnn"><?php echo Localize('Timeslot-Add');?></button>
+                        <button type="submit" class="btn sent-butnn"><?php echo Localize('TimeSlot-Add');?></button>
                     </div>
                 </form>
             </div>
