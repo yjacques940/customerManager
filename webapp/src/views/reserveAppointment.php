@@ -33,12 +33,30 @@ ob_start(); ?>
                 </div>
                 <div class="col-lg-5 col-md-5">
                     <div class="form-group contact-forms">
+                        <label for="typeOfTreatment">
+                            <h4><?php echo localize('AskForAppointment-TypeOfTreatment') ?></h4>
+                        </label>
+                        <select class="form-control mx-sm-3 w-200"
+                                style="height: 45px" id="typeOfTreatment" name="typeOfTreatment">
+                            <option disabled selected value></option>
+                            <option value="Regular">
+                                <?php echo localize('AskForAppointment-Treatment-Regular'); ?>
+                            </option>
+                            <option value="HourAndHalf"><?php echo localize('AskForAppointment-Treatment-1h30')?>
+                            </option>
+                            <option value="HotStones">
+                                <?php echo localize('AskForAppointment-Treatment-HotStones')?>
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group contact-forms">
                         <label for="therapist"><h4><?php echo localize('TakeAppointment-Therapist') ?></h4></label>
-                        <select class="form-control mx-sm-3 w-200" id="therapist" name="therapist">
-                          <option></option>
-                          <option value="either"><?php echo localize('TakeAppointment-Either') ?>
-                          <option value="Carl">Carl</option>
-                          <option value="Mélanie">Mélanie</option>
+                        <select class="form-control mx-sm-3 w-200"
+                                style="height: 45px" id="therapist" name="therapist">
+                            <option></option>
+                            <option value="either"><?php echo localize('TakeAppointment-Either') ?>
+                            <option value="Carl">Carl</option>
+                            <option value="Mélanie">Mélanie</option>
                         </select>
                     </div>
                     <div class="form-group contact-forms">
@@ -70,9 +88,14 @@ ob_start(); ?>
                         </label>
                         <input class="form-control mx-sm-3 w-200" name="doctor-diagnostic" id="doctor-diagnostic">
                     </div>
-                    <button type="submit" class="btn sent-butnn">
+                    <button type="submit" class="btn sent-butnn" id="btn_makeAppointment">
                         <?php echo Localize('CreateAppointment-MakeAppointment') ?>
                     </button>
+                    <p id="appointmentWarning" style="display: none; font-weight: bold; color: rgb(192, 0, 0)">
+                        <?php echo localize("NewAppointment-Warning") ?> <a href='?action=ask_for_appointment'>
+                            <?php echo localize("NewAppointment-RequestLink-Text") ?>
+                        </a>
+                    </p>
                     <div id="timeslottaken" style="color:#F00"></div>
                 </div>
             </div>
@@ -167,6 +190,14 @@ $(document).ready(function(){
         else
             $("#form_doctor-diagnostic").hide();
     } );
+
+    $("#typeOfTreatment").change(function() {
+        $("#btn_makeAppointment").prop("disabled", ($("#typeOfTreatment").val() != "Regular"));
+        if ($("#typeOfTreatment").val() != "Regular")
+            $("#appointmentWarning").show();
+        else
+            $("#appointmentWarning").hide();
+    });
 
     $("#reserveappointment").validate({
         errorClass : "error_class",
