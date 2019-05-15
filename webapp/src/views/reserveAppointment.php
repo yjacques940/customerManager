@@ -34,7 +34,7 @@ ob_start(); ?>
                 <div class="col-lg-5 col-md-5">
                     <div class="form-group contact-forms">
                         <label for="therapist"><h4><?php echo localize('TakeAppointment-Therapist') ?></h4></label>
-                        <select id="therapist" name="therapist">
+                        <select class="form-control mx-sm-3 w-200" id="therapist" name="therapist">
                           <option></option>
                           <option value="either"><?php echo localize('TakeAppointment-Either') ?>
                           <option value="Carl">Carl</option>
