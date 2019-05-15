@@ -491,10 +491,29 @@ VALUES('Vous souffrez de mobilité restreinte au niveau de l\'épaule?',' Your s
 d’exercices adapté comprenant des exercices de stabilisation musculaire, de renforcement et
 d’assouplissement. Ainsi, vous augmenterez la stabilité dynamique de votre épaule et minimiserez les
 sensations de coincement. ','It\'s important for your therapist to teach you exercices adapted to your situations.',3,1),
-      ('Qui somme nous?','Who are we?','Carl Giguère et Mélanie Plante sont Orthothérapeutes.',
-      'Carl Giguère and Mélanie Plante are orthotherapists.',2,1),
-      ('Notre But', 'Our goal','On souhaite vous aider à améliorer votre situation.',
-      'We wish to help you improve your situation',1,1);
+      ('Venez vivre l\'expérience','Come live the experience','Ayant plus de 5 ans d\'expérience dans le domaine, nous
+      vous offrons des soins et des conseils qui vont vous aider à vous faire sentir mieux.',
+      'With more than 5 years of experience in the field, we offer care and advice that will help you feel better.',2,1),
+      ('Nos services', 'Our services','<dl>
+<li>Massothérapie</li>
+<li>Orthothérapie</li>
+<li>Kinésithérapie</li>
+<li>Naturothérapie</li>
+<li>Taping neuro-proprioceptif</li>
+<li>Reiki</li>
+<li>Soins Qi Gong</li>
+<li>Cours de yoga</li>
+</dl>',
+'<dl>
+<li> Massage Therapy </li>
+<li> Orthotherapy </li>
+<li> Therapy </li>
+<li> Naturotherapy </li>
+<li> Neuro-proprioceptive taping </li>
+<li> Reiki </li>
+<li> Qi Gong care </li>
+<li> Yoga class </li>
+</dl>',1,1);
 
 #------------------------------------------------------------
 # Creating data for tests
