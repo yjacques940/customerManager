@@ -504,17 +504,16 @@ sensations de coincement. ','It\'s important for your therapist to teach you exe
 <li>Soins Qi Gong</li>
 <li>Cours de yoga</li>
 </dl>',
-      '
-<Dl>
-<Li> Massage Therapy </ li>
-<Li> Orthotherapy </ li>
-<Li> Therapy </ li>
-<Li> Naturotherapy </ li>
-<li> Neuro-proprioceptive taping </ li>
-<Li> Reiki </ li>
-<li> Qi Gong care </ li>
-<li> Yoga class </ li>
-</ Dl>',1,1);
+'<dl>
+<li> Massage Therapy </li>
+<li> Orthotherapy </li>
+<li> Therapy </li>
+<li> Naturotherapy </li>
+<li> Neuro-proprioceptive taping </li>
+<li> Reiki </li>
+<li> Qi Gong care </li>
+<li> Yoga class </li>
+</dl>',1,1);
 
 #------------------------------------------------------------
 # Creating data for tests
