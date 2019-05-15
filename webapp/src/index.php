@@ -77,9 +77,6 @@ try
         case 'reserveappointment':
             ReserveAppointment();
             break;
-        case "searchCustomer":
-            SearchCustomer();
-            break;
         case "showCustomerInfo":
             ShowCustomerInfo();
             break;
@@ -102,7 +99,6 @@ try
             OpenForgotPasswordEmailSelector();
             break;
         case "runDailyCronJobs":
-            var_dump(CallAPI('Get', 'Jobs/Daily'));
             Home();
             break;
         case 'cancelappointments':

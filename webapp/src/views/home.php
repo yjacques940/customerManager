@@ -63,11 +63,6 @@
                           <?php echo localize('CreateCustomerAccount-Title'); ?>
                       </a>
                   </li>
-                <li>
-                  <a href="index.php?action=searchCustomer" class="drop-down">
-                  <?php echo localize('searchClient'); ?>
-                  </a>
-                </li>
                 <?php if(userHasPermission('SiteManager')){ ?>
                 <li>
                   <a href="index.php?action=manageDiaporama" class="drop-text">
