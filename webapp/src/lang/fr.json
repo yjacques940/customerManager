@@ -82,7 +82,7 @@
   "Login-Register": "Inscrivez-vous",
   "Login-Success": "Enregistrement réussi, veuillez vous connecter",
   "Login-Title": "Connexion",
-  "AskForAppointment-Instructions" : "Pour demander un rendez-vous veuillez remplir le formulaire ci-dessous. Il est obligatoire de faire une demande de réservation pour un traitement de pierres chaudes ou un traitement d'une heure trente. Nous vous contacterons pour vous discuter du rendez-vous sous peu. Vous pouvez aussi nous contacter au (418) 774-0246",
+  "AskForAppointment-Instructions" : "Pour demander un rendez-vous veuillez remplir le formulaire ci-dessous. Il est obligatoire de faire une demande de réservation pour un traitement de pierres chaudes ou un traitement d'une heure trente. Après l'envoi de la demande, nous vous contacterons pour vous discuter du rendez-vous sous peu. Vous pouvez aussi nous contacter au (418) 774-0246",
   "Modification-Success": "Modifications effectuées avec succès",
   "PageTitle-About": "À propos",
   "PageTitle-Appointments": "Rendez-vous",
@@ -206,5 +206,7 @@
   "CreateCustomerAccount-Title" : "Création de client",
   "CronJobs" : "Envois de courriels quotidien",
   "AddEmailToCustomer" : "Ajout d'une adresse courriel",
-  "Confirmation-UserCreatedSuccessfully" : "Le compte a été créé!"
+  "Confirmation-UserCreatedSuccessfully" : "Le compte a été créé!",
+  "NewAppointment-Warning" : "Pour un rendez-vous de plus d'une heure ou pour un traitement aux pierres chaudes, vous devez faire une demande de réservation",
+  "NewAppointment-RequestLink-Text" : "en suivant ce lien."
 }
