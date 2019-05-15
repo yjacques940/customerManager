@@ -28,7 +28,7 @@ ob_start(); ?>
         <form action="" id="reserveappointment" name="reserveappointment" method="post">
             <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
                 <div class="col-lg-7 col-md-7">
-                    <h4><?php echo localize('TakeAppointment-ChooseTimeSlot') ?></h4>
+                    <h4><?php echo localize('ReserveAppointment-ChooseTimeSlot') ?></h4>
                     <div id="calendarEl" class="form-group contact-forms"></div>
                 </div>
                 <div class="col-lg-5 col-md-5">
@@ -42,10 +42,11 @@ ob_start(); ?>
                         </select>
                     </div>
                     <div class="form-group contact-forms">
-                        <label class="col-form-label" for="visit-reason">
-                            <h4><?php echo localize('ReserveAppointment-VisitReason') ?></h4>
+                        <label class="col-form-label" for="consultation-reason">
+                            <h4><?php echo localize('ReserveAppointment-ConsultationReason') ?></h4>
                         </label>
-                        <input class="form-control mx-sm-3 w-200" name="visit-reason" id="visit-reason" required>
+                        <input class="form-control mx-sm-3 w-200"
+                            name="consultation-reason" id="consultation-reason" required>
                     </div>
                     <div class="form-group contact-forms">
                         <label for="therapist-bool">
@@ -53,9 +54,13 @@ ob_start(); ?>
                         </label>
                         <div class="form-group form-inline">
                             <input style="width:24px;height: 24px;" class="mx-sm-2"
-                                type="radio" value="true" name="doctor-bool" required>Oui</input>
+                                    type="radio" value="true" name="doctor-bool" required>
+                                <?php echo localize('Answer-Yes') ?>
+                            </input>
                             <input style="width:24px;height: 24px;" class="mx-sm-2"
-                                type="radio" value="false" name="doctor-bool">Non</input>
+                                    type="radio" value="false" name="doctor-bool">
+                                <?php echo localize('Answer-No') ?>
+                            </input>
                             <div class="mx-sm-4"></div>
                         </div>
                         <label class="col-form-label" for="therapist-reason">
@@ -187,7 +192,7 @@ $(document).ready(function(){
                 data:{
                     <?php if(isset($customerId)) echo 'customerId: urlParams.get("customerId"),' ?>
                     timeSlot: currentSelection.id,
-                    visitReason: $("#visit-reason").val(),
+                    consultationReason: $("#consultation-reason").val(),
                     therapist: $("#therapist").val(),
                     hasSeenDoctor: $("input[name=doctor-bool]:checked").val(),
                     doctorDiagnostic: $("#doctor-diagnostic").val()

@@ -49,7 +49,7 @@ ob_start();
         <div class="col-md-6">
             <div class="text-justify m-2">
                 <p><b><?php echo localize('ConsultationReason')?>:</b></p>
-                <p><?php echo $data->appointment->visitReason ?? localize('NoNotes') ?></p>
+                <p><?php echo $data->appointment->consultationReason ?? localize('NoNotes') ?></p>
             </div>
             <p class="m-2"><b><?php echo localize('hasSeenDoctor')?>:</b>
                 <?php

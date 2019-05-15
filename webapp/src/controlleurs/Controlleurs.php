@@ -727,7 +727,7 @@ function ReserveTimeSlotForAppointment($customerId) {
         'idUser' => ($customerId == null) ? htmlentities($_SESSION['userid']) : null,
         'idCustomer' => ($customerId != null) ? $customerId : null,
         'therapist' => htmlentities($_POST['therapist']),
-        'visitReason' => htmlentities($_POST['visitReason']),
+        'consultationReason' => htmlentities($_POST['consultationReason']),
         'hasSeenDoctor' => htmlentities($_POST['hasSeenDoctor']),
         'doctorDiagnostic' => htmlentities($_POST['doctorDiagnostic'])
     );
@@ -1011,7 +1011,7 @@ function PrepareArraysFromPost(){
         $isDisplayed = false;
         if($displayArray[$cpt] == '1')
             $isDisplayed = true;
-        
+
         $result = array(
             "id"=> $idArray[$cpt],
             "displayOrder"=> $orderArray[$cpt],
@@ -1144,7 +1144,7 @@ function ManageAboutText(){
                     "id"      => $_POST['id'],
                     "titleFr" => $_POST['titlefr'],
                     "titleEn" => $_POST['titleen'],
-                    "descriptionFr" => $_POST['descriptionfr'], 
+                    "descriptionFr" => $_POST['descriptionfr'],
                     "descriptionEn" => $_POST['descriptionen']
                 );
                 $result = CallAPI('POST','AboutTexts/UpdateAboutText',json_encode($data));
@@ -1157,7 +1157,7 @@ function ManageAboutText(){
     }else{
         error(403);
     }
-    
+
 }
 
 ?>

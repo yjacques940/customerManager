@@ -152,11 +152,20 @@ namespace WebApi.Services
             if (appointmentService != null)
             {
                 appointment.CreatedOn = DateConverter.CurrentEasternDateTime();
-                appointment.IdCustomer = (appointmentService.IdCustomer != null)
-                        ? appointmentService.IdCustomer.Value
-                        : Context.Users.First(c => c.Id == appointmentService.IdUser).IdCustomer;
+                if (appointmentService.IdCustomer != null)
+                {
+                    appointment.IdCustomer = appointmentService.IdCustomer.Value;
+                }
+                else
+                {
+                    var customer = Context.Users.FirstOrDefault(c => c.Id == appointmentService.IdUser);
+                    if (customer != null)
+                        appointment.IdCustomer = customer.Id;
+                    else
+                        return false;
+                }
                 appointment.IdTimeSlot = appointmentService.IdTimeSlot;
-		        appointment.VisitReason = appointmentService.VisitReason;
+		        appointment.ConsultationReason = appointmentService.ConsultationReason;
                 appointment.Therapist = appointmentService.Therapist;
                 appointment.HasSeenDoctor = appointmentService.HasSeenDoctor;
                 appointment.DoctorDiagnostic = appointmentService.DoctorDiagnostic;

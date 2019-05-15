@@ -192,5 +192,9 @@
   "Confirmation-UserCreatedSuccessfully" : "Account created!",
   "ConsultationReason" : "Consultation Reason",
   "hasSeenDoctor" : "Consulted the doctor",
-  "DoctorDiagnostic" : "Doctor's diagnostic"
+  "DoctorDiagnostic" : "Doctor's diagnostic",
+  "ReserveAppointment-ChooseTimeSlot" : "Choose a timeslot",
+  "ReserveAppointment-ConsultationReason" : "What is the reason of your consultation?",
+  "ReserveAppointment-HasSeenDoctor" : "Have you seen a doctor about it?",
+  "ReserveAppointment-DoctorDiagnostic" : "If so, what was the diagnostic?"
 }
