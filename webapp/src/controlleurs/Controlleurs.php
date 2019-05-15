@@ -610,7 +610,7 @@ function GetCustomerInformation($customersInformation){
 $output .= '</tbody></table>';
         echo $output;
     }else{
-        echo localize('CustomersList-NoResult');
+        echo '<p class="text-center"><b >' . localize('CustomersList-NoResult').'</b></p>';
     }
 }
 
