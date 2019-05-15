@@ -56,9 +56,6 @@
         <div class="icons mt-3 ">
           <ul>
             <li><a href="www.fb.com/898434873569060/"><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-            <li><a href="#"><span class="fa fa-rss"></span></a></li>
-            <li><a href="#"><span class="fa fa-vk"></span></a></li>
           </ul>
         </div>
       </div>

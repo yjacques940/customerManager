@@ -135,56 +135,35 @@ $title = 'Connection';
     </section>
     <!--//about-->
     <!--States-->
-    <section class="stats-count">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-6 stats">
-          </div>
-          <div class="col-lg-6 col-md-6 col-sm-6 counter-number">
-            <div class="row text-center">
-              <div class="col-lg-6 col-md-6 col-sm-6 number-w3three-info ">
-                <h5><?php echo localize('About-Stats-Diplomas-Count'); ?></h5>
-                <h6 class="pt-2"><?php echo localize('About-Stats-Diplomas-Text'); ?></h6>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 number-w3three-info">
-                <h5><?php echo localize('About-Stats-Customers-Count'); ?></h5>
-                <h6 class="pt-2"><?php echo localize('About-Stats-Customers-Text'); ?></h6>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+
     <!--//States-->
     <!-- team -->
-    <section class="team py-lg-4 py-md-3 py-sm-3 py-3" id="team">
-      <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-        <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('About-OurTeam'); ?></h3>
-        <div class="title-wls-text text-center mb-lg-5 mb-md-4 mb-sm-4 mb-3">
-          <p><?php echo localize('About-OurTeam-Text'); ?></p>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6 team-row-grid">
-            <div class="team-grid">
-              <div class="team-image mb-3">
-                <img src="images/t1.jpg" alt="" class="img-fluid">
-              </div>
-              <h4>Carl Giguère</h4>
-              <p class="mt-2">Orthothérapeute</p>
+<section class="team py-lg-4 py-md-3 py-sm-3 py-3" id="team">
+    <div class="container py-lg-5 py-md-4 py-sm-4 py-3 ">
+        <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('About-OurTeam'); ?></h3><br/>
+        <div class="row text-center">
+            <div class=" col-md-6 col-sm-6 team-row-grid">
+                <div class="team-grid">
+                    <div class="team-image mb-3">
+                        <img src="images/t2.jpg" alt="" class="img-fluid">
+                    </div>
+                    <h4>Carl Giguère</h4>
+                    <p class="mt-2 text-center">Orthothérapeute</p>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 team-row-grid">
-            <div class="team-grid">
-              <div class="team-image mb-3">
-                <img src="images/t2.jpg" alt="" class="img-fluid">
-              </div>
-              <h4>Mélanie Plante</h4>
-              <p class="mt-2">Orthothérapeute</p>
+            <div class=" col-md-6 col-sm-6 team-row-grid">
+                <div class="team-grid">
+                    <div class="team-image mb-3">
+                        <img src="images/t1.jpg" alt="" class="img-fluid">
+                    </div>
+                    <h4>Mélanie Plante</h4>
+                    <p class="mt-2">Orthothérapeute</p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
+<script>
 <script>
     <?php
     if(isset($_POST['isfirstlogin'])&& htmlentities($_POST['isfirstlogin']))

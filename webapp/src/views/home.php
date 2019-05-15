@@ -229,15 +229,14 @@
           <div class="footer-info-bottom col-lg-6 col-md-6">
             <div class="icons mt-3 ">
               <ul>
-                <li><a href="<?php echo localize('Company-Fb'); ?>"><span class="fa fa-facebook"></span></a></li>
-                <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-                <li><a href="#"><span class="fa fa-rss"></span></a></li>
-                <li><a href="#"><span class="fa fa-vk"></span></a></li>
-              </ul>
-            </div>
-              <div>
+                <li>
+                    <a href="<?php echo localize('Company-Fb'); ?>"><span class="fa fa-facebook"></span></a>
+                </li>
+              <li>
                   <i><a href="?action=ask_for_appointment" style="color:white; font-style:normal;"><span class="fa fa-pencil-square-o" aria-hidden="true">
                           </span> <?php echo localize('Appointment-AskForAppointment') ?></a></i>
+              </li>
+              </ul>
               </div>
           </div>
         </div>
