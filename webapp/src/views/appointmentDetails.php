@@ -51,7 +51,7 @@ ob_start();
                 <p><b><?php echo localize('ConsultationReason')?>:</b></p>
                 <p><?php echo $data->appointment->consultationReason ?? localize('NoNotes') ?></p>
             </div>
-            <p class="m-2"><b><?php echo localize('hasSeenDoctor')?>:</b>
+            <p class="m-2"><b><?php echo localize('HasSeenDoctor')?>:</b>
                 <?php
                     echo ($data->appointment->hasSeenDoctor) ? localize('Answer-Yes') : localize('Answer-No');
                 ?>
