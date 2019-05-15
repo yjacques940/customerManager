@@ -746,16 +746,17 @@ function CheckTimeSlotAvailable(){
     }
 }
 
-function ReserveTimeSlotForAppointment($customerId){
-    $timeSlot = htmlentities($_POST['timeSlot']);
-    $therapist = htmlentities($_POST['therapist']);
+function ReserveTimeSlotForAppointment($customerId) {
     $appointment = array(
-        'idTimeSlot' => $timeSlot,
-        'therapist' => $therapist,
+        'idTimeSlot' => htmlentities($_POST['timeSlot']),
         'idUser' => ($customerId == null) ? htmlentities($_SESSION['userid']) : null,
-        'idCustomer' => ($customerId != null) ? $customerId : null
+        'idCustomer' => ($customerId != null) ? $customerId : null,
+        'therapist' => htmlentities($_POST['therapist']),
+        'consultationReason' => htmlentities($_POST['consultationReason']),
+        'hasSeenDoctor' => htmlentities($_POST['hasSeenDoctor']),
+        'doctorDiagnostic' => htmlentities($_POST['doctorDiagnostic'])
     );
-    CallAPI('POST','Appointments/ReserveAnAppointment',json_encode($appointment));
+    $output = CallAPI('POST','Appointments/ReserveAnAppointment',json_encode($appointment));
     $_SESSION['appointmenttaken'] = true;
 }
 
@@ -1039,7 +1040,7 @@ function PrepareArraysFromPost(){
         $isDisplayed = false;
         if($displayArray[$cpt] == '1')
             $isDisplayed = true;
-        
+
         $result = array(
             "id"=> $idArray[$cpt],
             "displayOrder"=> $orderArray[$cpt],
@@ -1172,7 +1173,7 @@ function ManageAboutText(){
                     "id"      => $_POST['idAboutZone'],
                     "titleFr" => $_POST['titlefr'],
                     "titleEn" => $_POST['titleen'],
-                    "descriptionFr" => $_POST['descriptionfr'], 
+                    "descriptionFr" => $_POST['descriptionfr'],
                     "descriptionEn" => $_POST['descriptionen']
                 );
                 $result = CallAPI('POST','AboutTexts/UpdateAboutText',json_encode($data));
@@ -1185,7 +1186,7 @@ function ManageAboutText(){
     }else{
         error(403);
     }
-    
+
 }
 
 ?>

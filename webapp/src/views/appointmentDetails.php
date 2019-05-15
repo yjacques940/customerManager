@@ -36,18 +36,29 @@ ob_start();
                         strftime("%x %X", $appointmentReservedTime);
                 ?>
             </p>
-        </div>
-        <div class="col-md-6">
-            <div class="m-2">
-                <p>
-                    <?php
-                        echo '<b>'. localize('Appointment-RequestedTherapist') .':</b> '. $data->appointment->therapist
-                    ?>
-                </p>
-            </div>
+            <p class="m-2">
+                <?php
+                    echo '<b>'. localize('Appointment-RequestedTherapist') .':</b> '. $data->appointment->therapist
+                ?>
+            </p>
             <div class="text-justify m-2">
                 <p><b><?php echo localize('TimeSlot-Notes-Text')?>:</b></p>
                 <p><?php echo ($data->timeSlot->notes != null) ? $data->timeSlot->notes : localize('NoNotes') ?></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-justify m-2">
+                <p><b><?php echo localize('ConsultationReason')?>:</b></p>
+                <p><?php echo $data->appointment->consultationReason ?? localize('NoNotes') ?></p>
+            </div>
+            <p class="m-2"><b><?php echo localize('hasSeenDoctor')?>:</b>
+                <?php
+                    echo ($data->appointment->hasSeenDoctor) ? localize('Answer-Yes') : localize('Answer-No');
+                ?>
+            </p>
+            <div class="text-justify m-2">
+                <p><b><?php echo localize('DoctorDiagnostic')?>:</b></p>
+                <p><?php echo $data->appointment->doctorDiagnostic ?? localize('NoNotes') ?></p>
             </div>
         </div>
     </div>

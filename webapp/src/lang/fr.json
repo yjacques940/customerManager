@@ -209,5 +209,12 @@
   "CreateCustomerAccount-Title" : "Création de client",
   "CronJobs" : "Envois de courriels quotidien",
   "AddEmailToCustomer" : "Ajout d'une adresse courriel",
-  "Confirmation-UserCreatedSuccessfully" : "Le compte a été créé!"
+  "Confirmation-UserCreatedSuccessfully" : "Le compte a été créé!",
+  "ConsultationReason" : "Raison de la consultation",
+  "hasSeenDoctor" : "A consulté le médecin",
+  "DoctorDiagnostic" : "Diagnostic du médecin",
+  "ReserveAppointment-ChooseTimeSlot" : "Choisissez une plage horaire",
+  "ReserveAppointment-ConsultationReason" : "Quelle est la raison de votre consultation?",
+  "ReserveAppointment-HasSeenDoctor" : "Avez-vous consulté un médecin à ce sujet?",
+  "ReserveAppointment-DoctorDiagnostic" : "Quel a été son diagnostic?"
 }

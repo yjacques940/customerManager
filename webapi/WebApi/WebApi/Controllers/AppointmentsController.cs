@@ -117,7 +117,7 @@ namespace WebApi.Controllers
             var customerAppointmentInformation = Service.GetAppointmentDetails(userId, appointmentId);
             if (customerAppointmentInformation != null)
             {
-                return Ok(Service.GetAppointmentDetails(userId, appointmentId));
+                return Ok(customerAppointmentInformation);
             }
             return Unauthorized();
         }

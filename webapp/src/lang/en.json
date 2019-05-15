@@ -191,5 +191,12 @@
   "CreateCustomerAccount-Title" : "Create a customer",
   "CronJobs" : "Daily emails sending",
   "AddEmailToCustomer" : "Add an email address",
-  "Confirmation-UserCreatedSuccessfully" : "Account created!"
+  "Confirmation-UserCreatedSuccessfully" : "Account created!",
+  "ConsultationReason" : "Consultation Reason",
+  "hasSeenDoctor" : "Consulted the doctor",
+  "DoctorDiagnostic" : "Doctor's diagnostic",
+  "ReserveAppointment-ChooseTimeSlot" : "Choose a timeslot",
+  "ReserveAppointment-ConsultationReason" : "What is the reason of your consultation?",
+  "ReserveAppointment-HasSeenDoctor" : "Have you seen a doctor about it?",
+  "ReserveAppointment-DoctorDiagnostic" : "What was the diagnostic?"
 }
