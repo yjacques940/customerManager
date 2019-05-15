@@ -9,6 +9,7 @@ ob_start();
 <?php echo $customer->firstName . ' ' . $customer->lastName; ?>
 </h4>
     <div class="search-header">
+    <?php if(count($listOfFollowUps) > 0){?>
       <table class="table table-sm table-hover" id="tbl_followups">
         <thead class="thead-dark">
           <tr> 
@@ -27,11 +28,17 @@ ob_start();
         ?>
         </tbody>
       </table>
+          <?php 
+          }else{
+            echo '<p class="text-center"><b>'. localize('FollowUp-NoFollowUps') . '</b></p>';
+          }
+        ?>
+      <div class="py-4">
       <a href="index.php?action=newFollowUp&customerid=<?php echo $customerId ?>" class="btn btn-success">
             <?php echo localize('FollowUp-Add'); ?>
         </a>
+        </div>
     </div>
-    
 </div>
 <?php
   $contenu = ob_get_clean();

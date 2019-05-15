@@ -35,6 +35,7 @@
   "EmailUpdate-NewEmail": "New email",
   "EmailUpdate-NewEmailConfirmed": "Confirm the email",
   "EmailUpdate-PasswordConfirm" : "Password verification",
+  "FollowUp-NoFollowUps" : "This customer doesn't have any follow-up",
   "Footer-Text-Address": "Address",
   "Footer-Text-Email": "Email",
   "Footer-Text-Phone": "Phone",

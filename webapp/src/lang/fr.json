@@ -45,6 +45,7 @@
   "EmailUpdate-PasswordConfirm" : "Veuillez confirmer avec votre mot de passe",
   "FollowUp-Add": "Ajouter un suivi",
   "FollowUp-Inspect" : "Consultation d'un suivi",
+  "FollowUp-NoFollowUps" : "Ce client n'a aucun suivi",
   "FollowUp-Summary" : "Résumé de la rencontre",
   "FollowUp-Treatment" : "Traitement",
   "FollowUp-Title": "Liste des suivis",
