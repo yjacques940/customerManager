@@ -50,7 +50,7 @@
   "Home-Text-Bold": "From x$",
   "Home-Text-Details": "Conditions may apply.",
   "Home-Text-Title": "Take an appointment with us today!",
-  "AskForAppointment-Instructions" : "To request an appointment please fill out the form below. It is mandatory to make a booking request for a hot stone treatment or an hour and a half treatment. We will contact you to discuss the appointment shortly. You can also contact us at (418) 774-0246",
+  "AskForAppointment-Instructions" : "To request an appointment please fill out the form below. It is mandatory to make a booking request for a hot stone treatment or for an hour and a half treatment. After sending your request, we will contact you to discuss the appointment shortly. You can also contact us at (418) 774-0246",
   "Inscription-AlreadyRegistered":"Already a client",
   "Inscription-ConfirmEmail": "Email confirmation",
   "Inscription-ConfirmPassword": "Password confirmation",
@@ -198,5 +198,8 @@
   "ReserveAppointment-ChooseTimeSlot" : "Choose a timeslot",
   "ReserveAppointment-ConsultationReason" : "What is the reason of your consultation?",
   "ReserveAppointment-HasSeenDoctor" : "Have you seen a doctor about it?",
-  "ReserveAppointment-DoctorDiagnostic" : "What was the diagnostic?"
+  "ReserveAppointment-DoctorDiagnostic" : "What was the diagnostic?",
+
+  "NewAppointment-Warning" : "For an appointment longer than one hour or a hot stone treatment, you must make an appointment request",
+  "NewAppointment-RequestLink-Text" : "by following this link."
 }
