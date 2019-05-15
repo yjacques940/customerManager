@@ -4,6 +4,9 @@ $title = localize('FollowUp-Add');
 
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('FollowUp-Add'); ?></h3>
+    <h4 class=" text-center">
+        <?php echo $customerName; ?>
+        </h4>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-12 col-md-12">
         <form action="index.php?action=newFollowUp" id="newFollowUp" method="post">
@@ -12,7 +15,7 @@ $title = localize('FollowUp-Add');
             <div class="col-lg-4 col-md-4">
                 <div class="form-group contact-forms">
                     <label for="date"><h4><?php echo localize('Appointment-Date');?></h4></label>
-                    <input type="date" name="date" id="date" class="datepicker">
+                    <input type="date" name="date" id="date" class="datepicker" value="<?php echo date('Y-m-d')?>">
                 </div> 
             </div>
             <div class="col-lg-12 col-md-12">

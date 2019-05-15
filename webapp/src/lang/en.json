@@ -35,6 +35,7 @@
   "EmailUpdate-NewEmail": "New email",
   "EmailUpdate-NewEmailConfirmed": "Confirm the email",
   "EmailUpdate-PasswordConfirm" : "Password verification",
+  "FollowUp-NoFollowUps" : "This customer doesn't have any follow-up",
   "Footer-Text-Address": "Address",
   "Footer-Text-Email": "Email",
   "Footer-Text-Phone": "Phone",
@@ -83,6 +84,7 @@
   "PasswordUpdate-OldPassword": "Current password",
   "PasswordUpdate-UpdateConfirmation": "Confirm changes",
   "Appointment-AskForAppointment":"Ask for an appointment",
+  "Personal-OnePhone" : "You must enter at least one phone number",
   "Personal-Address": "Address",
   "Personal-City": "City",
   "Personal-DateOfBirth": "Date of birth",
@@ -187,7 +189,6 @@
   "UserAppointments-OldList" : "Consult old appointments",
   "PageTitle-OldAppointments": "Old appointments",
   "CreateCustomerAccount-Title" : "Create a customer",
-  "Save" : "Save",
   "CronJobs" : "Daily emails sending",
   "AddEmailToCustomer" : "Add an email address",
   "Confirmation-UserCreatedSuccessfully" : "Account created!"

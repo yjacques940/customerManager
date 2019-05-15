@@ -14,21 +14,21 @@ $title = localize('AboutText-Title');
     $descriptionEn = '';
     $zone    = '';
  }
- $id = isset($_GET['id']) ? $_GET['id'] : 0;
+ $id = isset($_GET['idAboutZone']) ? $_GET['idAboutZone'] : 0;
  ?>
 
 <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('AboutText-Title'); ?></h3>
     <?php
-    if(isset($_POST['id'])){
-        if($_POST['id'] == 0){
+    if(isset($_POST['idAboutZone'])){
+        if($_POST['idAboutZone'] == 0){
             echo '<p style="color:red;" class="text-center mb-md-4 mb-sm-3 mb-3 mb-2">'. localize('AboutText-NoId').'</p>';
         }
     } ?>
     <div class="row w3pvt-info-para pt-lg-5 pt-md-4 pt-3">
       <div class="col-lg-12 col-md-12">
         <form action="index.php?action=manageAboutText" id="manageabouttext" method="post">
-        <input type="hidden" name="id" value="<?php echo $id ?>">
+        <input type="hidden" name="idAboutZone" value="<?php echo $id ?>">
           <div class="w3pvt-wls-contact-mid">
             <div class="row">
                 <div class="col-lg-6 col-md-8">
@@ -53,7 +53,7 @@ $title = localize('AboutText-Title');
                 </div>
             </div>
           </div>
-          <button type="submit" class="btn sent-butnn"><?php echo localize('Save');?></button>
+          <button type="submit" <?php if(!isset($_GET['idAboutZone'])) echo 'disabled' ?> class="btn sent-butnn"><?php echo localize('Save');?></button>
         </form>
         <table class="table table-sm table-striped table-hover table-bordered" id="tbl_appointments">
         <thead class="thead-dark">
@@ -76,7 +76,7 @@ $title = localize('AboutText-Title');
                     $tableDescription = $text->descriptionEn;
                 }?>
                 <tr>
-                    <td><a href="?action=manageAboutText&id=<?php echo $text->id ?>"><?php echo $zone ?> </a> </td>
+                    <td><a href="?action=manageAboutText&idAboutZone=<?php echo $text->id ?>"><?php echo $zone ?> </a> </td>
                     <td><?php echo $tableTitle ?> </td>
                     <td><?php echo $tableDescription ?> </td>
                 </tr>
