@@ -196,5 +196,5 @@
   "ReserveAppointment-ChooseTimeSlot" : "Choose a timeslot",
   "ReserveAppointment-ConsultationReason" : "What is the reason of your consultation?",
   "ReserveAppointment-HasSeenDoctor" : "Have you seen a doctor about it?",
-  "ReserveAppointment-DoctorDiagnostic" : "If so, what was the diagnostic?"
+  "ReserveAppointment-DoctorDiagnostic" : "What was the diagnostic?"
 }

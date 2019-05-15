@@ -211,7 +211,7 @@
   "hasSeenDoctor" : "A consulté le médecin",
   "DoctorDiagnostic" : "Diagnostic du médecin",
   "ReserveAppointment-ChooseTimeSlot" : "Choisissez une plage horaire",
-  "ReserveAppointment-ConsultationReason" : "Quel est la raison de votre consultation?",
+  "ReserveAppointment-ConsultationReason" : "Quelle est la raison de votre consultation?",
   "ReserveAppointment-HasSeenDoctor" : "Avez-vous consulté un médecin à ce sujet?",
-  "ReserveAppointment-DoctorDiagnostic" : "Si oui, quel a été le diagnostic?"
+  "ReserveAppointment-DoctorDiagnostic" : "Quel a été son diagnostic?"
 }

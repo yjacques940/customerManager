@@ -63,6 +63,8 @@ ob_start(); ?>
                             </input>
                             <div class="mx-sm-4"></div>
                         </div>
+                    </div>
+                    <div id="form_doctor-diagnostic" class="form-group contact-forms" style="display: none;">
                         <label class="col-form-label" for="therapist-reason">
                             <h4><?php echo localize('ReserveAppointment-DoctorDiagnostic') ?></h4>
                         </label>
@@ -159,23 +161,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(document).ready(function(){
+    $("input[name=doctor-bool]").on("change", function() {
+        if ($(this).val() == "true")
+            $("#form_doctor-diagnostic").show();
+        else
+            $("#form_doctor-diagnostic").hide();
+    } );
 
     $("#reserveappointment").validate({
         errorClass : "error_class",
         errorelement : "em",
         errorPlacement : function(error,element) {
-           error.appendTo(element.parent());
-       },
+            error.appendTo(element.parent());
+        },
         rules:{
-          timeSlots: {
+            timeSlots: {
                 required:true
             },
-          therapist: {
+            therapist: {
             required:true
-          }
+            }
         },
         messages:{
-          timeSlots:{
+            timeSlots:{
                 required:'<?php echo localize('Validate-Error-RequiredField'); ?>.'
             },
             therapist:{
