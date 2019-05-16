@@ -6,6 +6,8 @@ ob_start();
 
 <div class="mx-auto" style="margin-top: 30px; width: 90%">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('UserAppointmentsList-Title');?></h3>
+    <?php $result = CallAPI('GET', 'Appointments/AppointmentsAndCustomers');
+          if($result['response']) {?>
         <table class="table table-sm table-striped table-hover border" id="tbl_appointments">
             <thead class="thead-dark">
                 <tr>
@@ -18,40 +20,48 @@ ob_start();
             </thead>
             <tbody>
                 <?php
-                    $appointmentDate = new DateTime($appointment->timeSlot->startDateTime);
-                    echo $appointmentDate->format('Y-m-d');
-                ?>
-                </td>
-                <td>
-                <?php
-                    echo $appointmentDate->format('H:i');
-                ?>
-                </td>
-                <td>
-                <?php
-                    echo $appointment->customer->firstName
-                        ." ".
-                        $appointment->customer->lastName;
-                ?>
-                </td>
-                <td>
-                <?php
-                foreach ($appointment->phoneNumbers as $phoneNumber) {
-                ?>
-                    <table style="width:100%;">
-                        <tr>
-                            <div>
-                                <td style="text-align: right; border: none; width: 45%;"
-                                ><?php echo localize($phoneNumber->phoneType) . " :"; ?></td>
-                                <td style="text-align: left; border: none; float:left;">
-                                    <?php echo $phoneNumber->phone; ?>
-                                    <?php
-                                    if($phoneNumber->extension)
-                                    {
-                                        echo "&nbsp&nbsp Ext. " .$phoneNumber->extension ;
-                                    }
-                                    ?>
-                                </td>
+
+                $appointments = $result['response'];
+                if($appointments)
+                {
+                    foreach ($appointments as $appointment) {
+                    ?>
+                    <tr id="<?php echo $appointment->appointment->idCustomer; ?>">
+                        <td scope="row">
+                        <?php
+                            $appointmentDate = new DateTime($appointment->timeSlot->startDateTime);
+                            echo $appointmentDate->format('Y-m-d');
+                        ?>
+                        </td>
+                        <td>
+                        <?php
+                            echo $appointmentDate->format('H:i');
+                        ?>
+                        </td>
+                        <td>
+                        <?php
+                            echo $appointment->customer->firstName
+                                ." ".
+                                $appointment->customer->lastName;
+                        ?>
+                        </td>
+                        <td>
+                        <?php
+                        foreach ($appointment->phoneNumbers as $phoneNumber) {
+                        ?>
+                            <table style="width:100%;">
+                                <tr>
+                                    <div>
+                                        <td style="text-align: right; border: none; width: 45%;"><?php echo $phoneNumber->phoneType . " :"; ?></td>
+                                        <td style="text-align: left; border: none; float:left;">
+                                            <?php echo $phoneNumber->phone; ?>
+                                            <?php
+                                            if($phoneNumber->extension)
+                                            {
+                                                echo "&nbsp&nbsp Ext. " .$phoneNumber->extension ;
+                                            }
+                                            ?>
+                                        </td>
 
                                     </div>
                                 </tr>
@@ -72,6 +82,9 @@ ob_start();
                 ?>
             </tbody>
         </table>
+    <?php } else {
+        echo '<h4>' . localize('UserAppointmentsList-NoAppointmentsFound').'</h4>';
+    }?>
 </div>
 <?php
   $contenu = ob_get_clean();
