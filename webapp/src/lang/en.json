@@ -110,6 +110,8 @@
     "Header-Manage-PersonalInfo": "Modify my personal information",
     "Header-MedicalSurvey": "Medical survey",
     "Header-Menu": "Menu",
+    "Header-Services": "Online services",
+    "Header-TakeAppointment": "Take an appointment",
     "Home-Button": "Sign in",
     "Home-Text-Bold": " ",
     "Home-Text-Details": "Conditions may apply.",
@@ -135,6 +137,7 @@
     "Login-Title": "Connection",
     "MedicalSurvey-CreatedOn": "Survey creation date",
     "MedicalSurvey-DeletionWarning": "Any previously completed survey will be deleted",
+    "MedicalSurvey-Instructions": "Please complete this survey. All questions are mandatory.",
     "MedicalSurvey-Moderatly": "Moderatly",
     "MedicalSurvey-NotAtAll": "Not at all",
     "MedicalSurvey-Update": "Update the survey",
@@ -170,6 +173,7 @@
     "Personal-City": "City",
     "Personal-DateOfBirth": "Date of birth",
     "Personal-Ext": "Ext",
+    "Personal-EditEmployee": "Edit personal informations",
     "Personal-Occupation": "Occupation",
     "Personal-OnePhone": "You must enter at least one phone number",
     "Personal-Phone": "Phone",
@@ -212,5 +216,6 @@
     "Validate-Error-PasswordDontMatch": "Passwords does not match",
     "Validate-Error-PasswordMinLength": "Password must contain at least 7 characters",
     "Validate-Error-RequiredField": "This field is required",
+    "Validate-Error-ValidPhone": "Please enter a valid phone number",
     "Website-Credits": "Courtesy of Yannick Jacques, Jessy Rodrigue and Nicolas Talbot"
 }

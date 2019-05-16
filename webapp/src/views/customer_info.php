@@ -61,7 +61,7 @@ unset($_SESSION['TempCustomerId']);
             <div class="text-center">
             <a href="?action=personalinformation&customerId=<?php echo $_GET['customerId']?>">
                 <button style="background-color:#d93;" class="btn btn-lg btn-primary mr-2">
-                    <?php echo localize('Personal-ModificationEmployee'); ?>
+                    <?php echo localize('Personal-EditEmployee'); ?>
                 </button>
             </a>
             </div>

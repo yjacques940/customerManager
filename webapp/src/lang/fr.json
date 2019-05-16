@@ -103,7 +103,6 @@
     "HasSeenDoctor": "A consulté le médecin",
     "Header-Account": "Mon compte",
     "Header-Account-Manage": "Gérer mon compte",
-    "Header-Admin": "Administration",
     "Header-Administration": "Administration",
     "Header-Logout": "Se déconnecter",
     "Header-Manage-Email": "Modification de l'adresse courriel",
@@ -174,7 +173,7 @@
     "Personal-City": "Ville",
     "Personal-DateOfBirth": "Date de naissance",
     "Personal-Ext": "Ext",
-    "Personal-ModificationEmployee": "Modifier les informations personnelles",
+    "Personal-EditEmployee": "Modifier les informations personnelles",
     "Personal-Occupation": "Occupation",
     "Personal-OnePhone": "Vous devez entrer au moins un numéro de téléphone",
     "Personal-Phone": "Téléphone",
@@ -217,6 +216,6 @@
     "Validate-Error-PasswordDontMatch": "Les mots de passe ne correspondent pas",
     "Validate-Error-PasswordMinLength": "Le mot de passe doit contenir au moins 7 caractères",
     "Validate-Error-RequiredField": "Ce champ est obligatoire",
-    "Validate-Error-ValidPhone": "Veuillez entrer un numéro valide",
+    "Validate-Error-ValidPhone": "Veuillez entrer un numéro de téléphone valide",
     "Website-Credits": "Gracieuseté de Yannick Jacques, Jessy Rodrigue et Nicolas Talbot"
 }
