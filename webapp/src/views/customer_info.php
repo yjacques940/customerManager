@@ -31,11 +31,11 @@ unset($_SESSION['TempCustomerId']);
                         foreach($customerInfo->phoneNumbers as $phone){
                             if($phone->extension)
                             {
-                                echo '<p><b>' .$phone->phoneType. ':</b> ' . $phone->phone.' Ext.  ' . $phone->extension .'</p>';
+                                echo '<p><b>' .localize($phone->phoneType). ':</b> ' . $phone->phone.' Ext.  ' . $phone->extension .'</p>';
                             }
                             else
                             {
-                                echo '<p><b>' .$phone->phoneType. ':</b> ' .$phone->phone.'</p>';
+                                echo '<p><b>' .localize($phone->phoneType). ':</b> ' .$phone->phone.'</p>';
                             }
                         } ?>
                     </div>

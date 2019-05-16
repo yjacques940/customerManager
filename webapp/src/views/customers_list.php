@@ -52,7 +52,7 @@ ob_start(); ?>
                             <tr>
                                 <div>
                                     <td style="text-align: right; border: none; width: 45%;">
-                                        <?php echo $phoneNumber->phoneType . " :"; ?>
+                                        <?php echo localize($phoneNumber->phoneType) . " :"; ?>
                                     </td>
                                     <td style="text-align: left; border: none; float:left;">
                                         <?php echo $phoneNumber->phone; ?>

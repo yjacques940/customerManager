@@ -605,7 +605,7 @@ function GetCustomerInformation($customersInformation){
             foreach ($customer->phoneNumberAndTypes as $phoneNumber) {
                 $output .= '
                     <tr>
-                        <td style="text-align: right; border: none; width: 45%;">'.$phoneNumber->phoneType.' : </td>
+                        <td style="text-align: right; border: none; width: 45%;">'.localize($phoneNumber->phoneType).' : </td>
                         <td style="text-align: left; border: none; float:left;">'.$phoneNumber->phone;
                 if($phoneNumber->extension){
                     $output = $output . '&nbsp&nbsp Ext.'. $phoneNumber->extension;

@@ -64,7 +64,8 @@ ob_start(); ?>
                                         <table style="width:100%;">
                                             <tr>
                                                 <div>
-                                                    <td style="text-align: left; border: none; width:45%; "><?php echo $phoneNumber->phoneType . " :"; ?></td>
+                                                    <td style="text-align: left; border: none; width:45%; "
+                                                    ><?php echo localize($phoneNumber->phoneType) . " :"; ?></td>
                                                     <td style="text-align: left; border: none; float:left;">
                                                         <?php echo $phoneNumber->phone; ?>
                                                         <?php

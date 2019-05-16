@@ -18,48 +18,40 @@ ob_start();
             </thead>
             <tbody>
                 <?php
-                $result = CallAPI('GET', 'Appointments/AppointmentsAndCustomers');
-                $appointments = $result['response'];
-                if($appointments)
-                {
-                    foreach ($appointments as $appointment) {
-                    ?>
-                    <tr id="<?php echo $appointment->appointment->idCustomer; ?>">
-                        <td scope="row">
-                        <?php
-                            $appointmentDate = new DateTime($appointment->timeSlot->startDateTime);
-                            echo $appointmentDate->format('Y-m-d');
-                        ?>
-                        </td>
-                        <td>
-                        <?php
-                            echo $appointmentDate->format('H:i');
-                        ?>
-                        </td>
-                        <td>
-                        <?php
-                            echo $appointment->customer->firstName
-                                ." ".
-                                $appointment->customer->lastName;
-                        ?>
-                        </td>
-                        <td>
-                        <?php
-                        foreach ($appointment->phoneNumbers as $phoneNumber) {
-                        ?>
-                            <table style="width:100%;">
-                                <tr>
-                                    <div>
-                                        <td style="text-align: right; border: none; width: 45%;"><?php echo $phoneNumber->phoneType . " :"; ?></td>
-                                        <td style="text-align: left; border: none; float:left;">
-                                            <?php echo $phoneNumber->phone; ?>
-                                            <?php
-                                            if($phoneNumber->extension)
-                                            {
-                                                echo "&nbsp&nbsp Ext. " .$phoneNumber->extension ;
-                                            }
-                                            ?>
-                                        </td>
+                    $appointmentDate = new DateTime($appointment->timeSlot->startDateTime);
+                    echo $appointmentDate->format('Y-m-d');
+                ?>
+                </td>
+                <td>
+                <?php
+                    echo $appointmentDate->format('H:i');
+                ?>
+                </td>
+                <td>
+                <?php
+                    echo $appointment->customer->firstName
+                        ." ".
+                        $appointment->customer->lastName;
+                ?>
+                </td>
+                <td>
+                <?php
+                foreach ($appointment->phoneNumbers as $phoneNumber) {
+                ?>
+                    <table style="width:100%;">
+                        <tr>
+                            <div>
+                                <td style="text-align: right; border: none; width: 45%;"
+                                ><?php echo localize($phoneNumber->phoneType) . " :"; ?></td>
+                                <td style="text-align: left; border: none; float:left;">
+                                    <?php echo $phoneNumber->phone; ?>
+                                    <?php
+                                    if($phoneNumber->extension)
+                                    {
+                                        echo "&nbsp&nbsp Ext. " .$phoneNumber->extension ;
+                                    }
+                                    ?>
+                                </td>
 
                                     </div>
                                 </tr>
