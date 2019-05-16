@@ -67,7 +67,7 @@ $title = localize('AboutText-Title');
         <?php
             foreach($aboutTexts as $aboutText){
                 $text = $aboutText->aboutText;
-                $zone = $aboutText->zoneDescription;
+                $zone = localize($aboutText->zoneDescription);
                 if($_SESSION['locale'] == 'fr'){
                     $tableTitle = $text->titleFr;
                     $tableDescription = $text->descriptionFr;

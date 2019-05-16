@@ -481,9 +481,9 @@ INSERT INTO tbl_state (code,name,id_country) VALUES
 	('WY','Wyoming', @USA_CountryId);
     
 INSERT INTO tbl_about_zone(description, code, is_active)
-VALUES('En haut à gauche','topleft',1),
-      ('En haut à droite','topright',1),
-      ('Zone de traitement','treatment',1);
+VALUES('TopLeft','topleft',1),
+      ('TopRight','topright',1),
+      ('TreatmentInfoZone','treatment',1);
       
 INSERT INTO tbl_about_text(title_fr, title_en, description_fr, description_en, id_zone, is_active)
 VALUES('Vous souffrez de mobilité restreinte au niveau de l\'épaule?',' Your shoulder suffers from mouvement restrictions?',
