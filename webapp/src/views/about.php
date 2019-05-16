@@ -174,12 +174,11 @@ $title = 'Connection';
     function AskAboutMedicalForm()
     {
         Swal.fire({
-            title: 'Voulez-vous remplir votre questionnaire santé maintenant?',
-                text: "Il est possible de remplir ce questionnaire en ligne" +
-                    " dès maintenant ou lors de votre prochaine visite.",
+            title: '<?php echo localize('FillSurveyNowQuestion') ?>',
+                text: "<?php echo localize('FillSurveyNowText') ?>",
             showCancelButton: true,
-            cancelButtonText: "Non",
-            confirmButtonText: "Oui",
+            cancelButtonText: "<?php echo localize('Answer-No') ?>",
+            confirmButtonText: "<?php echo localize('Answer-Yes') ?>",
             confirmButtonColor: '#3d3',
             type: 'info'
         }).then((result) => {

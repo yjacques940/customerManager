@@ -257,5 +257,7 @@
     "Validate-Error-RequiredField": "This field is required",
     "Validate-Error-ValidPhone": "Please enter a valid phone number",
     "Visible": "Visible",
+    "FillSurveyNowQuestion" : "Do you want to fill your medical survey now?",
+    "FillSurveyNowText" : "You can fill the survey online now, later or during your next visit.",
     "Website-Credits": "Courtesy of Yannick Jacques, Jessy Rodrigue and Nicolas Talbot"
 }

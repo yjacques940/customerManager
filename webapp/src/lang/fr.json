@@ -257,5 +257,7 @@
     "Validate-Error-RequiredField": "Ce champ est obligatoire",
     "Validate-Error-ValidPhone": "Veuillez entrer un numéro de téléphone valide",
     "Visible": "Afficher",
+    "FillSurveyNowQuestion" : "Voulez-vous remplir votre questionnaire santé maintenant?",
+    "FillSurveyNowText" : "Il est possible de remplir ce questionnaire en ligne dès maintenant, plus tard ou lors de votre prochaine visite.",
     "Website-Credits": "Gracieuseté de Yannick Jacques, Jessy Rodrigue et Nicolas Talbot"
 }
