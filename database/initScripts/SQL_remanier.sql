@@ -399,7 +399,7 @@ INSERT INTO tbl_permission (bit,name) VALUES
 (1024, 'SiteManager');
 
 INSERT INTO tbl_phone_type (name) VALUES
-('Résidentiel'), ('Bureau'), ('Cellulaire');
+('Residential'), ('Office'), ('CellPhone');
 
 INSERT INTO tbl_country (name) VALUES
 ('Canada'), ('États-Unis');
