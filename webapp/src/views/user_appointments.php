@@ -111,7 +111,7 @@ $title = localize('UserAppointmentsList-Title');
         </form>
       </div>
         <?php } else {
-    echo '<h4>' . localize('UserAppointmentsList-NoAppointmentsFound').'</h4>';
+            echo '<h4>' . localize('UserAppointmentsList-NoAppointmentsFound').'</h4>';
         }?>
     </div>
       <div class="text-center col-lg-12 col-md-12" style="padding-top: 2%">
