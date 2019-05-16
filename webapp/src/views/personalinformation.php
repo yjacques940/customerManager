@@ -1,6 +1,6 @@
 <?php
 $title = localize('Personal-Title');
- ob_start(); 
+ ob_start();
     $cpt=0;
     $address='';
     $city='';
@@ -12,7 +12,7 @@ $title = localize('Personal-Title');
     $phone3 = array('','','0','0');
 
 $customerIdAction = isset($_GET['customerId']) ? '&customerId=' . htmlentities($_GET['customerId']) : '' ;
-    
+
 if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
     $address = $personalInformation->physicalAddress->physicalAddress;
     $city = $personalInformation->physicalAddress->cityName;
@@ -47,9 +47,9 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
   <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
     <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('Personal-Title');?></h3>
     <?php if(isset($_GET['customerId'])){
-        echo '<h4 class=" text-center mb-md-4 mb-sm-3 mb-3 mb-2">' . localize('Appointment-Customer') . ': '. 
+        echo '<h4 class=" text-center mb-md-4 mb-sm-3 mb-3 mb-2">' . localize('Appointment-Customer') . ': '.
             $name .'</h4>';
-    } 
+    }
     if(isset($_POST['phone1'])){
         if($_POST['phone1'] == '' and $_POST['phone2'] == '' and $_POST['phone3'] == ''){
             echo '<p style="color:red;">'. localize('Personal-OnePhone').'</p>';
@@ -76,7 +76,7 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                     <label for="province"><h4><?php echo localize('Personal-Province');?></h4></label>
                     <select name="province" id="province">
                     <option value=""></option>
-                    
+
                     <?php foreach($states as $state)
                     {
                         if($state->id == $idProvince){
@@ -93,8 +93,8 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                     <input type="text" value="<?php echo $zipcode ?>" name="zipcode" id="zipcode" class="form-control" placeholder="<?php echo localize('Personal-Zip');?>">
                 </div>
             </div>
-         <div class="form-row">   
-                
+         <div class="form-row">
+
                 <div class="form-group contact-forms col-md-8">
                     <label for="occupation"><h4><?php echo localize('Personal-Occupation');?></h4></label>
                     <input type="text" value="<?php echo $occupation; ?>" name="occupation" id="occupation" class="form-control" placeholder="<?php echo localize('Personal-Occupation');?>">
@@ -107,10 +107,12 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
             </div>
             <div class="form-row">
                 <div class="form-group contact-forms col-md-4">
-                    <input type="text" value="<?php echo $phone1[0];?>" name="phone1" id="phone1" class="form-control" placeholder="<?php echo localize('Personal-Phone');?>">
+                    <input type="text" value="<?php echo $phone1[0];?>" name="phone1" id="phone1"
+                            class="form-control" placeholder="<?php echo localize('Personal-Phone');?>">
                 </div>
                 <div class="form-group contact-forms col-md-2">
-                    <input type="text" value="<?php echo $phone1[1];?>" name="extension1" id="extension1" class="form-control" placeholder="<?php echo localize('Personal-Ext');?>:">
+                    <input type="text" value="<?php echo $phone1[1];?>" name="extension1" id="extension1"
+                            class="form-control" placeholder="<?php echo localize('Personal-Ext');?>">
                 </div>
                 <div class="form-group contact-forms col-md-4">
                     <select name="type1" id="type1">
@@ -131,10 +133,12 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
             </div>
             <div class="form-row" id="phonerow2" >
                 <div class="form-group contact-forms col-md-4">
-                    <input type="text" id="phone2" name="phone2" value="<?php echo $phone2[0];?>" class="form-control" placeholder="Téléphone">
+                    <input type="text" id="phone2" name="phone2" value="<?php echo $phone2[0];?>"
+                            class="form-control" placeholder="<?php echo localize('Personal-Phone') ?>">
                 </div>
                 <div class="form-group contact-forms col-md-2">
-                    <input type="text" name="extension2" id="extension2" value="<?php echo $phone2[1];?>" class="form-control" placeholder="Ext:">
+                    <input type="text" name="extension2" id="extension2" value="<?php echo $phone2[1];?>"
+                            class="form-control" placeholder="<?php echo localize('Personal-Ext');?>">
                 </div>
                 <div class="form-group contact-forms col-md-4">
                     <select name="type2" id="type2">
@@ -156,10 +160,12 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
             </div>
             <div class="form-row" id="phonerow3" >
                 <div class="form-group contact-forms col-md-4">
-                    <input type="text" value="<?php echo $phone3[0] ?>" id="phone3" name="phone3" class="form-control" placeholder="Téléphone">
+                    <input type="text" value="<?php echo $phone3[0] ?>" id="phone3" name="phone3"
+                            class="form-control" placeholder="<?php echo localize('Personal-Phone');?>">
                 </div>
                 <div class="form-group contact-forms col-md-2">
-                    <input type="text" value="<?php echo $phone3[1] ?>" name="extension3" id="extension3" class="form-control" placeholder="Ext:">
+                    <input type="text" value="<?php echo $phone3[1] ?>" name="extension3" id="extension3"
+                            class="form-control" placeholder="<?php echo localize('Personal-Ext');?>">
                 </div>
                 <div class="form-group contact-forms col-md-4">
                     <select name="type3" id="type3">
@@ -290,6 +296,6 @@ function ClearPhone(rowNumber){
 
 </script>
 
-<?php $contenu = ob_get_clean(); 
+<?php $contenu = ob_get_clean();
 $onHomePage = false;
 require 'gabarit.php'; ?>

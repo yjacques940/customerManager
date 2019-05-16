@@ -64,7 +64,7 @@ ob_start(); ?>
             },
             customButtons: {
                 block_event: {
-                    text: 'Rendre indisponible',
+                    text: '<?php echo localize("MarkUnavailable") ?>',
                     click: function() {
                         (currentSelection !== null)
                             ? ajaxAddNewTimeSlot({ "isAvailable": false, "isPublic": false, "notes": '' })
@@ -119,7 +119,7 @@ ob_start(); ?>
                     ? colors.public
                     : (timeSlot.isAvailable) ? colors.available : colors.unavailable;
             }
-            text += (timeSlot.notes) ? timeSlot.notes : "Aucune note";
+            text += (timeSlot.notes) ? timeSlot.notes : "<?php echo localize("NoNotes") ?>";
             calendar.addEvent({
                 id: timeSlot.id,
                 title: text,
@@ -149,7 +149,7 @@ ob_start(); ?>
                         var response = JSON.parse(content);
                         calendar.addEvent({
                             id: response.id,
-                            title: (response.notes) ? response.notes : "Aucune note",
+                            title: (response.notes) ? response.notes : "<?php echo localize("NoNotes") ?>",
                             backgroundColor: (response.isPublic)
                                 ? colors.public
                                 : (response.isAvailable) ? colors.available : colors.unavailable,
@@ -158,9 +158,9 @@ ob_start(); ?>
                         });
                         calendar.unselect();
                         showToastSavingSuccess();
-                    } else Swal.fire('Erreur', content, 'error');
+                    } else Swal.fire('<?php echo localize("Error-Title") ?>', content, 'error');
                 }
-                else Swal.fire('Erreur', content, 'error');
+                else Swal.fire('<?php echo localize("Error-Title") ?>', content, 'error');
             }).fail(function() { showErrorAjax() });
         }
 
@@ -177,8 +177,8 @@ ob_start(); ?>
                         showToastSavingSuccess();
                     } else if (isJsonString(content)) {
                         showErrorAppointmentExists(content);
-                    } else Swal.fire('Erreur', content, 'error');
-                } else Swal.fire('Erreur', content, 'error');
+                    } else Swal.fire('<?php echo localize("Error-Title") ?>', content, 'error');
+                } else Swal.fire('<?php echo localize("Error-Title") ?>', content, 'error');
             }).fail(function() { showErrorAjax() });
         }
 
@@ -214,7 +214,7 @@ ob_start(); ?>
                     else {
                         var eventTitle = '';
                     }
-                    eventTitle += (notes != '') ? notes : "Aucune note";
+                    eventTitle += (notes != '') ? notes : "<?php echo localize("NoNotes") ?>";
                     calendar.addEvent({
                         id: timeSlot.id,
                         title: eventTitle,
@@ -223,7 +223,7 @@ ob_start(); ?>
                         end: timeSlot.end
                     });
                     showTimeSlotDetails(calendar.getEventById(timeSlot.id));
-                } else Swal.fire('Erreur', response, 'error');
+                } else Swal.fire('<?php echo localize("Error-Title") ?>', response, 'error');
             }).fail(function() { showErrorAjax() });
         }
 
@@ -263,14 +263,14 @@ ob_start(); ?>
                 }
             }
             Swal.fire({
-                title: "Nouvelle plage horaire",
-                html:
-                    'Souhaitez-vous créer une plage horaire</br><em>' + infoString + '</em> ?' +
-                    '<input id="newTimeSlotNotes" class="swal2-input" placeholder="Notes (optionnel)">' +
-                    '<label for="newTimeSlotIsPublic"><p>Créer une plage horaire publique </p> </label>' +
-                    '<input id="newTimeSlotIsPublic" type="checkbox" name="isPublic" value="true" ' +
-                    'style="height: 16px; width: 24px; vertical-align: middle">',
-                confirmButtonText: 'Créer',
+                title: '<?php echo localize("Create") ?>',
+                html: '<?php echo localize("CreateTimeSlotQuestion") ?>'
+                    + '</br><em>' + infoString + '</em> ?<input id="newTimeSlotNotes" class="swal2-input" placeholder="'
+                    + 'Notes (<?php echo localize('Optional') ?>)">'
+                    + '<label for="newTimeSlotIsPublic"><p><?php echo localize('CreatePublicTimeSlot') ?> </p> </label>'
+                    + '<input id="newTimeSlotIsPublic" type="checkbox" name="isPublic" '
+                    + 'value="true" style="height: 16px; width: 24px; vertical-align: middle">',
+                confirmButtonText: '<?php echo localize("Create") ?>',
                 showCancelButton: true,
                 preConfirm: () => {
                     return [
@@ -290,12 +290,12 @@ ob_start(); ?>
 
         function showConfirmDeleteTimeSlot(timeSlot) {
             Swal.fire({
-                title: "Suppression plage horaire",
-                html: 'Souhaitez-vous vraiment supprimer cette plage horaire?</br><em>Le '
+                title: "<?php echo localize("DeleteTimeSlot") ?>",
+                html: '<?php echo localize("DeleteTimeSlotQuestion") ?>?</br><em>'
                     + timeSlot.start.toLocaleDateString(locale + '-ca', dateTimeOptions) + '</em>',
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonText: 'Confirmer la suppression',
+                confirmButtonText: '<?php echo localize("ConfirmDelete") ?>',
                 confirmButtonColor: '#d33'
             }).then((result) => {
                 if (result.value)
@@ -306,31 +306,31 @@ ob_start(); ?>
         }
 
         function showErrorAjax() {
-            Swal.fire("Erreur", "Une erreur c'est produite lors de l'envoi de la requête", "error");
+            Swal.fire("<?php echo localize("Error") ?>", "<?php echo localize("ErrorDuringRequest") ?>", "error");
         }
 
         function showErrorConnection() {
-            Swal.fire("Error", "Aucune réponse reçue. Veuillez réessayer plus tard...", "warning");
+            Swal.fire("<?php echo localize("Error") ?>", "<?php echo localize("ConnectionLost") ?>", "warning");
         }
 
         function showErrorAppointmentExists(content) {
             var response = JSON.parse(content);
             var data = response.data;
             if (data.customer.email != '')
-                var emailMessage = "<br/>Courriel: <a href='mailto:"
+                var emailMessage = "<br/><?php echo localize("Login-Email") ?>: <a href='mailto:"
                     + data.customer.email + "'>" + data.customer.email + "</a>";
             else
                 var emailMessage = '';
 
-            var message = "Vous devez annuler le rendez-vous avant de supprimer cette plage horaire.<br/>"
-                + "<br/>Informations sur le rendez-vous:"
-                + "<br/>Rendez-vous réservé le "
+            var message = "<?php echo localize("DeleteTimeSlot-ErrorAppointmentExists") ?><br/>"
+                + "<br/><?php echo localize("PageTitle-AppointmentDetails") ?>:"
+                + "<br/><?php echo localize("Appointment-ReservationDate") ?> "
                 + new Date(data.appointment.createdOn).toLocaleDateString(locale + '-ca', dateOptions)
                 + "<br/>Client: <a target='_blank' href='?action=showCustomerInfo&customerId=" + data.customer.id + "'>"
                 + data.customer.fullName + "</a>" + emailMessage
                 + "<br/><a class='btn btn-info m-2 pl-4 pr-4' target='_blank' "
                 + "href='?action=showAppointmentDetails&appointmentId=" + data.appointment.id + "'/>"
-                + "Consulter le rendez-vous"
+                + "<?php echo localize("ConsultAppointment") ?>"
                 + " <i class='fa fa-external-link' aria-hidden='true'></i></a>";
 
             Swal.fire({
@@ -342,7 +342,7 @@ ob_start(); ?>
 
         function showErrorNoSelection() {
             Swal.fire({
-                text: 'Veuillez sélectionner une plage horaire.',
+                text: '<?php echo localize('SelectTimeSlot') ?>',
                 type: 'info',
                 toast: true,
                 position: 'top',
@@ -352,7 +352,7 @@ ob_start(); ?>
 
         function showErrorSelectionWithinDay() {
             Swal.fire({
-                text: 'La plage horaire doit être contenue dans la même journée.',
+                text: '<?php echo localize('TimeSlotWithinSameDay') ?>',
                 type: 'warning',
                 toast: true,
                 position: 'top',
@@ -364,21 +364,16 @@ ob_start(); ?>
             if (timeSlotsInfoArray[timeSlot.id] !== undefined) {
                 var data = timeSlotsInfoArray[timeSlot.id];
                 var notes = "<h5 class='mt-3 font-weight-underlined'><u>"
-                    + "Notes sur plage horaire"
-                    + ":</u></h5>";
-                notes += (data.notesTimeSlot !== null) ? data.notesTimeSlot : 'Aucune note';
-                notes += "<h5 class='mt-3 font-weight-bold'><u>"
-                    + "Réservation au nom de"
-                    + ":</u></h5><a target='_blank' href='?action=showCustomerInfo&customerId="
-                    + data.customerInfo.id + "'>" + data.customerInfo.fullName
+                    + "<?php echo localize('TimeSlot-Notes') ?>:</u></h5>";
+                notes += (data.notesTimeSlot !== null) ? data.notesTimeSlot : '<?php echo localize('NoNotes') ?>';
+                notes += "<h5 class='mt-3 font-weight-bold'><u><?php echo localize('AppointmentForName') ?>:</u></h5>"
+                    + "<a target='_blank' href='?action=showCustomerInfo&customerId=" + data.customerInfo.id + "'>"
+                    + data.customerInfo.fullName
                     + " <i class='fa fa-external-link' aria-hidden='true'></i></a><h5 class='mt-3 font-weight-bold'><u>"
-                    + "Pour rejoindre"
-                    + ":</u></h5>";
+                    + "<?php echo localize('ToContact') ?>:</u></h5>";
                 if (data.customerInfo.email !== null) {
-                    notes += "<b class='mt-3 font-weight-bold'>"
-                        + "Courriel:"
-                        + "</b> <a href='mailto:" + data.customerInfo.email + "'>"
-                        + data.customerInfo.email + "</a><br/>";
+                    notes += "<b class='mt-3 font-weight-bold'><?php echo localize('Login-Email') ?>:</b> "
+                        + "<a href='mailto:" + data.customerInfo.email + "'>" + data.customerInfo.email + "</a><br/>";
                 }
                 $.each(data.customerInfo.phoneNumbers, function(index, phoneNumber) {
                     notes += "<b class='font-weight-bold'>" + phoneNumber.phoneType + ":</b> " + phoneNumber.phone;
@@ -386,24 +381,22 @@ ob_start(); ?>
                 });
                 notes += "<br/><a class='btn btn-info pl-4 pr-4' target='_blank' "
                     + "href='?action=showAppointmentDetails&appointmentId=" + data.idAppointment + "'/>"
-                    + "Consulter le rendez-vous"
+                    + "<?php echo localize('ConsultAppointment') ?>"
                     + " <i class='fa fa-external-link' aria-hidden='true'></i></a>";
             }
             else {
                 var notes = "<h5 class='m-1 font-weight-underlined'><u>"
-                    + "Notes sur plage horaire"
-                    + ":</u></h5>" + timeSlot.title;
+                    + "<?php echo localize('TimeSlot-Notes') ?>:</u></h5>" + timeSlot.title;
             }
             notes += "<br/><button class='btn m-1 mt-3 pl-4 pr-4' style='background-color: #D90; color: #FFF'"
-                + " id='timeSlotEdit'>"
-                + "Modifier la plage horaire"
+                + " id='timeSlotEdit'><?php echo localize('EditTimeSlot') ?>"
                 + " <i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>";
             Swal.fire({
                 title: timeSlot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
                 html: notes,
                 showCancelButton: true,
-                cancelButtonText: "Fermer",
-                confirmButtonText: "Suppprimer la plage <i class='fa fa-trash-o' aria-hidden='true'></i>",
+                cancelButtonText: "<?php echo localize('Close') ?>",
+                confirmButtonText: "<?php echo localize('DeleteTimeSlot') ?> <i class='fa fa-trash-o' aria-hidden='true'></i>",
                 confirmButtonColor: '#d33',
                 onBeforeOpen: () => {
                     const content = Swal.getContent();
@@ -420,17 +413,16 @@ ob_start(); ?>
                     ? timeSlotsInfoArray[timeSlot.id].notesTimeSlot : '';
             }
             else {
-                var notes = (timeSlot.title != 'Aucune note') ? timeSlot.title : '';
+                var notes = (timeSlot.title != '<?php echo localize('NoNotes') ?>') ? timeSlot.title : '';
             }
             Swal.fire({
                 title: timeSlot.start.toLocaleDateString(locale + '-ca', dateTimeOptions),
-                html: "Mode édition"
+                html: "<?php echo localize('EditMode') ?>"
                     + "<br/><input class='swal2-input' type='text' id='swal-input-notes' placeholder='Notes' value='"
-                    + notes
-                    + "'></input>",
+                    + notes + "'></input>",
                 showCancelButton: true,
-                cancelButtonText: "Annuler",
-                confirmButtonText: "Enregistrer <i class='fa fa-floppy-o' aria-hidden='true'></i>",
+                cancelButtonText: "<?php echo localize('Cancel') ?>",
+                confirmButtonText: "<?php echo localize('Save') ?> <i class='fa fa-floppy-o' aria-hidden='true'></i>",
                 confirmButtonColor: "#5cb85c",
                 preConfirm: () => {
                     return { "notes": document.getElementById('swal-input-notes').value }
@@ -449,7 +441,7 @@ ob_start(); ?>
 
         function showToastCurrentlySaving() {
             Swal.fire({
-                title: 'Enregistrement en cours...',
+                title: '<?php echo localize('SaveInProgress') ?>',
                 timer: 7500,
                 toast: true,
                 position: 'top',
@@ -460,7 +452,7 @@ ob_start(); ?>
 
         function showToastLoading() {
             Swal.fire({
-                title: 'Chargement en cours...',
+                title: '<?php echo localize('LoadingInProgress') ?>',
                 toast: true,
                 position: 'top',
                 onBeforeOpen: () => { Swal.showLoading() }
@@ -469,7 +461,7 @@ ob_start(); ?>
 
         function showToastSavingSuccess() {
             Swal.fire({
-                text: 'Enregistrement effectué avec succès!',
+                text: '<?php echo localize('SaveSuccess') ?>',
                 timer: 1750,
                 toast: true,
                 type: 'success',
@@ -493,23 +485,23 @@ ob_start(); ?>
 </style>
 
 <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('PageTitle-TimeSlotManagement') ?></h3>
-<p class="text-center">Légende:</p>
+<p class="text-center"><?php echo localize('Private') ?>:</p>
 <div class="legend d-flex flex-wrap justify-content-around">
     <div class="d-flex flex-nowrap m-1">
         <div id="legend-color-unavailable"></div>
-        <div class="ml-1 mr-auto">Indisponible privée</div>
+        <div class="ml-1 mr-auto"><?php echo localize('Unavailable').' '.localize('Private') ?></div>
     </div>
     <div class="d-flex flex-nowrap m-1">
         <div id="legend-color-available"></div>
-        <div class="ml-1 mr-auto">Disponible privée</div>
+        <div class="ml-1 mr-auto"><?php echo localize('Available').' '.localize('Private') ?></div>
     </div>
     <div class="d-flex flex-nowrap m-1">
         <div id="legend-color-public"></div>
-        <div class="ml-1 mr-auto">Disponible publique</div>
+        <div class="ml-1 mr-auto"><?php echo localize('Available').' '.localize('Public') ?></div>
     </div>
     <div class="d-flex flex-nowrap m-1">
         <div id="legend-color-reserved"></div>
-        <div class="ml-1 mr-auto">Réservée</div>
+        <div class="ml-1 mr-auto"><?php echo localize('Reserved') ?></div>
     </div>
 </div>
 <div id="calendar" class="container py-lg-5 py-md-4 py-sm-4 py-3"></div>

@@ -250,7 +250,7 @@ $(document).ready(function(){
                 },
                 success:function(output){
                     if(output == 'taken')
-                        $("#timeSlottaken").html("<p><?php echo localize('TakeAppointment-TimeSlotTaken');?></p>");
+                        $("#timeSlottaken").html("<p><?php echo localize('TakeAppointment-TimeSlotTaken') ?></p>");
                     else if(output == 'available')
                         window.location = 'index.php?action=about';
                     else alert(output + "Une erreur s'est produite");
@@ -258,7 +258,7 @@ $(document).ready(function(){
             });
         } else {
             Swal.fire({
-                text: 'Veuillez sélectionner une plage horaire.',
+                text: '<?php echo localize('SelectTimeSlot') ?>',
                 type: 'info',
                 toast: true,
                 position: 'top',

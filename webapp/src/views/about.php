@@ -141,7 +141,7 @@ $title = 'Connection';
     <!-- team -->
     <section class="team py-lg-4 py-md-3 py-sm-3 py-3" id="team">
         <div class="container py-lg-5 py-md-4 py-sm-4 py-3 ">
-            <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('About-OurTeam'); ?></h3><br/>
+            <h3 class="title text-center mb-md-4 mb-sm-3 mb-3 mb-2"><?php echo localize('About-OurTeam') ?></h3><br/>
             <div class="row text-center">
                 <div class=" col-md-6 col-sm-6 team-row-grid">
                     <div class="team-grid">
@@ -149,7 +149,7 @@ $title = 'Connection';
                             <img src="images/t2.jpg" alt="" class="img-fluid">
                         </div>
                         <h4>Carl Giguère</h4>
-                        <p class="mt-2 text-center">Orthothérapeute</p>
+                        <p class="mt-2 text-center"><?php echo localize('Orthotherapist') ?></p>
                     </div>
                 </div>
                 <div class=" col-md-6 col-sm-6 team-row-grid">
@@ -158,7 +158,7 @@ $title = 'Connection';
                             <img src="images/t1.jpg" alt="" class="img-fluid">
                         </div>
                         <h4>Mélanie Plante</h4>
-                        <p class="mt-2">Orthothérapeute</p>
+                        <p class="mt-2"><?php echo localize('Orthotherapist') ?></p>
                     </div>
                 </div>
             </div>
