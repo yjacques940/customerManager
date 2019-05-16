@@ -131,20 +131,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function addSelectionInArray(event){
-        if (currentSelection != null) {
-            calendar.getEventById(currentSelection.id).remove();
-            calendar.addEvent({
-                id: currentSelection.id,
-                title: "Plage Disponible",
-                backgroundColor: "#3788d8",
-                start: currentSelection.start,
-                end: currentSelection.end
-            });
+        if (currentSelection == null) {
+            selectEvent(event);
         }
+        else if (event.id != currentSelection.id) {
+            unselectEvent(event);
+            selectEvent(event);
+        }
+        else {
+            unselectEvent(event);
+            currentSelection = null;
+        }
+    }
+
+    function unselectEvent(event) {
+        calendar.getEventById(currentSelection.id).remove();
+        calendar.addEvent({
+            id: currentSelection.id,
+            backgroundColor: "#3788d8",
+            start: currentSelection.start,
+            end: currentSelection.end
+        });
+    }
+
+    function selectEvent(event) {
         event.remove();
         calendar.addEvent({
             id: event.id,
-            title: "Plage Sélectionnée",
             backgroundColor: "#0a0",
             start: event.start,
             end: event.end
@@ -155,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function addTimeSlotToCalendar(timeSlot) {
         calendar.addEvent({
             id: timeSlot.id,
-            title: "Plage Disponible",
             start: timeSlot.startDateTime.toLocaleString('it-IT'),
             end: timeSlot.endDateTime.toLocaleString('it-IT')
         });
@@ -238,7 +250,7 @@ $(document).ready(function(){
                 },
                 success:function(output){
                     if(output == 'taken')
-                        $("#timeSlottaken").html("<p><?php echo localize('TakeAppointment-TimeSlotTaken');?></p>");
+                        $("#timeSlottaken").html("<p><?php echo localize('TakeAppointment-TimeSlotTaken') ?></p>");
                     else if(output == 'available')
                         window.location = 'index.php?action=about';
                     else alert(output + "Une erreur s'est produite");
@@ -246,7 +258,7 @@ $(document).ready(function(){
             });
         } else {
             Swal.fire({
-                text: 'Veuillez sélectionner une plage horaire.',
+                text: '<?php echo localize('SelectTimeSlot') ?>',
                 type: 'info',
                 toast: true,
                 position: 'top',

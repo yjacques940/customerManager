@@ -24,28 +24,28 @@ $title = Localize('Diaporama-ManageDiaporama');
             <button type="submit" class="btn sent-butnn"><?php echo Localize('TimeSlot-Add');?></button>
           </div>
         </form>
-      </div> 
+      </div>
       <div class="col-lg-12 col-md-12">
       <?php if(isset($images)){ ?>
       <form action="index.php?action=manageDiaporama" class="text-center" name="managediaporama" id="managediaporama" method="post">
         <div class="row ">
               <?php
               $maxOrder = count($images);
-              foreach($images as $image){ 
+              foreach($images as $image){
                 $display = $image->isDisplayed;?>
               <div class="col-sm-12 col-md-6 col-lg-4 pt-2 pb-2">
                 <img style="max-height:200px;" src="<?php echo $image->path ?>">
                 <div>
                   <input type="hidden" name="id<?php echo $image->id; ?>" value="id<?php echo $image->id; ?>">
-                  <label > Afficher</label>
-                  <label for="yes<?php echo $image->id?>"> oui</label>
+                  <label><?php echo localize('Visible') ?></label>
+                  <label for="yes<?php echo $image->id?>"> <?php echo localize('Answer-Yes') ?></label>
                   <input type="radio" <?php if($display) echo'checked'?> id="yes<?php echo $image->id?>" name="display<?php echo $image->id?>" value="display1">
-                  <label for="no<?php echo $image->id?>"> Non </label>
+                  <label for="no<?php echo $image->id?>"> <?php echo localize('Answer-No') ?> </label>
                     <input type="radio" <?php if(!$display) echo'checked'?> id="no<?php echo $image->id?>" name="display<?php echo $image->id?>" value="display0">
                     <div>
-                  <label for="order<?php echo $image->id?>"> Ordre </label>
+                  <label for="order<?php echo $image->id?>"> <?php echo localize('Order') ?> </label>
                   <select name="order<?php echo $image->id?>">
-                    <option value="order0">Ordre</option>
+                    <option value="order0"><?php echo localize('Order') ?></option>
                     <?php
                     $cpt=1;
                       while($cpt <= $maxOrder){
@@ -61,7 +61,7 @@ $title = Localize('Diaporama-ManageDiaporama');
                     </div>
                 </div>
                 <div>
-                <label for="delete<?php echo $image->id?>"> Supprimer</label>
+                <label for="delete<?php echo $image->id?>"><?php echo localize('Delete') ?></label>
                 <input name="delete<?php echo $image->id?>" id="delete<?php echo $image->id?>" value="delete<?php echo $image->id?>" type="checkbox">
                 </div>
               </div>
@@ -75,6 +75,6 @@ $title = Localize('Diaporama-ManageDiaporama');
     </div>
   </div>
 </section>
-<?php $contenu = ob_get_clean(); 
+<?php $contenu = ob_get_clean();
 $onHomePage = false;
 require 'gabarit.php'; ?>
