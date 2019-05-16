@@ -119,9 +119,9 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                     <option value="0"></option>
                     <?php foreach($phoneTypes as $phoneType){
                         if($phoneType->id == $phone1[2]){
-                            echo '<option selected value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
+                            echo '<option selected value="'.$phoneType->id.'">'.localize($phoneType->name).'</option>';
                         }else{
-                            echo '<option value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
+                            echo '<option value="'.$phoneType->id.'">'.localize($phoneType->name).'</option>';
                         }
                     }
                     ?>
@@ -146,9 +146,9 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                     <?php
                     foreach($phoneTypes as $phoneType){
                         if($phoneType->id == $phone2[2]){
-                            echo '<option selected value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
+                            echo '<option selected value="'.$phoneType->id.'">'.localize($phoneType->name).'</option>';
                         }else{
-                            echo '<option value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
+                            echo '<option value="'.$phoneType->id.'">'.localize($phoneType->name).'</option>';
                         }
                     }
                     ?>
@@ -173,9 +173,9 @@ if(isset($_SESSION['userid']) && !isset($_SESSION['customerName'])){
                     <?php
                     foreach($phoneTypes as $phoneType){
                         if($phoneType->id == $phone3[2]){
-                            echo '<option selected value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
+                            echo '<option selected value="'.$phoneType->id.'">'.localize($phoneType->name).'</option>';
                         }else{
-                            echo '<option value="'.$phoneType->id.'">'.$phoneType->name.'</option>';
+                            echo '<option value="'.$phoneType->id.'">'.localize($phoneType->name).'</option>';
                         }
                     }
                     ?>
