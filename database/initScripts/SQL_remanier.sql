@@ -380,7 +380,7 @@ INSERT INTO tbl_question(id_question,id_parent,question_fr,question_en,answer_ty
 ),
 (21,10,
 'Lequel?',
-'Wich one?',
+'Which one?',
 'string',0
 );
 
