@@ -236,7 +236,8 @@ $(document).ready(function(){
     });
     $('#reserveappointment').submit(function(e){
         e.preventDefault();
-        if (currentSelection != null) {
+        if (!$(this).valid()) return;
+        else if (currentSelection != null) {
             $.ajax({
                 url:"?action=makeAnAppointment",
                 type:'POST',
