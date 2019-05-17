@@ -24,9 +24,10 @@ try
             UpdatePassword();
             break;
         case 'logout':
+            $locale = $_SESSION['locale'];
             session_unset();
             session_destroy();
-            $_SESSION['locale'] = 'fr';
+            $_SESSION['locale'] = $locale;
             Home();
             break;
         case 'ask_for_appointment' :
