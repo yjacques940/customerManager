@@ -103,6 +103,7 @@ try
             OpenForgotPasswordEmailSelector();
             break;
         case "runDailyCronJobs":
+            CallAPI('GET','Jobs/Daily');
             Home();
             break;
         case 'cancelappointments':
