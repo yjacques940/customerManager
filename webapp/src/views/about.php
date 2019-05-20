@@ -146,7 +146,7 @@ $title = 'Connection';
                 <div class=" col-md-6 col-sm-6 team-row-grid">
                     <div class="team-grid">
                         <div class="team-image mb-3">
-                            <img src="images/t2.jpg" alt="" class="img-fluid">
+                            <img src="images/carl.png" alt="" class="img-fluid">
                         </div>
                         <h4>Carl Giguère</h4>
                         <p class="mt-2 text-center"><?php echo localize('Orthotherapist') ?></p>
@@ -155,7 +155,7 @@ $title = 'Connection';
                 <div class=" col-md-6 col-sm-6 team-row-grid">
                     <div class="team-grid">
                         <div class="team-image mb-3">
-                            <img src="images/t1.jpg" alt="" class="img-fluid">
+                            <img src="images/melanie.png" alt="" class="img-fluid">
                         </div>
                         <h4>Mélanie Plante</h4>
                         <p class="mt-2"><?php echo localize('Orthotherapist') ?></p>
