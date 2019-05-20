@@ -89,7 +89,7 @@ $title = 'Connection';
                         </div>
                     </div>
                     <div class="col-lg-4 w3layouts-left-side-img">
-                        <img src="images/blog2.jpg" class="img-thumbnail" alt="">
+                        <img src="images/batisse.jpg" class="img-thumbnail" alt="">
                     </div>
                     <div class="col-lg-4 w3layouts-right-side-img">
                         <div class="abut-inner-wls-head">
