@@ -586,7 +586,8 @@ INSERT INTO tbl_diaporama_image(is_active, is_displayed, display_order, path)
 VALUES (1,1,1,'images/salleattente.jpg'),
        (1,1,2,'images/sallemassage.jpg'),
        (1,1,3,'images/pierrechaudes.jpg'),
-       (1,1,4,'images/sallemassage_2.jpg');
+       (1,1,4,'images/sallemassage_2.jpg'),
+       (1,1,0,'images/b3.jpg');
 
 
 

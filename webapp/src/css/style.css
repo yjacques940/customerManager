@@ -640,14 +640,13 @@ button.btn1:hover,
 }
 
 .homepage1 {
-  background: url(../images/b3.jpg) no-repeat;
+  background: url(../images/labatisse.jpg) no-repeat center;
   background-size: cover;
-  background-position: center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   -ms-background-size: cover;
-  height: 100%;
+  min-height: 300px;
 }
 
 /*--//info-- */
