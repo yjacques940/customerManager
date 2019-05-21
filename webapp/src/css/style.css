@@ -720,7 +720,6 @@ button.btn1:hover,
 /*--book-table-w3pvt --*/
 
 .inner_page-banner {
-  text-align: center;
   background: url(../images/labatisse.jpg) no-repeat center;
   background-size: cover;
   -webkit-background-size: cover;
@@ -1076,7 +1075,7 @@ footer p a:hover {
 
 @media(max-width:1600px) {}
 
-@media(max-width:1440px) {
+@media(max-width:1920px) {
   .main-top {
     min-height: 680px;
   }
