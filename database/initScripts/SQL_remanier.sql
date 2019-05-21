@@ -587,7 +587,8 @@ VALUES (1,1,1,'images/salleattente.jpg'),
        (1,1,2,'images/sallemassage.jpg'),
        (1,1,3,'images/pierrechaudes.jpg'),
        (1,1,4,'images/sallemassage_2.jpg'),
-       (1,1,0,'images/b3.jpg');
+       (1,1,0,'images/b3.jpg'),
+       (1,1,5,'images/bureauaccueil.jpg');
 
 
 
