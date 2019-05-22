@@ -26,7 +26,7 @@
       <div class="headder-top">
           <div style="display: inline; float:left;margin: 10px 10px 10px 10px;"  >
               <a href="?action=home"><img
-                          style=" width:70%;" class="img-fluid" src="images/completeLogo.svg" alt="Carl et Mélanie Massothérapie" /></a>
+                          style=" width:30%;" class="img-fluid" src="images/completeLogo.png" alt="Carl et Mélanie Massothérapie" /></a>
           </div>
         <nav style="display: -moz-inline-block;">
           <label for="drop" class="toggle"><?php echo localize('Header-Menu'); ?></label>

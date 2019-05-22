@@ -583,10 +583,12 @@ VALUES (NOW(), 1,1,1,1,false,''),
 	   (NOW(), 1,1,1,6,false,'Peut Importe');
        
 INSERT INTO tbl_diaporama_image(is_active, is_displayed, display_order, path)
-VALUES (1,1,1,'images/ab1.jpg'),
-       (1,1,2,'images/blog1.jpg'),
-       (1,0,3,'images/t3.jpg'),
-       (1,1,1,'images/blog4.jpg');
-       
+VALUES (1,1,1,'images/salleattente.jpg'),
+       (1,1,2,'images/sallemassage.jpg'),
+       (1,1,3,'images/pierrechaudes.jpg'),
+       (1,1,4,'images/sallemassage_2.jpg'),
+       (1,1,0,'images/b3.jpg'),
+       (1,1,5,'images/bureauaccueil.jpg');
+
 
 

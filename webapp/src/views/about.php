@@ -89,7 +89,7 @@ $title = 'Connection';
                         </div>
                     </div>
                     <div class="col-lg-4 w3layouts-left-side-img">
-                        <img src="images/blog2.jpg" class="img-thumbnail" alt="">
+                        <img src="images/batisse.jpg" class="img-thumbnail" alt="">
                     </div>
                     <div class="col-lg-4 w3layouts-right-side-img">
                         <div class="abut-inner-wls-head">
@@ -146,7 +146,7 @@ $title = 'Connection';
                 <div class=" col-md-6 col-sm-6 team-row-grid">
                     <div class="team-grid">
                         <div class="team-image mb-3">
-                            <img src="images/t2.jpg" alt="" class="img-fluid">
+                            <img src="images/carl.png" alt="" class="img-fluid">
                         </div>
                         <h4>Carl Giguère</h4>
                         <p class="mt-2 text-center"><?php echo localize('Orthotherapist') ?></p>
@@ -155,7 +155,7 @@ $title = 'Connection';
                 <div class=" col-md-6 col-sm-6 team-row-grid">
                     <div class="team-grid">
                         <div class="team-image mb-3">
-                            <img src="images/t1.jpg" alt="" class="img-fluid">
+                            <img src="images/melanie.png" alt="" class="img-fluid">
                         </div>
                         <h4>Mélanie Plante</h4>
                         <p class="mt-2"><?php echo localize('Orthotherapist') ?></p>

@@ -523,7 +523,7 @@ background-color: #212121;
 /* banner */
 
 .main-top {
-  background: url(../images/b3.jpg) no-repeat;
+  background: url(../images/labatisse.jpg) no-repeat;
   background-size: cover;
   background-position: center;
   -webkit-background-size: cover;
@@ -639,6 +639,15 @@ button.btn1:hover,
   -ms-background-size: cover;
 }
 
+.homepage {
+  background: url(../images/labatisse.jpg) no-repeat center;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -ms-background-size: cover;
+  min-height: 300px;
+}
 
 /*--//info-- */
 
@@ -710,8 +719,7 @@ button.btn1:hover,
 /*--book-table-w3pvt --*/
 
 .inner_page-banner {
-  text-align: center;
-  background: url(../images/b3.jpg) no-repeat center;
+  background: url(../images/labatisse.jpg) no-repeat center;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -1066,7 +1074,7 @@ footer p a:hover {
 
 @media(max-width:1600px) {}
 
-@media(max-width:1440px) {
+@media(max-width:1920px) {
   .main-top {
     min-height: 680px;
   }
