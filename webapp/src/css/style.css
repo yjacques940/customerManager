@@ -639,7 +639,7 @@ button.btn1:hover,
   -ms-background-size: cover;
 }
 
-.homepage1 {
+.homepage {
   background: url(../images/labatisse.jpg) no-repeat center;
   background-size: cover;
   -webkit-background-size: cover;

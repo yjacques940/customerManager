@@ -12,7 +12,7 @@
   </head>
   <body>
 
-    <header class="main-top homepage1" id="home">
+    <header class="main-top homepage" id="home">
     <div class="headder-top">
           <div style="display: inline; float:left;margin: 10px 10px 10px 10px;"  >
               <a href="?action=home"><img
