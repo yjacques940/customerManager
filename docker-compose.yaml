@@ -2,22 +2,22 @@
 
 version: '2.4'
 services:
-    webapp:
+    web:
         image: httpd:2.4-apache
         build:
-            context: ./webapp/
-            dockerfile: Dockerfile
+            context: ./web
+            dockerfile: ./docker/Dockerfile
         environment:
-          - API_URL=test #'http://localhost:63212/api/'
+          - API_URL=test #'http://localhost:5000/api/'
         networks:
         - local
         ports:
         - '80:80'
         - '443:443'
-        volumes:
-        - type: bind
-          source: ./webapp/src
-          target: /var/www/html
+          #        volumes:
+          #        - type: bind
+          #          source: ./webapp/src
+          #          target: /var/www/html
     webapi:
         image: alpine:3.9
         build:
