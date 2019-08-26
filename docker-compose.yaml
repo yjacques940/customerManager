@@ -6,9 +6,9 @@ services:
         image: httpd:2.4-apache
         build:
             context: ./web
-            dockerfile: docker/Dockerfile
+            dockerfile: ./docker/Dockerfile
         environment:
-          - API_URL=test #'http://localhost:63212/api/'
+          - API_URL=test #'http://localhost:5000/api/'
         networks:
         - local
         ports:

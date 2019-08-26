@@ -16,6 +16,9 @@ customers: Customer[] = [];
   }
 
   getCustomers() {
-    this.customerService.get().subscribe(customers => this.customers = customers);
+    this.customerService.get().subscribe(customers => {
+      this.customers = customers;
+      console.log(customers);
+    }, error => console.log(error));
   }
 }

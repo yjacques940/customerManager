@@ -11,7 +11,7 @@ export class CustomerService {
   constructor(private httpClient: HttpClient) { }
 
   get(): Observable<Customer[]> {
-    const url = `http://localhost/api/Customers/GetAll`;
+    const url = `http://localhost:8080/api/Customers/GetAll`;
     return this.httpClient.get<Customer[]>(url);
   }
 }
