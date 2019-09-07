@@ -16,13 +16,15 @@ import { UpgradeComponent } from '../../pages/upgrade/upgrade.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {CustomerManagementComponent} from '../../pages/customer-management/customer-management.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
-    NgbModule
+    NgbModule,
+    MatTableModule
   ],
   declarations: [
     DashboardComponent,
@@ -34,7 +36,7 @@ import {CustomerManagementComponent} from '../../pages/customer-management/custo
     MapsComponent,
     NotificationsComponent,
     CustomerManagementComponent
-  ]
+  ],
 })
 
 export class AdminLayoutModule {}

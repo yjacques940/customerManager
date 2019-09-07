@@ -1,1 +1,19 @@
-<p>customer-management works!</p>
+<mat-table [dataSource]="customers" class="mat-elevation-z8">
+  <ng-container matColumnDef="firstName">
+    <mat-header-cell *matHeaderCellDef> Prénom </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="lastName">
+    <mat-header-cell *matHeaderCellDef> Nom </mat-header-cell>
+    <mat-cell mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="occupation">
+    <mat-header-cell *matHeaderCellDef> Occupation </mat-header-cell>
+    <mat-cell mat-cell *matCellDef="let element"> {{element.occupation}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
