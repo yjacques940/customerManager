@@ -17,7 +17,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
   ],
   imports: [
     BrowserAnimationsModule,
